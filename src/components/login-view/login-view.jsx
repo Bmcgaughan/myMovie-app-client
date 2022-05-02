@@ -13,7 +13,6 @@ export function LoginView(props) {
 
   const handleRegister = (e) => {
       e.preventDefault()
-      console.log('here')
       props.onRegister(true)
   }
 
@@ -48,3 +47,5 @@ export function LoginView(props) {
     </form>
   );
 }
+
+
