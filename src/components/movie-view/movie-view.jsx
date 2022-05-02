@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+//showing details once MovieCard is clicked
 export class MovieView extends React.Component {
   render() {
     const { movie, onBackClick } = this.props;

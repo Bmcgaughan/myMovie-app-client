@@ -8,6 +8,8 @@ const dkLogo = require('../../img/dk.jpg');
 const srLogo = require('../../img/sr.jpg');
 const gbeLogo = require('../../img/gbu.jpeg');
 
+
+//getting array of movies from remote and displaying as a list
 export class MainView extends React.Component {
   constructor() {
     super();
