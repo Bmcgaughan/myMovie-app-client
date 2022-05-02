@@ -18,6 +18,13 @@ body {
 .btn-secondary {
   background-color: red !important;
 }
+.movie-view {
+  color: white;
+}
+
+.mov-section {
+  padding-bottom: 10px;
+}
 .login-form {
   color: white;
   height: 100%;
@@ -34,6 +41,10 @@ body {
 
 .buttons {
   margin-top: 15px;
+}
+
+.login-form button {
+  margin-bottom: 10px;
 }
 .reg-form {
   color: white;
