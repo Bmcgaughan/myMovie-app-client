@@ -1,0 +1,10 @@
+$primary-color: black;
+$btn-color: red;
+
+.app-container {
+  background-color: $primary-color;
+}
+
+.btn-secondary {
+  background-color: $btn-color !important;
+}

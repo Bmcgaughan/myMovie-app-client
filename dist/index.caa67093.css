@@ -1,4 +1,59 @@
 .myMovie {
   color: steelblue;
 }
+
+html {
+  min-height: 100vh;
+  background-color: black;
+}
+
+body {
+  height: 100%;
+  background-color: black !important;
+}
+.app-container {
+  background-color: black;
+}
+
+.btn-secondary {
+  background-color: red !important;
+}
+.login-form {
+  color: white;
+  height: 100%;
+}
+
+.login-form {
+  margin-top: 100px;
+}
+
+.form-label,
+.buttons {
+  width: 400px;
+}
+
+.buttons {
+  margin-top: 15px;
+}
+.reg-form {
+  color: white;
+  height: 100%;
+}
+
+.reg-form {
+  margin-top: 100px;
+}
+
+.form-label {
+  width: 400px;
+}
+
+.btn {
+  margin-top: 5px;
+}
+
+.register-button {
+  margin-top: 20px;
+  width: 400px;
+}
 /*# sourceMappingURL=index.caa67093.css.map */
