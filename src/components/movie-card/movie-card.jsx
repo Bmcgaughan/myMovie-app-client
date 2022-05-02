@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types';
 
 //Basic display of movies that are rendered on MainView
 export class MovieCard extends React.Component {
@@ -17,3 +17,15 @@ export class MovieCard extends React.Component {
     );
   }
 }
+
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string,
+    Description: PropTypes.string,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string,
+    }),
+  }).isRequired,
+
+  onMovieClick: PropTypes.func.isRequired,
+};

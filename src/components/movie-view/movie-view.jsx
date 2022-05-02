@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 //showing details once MovieCard is clicked
 export class MovieView extends React.Component {
   render() {
@@ -18,6 +17,10 @@ export class MovieView extends React.Component {
         <div className="movie-description">
           <span className="label">Description: </span>
           <span className="value">{movie.Description}</span>
+        </div>
+        <div className="movie-genre">
+          <span className="label">Genre: </span>
+          <span className="value">{movie.Genre.Name}</span>
         </div>
         <button
           onClick={() => {

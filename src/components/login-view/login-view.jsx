@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
-export class LoginView extends React.Component {
-    constructor(props) {
-        super(props);
+export function LoginView(props) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-        this.state = {
-            username: '',
-            password: ''
-        }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(username, password);
+    props.onLoggedIn(username)
+  };
 
-        this.onUsernameChange = this.onUsernameChange.bind(this);
-        this.onPasswordChange = this.onPasswordChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
-    
+  return (
+    <form>
+      <label>
+        Username:
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </label>
+      <label>
+        Password:
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </label>
+      <button type="submit" onClick={handleSubmit}>
+        Submit
+      </button>
+    </form>
+  );
 }
