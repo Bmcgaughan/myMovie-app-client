@@ -58,12 +58,19 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie, user, registered } = this.state;
 
+    //forcing a registration form for testing
     if (registered) {
       return <RegistrationView onRegister={(bool) => this.onRegister(bool)} />;
     }
 
+    //if user is no logged in - force a login form
     if (!user) {
-      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} onRegister={(bool) => this.onRegister(bool)}  />;
+      return (
+        <LoginView
+          onLoggedIn={(user) => this.onLoggedIn(user)}
+          onRegister={(bool) => this.onRegister(bool)}
+        />
+      );
     }
 
     if (movies.length === 0)
