@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+//user registration form taking necessary user details
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,7 +10,7 @@ export function RegistrationView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(username, password, email, birthday);
-    props.onRegister(true);
+    props.onRegister(false);
   };
 
   return (

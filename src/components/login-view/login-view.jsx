@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-
+//login for user - taking username and password
 export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -8,8 +8,15 @@ export function LoginView(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(username, password);
-    props.onLoggedIn(username)
+    props.onLoggedIn(username);
   };
+
+  const handleRegister = (e) => {
+      e.preventDefault()
+      console.log('here')
+      props.onRegister(true)
+  }
+
 
   return (
     <form>
@@ -31,6 +38,12 @@ export function LoginView(props) {
       </label>
       <button type="submit" onClick={handleSubmit}>
         Submit
+      </button>
+      <button
+        type="submit"
+        onClick={handleRegister}
+      >
+        Register Here
       </button>
     </form>
   );

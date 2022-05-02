@@ -58,14 +58,12 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie, user, registered } = this.state;
 
-    if (!registered) {
-      return (
-        <RegistrationView onRegister={(val) => this.onRegister(val)} />
-      );
+    if (registered) {
+      return <RegistrationView onRegister={(bool) => this.onRegister(bool)} />;
     }
 
     if (!user) {
-      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />;
+      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} onRegister={(bool) => this.onRegister(bool)}  />;
     }
 
     if (movies.length === 0)
