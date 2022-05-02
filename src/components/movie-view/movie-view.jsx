@@ -11,7 +11,7 @@ export class MovieView extends React.Component {
 
     return (
       <div className="movie-view">
-        <div className="movie-poster">
+        <div className="movie-poster d-flex justify-content-center">
           <img src={movie.ImagePath} />
         </div>
         <div className="movie-title mov-section">
@@ -19,7 +19,9 @@ export class MovieView extends React.Component {
           <span className="value">{movie.Title}</span>
         </div>
         <div className="movie-description mov-section">
-          <span className="label">Description:<br></br> </span>
+          <span className="label">
+            Description:<br></br>{' '}
+          </span>
           <span className="value">{movie.Description}</span>
         </div>
         <div className="movie-director mov-section">

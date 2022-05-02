@@ -19,6 +19,7 @@ body {
   background-color: red !important;
 }
 .movie-view {
+  margin-top: 25px;
   color: white;
 }
 
