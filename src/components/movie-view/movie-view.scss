@@ -1,7 +1,9 @@
+@use '../../index.scss' as v;
+
 .movie-view {
   margin-top: 5px;
   margin-bottom: 5px;
-  color: black;
+  color: v.$primary-color;
   background-color: white;
   padding: 10px;
   border-radius: 5px;
@@ -10,3 +12,5 @@
 .mov-section {
   padding-bottom: 10px;
 }
+
+

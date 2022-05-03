@@ -1,10 +1,5 @@
-$primary-color: black;
-$btn-color: red;
+@use '../../index.scss' as v;
 
 .app-container {
-  background-color: $primary-color;
-}
-
-.btn-secondary {
-  background-color: $btn-color !important;
+  background-color: v.$primary-color;
 }

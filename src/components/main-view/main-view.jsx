@@ -35,9 +35,10 @@ export class MainView extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+
   }
 
-  //sets the selected movie state with value
+  //sets the selected movie state with value that is provided
   setSelectedMovie(newSelectedMovie) {
     this.setState({
       selectedMovie: newSelectedMovie,
@@ -51,6 +52,7 @@ export class MainView extends React.Component {
     });
   }
 
+  //placeholder to force the registration page
   onRegister(registered) {
     this.setState({
       registered,
