@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -13,8 +15,21 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
-    props.onLoggedIn(username);
+  
+    //sending post request to API with Username and Password
+    axios
+      .post('https://whatdoiwatch.herokuapp.com/login', {
+        Username: username,
+        Password: password,
+      })
+      .then((response) => {
+        const data = response.data;
+        props.onLoggedIn(data);
+      })
+      .catch((e) => {
+        console.log('User does not exist');
+      });
+
   };
 
   const handleRegister = (e) => {
@@ -25,7 +40,7 @@ export function LoginView(props) {
   return (
     <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
       <div>
-        <h1>Log in to What Do I Watch!</h1>
+        <h1>What Do I Watch!</h1>
       </div>
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>

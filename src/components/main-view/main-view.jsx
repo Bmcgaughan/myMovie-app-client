@@ -10,10 +10,6 @@ import { LoginView } from '../login-view/login-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
-const dkLogo = require('../../img/dk.jpg');
-const srLogo = require('../../img/sr.jpg');
-const gbeLogo = require('../../img/gbu.jpeg');
-
 //getting array of movies from remote and displaying as a list
 export class MainView extends React.Component {
   constructor() {
@@ -35,7 +31,18 @@ export class MainView extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+  }
 
+  getMovies(token){
+    axios.get('https://whatdoiwatch.herokuapp.com/movies', {
+      headers: {Authorization: `Bearer ${token}`}
+    }).then((response) =>{
+      this.setState({
+        movies: response.data
+      })
+    }).catch((error) =>{
+      console.log(error)
+    })
   }
 
   //sets the selected movie state with value that is provided
@@ -46,10 +53,13 @@ export class MainView extends React.Component {
   }
 
   //when user is verified set state to current user
-  onLoggedIn(user) {
+  onLoggedIn(userAuth) {
     this.setState({
-      user,
+      user : userAuth.user.Username
     });
+    localStorage.setItem('token', userAuth.token),
+    localStorage.setItem('user', userAuth.user.Username)
+    this.getMovies(userAuth.token)
   }
 
   //placeholder to force the registration page
