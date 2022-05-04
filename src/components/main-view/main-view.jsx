@@ -23,26 +23,29 @@ export class MainView extends React.Component {
     };
   }
   componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user'),
+      });
+      this.getMovies(accessToken);
+    }
+  }
+
+  //once authenticated request movies from API - Array of JSONS
+  getMovies(token) {
     axios
-      .get('https://whatdoiwatch.herokuapp.com/movies')
+      .get('https://whatdoiwatch.herokuapp.com/movies', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
-        this.setState({ movies: response.data });
+        this.setState({
+          movies: response.data,
+        });
       })
       .catch((error) => {
         console.log(error);
       });
-  }
-
-  getMovies(token){
-    axios.get('https://whatdoiwatch.herokuapp.com/movies', {
-      headers: {Authorization: `Bearer ${token}`}
-    }).then((response) =>{
-      this.setState({
-        movies: response.data
-      })
-    }).catch((error) =>{
-      console.log(error)
-    })
   }
 
   //sets the selected movie state with value that is provided
@@ -55,11 +58,11 @@ export class MainView extends React.Component {
   //when user is verified set state to current user
   onLoggedIn(userAuth) {
     this.setState({
-      user : userAuth.user.Username
+      user: userAuth.user.Username,
     });
     localStorage.setItem('token', userAuth.token),
-    localStorage.setItem('user', userAuth.user.Username)
-    this.getMovies(userAuth.token)
+      localStorage.setItem('user', userAuth.user.Username);
+    this.getMovies(userAuth.token);
   }
 
   //placeholder to force the registration page
