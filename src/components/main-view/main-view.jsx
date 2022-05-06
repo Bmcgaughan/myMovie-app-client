@@ -105,19 +105,19 @@ export class MainView extends React.Component {
             path="/"
             render={() => {
               return movies.map((m) => (
-                <Col md={3} key={m.id}>
+                <Col md={3} key={m._id}>
                   <MovieCard movie={m} />
                 </Col>
               ));
             }}
           />
           <Route
-            path="/movies/:movieID"
+            path="/movies/:movieId"
             render={({ match }) => {
               return (
                 <Col md={8}>
                   <MovieView
-                    move={movies.find((m) => m.id === match.params.movieId)}
+                    movie={movies.find((m) => m._id === match.params.movieId)}
                   />
                 </Col>
               );
