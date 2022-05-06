@@ -22,6 +22,7 @@ export class MainView extends React.Component {
       user: null,
     };
   }
+
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
@@ -32,7 +33,7 @@ export class MainView extends React.Component {
     }
   }
 
-  //once authenticated request movies from API - Array of JSONS
+  //once authenticated - request movies from API with token - recieve array of JSONS
   getMovies(token) {
     axios
       .get('https://whatdoiwatch.herokuapp.com/movies', {
