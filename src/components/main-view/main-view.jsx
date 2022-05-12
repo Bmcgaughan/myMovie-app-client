@@ -139,6 +139,11 @@ export class MainView extends React.Component {
                       movies.find((m) => m.Director.Name === match.params.name)
                         .Director
                     }
+                    directorMovies={
+                      movies.filter((m) =>{
+                        return m.Director.Name === match.params.name
+                      })
+                    }
                     onBackClick={() => history.goBack()}
                   />
                 </Col>
@@ -157,9 +162,11 @@ export class MainView extends React.Component {
                       movies.find((m) => m.Genre.Name === match.params.name)
                         .Genre
                     }
-                    movies={movies.map((m) => {
-                      m.Genre.Name == match.params.name
-                    })}
+                    genreMovies={
+                      movies.filter((m) =>{
+                        return m.Genre.Name === match.params.name
+                      })
+                    }
                     onBackClick={() => history.goBack()}
                   />
                 </Col>
