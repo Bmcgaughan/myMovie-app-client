@@ -336,6 +336,14 @@ body {
   padding-bottom: 10px;
 }
 
+.back-btn {
+  width: 100%;
+}
+
+.movie-opt button {
+  width: 100%;
+}
+
 .main-nav {
   margin-bottom: 15px;
 }

@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import './movie-view.scss';
 
@@ -34,20 +36,35 @@ export class MovieView extends React.Component {
           <span className="label">Genre: </span>
           <span className="value">{movie.Genre.Name}</span>
         </div>
-        <Link to={`/directors/${movie.Director.Name}`}>
-          <Button variant="secondary">Director</Button>
-        </Link>
-        <Link to={`/genres/${movie.Genre.Name}`}>
-        <Button variant="secondary">Genre</Button>
-        </Link>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            onBackClick();
-          }}
-        >
-          Back
-        </Button>
+        <Row className='d-flex text-center'>
+          <Col md={6} >
+            <Link
+              to={`/directors/${movie.Director.Name}`}
+              className="movie-opt"
+            >
+              <Button variant="secondary">More from this Director</Button>
+            </Link>
+          </Col>
+          <Col md={6}>
+            <Link to={`/genres/${movie.Genre.Name}`} className="movie-opt">
+              <Button variant="secondary">More of this Genre</Button>
+            </Link>
+          </Col>
+        </Row>
+
+        <Row md={12} className="d-flex text-center">
+          <Col>
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => {
+                onBackClick();
+              }}
+            >
+              Back
+            </Button>
+          </Col>
+        </Row>
       </div>
     );
   }
