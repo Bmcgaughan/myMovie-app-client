@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
+import { DirectorView } from '../director-view/director-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 
@@ -113,11 +114,25 @@ export class MainView extends React.Component {
           />
           <Route
             path="/movies/:movieId"
-            render={({ match }) => {
+            render={({ match, history }) => {
               return (
                 <Col md={8}>
                   <MovieView
                     movie={movies.find((m) => m._id === match.params.movieId)}
+                    onBackClick={() => history.goBack()}
+                  />
+                </Col>
+              );
+            }}
+          />
+          <Route
+            path="/movies/:movieId"
+            render={({ match, history }) => {
+              return (
+                <Col md={8}>
+                  <MovieView
+                    movie={movies.find((m) => m._id === match.params.movieId)}
+                    onBackClick={() => history.goBack()}
                   />
                 </Col>
               );

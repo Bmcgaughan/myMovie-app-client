@@ -136,6 +136,10 @@ body {
 .app-container {
   background-color: black;
 }
+
+.mov-button {
+  width: 100%;
+}
 html {
   min-height: 100vh;
   background-color: black;
