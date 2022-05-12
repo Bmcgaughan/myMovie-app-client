@@ -164,7 +164,12 @@ body {
 }
 
 .form-label,
-.buttons {
+.buttons,
+.reg-button {
+  width: 400px;
+}
+
+.reg-button button {
   width: 400px;
 }
 
@@ -331,4 +336,7 @@ body {
   padding-bottom: 10px;
 }
 
+.main-nav {
+  margin-bottom: 15px;
+}
 /*# sourceMappingURL=index.caa67093.css.map */

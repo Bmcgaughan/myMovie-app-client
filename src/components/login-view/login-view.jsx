@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 
+import { Link } from 'react-router-dom';
+
 import './login-view.scss';
 
 //login for user - taking username and password
@@ -57,10 +59,10 @@ export function LoginView(props) {
     }
   };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    props.onRegister(true);
-  };
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+  //   props.onRegister(true);
+  // };
 
   return (
     <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
@@ -87,9 +89,9 @@ export function LoginView(props) {
         <Button variant="danger" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
-        <Button variant="danger" type="submit" onClick={handleRegister}>
-          Register
-        </Button>
+        <Link className="reg-button" to={`/register`}>
+          <Button variant="danger">Register</Button>
+        </Link>
       </Row>
     </Form>
   );

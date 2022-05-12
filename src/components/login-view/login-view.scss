@@ -8,7 +8,12 @@
 }
 
 .form-label,
-.buttons {
+.buttons,
+.reg-button {
+  width: 400px;
+}
+
+.reg-button button {
   width: 400px;
 }
 
