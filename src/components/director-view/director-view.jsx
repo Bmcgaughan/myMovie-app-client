@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+
 
 import './director-view.scss';
 
-export function DirectorView(props) {
-  return <div>directorview</div>;
+export class DirectorView extends React.Component {
+    
+  render() {
+    const { director, onBackClick } = this.props;
+    return (
+
+    <div>directorview</div>
+    )
+  }
 }
