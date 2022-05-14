@@ -357,4 +357,8 @@ a {
 .register-title {
   margin-top: 10px;
 }
+
+.delete-account-button {
+  align-self: end;
+}
 /*# sourceMappingURL=index.caa67093.css.map */

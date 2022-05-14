@@ -178,6 +178,25 @@ export class ProfileView extends React.Component {
     }
   };
 
+  handleDeleteProfile() {
+    const userName = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    axios
+      .delete(
+        `https://whatdoiwatch.herokuapp.com/users/${userName}`,
+
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((response) => {
+        console.log(response);
+        alert('profile deleted');
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.open('/', '_self');
+      })
+      .catch((e) => console.log(e));
+  }
+
   render() {
     const { movies, onBackClick } = this.props;
     const { favoriteMovies, username, email, birthday, editAccount } =
@@ -191,22 +210,28 @@ export class ProfileView extends React.Component {
             <p>Username: {username}</p>
             <p>Email: {email}</p>
             <p>Birthday: {this.getFormattedDate(birthday)}</p>
-            <Button
-              className="update-info-button"
-              variant="primary"
-              type="submit"
-              onClick={this.handleEdit}
-            >
-              {this.state.editAccount ? 'Close' : 'Edit Account'}
-            </Button>
-            <Button
-              className="delete-account-button"
-              variant="danger"
-              type="submit"
-              onClick={this.handleEdit}
-            >
-              Delete Account
-            </Button>
+            <Row>
+              <Col md={6}>
+                <Button
+                  className="update-info-button"
+                  variant="primary"
+                  type="submit"
+                  onClick={this.handleEdit}
+                >
+                  {this.state.editAccount ? 'Close' : 'Edit Account'}
+                </Button>
+              </Col>
+              <Col md={6} className="text-right">
+                <Button
+                  className="delete-account-button"
+                  variant="danger"
+                  type="submit"
+                  onClick={this.handleDeleteProfile}
+                >
+                  Delete Account
+                </Button>
+              </Col>
+            </Row>
           </div>
           {this.state.editAccount && (
             <Form
@@ -261,7 +286,7 @@ export class ProfileView extends React.Component {
               </Form.Group>
               <Button
                 className="register-button"
-                variant="danger"
+                variant="primary"
                 type="submit"
                 onClick={this.handleSubmit}
               >
