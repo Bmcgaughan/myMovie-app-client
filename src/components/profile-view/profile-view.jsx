@@ -1,21 +1,12 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { MovieCard } from '../movie-card/movie-card';
 
 import axios from 'axios';
 
 import './profile-view.scss';
 
-import {
-  Card,
-  Form,
-  FormGroup,
-  Col,
-  Row,
-  Container,
-  FormControl,
-  Button,
-} from 'react-bootstrap';
+import { Form, Col, Row, Button } from 'react-bootstrap';
 
 export class ProfileView extends React.Component {
   constructor() {
@@ -76,12 +67,6 @@ export class ProfileView extends React.Component {
     );
   }
 
-  // handleFormChange(event) {
-  //   let fieldName = event.target.name;
-  //   let fieldVal = event.target.value;
-  //   this.setState({ ...this.state, [fieldName]: fieldVal });
-  // }
-
   validate() {
     let isReq = true;
     if (!this.state.username) {
@@ -102,6 +87,18 @@ export class ProfileView extends React.Component {
 
     return isReq;
   }
+
+  listFavorites = (movies) => {
+    let userFavorites = movies.filter((m) =>
+      this.state.favoriteMovies.includes(m._id)
+    );
+    let favoriteCards = userFavorites.map((m) => (
+      <Col md={4} key={m._id}>
+        <MovieCard movie={m} />
+      </Col>
+    ));
+    return favoriteCards;
+  };
 
   setUsername(value) {
     this.setState({
@@ -294,6 +291,10 @@ export class ProfileView extends React.Component {
               </Button>
             </Form>
           )}
+        </div>
+        <div className="movie-view bt-movie">
+          <div>{this.state.username}'s Favorite Movies:</div>
+          <Row>{this.listFavorites(movies)}</Row>
         </div>
       </div>
     );
