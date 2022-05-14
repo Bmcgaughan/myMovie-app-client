@@ -344,6 +344,9 @@ body {
   width: 100%;
 }
 
+.bt-movie {
+  margin-top: 10px;
+}
 .main-nav {
   margin-bottom: 15px;
 }

@@ -25,9 +25,9 @@ export function Menubar({ user }) {
     <Navbar
       className="main-nav nav-fill w-100"
       sticky="top"
-      bg="dark"
+      bg="light"
       expand="lg"
-      variant="dart"
+      variant="light"
     >
       <Navbar.Brand className="navbar-logo">What Do I Watch?</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navba-nav" />

@@ -173,7 +173,7 @@ export class MainView extends React.Component {
                   );
                 if (movies.length === 0) return <div className="main-view" />;
                 return (
-                  <Col md={8}>
+                  <Col md={12}>
                     <GenreView
                       genre={
                         movies.find((m) => m.Genre.Name === match.params.name)

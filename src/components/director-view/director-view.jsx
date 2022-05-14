@@ -1,29 +1,45 @@
 import React from 'react';
 
-import { Button } from 'react-bootstrap';
+import { MovieCard } from '../movie-card/movie-card';
+
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import './director-view.scss';
 
 export class DirectorView extends React.Component {
   render() {
     const { director, onBackClick, directorMovies } = this.props;
+
+    let directorCards = directorMovies.map((m) => (
+      <Col md={4} key={m._id}>
+        <MovieCard movie={m} />
+      </Col>
+    ));
+
     return (
-      <div className="movie-view">
-        <div className="movie-genre mov-section">
-          <span className="label">
-            Director: <br></br>
-          </span>
-          <span>{director.Name}</span>
-          <span>{directorMovies.length}</span>
+      <div className="director-wrapper">
+        <div className="movie-view tp-movie">
+          <div className="movie-genre mov-section">
+            <div>{director.Name}</div>
+            <br></br>
+            <div>{director.Bio}</div>
+            <br></br>
+          </div>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              onBackClick();
+            }}
+          >
+            Back
+          </Button>
         </div>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            onBackClick();
-          }}
-        >
-          Back
-        </Button>
+        <div className="movie-view bt-movie">
+          <div>{director.Name} Movies:</div>
+          <Row>{directorCards}</Row>
+        </div>
       </div>
     );
   }
