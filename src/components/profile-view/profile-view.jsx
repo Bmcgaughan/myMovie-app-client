@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import {
@@ -20,15 +19,16 @@ export class ProfileView extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: null,
-      password: null,
-      email: null,
-      birthday: null,
+      username: '',
+      password: '',
+      email: '',
+      birthday: '',
       favoriteMovies: [],
-      usernameErr: null,
-      passwordErr: null,
-      emailErr: null,
+      usernameErr: '',
+      passwordErr: '',
+      emailErr: '',
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   getUser(token) {
@@ -62,57 +62,169 @@ export class ProfileView extends React.Component {
     window.open('/', '_self');
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  getFormattedDate(date) {
+    return `${date.substr(5, 2)}/${date.substr(8, 2)}/${date.substr(0, 4)}`;
+  }
 
-    const isReq = validate();
+  validateEmail(email) {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  }
+
+  handleFormChange(event) {
+    let fieldName = event.target.name;
+    let fieldVal = event.target.value;
+    this.setState({ ...this.state, [fieldName]: fieldVal });
+  }
+
+  validate() {
+    let isReq = true;
+    if (!this.state.username) {
+      this.setUsernameErr = 'Username Required';
+      isReq = false;
+    } else if (this.state.username.length < 2) {
+      this.setUsernameErr = 'Username must be more than 2 characters';
+      isReq = false;
+    }
+    if (this.state.password && this.state.password.length < 6) {
+      this.setPasswordErr = 'Password must be at least 6 characters';
+      isReq = false;
+    }
+    if (this.state.email && !this.validateEmail(this.state.email)) {
+      this.setEmailErr = 'Must use a valid Email Address';
+      isReq = false;
+    }
+
+    return isReq;
+  }
+
+  setUsername(value) {
+    this.setState({
+      username: value,
+    });
+  }
+
+  setPassword(value) {
+    this.setState({
+      password: value,
+    });
+  }
+
+  setEmail(value) {
+    this.setState({
+      email: value,
+    });
+  }
+
+  setBirthday(value) {
+    this.setState({
+      birthday: value,
+    });
+  }
+
+  handleSubmit = (e) => {
+    console.log('submitted');
+    e.preventDefault();
+    const userName = localStorage.getItem('user');
+    let token = localStorage.getItem('token');
+    const isReq = this.validate();
+    console.log(isReq);
     if (isReq) {
+      console.log(
+        this.state.username,
+        this.state.password,
+        this.state.email,
+        this.state.birthday
+      );
       axios
-        .post('https://whatdoiwatch.herokuapp.com/users', {
-          Username: username,
-          Password: password,
-          Email: email,
-          Birthday: birthday,
-        })
+        .put(
+          `https://whatdoiwatch.herokuapp.com/users/${userName}`,
+          {
+            Username: this.state.username,
+            Password: this.state.password,
+            Email: this.state.email,
+            Birthday: this.state.birthday,
+          },
+
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
         .then((response) => {
-          const date = response.data;
-          alert('Success! - please log in');
-          window.open('/', '_self');
-        })
-        .catch((error) => {
-          console.log(error);
-          alert('unable to register');
+          this.setState({
+            username: response.data.username,
+            password: response.data.password,
+            email: response.data.email,
+            birthday: response.data.birthday,
+          });
+          localStorage.setItem('user', this.state.username);
+          alert('profile updated successfully!');
+          window.open('/profile', '_self');
         });
     }
-  }
+  };
 
   render() {
     const { movies, onBackClick } = this.props;
-    const { favoriteMovies, username, password, email, birthday } = this.state;
+    const { favoriteMovies, username, email, birthday } = this.state;
 
     return (
-      <Form className="reg-form d-flex justify-content-md-center flex-column align-items-center">
+      <Form
+        className="reg-form d-flex justify-content-md-center flex-column align-items-center"
+        onSubmit={(e) =>
+          this.handleSubmit(
+            e,
+            this.Username,
+            this.Password,
+            this.Email,
+            this.Birthday
+          )
+        }
+      >
         <div className="register-title">
           <h1>View and Update Your Account</h1>
         </div>
         <Form.Group controlId="regUsername">
-          <Form.Label>Username:</Form.Label>
-          <Form.Control type="text" value={username} />
+          <Form.Label>Username: ({username})</Form.Label>
+          <Form.Control
+            type="text"
+            name="Username"
+            onChange={(e) => this.setUsername(e.target.value)}
+          />
+          {this.usernameErr && <p>{this.usernameErr}</p>}
         </Form.Group>
         <Form.Group controlId="regPassword">
           <Form.Label>Password:</Form.Label>
-          <Form.Control type="password" />
+          <Form.Control
+            type="password"
+            name="Password"
+            onChange={(e) => this.setPassword(e.target.value)}
+          />
+          {this.passwordErr && <p>{this.passwordErr}</p>}
         </Form.Group>
         <Form.Group controlId="regEmail">
-          <Form.Label>Email:</Form.Label>
-          <Form.Control type="email" value={email} />
+          <Form.Label>Email: ({email})</Form.Label>
+          <Form.Control
+            type="email"
+            name="Email"
+            onChange={(e) => this.setEmail(e.target.value)}
+          />
+          {this.emailErr && <p>{this.emailErr}</p>}
         </Form.Group>
         <Form.Group controlId="regBirthday">
-          <Form.Label>Birthday:</Form.Label>
-          <Form.Control type="date" value={birthday} />
+          <Form.Label>Birthday: ({this.getFormattedDate(birthday)})</Form.Label>
+          <Form.Control
+            type="date"
+            name="Birthday"
+            onChange={(e) => this.setBirthday(e.target.value)}
+          />
         </Form.Group>
-        <Button className="register-button" variant="danger" type="submit">
-          Submit
+        <Button
+          className="register-button"
+          variant="danger"
+          type="submit"
+          onClick={this.handleSubmit}
+        >
+          Submit Changes
         </Button>
       </Form>
     );
