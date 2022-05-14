@@ -27,7 +27,11 @@ export class ProfileView extends React.Component {
       usernameErr: '',
       passwordErr: '',
       emailErr: '',
+      existingBirthday: '',
+      existingEmail: '',
+      existingUsername: '',
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -43,6 +47,9 @@ export class ProfileView extends React.Component {
           email: response.data.Email,
           birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies,
+          existingEmail: response.data.Email,
+          existingBirthday: response.data.Birthday,
+          existingUsername: response.data.Username,
         });
       })
       .catch((e) => console.log(e));
@@ -84,15 +91,15 @@ export class ProfileView extends React.Component {
       this.setUsernameErr = 'Username Required';
       isReq = false;
     } else if (this.state.username.length < 2) {
-      this.setUsernameErr = 'Username must be more than 2 characters';
+      this.setErr('setUsernameErr', 'Username must be more than 2 characters');
       isReq = false;
     }
     if (this.state.password && this.state.password.length < 6) {
-      this.setPasswordErr = 'Password must be at least 6 characters';
+      this.setErr('setPasswordErr', 'Password must be at least 6 characters');
       isReq = false;
     }
     if (this.state.email && !this.validateEmail(this.state.email)) {
-      this.setEmailErr = 'Must use a valid Email Address';
+      this.setErr('setEmailErr', ' Must use a valid Email Address');
       isReq = false;
     }
 
@@ -123,6 +130,10 @@ export class ProfileView extends React.Component {
     });
   }
 
+  setErr(typeErr, value) {
+    this.setState({ [typeErr]: value });
+  }
+
   handleSubmit = (e) => {
     console.log('submitted');
     e.preventDefault();
@@ -131,12 +142,6 @@ export class ProfileView extends React.Component {
     const isReq = this.validate();
     console.log(isReq);
     if (isReq) {
-      console.log(
-        this.state.username,
-        this.state.password,
-        this.state.email,
-        this.state.birthday
-      );
       axios
         .put(
           `https://whatdoiwatch.herokuapp.com/users/${userName}`,
@@ -150,22 +155,31 @@ export class ProfileView extends React.Component {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((response) => {
+          console.log(response);
           this.setState({
-            username: response.data.username,
-            password: response.data.password,
-            email: response.data.email,
-            birthday: response.data.birthday,
+            username: response.data.Username,
+            password: response.data.Password,
+            email: response.data.Email,
+            birthday: response.data.Birthday,
           });
           localStorage.setItem('user', this.state.username);
           alert('profile updated successfully!');
-          window.open('/profile', '_self');
+          window.open(`/users/${this.state.username}`, '_self');
         });
     }
   };
 
   render() {
     const { movies, onBackClick } = this.props;
-    const { favoriteMovies, username, email, birthday } = this.state;
+    const {
+      favoriteMovies,
+      username,
+      email,
+      birthday,
+      existingBirthday,
+      existingUsername,
+      existingEmail,
+    } = this.state;
 
     return (
       <Form
@@ -184,7 +198,7 @@ export class ProfileView extends React.Component {
           <h1>View and Update Your Account</h1>
         </div>
         <Form.Group controlId="regUsername">
-          <Form.Label>Username: ({username})</Form.Label>
+          <Form.Label>Username: ({existingUsername})</Form.Label>
           <Form.Control
             type="text"
             name="Username"
@@ -202,7 +216,7 @@ export class ProfileView extends React.Component {
           {this.passwordErr && <p>{this.passwordErr}</p>}
         </Form.Group>
         <Form.Group controlId="regEmail">
-          <Form.Label>Email: ({email})</Form.Label>
+          <Form.Label>Email: ({existingEmail})</Form.Label>
           <Form.Control
             type="email"
             name="Email"
@@ -211,7 +225,9 @@ export class ProfileView extends React.Component {
           {this.emailErr && <p>{this.emailErr}</p>}
         </Form.Group>
         <Form.Group controlId="regBirthday">
-          <Form.Label>Birthday: ({this.getFormattedDate(birthday)})</Form.Label>
+          <Form.Label>
+            Birthday: ({this.getFormattedDate(existingBirthday)})
+          </Form.Label>
           <Form.Control
             type="date"
             name="Birthday"

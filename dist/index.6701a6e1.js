@@ -45206,7 +45206,10 @@ class ProfileView extends _reactDefault.default.Component {
             favoriteMovies: [],
             usernameErr: '',
             passwordErr: '',
-            emailErr: ''
+            emailErr: '',
+            existingBirthday: '',
+            existingEmail: '',
+            existingUsername: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -45221,7 +45224,10 @@ class ProfileView extends _reactDefault.default.Component {
                 username: response.data.Username,
                 email: response.data.Email,
                 birthday: response.data.Birthday,
-                favoriteMovies: response.data.FavoriteMovies
+                favoriteMovies: response.data.FavoriteMovies,
+                existingEmail: response.data.Email,
+                existingBirthday: response.data.Birthday,
+                existingUsername: response.data.Username
             });
         }).catch((e)=>console.log(e)
         );
@@ -45258,15 +45264,15 @@ class ProfileView extends _reactDefault.default.Component {
             this.setUsernameErr = 'Username Required';
             isReq = false;
         } else if (this.state.username.length < 2) {
-            this.setUsernameErr = 'Username must be more than 2 characters';
+            this.setErr('setUsernameErr', 'Username must be more than 2 characters');
             isReq = false;
         }
         if (this.state.password && this.state.password.length < 6) {
-            this.setPasswordErr = 'Password must be at least 6 characters';
+            this.setErr('setPasswordErr', 'Password must be at least 6 characters');
             isReq = false;
         }
         if (this.state.email && !this.validateEmail(this.state.email)) {
-            this.setEmailErr = 'Must use a valid Email Address';
+            this.setErr('setEmailErr', ' Must use a valid Email Address');
             isReq = false;
         }
         return isReq;
@@ -45291,6 +45297,11 @@ class ProfileView extends _reactDefault.default.Component {
             birthday: value
         });
     }
+    setErr(typeErr, value) {
+        this.setState({
+            [typeErr]: value
+        });
+    }
     handleSubmit = (e)=>{
         console.log('submitted');
         e.preventDefault();
@@ -45298,40 +45309,38 @@ class ProfileView extends _reactDefault.default.Component {
         let token = localStorage.getItem('token');
         const isReq = this.validate();
         console.log(isReq);
-        if (isReq) {
-            console.log(this.state.username, this.state.password, this.state.email, this.state.birthday);
-            _axiosDefault.default.put(`https://whatdoiwatch.herokuapp.com/users/${userName}`, {
-                Username: this.state.username,
-                Password: this.state.password,
-                Email: this.state.email,
-                Birthday: this.state.birthday
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then((response)=>{
-                this.setState({
-                    username: response.data.username,
-                    password: response.data.password,
-                    email: response.data.email,
-                    birthday: response.data.birthday
-                });
-                localStorage.setItem('user', this.state.username);
-                alert('profile updated successfully!');
-                window.open('/profile', '_self');
+        if (isReq) _axiosDefault.default.put(`https://whatdoiwatch.herokuapp.com/users/${userName}`, {
+            Username: this.state.username,
+            Password: this.state.password,
+            Email: this.state.email,
+            Birthday: this.state.birthday
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            console.log(response);
+            this.setState({
+                username: response.data.Username,
+                password: response.data.Password,
+                email: response.data.Email,
+                birthday: response.data.Birthday
             });
-        }
+            localStorage.setItem('user', this.state.username);
+            alert('profile updated successfully!');
+            window.open(`/users/${this.state.username}`, '_self');
+        });
     };
     render() {
         const { movies , onBackClick  } = this.props;
-        const { favoriteMovies , username , email , birthday  } = this.state;
+        const { favoriteMovies , username , email , birthday , existingBirthday , existingUsername , existingEmail ,  } = this.state;
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form, {
             className: "reg-form d-flex justify-content-md-center flex-column align-items-center",
             onSubmit: (e)=>this.handleSubmit(e, this.Username, this.Password, this.Email, this.Birthday)
             ,
             __source: {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 171
+                lineNumber: 185
             },
             __self: this,
             children: [
@@ -45339,13 +45348,13 @@ class ProfileView extends _reactDefault.default.Component {
                     className: "register-title",
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 183
+                        lineNumber: 197
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("h1", {
                         __source: {
                             fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 184
+                            lineNumber: 198
                         },
                         __self: this,
                         children: "View and Update Your Account"
@@ -45355,19 +45364,19 @@ class ProfileView extends _reactDefault.default.Component {
                     controlId: "regUsername",
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 186
+                        lineNumber: 200
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Label, {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 187
+                                lineNumber: 201
                             },
                             __self: this,
                             children: [
                                 "Username: (",
-                                username,
+                                existingUsername,
                                 ")"
                             ]
                         }),
@@ -45378,14 +45387,14 @@ class ProfileView extends _reactDefault.default.Component {
                             ,
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 188
+                                lineNumber: 202
                             },
                             __self: this
                         }),
                         this.usernameErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 193
+                                lineNumber: 207
                             },
                             __self: this,
                             children: this.usernameErr
@@ -45396,14 +45405,14 @@ class ProfileView extends _reactDefault.default.Component {
                     controlId: "regPassword",
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 195
+                        lineNumber: 209
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 196
+                                lineNumber: 210
                             },
                             __self: this,
                             children: "Password:"
@@ -45415,14 +45424,14 @@ class ProfileView extends _reactDefault.default.Component {
                             ,
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 197
+                                lineNumber: 211
                             },
                             __self: this
                         }),
                         this.passwordErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 202
+                                lineNumber: 216
                             },
                             __self: this,
                             children: this.passwordErr
@@ -45433,19 +45442,19 @@ class ProfileView extends _reactDefault.default.Component {
                     controlId: "regEmail",
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 204
+                        lineNumber: 218
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Label, {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 205
+                                lineNumber: 219
                             },
                             __self: this,
                             children: [
                                 "Email: (",
-                                email,
+                                existingEmail,
                                 ")"
                             ]
                         }),
@@ -45456,14 +45465,14 @@ class ProfileView extends _reactDefault.default.Component {
                             ,
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 206
+                                lineNumber: 220
                             },
                             __self: this
                         }),
                         this.emailErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 211
+                                lineNumber: 225
                             },
                             __self: this,
                             children: this.emailErr
@@ -45474,19 +45483,19 @@ class ProfileView extends _reactDefault.default.Component {
                     controlId: "regBirthday",
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 213
+                        lineNumber: 227
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Label, {
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 214
+                                lineNumber: 228
                             },
                             __self: this,
                             children: [
                                 "Birthday: (",
-                                this.getFormattedDate(birthday),
+                                this.getFormattedDate(existingBirthday),
                                 ")"
                             ]
                         }),
@@ -45497,7 +45506,7 @@ class ProfileView extends _reactDefault.default.Component {
                             ,
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 215
+                                lineNumber: 231
                             },
                             __self: this
                         })
@@ -45510,7 +45519,7 @@ class ProfileView extends _reactDefault.default.Component {
                     onClick: this.handleSubmit,
                     __source: {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 221
+                        lineNumber: 237
                     },
                     __self: this,
                     children: "Submit Changes"
