@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
+import './profile-view.scss';
+
 import {
   Card,
   Form,
@@ -27,9 +29,7 @@ export class ProfileView extends React.Component {
       usernameErr: '',
       passwordErr: '',
       emailErr: '',
-      existingBirthday: '',
-      existingEmail: '',
-      existingUsername: '',
+      editAccount: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,9 +47,6 @@ export class ProfileView extends React.Component {
           email: response.data.Email,
           birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies,
-          existingEmail: response.data.Email,
-          existingBirthday: response.data.Birthday,
-          existingUsername: response.data.Username,
         });
       })
       .catch((e) => console.log(e));
@@ -79,11 +76,11 @@ export class ProfileView extends React.Component {
     );
   }
 
-  handleFormChange(event) {
-    let fieldName = event.target.name;
-    let fieldVal = event.target.value;
-    this.setState({ ...this.state, [fieldName]: fieldVal });
-  }
+  // handleFormChange(event) {
+  //   let fieldName = event.target.name;
+  //   let fieldVal = event.target.value;
+  //   this.setState({ ...this.state, [fieldName]: fieldVal });
+  // }
 
   validate() {
     let isReq = true;
@@ -131,8 +128,21 @@ export class ProfileView extends React.Component {
   }
 
   setErr(typeErr, value) {
-    this.setState({ [typeErr]: value });
+    this.setState({ ...this.state, [typeErr]: value });
   }
+
+  handleEdit = () => {
+    console.log(this.state.editAccount);
+    if (this.state.editAccount) {
+      this.setState({
+        editAccount: false,
+      });
+    } else {
+      this.setState({
+        editAccount: true,
+      });
+    }
+  };
 
   handleSubmit = (e) => {
     console.log('submitted');
@@ -155,7 +165,6 @@ export class ProfileView extends React.Component {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((response) => {
-          console.log(response);
           this.setState({
             username: response.data.Username,
             password: response.data.Password,
@@ -171,78 +180,97 @@ export class ProfileView extends React.Component {
 
   render() {
     const { movies, onBackClick } = this.props;
-    const {
-      favoriteMovies,
-      username,
-      email,
-      birthday,
-      existingBirthday,
-      existingUsername,
-      existingEmail,
-    } = this.state;
+    const { favoriteMovies, username, email, birthday, editAccount } =
+      this.state;
 
     return (
-      <Form
-        className="reg-form d-flex justify-content-md-center flex-column align-items-center"
-        onSubmit={(e) =>
-          this.handleSubmit(
-            e,
-            this.Username,
-            this.Password,
-            this.Email,
-            this.Birthday
-          )
-        }
-      >
-        <div className="register-title">
-          <h1>View and Update Your Account</h1>
+      <div className="profile-wrapper">
+        <div className="movie-view tp-movie">
+          <div className="user-info">
+            <h4>User Information</h4>
+            <p>Username: {username}</p>
+            <p>Email: {email}</p>
+            <p>Birthday: {this.getFormattedDate(birthday)}</p>
+            <Button
+              className="update-info-button"
+              variant="primary"
+              type="submit"
+              onClick={this.handleEdit}
+            >
+              {this.state.editAccount ? 'Close' : 'Edit Account'}
+            </Button>
+            <Button
+              className="delete-account-button"
+              variant="danger"
+              type="submit"
+              onClick={this.handleEdit}
+            >
+              Delete Account
+            </Button>
+          </div>
+          {this.state.editAccount && (
+            <Form
+              className="d-flex justify-content-md-center flex-column align-items-center"
+              onSubmit={(e) =>
+                this.handleSubmit(
+                  e,
+                  this.Username,
+                  this.Password,
+                  this.Email,
+                  this.Birthday
+                )
+              }
+            >
+              <div className="register-title">
+                <h1>Update Your Account</h1>
+              </div>
+              <Form.Group controlId="regUsername">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="Username"
+                  onChange={(e) => this.setUsername(e.target.value)}
+                />
+                {this.usernameErr && <p>{this.usernameErr}</p>}
+              </Form.Group>
+              <Form.Group controlId="regPassword">
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="Password"
+                  onChange={(e) => this.setPassword(e.target.value)}
+                />
+                {this.passwordErr && <p>{this.passwordErr}</p>}
+              </Form.Group>
+              <Form.Group controlId="regEmail">
+                <Form.Label>Email:</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="Email"
+                  onChange={(e) => this.setEmail(e.target.value)}
+                />
+                {this.emailErr && <p>{this.emailErr}</p>}
+              </Form.Group>
+              <Form.Group controlId="regBirthday">
+                <Form.Label>Birthday:</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="Birthday"
+                  onChange={(e) => this.setBirthday(e.target.value)}
+                />
+              </Form.Group>
+              <Button
+                className="register-button"
+                variant="danger"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Submit Changes
+              </Button>
+            </Form>
+          )}
         </div>
-        <Form.Group controlId="regUsername">
-          <Form.Label>Username: ({existingUsername})</Form.Label>
-          <Form.Control
-            type="text"
-            name="Username"
-            onChange={(e) => this.setUsername(e.target.value)}
-          />
-          {this.usernameErr && <p>{this.usernameErr}</p>}
-        </Form.Group>
-        <Form.Group controlId="regPassword">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-            type="password"
-            name="Password"
-            onChange={(e) => this.setPassword(e.target.value)}
-          />
-          {this.passwordErr && <p>{this.passwordErr}</p>}
-        </Form.Group>
-        <Form.Group controlId="regEmail">
-          <Form.Label>Email: ({existingEmail})</Form.Label>
-          <Form.Control
-            type="email"
-            name="Email"
-            onChange={(e) => this.setEmail(e.target.value)}
-          />
-          {this.emailErr && <p>{this.emailErr}</p>}
-        </Form.Group>
-        <Form.Group controlId="regBirthday">
-          <Form.Label>
-            Birthday: ({this.getFormattedDate(existingBirthday)})
-          </Form.Label>
-          <Form.Control
-            type="date"
-            name="Birthday"
-            onChange={(e) => this.setBirthday(e.target.value)}
-          />
-        </Form.Group>
-        <Button
-          className="register-button"
-          variant="danger"
-          type="submit"
-          onClick={this.handleSubmit}
-        >
-          Submit Changes
-        </Button>
-      </Form>
+      </div>
     );
   }
 }

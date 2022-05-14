@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 
 import { Link } from 'react-router-dom';
 
+import '../../index.scss';
 import './login-view.scss';
 
 //login for user - taking username and password
@@ -86,11 +87,11 @@ export function LoginView(props) {
         {passwordErr && <p>{passwordErr}</p>}
       </Form.Group>
       <Row className="buttons flex-column">
-        <Button variant="danger" type="submit" onClick={handleSubmit}>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
         <Link className="reg-button" to={`/register`}>
-          <Button variant="danger">Register</Button>
+          <Button variant="primary">Register</Button>
         </Link>
       </Row>
     </Form>

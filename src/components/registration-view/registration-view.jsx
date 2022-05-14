@@ -107,7 +107,7 @@ export function RegistrationView(props) {
       </Form.Group>
       <Button
         className="register-button"
-        variant="danger"
+        variant="primary"
         type="submit"
         onClick={handleSubmit}
       >
