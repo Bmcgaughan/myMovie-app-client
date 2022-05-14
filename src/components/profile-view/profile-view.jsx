@@ -26,6 +26,7 @@ export class ProfileView extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  //asking database for pofile information
   getUser(token) {
     let user = localStorage.getItem('user');
     axios
@@ -48,6 +49,7 @@ export class ProfileView extends React.Component {
     this.getUser(accessToken);
   }
 
+  //logging user out
   onLoggedOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -57,16 +59,19 @@ export class ProfileView extends React.Component {
     window.open('/', '_self');
   }
 
+  //formatting date to MM/DD/YYY for display on form
   getFormattedDate(date) {
     return `${date.substr(5, 2)}/${date.substr(8, 2)}/${date.substr(0, 4)}`;
   }
 
+  //identifting if email address is valid before updating
   validateEmail(email) {
     return email.match(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
   }
 
+  //validating new user account info to clean up inputes
   validate() {
     let isReq = true;
     if (!this.state.username) {
@@ -88,6 +93,8 @@ export class ProfileView extends React.Component {
     return isReq;
   }
 
+  //takes users favorite movie ids and find them in the full set of movies
+  //for display
   listFavorites = (movies) => {
     let userFavorites = movies.filter((m) =>
       this.state.favoriteMovies.includes(m._id)
@@ -100,6 +107,7 @@ export class ProfileView extends React.Component {
     return favoriteCards;
   };
 
+  //methods for updating user info state during editing
   setUsername(value) {
     this.setState({
       username: value,
@@ -124,10 +132,14 @@ export class ProfileView extends React.Component {
     });
   }
 
+  //end user state updates
+
+  //trying to set validation errors
   setErr(typeErr, value) {
     this.setState({ ...this.state, [typeErr]: value });
   }
 
+  //allowing user to toggle editing their user account info
   handleEdit = () => {
     console.log(this.state.editAccount);
     if (this.state.editAccount) {
@@ -141,6 +153,7 @@ export class ProfileView extends React.Component {
     }
   };
 
+  //posting user updates to database
   handleSubmit = (e) => {
     console.log('submitted');
     e.preventDefault();
@@ -175,6 +188,7 @@ export class ProfileView extends React.Component {
     }
   };
 
+  //sending a delete request for user
   handleDeleteProfile() {
     const userName = localStorage.getItem('user');
     const token = localStorage.getItem('token');
@@ -215,6 +229,7 @@ export class ProfileView extends React.Component {
                   type="submit"
                   onClick={this.handleEdit}
                 >
+                  {/* toggling button to show edit form and close it on clicking */}
                   {this.state.editAccount ? 'Close' : 'Edit Account'}
                 </Button>
               </Col>
@@ -230,6 +245,7 @@ export class ProfileView extends React.Component {
               </Col>
             </Row>
           </div>
+          {/* will show the user information update form once the edit is clicked */}
           {this.state.editAccount && (
             <Form
               className="d-flex justify-content-md-center flex-column align-items-center"
@@ -292,6 +308,7 @@ export class ProfileView extends React.Component {
             </Form>
           )}
         </div>
+        {/* Showing list of favorite movies */}
         <div className="movie-view bt-movie">
           <div>{this.state.username}'s Favorite Movies:</div>
           <Row>{this.listFavorites(movies)}</Row>

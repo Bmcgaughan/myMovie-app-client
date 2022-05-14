@@ -12,6 +12,7 @@ export class GenreView extends React.Component {
   render() {
     const { genre, onBackClick, genreMovies } = this.props;
 
+    //generator for movies of the same genre - finds them in the full list of movies
     let genreCards = genreMovies.map((m) => (
       <Col md={4} key={m._id}>
         <MovieCard movie={m} />

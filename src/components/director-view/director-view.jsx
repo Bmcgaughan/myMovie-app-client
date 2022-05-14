@@ -12,6 +12,7 @@ export class DirectorView extends React.Component {
   render() {
     const { director, onBackClick, directorMovies } = this.props;
 
+    //generator for movies by the same director. 
     let directorCards = directorMovies.map((m) => (
       <Col md={4} key={m._id}>
         <MovieCard movie={m} />
