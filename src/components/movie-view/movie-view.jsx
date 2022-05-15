@@ -16,7 +16,7 @@ export class MovieView extends React.Component {
     return (
       <div className="movie-view">
         <div className="movie-poster d-flex justify-content-center">
-          <img src={movie.ImagePath} />
+          <img src={movie.ImagePath} crossorigin="anonymous" />
         </div>
         <div className="movie-title mov-section">
           <span className="label">Title: </span>
@@ -36,8 +36,8 @@ export class MovieView extends React.Component {
           <span className="label">Genre: </span>
           <span className="value">{movie.Genre.Name}</span>
         </div>
-        <Row className='d-flex text-center'>
-          <Col md={6} >
+        <Row className="d-flex text-center">
+          <Col md={6}>
             <Link
               to={`/directors/${movie.Director.Name}`}
               className="movie-opt"

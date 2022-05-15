@@ -11162,6 +11162,7 @@ class MovieView extends _reactDefault.default.Component {
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
                         src: movie.ImagePath,
+                        crossorigin: "anonymous",
                         __source: {
                             fileName: "src/components/movie-view/movie-view.jsx",
                             lineNumber: 19
@@ -45830,10 +45831,19 @@ function Menubar({ user  }) {
                     __self: this,
                     children: [
                         isAuth() && /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
-                            href: `/users/${user}`,
+                            href: `/`,
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
                                 lineNumber: 36
+                            },
+                            __self: this,
+                            children: "Full List"
+                        }),
+                        isAuth() && /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
+                            href: `/users/${user}`,
+                            __source: {
+                                fileName: "src/components/navbar-view/navbar.jsx",
+                                lineNumber: 38
                             },
                             __self: this,
                             children: "Profile"
@@ -45845,7 +45855,7 @@ function Menubar({ user  }) {
                             },
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 38
+                                lineNumber: 40
                             },
                             __self: this,
                             children: "Log Out"
@@ -45854,7 +45864,7 @@ function Menubar({ user  }) {
                             href: "/",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 47
+                                lineNumber: 49
                             },
                             __self: this,
                             children: "Sign In"
@@ -45863,7 +45873,7 @@ function Menubar({ user  }) {
                             href: "/register",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 48
+                                lineNumber: 50
                             },
                             __self: this,
                             children: "Register"
