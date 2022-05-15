@@ -15,33 +15,16 @@ import './movie-card.scss';
 
 //Basic display of movies that are rendered on MainView
 export class MovieCard extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      movieId: '',
       favoriteMovies: [],
+      favorited: '',
     };
   }
 
-  changeFavorites(mid, action) {}
-
-  //getting users favorite movies to populate icons
-  getFavorites(token) {
-    let user = localStorage.getItem('user');
-    axios
-      .get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        this.setState({
-          favoriteMovies: response.data.FavoriteMovies,
-        });
-      })
-      .catch((e) => console.log(e));
-  }
-
-  //adding movie to users favorite list
   addFavMovie(mid) {
-    console.log(mid);
     const userName = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -53,16 +36,16 @@ export class MovieCard extends React.Component {
       )
       .then((response) => {
         console.log(response);
+        this.setState({
+          favoriteMovies: response.data.FavoriteMovies,
+        });
       })
       .catch((e) => {
         console.log(e);
       });
-
-    this.state.favoriteMovies.push(mid);
   }
 
   removeFavMovie(mid) {
-    console.log(mid);
     const userName = localStorage.getItem('user');
     const token = localStorage.getItem('token');
 
@@ -74,52 +57,68 @@ export class MovieCard extends React.Component {
       )
       .then((response) => {
         console.log(response);
+        this.setState({
+          favoriteMovies: response.data.FavoriteMovies,
+        });
       })
       .catch((e) => {
         console.log(e);
       });
+  }
 
-    const index = this.state.favoriteMovies.indexOf(mid);
-    if (index !== -1) {
-      this.state.favoriteMovies.splice(index, 1);
+  favMovieClick(e) {
+    e.preventDefault();
+    console.log(this.props.accessFavorites(this.state.movieId));
+    if (this.state.favorited) {
+      this.setState({
+        favorited: false,
+      });
+      this.removeFavMovie(this.state.movieId);
+    } else {
+      this.setState({
+        favorited: true,
+      });
+      this.addFavMovie(this.state.movieId);
     }
   }
 
-  favMovieHandle(mid) {
-    if (this.state.favoriteMovies.includes(mid)) {
-      return (
-        <a href="#" onClick={() => this.removeFavMovie(mid)}>
-          <img src={heartFull} className="fav-icon" alt="cam" />
-        </a>
-      );
+  favMovieHandle(fav) {
+    if (fav) {
+      return heartFull;
     } else {
-      return (
-        <a href="#" onClick={() => this.addFavMovie(mid)}>
-          <img src={heartEmpty} className="fav-icon" alt="cam" />
-        </a>
-      );
+      return heartEmpty;
     }
   }
 
   componentDidMount() {
     const accessToken = localStorage.getItem('token');
-    this.getFavorites(accessToken);
+    this.setState({
+      favorited: this.props.isFavorite,
+      movieId: this.props.movie._id,
+      favoriteMovies: this.props.favorites,
+    });
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, isFavorite, favorites } = this.props;
     return (
       <Card className="h-100 mcard">
         <div className="poster-wrapper">
           <Card.Img
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
             variant="top"
             src={movie.ImagePath}
             className="poster-img"
           />
         </div>
 
-        {this.favMovieHandle(movie._id)}
+        <a href="#" onClick={(e) => this.favMovieClick(e)}>
+          <img
+            src={this.favMovieHandle(this.state.favorited)}
+            className="fav-icon"
+            alt="cam"
+          />
+        </a>
 
         <Card.Body className="d-flex flex-column">
           <Card.Title>{movie.Title}</Card.Title>

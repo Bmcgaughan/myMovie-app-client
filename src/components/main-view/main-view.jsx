@@ -27,7 +27,7 @@ export class MainView extends React.Component {
       movies: [],
       registered: null,
       user: null,
-      favorites: [],
+      favorites: null,
     };
   }
 
@@ -38,6 +38,7 @@ export class MainView extends React.Component {
         user: localStorage.getItem('user'),
       });
       this.getMovies(accessToken);
+      this.getFavorites(accessToken);
     }
   }
 
@@ -57,6 +58,22 @@ export class MainView extends React.Component {
       });
   }
 
+  //getting users favorite movies to populate icons
+  getFavorites(token) {
+    let user = localStorage.getItem('user');
+    axios
+      .get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response.data.FavoriteMovies);
+        this.setState({
+          favorites: response.data.FavoriteMovies,
+        });
+      })
+      .catch((e) => console.log(e));
+  }
+
   //sets the selected movie state with value that is provided
   setSelectedMovie(newSelectedMovie) {
     this.setState({
@@ -72,6 +89,7 @@ export class MainView extends React.Component {
     localStorage.setItem('token', userAuth.token),
       localStorage.setItem('user', userAuth.user.Username);
     this.getMovies(userAuth.token);
+    this.getFavorites(userAuth.token);
   }
 
   //placeholder to force the registration page
@@ -81,8 +99,16 @@ export class MainView extends React.Component {
     });
   }
 
+  accessFavorites(mid) {
+    if (this.state.favorites.length > 0 && this.state.favorites.includes(mid)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   render() {
-    const { movies, user } = this.state;
+    const { movies, user, favorites } = this.state;
 
     //if a movie is selected show the Movie View details
     return (
@@ -100,9 +126,17 @@ export class MainView extends React.Component {
                       <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                     </Col>
                   );
+                if (movies.length === 0) return <div className="main-view" />;
+                if (!favorites) return <div className="main-view" />;
+
                 return movies.map((m) => (
                   <Col md={3} key={m._id} className="mcard">
-                    <MovieCard movie={m} />
+                    <MovieCard
+                      movie={m}
+                      isFavorite={favorites.includes(m._id)}
+                      favorites={favorites}
+                      accessFavorites={(mid) => this.accessFavorites(mid)}
+                    />
                   </Col>
                 ));
               }}
