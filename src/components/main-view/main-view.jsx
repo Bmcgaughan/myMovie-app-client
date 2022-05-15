@@ -27,6 +27,7 @@ export class MainView extends React.Component {
       movies: [],
       registered: null,
       user: null,
+      favorites: [],
     };
   }
 
@@ -100,7 +101,7 @@ export class MainView extends React.Component {
                     </Col>
                   );
                 return movies.map((m) => (
-                  <Col md={3} key={m._id}>
+                  <Col md={3} key={m._id} className="mcard">
                     <MovieCard movie={m} />
                   </Col>
                 ));
