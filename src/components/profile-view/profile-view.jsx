@@ -95,13 +95,18 @@ export class ProfileView extends React.Component {
 
   //takes users favorite movie ids and find them in the full set of movies
   //for display
-  listFavorites = (movies) => {
+  listFavorites = (movies, favorites) => {
     let userFavorites = movies.filter((m) =>
       this.state.favoriteMovies.includes(m._id)
     );
     let favoriteCards = userFavorites.map((m) => (
       <Col md={4} key={m._id}>
-        <MovieCard movie={m} />
+        <MovieCard
+          movie={m}
+          favorites={favorites}
+          isFavorite={favorites.includes(m._id)}
+          updateFavorites={(mid) => this.props.updateFavorites(mid)}
+        />
       </Col>
     ));
     return favoriteCards;
@@ -209,9 +214,12 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { movies, onBackClick } = this.props;
+    const { movies, onBackClick, accessFavorites, updateFavorites } =
+      this.props;
     const { favoriteMovies, username, email, birthday, editAccount } =
       this.state;
+
+    const favorites = accessFavorites();
 
     return (
       <div className="profile-wrapper">
@@ -311,7 +319,7 @@ export class ProfileView extends React.Component {
         {/* Showing list of favorite movies */}
         <div className="movie-view bt-movie">
           <div>{this.state.username}'s Favorite Movies:</div>
-          <Row>{this.listFavorites(movies)}</Row>
+          <Row>{this.listFavorites(movies, favorites)}</Row>
         </div>
       </div>
     );

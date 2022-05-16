@@ -264,6 +264,8 @@ export class MainView extends React.Component {
                       history={history}
                       movies={movies}
                       user={user}
+                      accessFavorites={this.accessFavorites}
+                      updateFavorites={(mid) => this.updateFavorites(mid)}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>
