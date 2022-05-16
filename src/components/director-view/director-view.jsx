@@ -10,12 +10,25 @@ import './director-view.scss';
 
 export class DirectorView extends React.Component {
   render() {
-    const { director, onBackClick, directorMovies } = this.props;
+    const {
+      director,
+      onBackClick,
+      directorMovies,
+      accessFavorites,
+      updateFavorites,
+    } = this.props;
 
-    //generator for movies by the same director. 
+    const favorites = accessFavorites();
+
+    //generator for movies by the same director.
     let directorCards = directorMovies.map((m) => (
       <Col md={4} key={m._id}>
-        <MovieCard movie={m} />
+        <MovieCard
+          movie={m}
+          isFavorite={favorites.includes(m._id)}
+          favorites={favorites}
+          updateFavorites={(mid) => this.props.updateFavorites(mid)}
+        />
       </Col>
     ));
 

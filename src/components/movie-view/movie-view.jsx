@@ -16,7 +16,7 @@ export class MovieView extends React.Component {
     return (
       <div className="movie-view">
         <div className="movie-poster d-flex justify-content-center">
-          <img src={movie.ImagePath} crossorigin="anonymous" />
+          <img src={movie.ImagePath} crossOrigin="anonymous" />
         </div>
         <div className="movie-title mov-section">
           <span className="label">Title: </span>

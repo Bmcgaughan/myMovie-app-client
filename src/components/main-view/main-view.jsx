@@ -29,6 +29,7 @@ export class MainView extends React.Component {
       user: null,
       favorites: null,
     };
+    this.accessFavorites = this.accessFavorites.bind(this);
   }
 
   componentDidMount() {
@@ -81,6 +82,31 @@ export class MainView extends React.Component {
     });
   }
 
+  //allowing other component to reference favorite movies
+  accessFavorites() {
+    return this.state.favorites;
+  }
+
+  //allowing other components to update favorite movies list
+  updateFavorites(mid) {
+    let favArray = this.state.favorites;
+    if (!favArray) {
+      return;
+    }
+    if (favArray.includes(mid)) {
+      let index = favArray.indexOf(mid);
+      console.log(index);
+      favArray.splice(index, 1);
+      this.setState({
+        favorites: favArray,
+      });
+    } else {
+      this.setState({
+        favorites: [...this.state.favorites, mid],
+      });
+    }
+  }
+
   //when user is verified set state to current user
   onLoggedIn(userAuth) {
     this.setState({
@@ -97,14 +123,6 @@ export class MainView extends React.Component {
     this.setState({
       registered,
     });
-  }
-
-  accessFavorites(mid) {
-    if (this.state.favorites.length > 0 && this.state.favorites.includes(mid)) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   render() {
@@ -135,7 +153,7 @@ export class MainView extends React.Component {
                       movie={m}
                       isFavorite={favorites.includes(m._id)}
                       favorites={favorites}
-                      accessFavorites={(mid) => this.accessFavorites(mid)}
+                      updateFavorites={(mid) => this.updateFavorites(mid)}
                     />
                   </Col>
                 ));
@@ -189,9 +207,12 @@ export class MainView extends React.Component {
                           (m) => m.Director.Name === match.params.name
                         ).Director
                       }
+                      updateFavorites={(mid) => this.updateFavorites(mid)}
+                      favorites={favorites}
                       directorMovies={movies.filter((m) => {
                         return m.Director.Name === match.params.name;
                       })}
+                      accessFavorites={this.accessFavorites}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>
@@ -219,6 +240,8 @@ export class MainView extends React.Component {
                       genreMovies={movies.filter((m) => {
                         return m.Genre.Name === match.params.name;
                       })}
+                      accessFavorites={this.accessFavorites}
+                      updateFavorites={(mid) => this.updateFavorites(mid)}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>

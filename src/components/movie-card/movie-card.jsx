@@ -68,17 +68,18 @@ export class MovieCard extends React.Component {
 
   favMovieClick(e) {
     e.preventDefault();
-    console.log(this.props.accessFavorites(this.state.movieId));
     if (this.state.favorited) {
       this.setState({
         favorited: false,
       });
       this.removeFavMovie(this.state.movieId);
+      this.props.updateFavorites(this.state.movieId);
     } else {
       this.setState({
         favorited: true,
       });
       this.addFavMovie(this.state.movieId);
+      this.props.updateFavorites(this.state.movieId);
     }
   }
 
