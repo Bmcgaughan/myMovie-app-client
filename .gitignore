@@ -14,3 +14,4 @@ node_modules/*
 log.txt
 .cache
 .parcel-cache
+.proxyrc.js

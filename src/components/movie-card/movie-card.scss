@@ -4,7 +4,25 @@
   background-color: v.$primary-color;
 }
 
+.poster-wrapper {
+  position: relative;
+}
+
+.fav-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.mcard {
+  margin-bottom: 5px;
+}
 
 .mov-button {
   width: 100%;
+}
+
+.fav-icon {
+  height: 30px;
+  width: 30px;
 }

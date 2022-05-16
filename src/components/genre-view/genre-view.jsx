@@ -10,12 +10,25 @@ import './genre-view.scss';
 
 export class GenreView extends React.Component {
   render() {
-    const { genre, onBackClick, genreMovies } = this.props;
+    const {
+      genre,
+      onBackClick,
+      genreMovies,
+      accessFavorites,
+      updateFavorites,
+    } = this.props;
+
+    const favorites = accessFavorites();
 
     //generator for movies of the same genre - finds them in the full list of movies
     let genreCards = genreMovies.map((m) => (
       <Col md={4} key={m._id}>
-        <MovieCard movie={m} />
+        <MovieCard
+          movie={m}
+          isFavorite={favorites.includes(m._id)}
+          favorites={favorites}
+          updateFavorites={(mid) => this.props.updateFavorites(mid)}
+        />
       </Col>
     ));
 

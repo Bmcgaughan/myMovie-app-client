@@ -137,8 +137,27 @@ body {
   background-color: black;
 }
 
+.poster-wrapper {
+  position: relative;
+}
+
+.fav-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.mcard {
+  margin-bottom: 5px;
+}
+
 .mov-button {
   width: 100%;
+}
+
+.fav-icon {
+  height: 30px;
+  width: 30px;
 }
 html {
   min-height: 100vh;
