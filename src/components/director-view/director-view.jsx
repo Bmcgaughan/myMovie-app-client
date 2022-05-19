@@ -9,6 +9,12 @@ import Row from 'react-bootstrap/Row';
 import './director-view.scss';
 
 export class DirectorView extends React.Component {
+  //resetting window to top for component
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
+
   render() {
     const {
       director,

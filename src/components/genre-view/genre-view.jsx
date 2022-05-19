@@ -9,6 +9,11 @@ import Row from 'react-bootstrap/Row';
 import './genre-view.scss';
 
 export class GenreView extends React.Component {
+  //resetting window to top for component
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const {
       genre,

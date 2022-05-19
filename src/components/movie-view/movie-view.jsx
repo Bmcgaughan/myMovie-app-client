@@ -10,6 +10,11 @@ import './movie-view.scss';
 
 //showing details once MovieCard is clicked
 export class MovieView extends React.Component {
+  //resetting window to top for component
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const { movie, onBackClick } = this.props;
 
