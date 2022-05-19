@@ -12527,7 +12527,7 @@ function LoginView(props) {
                             lineNumber: 90
                         },
                         __self: this,
-                        children: "Submit"
+                        children: "Sign In"
                     }),
                     /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
                         className: "reg-button",

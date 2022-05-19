@@ -88,7 +88,7 @@ export function LoginView(props) {
       </Form.Group>
       <Row className="buttons flex-column">
         <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Submit
+          Sign In
         </Button>
         <Link className="reg-button" to={`/register`}>
           <Button variant="primary">Register</Button>
