@@ -9,14 +9,14 @@ a {
 }
 
 .navbar-nav a,
-button {
+.navbar-nav button {
   box-shadow: inset 0 0 0 0 v.$secondary-color;
   color: v.$secondary-color !important;
   transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .navbar-nav a:hover,
-button:hover {
+.navbar-nav button:hover {
   box-shadow: inset 100px 0 0 0 v.$secondary-color;
   color: white !important;
   border-radius: 5px;

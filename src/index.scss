@@ -30,6 +30,10 @@ body {
   }
 }
 
+.btn-danger {
+  color: white !important;
+}
+
 // BUTTON ANIMATIONS
 
 @mixin btn-border-drawing(
@@ -96,4 +100,8 @@ body {
 
 .btn-primary {
   @include btn-border-drawing($secondary-color, white, 2px, bottom, right);
+}
+
+.btn-danger {
+  @include btn-border-drawing(red, white, 2px, bottom, right);
 }
