@@ -2,14 +2,18 @@ import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
+//setting up redux and bringing in actions
+import { connect } from 'react-redux';
+import { setMovies, setFavorites, toggleFavorite } from '../../actions/actions';
+
+//bootstrap imports
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 //adding components to the main-view
-
 import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
+import MoviesList from '../movies-list/movies-list';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
@@ -19,15 +23,13 @@ import { Menubar } from '../navbar-view/navbar';
 import { Container } from 'react-bootstrap';
 
 //getting array of movies from remote and displaying as a list
-export class MainView extends React.Component {
+class MainView extends React.Component {
   constructor() {
     super();
     //initial state for main-view
     this.state = {
-      movies: [],
       registered: null,
       user: null,
-      favorites: null,
     };
     this.accessFavorites = this.accessFavorites.bind(this);
   }
@@ -50,9 +52,7 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.setState({
-          movies: response.data,
-        });
+        this.props.setMovies(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -61,16 +61,16 @@ export class MainView extends React.Component {
 
   //getting users favorite movies to populate icons
   getFavorites(token) {
+    //hold rendering movie-list until favorites are returned
+    this.props.setFavorites('');
     let user = localStorage.getItem('user');
     axios
       .get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response.data.FavoriteMovies);
-        this.setState({
-          favorites: response.data.FavoriteMovies,
-        });
+        this.props.setFavorites(response.data.FavoriteMovies);
+        this.props.toggleFavorite('6263daf56eb9e4aff4e588b3');
       })
       .catch((e) => console.log(e));
   }
@@ -126,7 +126,8 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, user, favorites } = this.state;
+    const { user } = this.state;
+    let { movies, favorites } = this.props;
 
     //if a movie is selected show the Movie View details
     return (
@@ -146,17 +147,7 @@ export class MainView extends React.Component {
                   );
                 if (movies.length === 0) return <div className="main-view" />;
                 if (!favorites) return <div className="main-view" />;
-
-                return movies.map((m) => (
-                  <Col md={3} key={m._id} className="mcard">
-                    <MovieCard
-                      movie={m}
-                      isFavorite={favorites.includes(m._id)}
-                      favorites={favorites}
-                      updateFavorites={(mid) => this.updateFavorites(mid)}
-                    />
-                  </Col>
-                ));
+                return <MoviesList movies={movies} favorites={favorites} />;
               }}
             />
 
@@ -278,3 +269,16 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    movies: state.movies,
+    favorites: state.favorites,
+  };
+};
+
+export default connect(mapStateToProps, {
+  setMovies,
+  setFavorites,
+  toggleFavorite,
+})(MainView);

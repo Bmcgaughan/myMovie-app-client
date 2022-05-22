@@ -7,10 +7,12 @@ import { Provider } from 'react-redux';
 
 import moviesApp from './reducers/reducers';
 
-import { MainView } from './components/main-view/main-view';
+import MainView from './components/main-view/main-view';
 import './index.scss';
 
-const store = createStore(moviesApp);
+import { devToolsEnhancer } from 'redux-devtools-extension';
+
+const store = createStore(moviesApp, devToolsEnhancer());
 
 class MyFlixApplication extends React.Component {
   render() {

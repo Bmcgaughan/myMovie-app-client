@@ -1,12 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import axios from 'axios';
 
-import PropTypes from 'prop-types';
+//connecting redux
+import { connect } from 'react-redux';
+
+//boostrap components
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import { Link } from 'react-router-dom';
+//favorite asset images
 import heartEmpty from '../../img/heart-empty.png';
 import heartFull from '../../img/heart-full.png';
 
@@ -149,3 +154,12 @@ MovieCard.propTypes = {
     }),
   }).isRequired,
 };
+
+let mapStateToProps = (state) => {
+  return {
+    movies: state.movies,
+    favorites: state.favorites,
+  };
+};
+
+export default connect(mapStateToProps)(MovieCard);
