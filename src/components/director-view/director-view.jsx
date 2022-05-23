@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MovieCard } from '../movie-card/movie-card';
+import MovieCard from '../movie-card/movie-card';
 
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -14,27 +14,14 @@ export class DirectorView extends React.Component {
     window.scrollTo(0, 0);
   }
 
-
   render() {
-    const {
-      director,
-      onBackClick,
-      directorMovies,
-      accessFavorites,
-      updateFavorites,
-    } = this.props;
-
-    const favorites = accessFavorites();
+    const { director, onBackClick, directorMovies, accessFavorites } =
+      this.props;
 
     //generator for movies by the same director.
     let directorCards = directorMovies.map((m) => (
       <Col md={4} key={m._id}>
-        <MovieCard
-          movie={m}
-          isFavorite={favorites.includes(m._id)}
-          favorites={favorites}
-          updateFavorites={(mid) => this.props.updateFavorites(mid)}
-        />
+        <MovieCard movie={m} />
       </Col>
     ));
 

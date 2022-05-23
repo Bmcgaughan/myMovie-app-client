@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-import { MovieCard } from '../movie-card/movie-card';
+import MovieCard from '../movie-card/movie-card';
 
 import axios from 'axios';
 
@@ -16,7 +17,6 @@ export class ProfileView extends React.Component {
       password: '',
       email: '',
       birthday: '',
-      favoriteMovies: [],
       usernameErr: '',
       passwordErr: '',
       emailErr: '',
@@ -102,23 +102,18 @@ export class ProfileView extends React.Component {
 
   //takes users favorite movie ids and find them in the full set of movies
   //for display
-  listFavorites = (movies, favorites) => {
-    let userFavorites = movies.filter((m) =>
-      this.state.favoriteMovies.includes(m._id)
-    );
-    let favoriteCards = userFavorites.map((m) => (
-      <Col md={4} key={m._id}>
-        <MovieCard
-          movie={m}
-          favorites={favorites}
-          isFavorite={favorites.includes(m._id)}
-          updateFavorites={(mid) => this.props.updateFavorites(mid)}
-        />
-      </Col>
-    ));
+  listFavorites = (favorites) => {
+    let favoriteCards = this.props.movies
+      .filter((m) => favorites.includes(m._id))
+      .map((m) => (
+        <Col md={4} key={m._id}>
+          <MovieCard movie={m} />
+        </Col>
+      ));
     return favoriteCards;
   };
 
+  //toggling delete state to display the modal to confim
   deleteConfirmSetState = () => {
     this.setState({
       deleteConfirm: !this.state.deleteConfirm,
@@ -258,20 +253,9 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { movies, onBackClick, accessFavorites, updateFavorites } =
-      this.props;
-    const {
-      favoriteMovies,
-      username,
-      email,
-      birthday,
-      editAccount,
-      usernameErr,
-      passwordErr,
-      emailErr,
-    } = this.state;
-
-    const favorites = accessFavorites();
+    const { movies, favorites } = this.props;
+    const { username, email, birthday, usernameErr, passwordErr, emailErr } =
+      this.state;
 
     return (
       <div className="profile-wrapper">
@@ -373,9 +357,18 @@ export class ProfileView extends React.Component {
         {/* Showing list of favorite movies */}
         <div className="movie-view bt-movie">
           <div>{this.state.username}'s Favorite Movies:</div>
-          <Row>{this.listFavorites(movies, favorites)}</Row>
+          <Row>{this.listFavorites(this.props.favorites)}</Row>
         </div>
       </div>
     );
   }
 }
+
+let mapStateToProps = (state) => {
+  return {
+    movies: state.movies,
+    favorites: state.favorites,
+  };
+};
+
+export default connect(mapStateToProps)(ProfileView);
