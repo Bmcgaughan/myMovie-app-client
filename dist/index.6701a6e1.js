@@ -12436,99 +12436,89 @@ class MovieCard extends _reactDefault.default.Component {
     }
     render() {
         const { movie , isFavorite , favorites  } = this.props;
-        return(/*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
-            className: "h-100 mcard",
+        return(/*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+            className: "card-link",
+            to: `/movies/${movie._id}`,
             __source: {
                 fileName: "src/components/movie-card/movie-card.jsx",
                 lineNumber: 96
             },
             __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                    className: "poster-wrapper",
-                    __source: {
-                        fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 97
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
-                        crossOrigin: "anonymous",
-                        variant: "top",
-                        src: movie.ImagePath,
-                        className: "poster-img",
+            children: /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
+                className: "h-100 mcard",
+                __source: {
+                    fileName: "src/components/movie-card/movie-card.jsx",
+                    lineNumber: 97
+                },
+                __self: this,
+                children: [
+                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                        className: "poster-wrapper",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
                             lineNumber: 98
                         },
-                        __self: this
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx("a", {
-                    href: "#",
-                    onClick: (e)=>this.favMovieClick(e)
-                    ,
-                    __source: {
-                        fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 106
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
-                        src: this.favMovieHandle(movie._id),
-                        className: "fav-icon",
-                        alt: "cam",
+                        __self: this,
+                        children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
+                            crossOrigin: "anonymous",
+                            variant: "top",
+                            src: movie.ImagePath,
+                            className: "poster-img",
+                            __source: {
+                                fileName: "src/components/movie-card/movie-card.jsx",
+                                lineNumber: 99
+                            },
+                            __self: this
+                        })
+                    }),
+                    /*#__PURE__*/ _jsxRuntime.jsx("a", {
+                        href: "#",
+                        onClick: (e)=>this.favMovieClick(e)
+                        ,
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
                             lineNumber: 107
                         },
-                        __self: this
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default.Body, {
-                    className: "d-flex flex-column",
-                    __source: {
-                        fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 114
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
+                        __self: this,
+                        children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
+                            src: this.favMovieHandle(movie._id),
+                            className: "fav-icon",
+                            alt: "cam",
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 115
+                                lineNumber: 108
                             },
-                            __self: this,
-                            children: movie.Title
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
-                            __source: {
-                                fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 116
-                            },
-                            __self: this,
-                            children: movie.Genre.Name
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
-                            className: "mt-auto mov-link",
-                            to: `/movies/${movie._id}`,
-                            __source: {
-                                fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 117
-                            },
-                            __self: this,
-                            children: /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                                className: "mov-button",
-                                variant: "secondary",
+                            __self: this
+                        })
+                    }),
+                    /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default.Body, {
+                        className: "d-flex flex-column",
+                        __source: {
+                            fileName: "src/components/movie-card/movie-card.jsx",
+                            lineNumber: 115
+                        },
+                        __self: this,
+                        children: [
+                            /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 118
+                                    lineNumber: 116
                                 },
                                 __self: this,
-                                children: "Open"
+                                children: movie.Title
+                            }),
+                            /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
+                                __source: {
+                                    fileName: "src/components/movie-card/movie-card.jsx",
+                                    lineNumber: 117
+                                },
+                                __self: this,
+                                children: movie.Genre.Name
                             })
-                        })
-                    ]
-                })
-            ]
+                        ]
+                    })
+                ]
+            })
         }));
     }
 }

@@ -516,12 +516,25 @@ body {
   transition-delay: 0s, 0.25s, 0s;
 }
 
+.card {
+  background: black;
+  color: white;
+}
+
+.card-link:hover {
+  opacity: 85%;
+}
+
 .app-container {
   background-color: black;
 }
 
 .poster-wrapper {
   position: relative;
+}
+
+.card-body {
+  padding: 0;
 }
 
 .card-img-top {

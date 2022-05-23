@@ -93,34 +93,36 @@ export class MovieCard extends React.Component {
   render() {
     const { movie, isFavorite, favorites } = this.props;
     return (
-      <Card className="h-100 mcard">
-        <div className="poster-wrapper">
-          <Card.Img
-            crossOrigin="anonymous"
-            variant="top"
-            src={movie.ImagePath}
-            className="poster-img"
-          />
-        </div>
+      <Link className="card-link" to={`/movies/${movie._id}`}>
+        <Card className="h-100 mcard">
+          <div className="poster-wrapper">
+            <Card.Img
+              crossOrigin="anonymous"
+              variant="top"
+              src={movie.ImagePath}
+              className="poster-img"
+            />
+          </div>
 
-        <a href="#" onClick={(e) => this.favMovieClick(e)}>
-          <img
-            src={this.favMovieHandle(movie._id)}
-            className="fav-icon"
-            alt="cam"
-          />
-        </a>
+          <a href="#" onClick={(e) => this.favMovieClick(e)}>
+            <img
+              src={this.favMovieHandle(movie._id)}
+              className="fav-icon"
+              alt="cam"
+            />
+          </a>
 
-        <Card.Body className="d-flex flex-column">
-          <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text>{movie.Genre.Name}</Card.Text>
-          <Link className="mt-auto mov-link" to={`/movies/${movie._id}`}>
-            <Button className="mov-button" variant="secondary">
-              Open
-            </Button>
-          </Link>
-        </Card.Body>
-      </Card>
+          <Card.Body className="d-flex flex-column">
+            <Card.Title>{movie.Title}</Card.Title>
+            <Card.Text>{movie.Genre.Name}</Card.Text>
+            {/* <Link className="mt-auto mov-link" to={`/movies/${movie._id}`}>
+              <Button className="mov-button" variant="secondary">
+                Details
+              </Button>
+            </Link> */}
+          </Card.Body>
+        </Card>
+      </Link>
     );
   }
 }

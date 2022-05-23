@@ -1,11 +1,24 @@
 @use '../../index.scss' as v;
 
+.card {
+  background: black;
+  color: white;
+}
+
+.card-link:hover {
+  opacity: 85%;
+}
+
 .app-container {
   background-color: v.$primary-color;
 }
 
 .poster-wrapper {
   position: relative;
+}
+
+.card-body {
+  padding: 0;
 }
 
 .card-img-top {
