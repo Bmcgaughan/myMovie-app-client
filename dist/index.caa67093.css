@@ -521,7 +521,8 @@ body {
   color: white;
 }
 
-.card-link:hover {
+.poster-img:hover,
+.card-body:hover {
   opacity: 85%;
 }
 
@@ -560,7 +561,10 @@ body {
   height: 30px;
   width: 30px;
 }
-
+.bt-movie {
+  background: black;
+  color: white;
+}
 .bt-movie {
   margin-top: 10px;
 }

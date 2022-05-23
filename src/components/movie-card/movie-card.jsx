@@ -104,7 +104,13 @@ export class MovieCard extends React.Component {
             />
           </div>
 
-          <a href="#" onClick={(e) => this.favMovieClick(e)}>
+          <a
+            href="#"
+            onClick={(e) => this.favMovieClick(e)}
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Add to Favorites"
+          >
             <img
               src={this.favMovieHandle(movie._id)}
               className="fav-icon"

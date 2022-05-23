@@ -12475,6 +12475,9 @@ class MovieCard extends _reactDefault.default.Component {
                         href: "#",
                         onClick: (e)=>this.favMovieClick(e)
                         ,
+                        "data-toggle": "tooltip",
+                        "data-placement": "top",
+                        title: "Add to Favorites",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
                             lineNumber: 107
@@ -12486,7 +12489,7 @@ class MovieCard extends _reactDefault.default.Component {
                             alt: "cam",
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 108
+                                lineNumber: 114
                             },
                             __self: this
                         })
@@ -12495,14 +12498,14 @@ class MovieCard extends _reactDefault.default.Component {
                         className: "d-flex flex-column",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 115
+                            lineNumber: 121
                         },
                         __self: this,
                         children: [
                             /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 116
+                                    lineNumber: 122
                                 },
                                 __self: this,
                                 children: movie.Title
@@ -12510,7 +12513,7 @@ class MovieCard extends _reactDefault.default.Component {
                             /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 117
+                                    lineNumber: 123
                                 },
                                 __self: this,
                                 children: movie.Genre.Name
