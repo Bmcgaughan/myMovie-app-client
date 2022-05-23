@@ -42,7 +42,7 @@ export class GenreView extends React.Component {
           </Button>
         </div>
         <div className="movie-view bt-movie">
-          <div>{genre.Name} Movies:</div>
+          <div className="cards-header">{genre.Name} Movies:</div>
           <Row>{genreCards}</Row>
         </div>
       </div>

@@ -44,7 +44,7 @@ export class DirectorView extends React.Component {
           </Button>
         </div>
         <div className="movie-view bt-movie">
-          <div>{director.Name} Movies:</div>
+          <div className="cards-header">Also directed by {director.Name}:</div>
           <Row>{directorCards}</Row>
         </div>
       </div>

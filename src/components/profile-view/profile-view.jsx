@@ -356,7 +356,7 @@ export class ProfileView extends React.Component {
         </div>
         {/* Showing list of favorite movies */}
         <div className="movie-view bt-movie">
-          <div>{this.state.username}'s Favorite Movies:</div>
+          <div className="cards-header">{this.state.username}'s Favorites:</div>
           <Row>{this.listFavorites(this.props.favorites)}</Row>
         </div>
       </div>

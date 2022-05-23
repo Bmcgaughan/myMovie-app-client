@@ -12319,14 +12319,16 @@ class DirectorView extends _reactDefault.default.Component {
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "cards-header",
                             __source: {
                                 fileName: "src/components/director-view/director-view.jsx",
                                 lineNumber: 47
                             },
                             __self: this,
                             children: [
+                                "Also directed by ",
                                 director.Name,
-                                " Movies:"
+                                ":"
                             ]
                         }),
                         /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
@@ -35880,6 +35882,7 @@ class GenreView extends _reactDefault.default.Component {
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "cards-header",
                             __source: {
                                 fileName: "src/components/genre-view/genre-view.jsx",
                                 lineNumber: 45
@@ -36506,6 +36509,7 @@ class ProfileView extends _reactDefault.default.Component {
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "cards-header",
                             __source: {
                                 fileName: "src/components/profile-view/profile-view.jsx",
                                 lineNumber: 359
@@ -36513,7 +36517,7 @@ class ProfileView extends _reactDefault.default.Component {
                             __self: this,
                             children: [
                                 this.state.username,
-                                "'s Favorite Movies:"
+                                "'s Favorites:"
                             ]
                         }),
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
