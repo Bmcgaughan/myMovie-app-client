@@ -3910,6 +3910,7 @@ var _genreView = require("../genre-view/genre-view");
 var _profileView = require("../profile-view/profile-view");
 var _profileViewDefault = parcelHelpers.interopDefault(_profileView);
 var _navbar = require("../navbar-view/navbar");
+var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _reactBootstrap = require("react-bootstrap");
 //getting array of movies from remote and displaying as a list
 class MainView extends _reactDefault.default.Component {
@@ -4012,7 +4013,7 @@ class MainView extends _reactDefault.default.Component {
             },
             __self: this,
             children: [
-                /*#__PURE__*/ _jsxRuntime.jsx(_navbar.Menubar, {
+                /*#__PURE__*/ _jsxRuntime.jsx(_navbarDefault.default, {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
@@ -47510,14 +47511,29 @@ $parcel$ReactRefreshHelpers$bd0e.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Menubar", ()=>Menubar
-);
 var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactTransitionGroup = require("react-transition-group");
 var _reactBootstrap = require("react-bootstrap");
+var _reactRedux = require("react-redux");
+var _visibilityFilterInput = require("../visibility-filter-input/visibility-filter-input");
+var _visibilityFilterInputDefault = parcelHelpers.interopDefault(_visibilityFilterInput);
 var _navBarScss = require("./nav-bar.scss");
-function Menubar({ user  }) {
+var _s = $RefreshSig$();
+//redux mapping filter to props for component
+const mapStateToProps = (state)=>{
+    const { visibilityFilter  } = state;
+    return {
+        visibilityFilter
+    };
+};
+//main Menubar Function
+function Menubar(props) {
+    _s();
+    const [searchBar, setSearchBar] = _react.useState(false);
+    const [fade, setFade] = _react.useState('');
+    const { visibilityFilter , user  } = props;
     const onLogOut = ()=>{
         localStorage.clear();
         window.open('/', '_self');
@@ -47527,6 +47543,11 @@ function Menubar({ user  }) {
         if (localStorage.getItem('token')) return localStorage.getItem('token');
         else return false;
     };
+    const toggleSearchBar = (e)=>{
+        if (fade !== '') setFade('');
+        else setFade('fade-in');
+        setSearchBar(!searchBar);
+    };
     return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Navbar, {
         className: "main-nav nav-fill w-100",
         sticky: "top",
@@ -47535,15 +47556,81 @@ function Menubar({ user  }) {
         variant: "light",
         __source: {
             fileName: "src/components/navbar-view/navbar.jsx",
-            lineNumber: 25
+            lineNumber: 53
         },
         __self: this,
         children: [
+            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Nav, {
+                __source: {
+                    fileName: "src/components/navbar-view/navbar.jsx",
+                    lineNumber: 60
+                },
+                __self: this,
+                children: [
+                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                        className: "search-expand d-flex align-items-center",
+                        __source: {
+                            fileName: "src/components/navbar-view/navbar.jsx",
+                            lineNumber: 61
+                        },
+                        __self: this,
+                        children: /*#__PURE__*/ _jsxRuntime.jsx("a", {
+                            className: "search-link",
+                            onClick: (e)=>toggleSearchBar(e)
+                            ,
+                            "data-toggle": "tooltip",
+                            "data-placement": "top",
+                            title: "Search by Title",
+                            __source: {
+                                fileName: "src/components/navbar-view/navbar.jsx",
+                                lineNumber: 62
+                            },
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsx("svg", {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                width: "20",
+                                height: "20",
+                                fill: "#000000",
+                                className: "bi bi-search",
+                                viewBox: "0 0 16 16",
+                                __source: {
+                                    fileName: "src/components/navbar-view/navbar.jsx",
+                                    lineNumber: 69
+                                },
+                                __self: this,
+                                children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
+                                    d: "M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z",
+                                    __source: {
+                                        fileName: "src/components/navbar-view/navbar.jsx",
+                                        lineNumber: 77
+                                    },
+                                    __self: this
+                                })
+                            })
+                        })
+                    }),
+                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                        className: `anim-search ${fade}`,
+                        __source: {
+                            fileName: "src/components/navbar-view/navbar.jsx",
+                            lineNumber: 81
+                        },
+                        __self: this,
+                        children: searchBar && /*#__PURE__*/ _jsxRuntime.jsx(_visibilityFilterInputDefault.default, {
+                            __source: {
+                                fileName: "src/components/navbar-view/navbar.jsx",
+                                lineNumber: 82
+                            },
+                            __self: this
+                        })
+                    })
+                ]
+            }),
             /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Navbar.Brand, {
                 className: "navbar-logo",
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 32
+                    lineNumber: 85
                 },
                 __self: this,
                 children: "What Do I Watch?"
@@ -47552,7 +47639,7 @@ function Menubar({ user  }) {
                 "aria-controls": "responsive-navba-nav",
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 33
+                    lineNumber: 86
                 },
                 __self: this
             }),
@@ -47560,14 +47647,14 @@ function Menubar({ user  }) {
                 id: "responsive-navbar-nav",
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 34
+                    lineNumber: 87
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Nav, {
                     className: "ml-auto",
                     __source: {
                         fileName: "src/components/navbar-view/navbar.jsx",
-                        lineNumber: 35
+                        lineNumber: 88
                     },
                     __self: this,
                     children: [
@@ -47575,7 +47662,7 @@ function Menubar({ user  }) {
                             href: `/`,
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 36
+                                lineNumber: 89
                             },
                             __self: this,
                             children: "Full List"
@@ -47584,7 +47671,7 @@ function Menubar({ user  }) {
                             href: `/users/${user}`,
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 38
+                                lineNumber: 91
                             },
                             __self: this,
                             children: "Profile"
@@ -47596,7 +47683,7 @@ function Menubar({ user  }) {
                             },
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 40
+                                lineNumber: 93
                             },
                             __self: this,
                             children: "Log Out"
@@ -47605,7 +47692,7 @@ function Menubar({ user  }) {
                             href: "/",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 49
+                                lineNumber: 102
                             },
                             __self: this,
                             children: "Sign In"
@@ -47614,7 +47701,7 @@ function Menubar({ user  }) {
                             href: "/register",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 50
+                                lineNumber: 103
                             },
                             __self: this,
                             children: "Register"
@@ -47625,7 +47712,9 @@ function Menubar({ user  }) {
         ]
     }));
 }
+_s(Menubar, "5JcTnw9akekMqlRfGvKWQRRIBaw=");
 _c = Menubar;
+exports.default = _reactRedux.connect(mapStateToProps)(Menubar);
 var _c;
 $RefreshReg$(_c, "Menubar");
 
@@ -47634,7 +47723,1034 @@ $RefreshReg$(_c, "Menubar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kGl7g":[function() {},{}],"1kGQ5":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../visibility-filter-input/visibility-filter-input":"7ZxGS","react-transition-group":"gQu97"}],"kGl7g":[function() {},{}],"7ZxGS":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$9bc3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$9bc3.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRedux = require("react-redux");
+var _form = require("react-bootstrap/Form");
+var _formDefault = parcelHelpers.interopDefault(_form);
+var _actions = require("../../actions/actions");
+function VisibilityFilterInput(props) {
+    return(/*#__PURE__*/ _jsxRuntime.jsx(_formDefault.default.Control, {
+        className: "search-bar",
+        onChange: (e)=>props.setFilter(e.target.value)
+        ,
+        value: props.visbilityFilter,
+        placeholder: "Search by Title",
+        __source: {
+            fileName: "src/components/visibility-filter-input/visibility-filter-input.jsx",
+            lineNumber: 10
+        },
+        __self: this
+    }));
+}
+_c = VisibilityFilterInput;
+exports.default = _reactRedux.connect(null, {
+    setFilter: _actions.setFilter
+})(VisibilityFilterInput);
+var _c;
+$RefreshReg$(_c, "VisibilityFilterInput");
+
+  $parcel$ReactRefreshHelpers$9bc3.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-redux":"2L0if","react-bootstrap/Form":"5ykgY","../../actions/actions":"1Ttfj","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"gQu97":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "CSSTransition", ()=>_csstransitionDefault.default
+);
+parcelHelpers.export(exports, "ReplaceTransition", ()=>_replaceTransitionDefault.default
+);
+parcelHelpers.export(exports, "SwitchTransition", ()=>_switchTransitionDefault.default
+);
+parcelHelpers.export(exports, "TransitionGroup", ()=>_transitionGroupDefault.default
+);
+parcelHelpers.export(exports, "Transition", ()=>_transitionDefault.default
+);
+parcelHelpers.export(exports, "config", ()=>_configDefault.default
+);
+var _csstransition = require("./CSSTransition");
+var _csstransitionDefault = parcelHelpers.interopDefault(_csstransition);
+var _replaceTransition = require("./ReplaceTransition");
+var _replaceTransitionDefault = parcelHelpers.interopDefault(_replaceTransition);
+var _switchTransition = require("./SwitchTransition");
+var _switchTransitionDefault = parcelHelpers.interopDefault(_switchTransition);
+var _transitionGroup = require("./TransitionGroup");
+var _transitionGroupDefault = parcelHelpers.interopDefault(_transitionGroup);
+var _transition = require("./Transition");
+var _transitionDefault = parcelHelpers.interopDefault(_transition);
+var _config = require("./config");
+var _configDefault = parcelHelpers.interopDefault(_config);
+
+},{"./CSSTransition":"echQq","./ReplaceTransition":"8sH79","./SwitchTransition":"2WsGH","./TransitionGroup":"lIDMU","./Transition":"6qqDo","./config":"eRNqr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"echQq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _extends = require("@babel/runtime/helpers/esm/extends");
+var _extendsDefault = parcelHelpers.interopDefault(_extends);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+var _inheritsLoose = require("@babel/runtime/helpers/esm/inheritsLoose");
+var _inheritsLooseDefault = parcelHelpers.interopDefault(_inheritsLoose);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _addClass = require("dom-helpers/addClass");
+var _addClassDefault = parcelHelpers.interopDefault(_addClass);
+var _removeClass = require("dom-helpers/removeClass");
+var _removeClassDefault = parcelHelpers.interopDefault(_removeClass);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _transition = require("./Transition");
+var _transitionDefault = parcelHelpers.interopDefault(_transition);
+var _propTypes1 = require("./utils/PropTypes");
+var _addClass1 = function addClass(node, classes) {
+    return node && classes && classes.split(' ').forEach(function(c) {
+        return _addClassDefault.default(node, c);
+    });
+};
+var removeClass = function removeClass1(node, classes) {
+    return node && classes && classes.split(' ').forEach(function(c) {
+        return _removeClassDefault.default(node, c);
+    });
+};
+/**
+ * A transition component inspired by the excellent
+ * [ng-animate](https://docs.angularjs.org/api/ngAnimate) library, you should
+ * use it if you're using CSS transitions or animations. It's built upon the
+ * [`Transition`](https://reactcommunity.org/react-transition-group/transition)
+ * component, so it inherits all of its props.
+ *
+ * `CSSTransition` applies a pair of class names during the `appear`, `enter`,
+ * and `exit` states of the transition. The first class is applied and then a
+ * second `*-active` class in order to activate the CSS transition. After the
+ * transition, matching `*-done` class names are applied to persist the
+ * transition state.
+ *
+ * ```jsx
+ * function App() {
+ *   const [inProp, setInProp] = useState(false);
+ *   return (
+ *     <div>
+ *       <CSSTransition in={inProp} timeout={200} classNames="my-node">
+ *         <div>
+ *           {"I'll receive my-node-* classes"}
+ *         </div>
+ *       </CSSTransition>
+ *       <button type="button" onClick={() => setInProp(true)}>
+ *         Click to Enter
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * When the `in` prop is set to `true`, the child component will first receive
+ * the class `example-enter`, then the `example-enter-active` will be added in
+ * the next tick. `CSSTransition` [forces a
+ * reflow](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L208-L215)
+ * between before adding the `example-enter-active`. This is an important trick
+ * because it allows us to transition between `example-enter` and
+ * `example-enter-active` even though they were added immediately one after
+ * another. Most notably, this is what makes it possible for us to animate
+ * _appearance_.
+ *
+ * ```css
+ * .my-node-enter {
+ *   opacity: 0;
+ * }
+ * .my-node-enter-active {
+ *   opacity: 1;
+ *   transition: opacity 200ms;
+ * }
+ * .my-node-exit {
+ *   opacity: 1;
+ * }
+ * .my-node-exit-active {
+ *   opacity: 0;
+ *   transition: opacity 200ms;
+ * }
+ * ```
+ *
+ * `*-active` classes represent which styles you want to animate **to**, so it's
+ * important to add `transition` declaration only to them, otherwise transitions
+ * might not behave as intended! This might not be obvious when the transitions
+ * are symmetrical, i.e. when `*-enter-active` is the same as `*-exit`, like in
+ * the example above (minus `transition`), but it becomes apparent in more
+ * complex transitions.
+ *
+ * **Note**: If you're using the
+ * [`appear`](http://reactcommunity.org/react-transition-group/transition#Transition-prop-appear)
+ * prop, make sure to define styles for `.appear-*` classes as well.
+ */ var CSSTransition1 = /*#__PURE__*/ function(_React$Component) {
+    _inheritsLooseDefault.default(CSSTransition2, _React$Component);
+    function CSSTransition2() {
+        var _this;
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
+        _this = _React$Component.call.apply(_React$Component, [
+            this
+        ].concat(args)) || this;
+        _this.appliedClasses = {
+            appear: {
+            },
+            enter: {
+            },
+            exit: {
+            }
+        };
+        _this.onEnter = function(maybeNode, maybeAppearing) {
+            var _this$resolveArgument = _this.resolveArguments(maybeNode, maybeAppearing), node = _this$resolveArgument[0], appearing = _this$resolveArgument[1];
+            _this.removeClasses(node, 'exit');
+            _this.addClass(node, appearing ? 'appear' : 'enter', 'base');
+            if (_this.props.onEnter) _this.props.onEnter(maybeNode, maybeAppearing);
+        };
+        _this.onEntering = function(maybeNode, maybeAppearing) {
+            var _this$resolveArgument2 = _this.resolveArguments(maybeNode, maybeAppearing), node = _this$resolveArgument2[0], appearing = _this$resolveArgument2[1];
+            var type = appearing ? 'appear' : 'enter';
+            _this.addClass(node, type, 'active');
+            if (_this.props.onEntering) _this.props.onEntering(maybeNode, maybeAppearing);
+        };
+        _this.onEntered = function(maybeNode, maybeAppearing) {
+            var _this$resolveArgument3 = _this.resolveArguments(maybeNode, maybeAppearing), node = _this$resolveArgument3[0], appearing = _this$resolveArgument3[1];
+            var type = appearing ? 'appear' : 'enter';
+            _this.removeClasses(node, type);
+            _this.addClass(node, type, 'done');
+            if (_this.props.onEntered) _this.props.onEntered(maybeNode, maybeAppearing);
+        };
+        _this.onExit = function(maybeNode) {
+            var _this$resolveArgument4 = _this.resolveArguments(maybeNode), node = _this$resolveArgument4[0];
+            _this.removeClasses(node, 'appear');
+            _this.removeClasses(node, 'enter');
+            _this.addClass(node, 'exit', 'base');
+            if (_this.props.onExit) _this.props.onExit(maybeNode);
+        };
+        _this.onExiting = function(maybeNode) {
+            var _this$resolveArgument5 = _this.resolveArguments(maybeNode), node = _this$resolveArgument5[0];
+            _this.addClass(node, 'exit', 'active');
+            if (_this.props.onExiting) _this.props.onExiting(maybeNode);
+        };
+        _this.onExited = function(maybeNode) {
+            var _this$resolveArgument6 = _this.resolveArguments(maybeNode), node = _this$resolveArgument6[0];
+            _this.removeClasses(node, 'exit');
+            _this.addClass(node, 'exit', 'done');
+            if (_this.props.onExited) _this.props.onExited(maybeNode);
+        };
+        _this.resolveArguments = function(maybeNode, maybeAppearing) {
+            return _this.props.nodeRef ? [
+                _this.props.nodeRef.current,
+                maybeNode
+            ] // here `maybeNode` is actually `appearing`
+             : [
+                maybeNode,
+                maybeAppearing
+            ];
+        };
+        _this.getClassNames = function(type) {
+            var classNames = _this.props.classNames;
+            var isStringClassNames = typeof classNames === 'string';
+            var prefix = isStringClassNames && classNames ? classNames + "-" : '';
+            var baseClassName = isStringClassNames ? "" + prefix + type : classNames[type];
+            var activeClassName = isStringClassNames ? baseClassName + "-active" : classNames[type + "Active"];
+            var doneClassName = isStringClassNames ? baseClassName + "-done" : classNames[type + "Done"];
+            return {
+                baseClassName: baseClassName,
+                activeClassName: activeClassName,
+                doneClassName: doneClassName
+            };
+        };
+        return _this;
+    }
+    var _proto = CSSTransition2.prototype;
+    _proto.addClass = function addClass1(node, type, phase) {
+        var className = this.getClassNames(type)[phase + "ClassName"];
+        var _this$getClassNames = this.getClassNames('enter'), doneClassName = _this$getClassNames.doneClassName;
+        if (type === 'appear' && phase === 'done' && doneClassName) className += " " + doneClassName;
+         // This is to force a repaint,
+        // which is necessary in order to transition styles when adding a class name.
+        if (phase === 'active') /* eslint-disable no-unused-expressions */ node && node.scrollTop;
+        if (className) {
+            this.appliedClasses[type][phase] = className;
+            _addClass1(node, className);
+        }
+    };
+    _proto.removeClasses = function removeClasses(node, type) {
+        var _this$appliedClasses$ = this.appliedClasses[type], baseClassName = _this$appliedClasses$.base, activeClassName = _this$appliedClasses$.active, doneClassName = _this$appliedClasses$.done;
+        this.appliedClasses[type] = {
+        };
+        if (baseClassName) removeClass(node, baseClassName);
+        if (activeClassName) removeClass(node, activeClassName);
+        if (doneClassName) removeClass(node, doneClassName);
+    };
+    _proto.render = function render() {
+        var _this$props = this.props, _ = _this$props.classNames, props = _objectWithoutPropertiesLooseDefault.default(_this$props, [
+            "classNames"
+        ]);
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_transitionDefault.default, _extendsDefault.default({
+        }, props, {
+            onEnter: this.onEnter,
+            onEntered: this.onEntered,
+            onEntering: this.onEntering,
+            onExit: this.onExit,
+            onExiting: this.onExiting,
+            onExited: this.onExited
+        })));
+    };
+    return CSSTransition2;
+}(_reactDefault.default.Component);
+CSSTransition1.defaultProps = {
+    classNames: ''
+};
+CSSTransition1.propTypes = _extendsDefault.default({
+}, _transitionDefault.default.propTypes, {
+    /**
+   * The animation classNames applied to the component as it appears, enters,
+   * exits or has finished the transition. A single name can be provided, which
+   * will be suffixed for each stage, e.g. `classNames="fade"` applies:
+   *
+   * - `fade-appear`, `fade-appear-active`, `fade-appear-done`
+   * - `fade-enter`, `fade-enter-active`, `fade-enter-done`
+   * - `fade-exit`, `fade-exit-active`, `fade-exit-done`
+   *
+   * A few details to note about how these classes are applied:
+   *
+   * 1. They are _joined_ with the ones that are already defined on the child
+   *    component, so if you want to add some base styles, you can use
+   *    `className` without worrying that it will be overridden.
+   *
+   * 2. If the transition component mounts with `in={false}`, no classes are
+   *    applied yet. You might be expecting `*-exit-done`, but if you think
+   *    about it, a component cannot finish exiting if it hasn't entered yet.
+   *
+   * 2. `fade-appear-done` and `fade-enter-done` will _both_ be applied. This
+   *    allows you to define different behavior for when appearing is done and
+   *    when regular entering is done, using selectors like
+   *    `.fade-enter-done:not(.fade-appear-done)`. For example, you could apply
+   *    an epic entrance animation when element first appears in the DOM using
+   *    [Animate.css](https://daneden.github.io/animate.css/). Otherwise you can
+   *    simply use `fade-enter-done` for defining both cases.
+   *
+   * Each individual classNames can also be specified independently like:
+   *
+   * ```js
+   * classNames={{
+   *  appear: 'my-appear',
+   *  appearActive: 'my-active-appear',
+   *  appearDone: 'my-done-appear',
+   *  enter: 'my-enter',
+   *  enterActive: 'my-active-enter',
+   *  enterDone: 'my-done-enter',
+   *  exit: 'my-exit',
+   *  exitActive: 'my-active-exit',
+   *  exitDone: 'my-done-exit',
+   * }}
+   * ```
+   *
+   * If you want to set these classes using CSS Modules:
+   *
+   * ```js
+   * import styles from './styles.css';
+   * ```
+   *
+   * you might want to use camelCase in your CSS file, that way could simply
+   * spread them instead of listing them one by one:
+   *
+   * ```js
+   * classNames={{ ...styles }}
+   * ```
+   *
+   * @type {string | {
+   *  appear?: string,
+   *  appearActive?: string,
+   *  appearDone?: string,
+   *  enter?: string,
+   *  enterActive?: string,
+   *  enterDone?: string,
+   *  exit?: string,
+   *  exitActive?: string,
+   *  exitDone?: string,
+   * }}
+   */ classNames: _propTypes1.classNamesShape,
+    /**
+   * A `<Transition>` callback fired immediately after the 'enter' or 'appear' class is
+   * applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */ onEnter: _propTypesDefault.default.func,
+    /**
+   * A `<Transition>` callback fired immediately after the 'enter-active' or
+   * 'appear-active' class is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */ onEntering: _propTypesDefault.default.func,
+    /**
+   * A `<Transition>` callback fired immediately after the 'enter' or
+   * 'appear' classes are **removed** and the `done` class is added to the DOM node.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed.
+   *
+   * @type Function(node: HtmlElement, isAppearing: bool)
+   */ onEntered: _propTypesDefault.default.func,
+    /**
+   * A `<Transition>` callback fired immediately after the 'exit' class is
+   * applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */ onExit: _propTypesDefault.default.func,
+    /**
+   * A `<Transition>` callback fired immediately after the 'exit-active' is applied.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */ onExiting: _propTypesDefault.default.func,
+    /**
+   * A `<Transition>` callback fired immediately after the 'exit' classes
+   * are **removed** and the `exit-done` class is added to the DOM node.
+   *
+   * **Note**: when `nodeRef` prop is passed, `node` is not passed
+   *
+   * @type Function(node: HtmlElement)
+   */ onExited: _propTypesDefault.default.func
+});
+exports.default = CSSTransition1;
+
+},{"@babel/runtime/helpers/esm/extends":"bKAu6","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","@babel/runtime/helpers/esm/inheritsLoose":"eO0be","prop-types":"1tgq3","dom-helpers/addClass":"72Fep","dom-helpers/removeClass":"i3BZq","react":"6TuXu","./Transition":"6qqDo","./utils/PropTypes":"da2hb","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"8sH79":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+var _inheritsLoose = require("@babel/runtime/helpers/esm/inheritsLoose");
+var _inheritsLooseDefault = parcelHelpers.interopDefault(_inheritsLoose);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactDom = require("react-dom");
+var _reactDomDefault = parcelHelpers.interopDefault(_reactDom);
+var _transitionGroup = require("./TransitionGroup");
+var _transitionGroupDefault = parcelHelpers.interopDefault(_transitionGroup);
+/**
+ * The `<ReplaceTransition>` component is a specialized `Transition` component
+ * that animates between two children.
+ *
+ * ```jsx
+ * <ReplaceTransition in>
+ *   <Fade><div>I appear first</div></Fade>
+ *   <Fade><div>I replace the above</div></Fade>
+ * </ReplaceTransition>
+ * ```
+ */ var ReplaceTransition1 = /*#__PURE__*/ function(_React$Component) {
+    _inheritsLooseDefault.default(ReplaceTransition2, _React$Component);
+    function ReplaceTransition2() {
+        var _this;
+        for(var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++)_args[_key] = arguments[_key];
+        _this = _React$Component.call.apply(_React$Component, [
+            this
+        ].concat(_args)) || this;
+        _this.handleEnter = function() {
+            for(var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++)args[_key2] = arguments[_key2];
+            return _this.handleLifecycle('onEnter', 0, args);
+        };
+        _this.handleEntering = function() {
+            for(var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++)args[_key3] = arguments[_key3];
+            return _this.handleLifecycle('onEntering', 0, args);
+        };
+        _this.handleEntered = function() {
+            for(var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++)args[_key4] = arguments[_key4];
+            return _this.handleLifecycle('onEntered', 0, args);
+        };
+        _this.handleExit = function() {
+            for(var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++)args[_key5] = arguments[_key5];
+            return _this.handleLifecycle('onExit', 1, args);
+        };
+        _this.handleExiting = function() {
+            for(var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++)args[_key6] = arguments[_key6];
+            return _this.handleLifecycle('onExiting', 1, args);
+        };
+        _this.handleExited = function() {
+            for(var _len7 = arguments.length, args = new Array(_len7), _key7 = 0; _key7 < _len7; _key7++)args[_key7] = arguments[_key7];
+            return _this.handleLifecycle('onExited', 1, args);
+        };
+        return _this;
+    }
+    var _proto = ReplaceTransition2.prototype;
+    _proto.handleLifecycle = function handleLifecycle(handler, idx, originalArgs) {
+        var _child$props;
+        var children = this.props.children;
+        var child = _reactDefault.default.Children.toArray(children)[idx];
+        if (child.props[handler]) (_child$props = child.props)[handler].apply(_child$props, originalArgs);
+        if (this.props[handler]) {
+            var maybeNode = child.props.nodeRef ? undefined : _reactDomDefault.default.findDOMNode(this);
+            this.props[handler](maybeNode);
+        }
+    };
+    _proto.render = function render() {
+        var _this$props = this.props, children = _this$props.children, inProp = _this$props.in, props = _objectWithoutPropertiesLooseDefault.default(_this$props, [
+            "children",
+            "in"
+        ]);
+        var _React$Children$toArr = _reactDefault.default.Children.toArray(children), first = _React$Children$toArr[0], second = _React$Children$toArr[1];
+        delete props.onEnter;
+        delete props.onEntering;
+        delete props.onEntered;
+        delete props.onExit;
+        delete props.onExiting;
+        delete props.onExited;
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_transitionGroupDefault.default, props, inProp ? _reactDefault.default.cloneElement(first, {
+            key: 'first',
+            onEnter: this.handleEnter,
+            onEntering: this.handleEntering,
+            onEntered: this.handleEntered
+        }) : _reactDefault.default.cloneElement(second, {
+            key: 'second',
+            onEnter: this.handleExit,
+            onEntering: this.handleExiting,
+            onEntered: this.handleExited
+        })));
+    };
+    return ReplaceTransition2;
+}(_reactDefault.default.Component);
+ReplaceTransition1.propTypes = {
+    in: _propTypesDefault.default.bool.isRequired,
+    children: function children(props, propName) {
+        if (_reactDefault.default.Children.count(props[propName]) !== 2) return new Error("\"" + propName + "\" must be exactly two transition components.");
+        return null;
+    }
+};
+exports.default = ReplaceTransition1;
+
+},{"@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","@babel/runtime/helpers/esm/inheritsLoose":"eO0be","prop-types":"1tgq3","react":"6TuXu","react-dom":"gkWJK","./TransitionGroup":"lIDMU","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"lIDMU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+var _extends = require("@babel/runtime/helpers/esm/extends");
+var _extendsDefault = parcelHelpers.interopDefault(_extends);
+var _assertThisInitialized = require("@babel/runtime/helpers/esm/assertThisInitialized");
+var _assertThisInitializedDefault = parcelHelpers.interopDefault(_assertThisInitialized);
+var _inheritsLoose = require("@babel/runtime/helpers/esm/inheritsLoose");
+var _inheritsLooseDefault = parcelHelpers.interopDefault(_inheritsLoose);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _transitionGroupContext = require("./TransitionGroupContext");
+var _transitionGroupContextDefault = parcelHelpers.interopDefault(_transitionGroupContext);
+var _childMapping = require("./utils/ChildMapping");
+var values = Object.values || function(obj) {
+    return Object.keys(obj).map(function(k) {
+        return obj[k];
+    });
+};
+var defaultProps = {
+    component: 'div',
+    childFactory: function childFactory(child) {
+        return child;
+    }
+};
+/**
+ * The `<TransitionGroup>` component manages a set of transition components
+ * (`<Transition>` and `<CSSTransition>`) in a list. Like with the transition
+ * components, `<TransitionGroup>` is a state machine for managing the mounting
+ * and unmounting of components over time.
+ *
+ * Consider the example below. As items are removed or added to the TodoList the
+ * `in` prop is toggled automatically by the `<TransitionGroup>`.
+ *
+ * Note that `<TransitionGroup>`  does not define any animation behavior!
+ * Exactly _how_ a list item animates is up to the individual transition
+ * component. This means you can mix and match animations across different list
+ * items.
+ */ var TransitionGroup1 = /*#__PURE__*/ function(_React$Component) {
+    _inheritsLooseDefault.default(TransitionGroup2, _React$Component);
+    function TransitionGroup2(props, context) {
+        var _this;
+        _this = _React$Component.call(this, props, context) || this;
+        var handleExited = _this.handleExited.bind(_assertThisInitializedDefault.default(_this)); // Initial children should all be entering, dependent on appear
+        _this.state = {
+            contextValue: {
+                isMounting: true
+            },
+            handleExited: handleExited,
+            firstRender: true
+        };
+        return _this;
+    }
+    var _proto = TransitionGroup2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+        this.mounted = true;
+        this.setState({
+            contextValue: {
+                isMounting: false
+            }
+        });
+    };
+    _proto.componentWillUnmount = function componentWillUnmount() {
+        this.mounted = false;
+    };
+    TransitionGroup2.getDerivedStateFromProps = function getDerivedStateFromProps(nextProps, _ref) {
+        var prevChildMapping = _ref.children, handleExited = _ref.handleExited, firstRender = _ref.firstRender;
+        return {
+            children: firstRender ? _childMapping.getInitialChildMapping(nextProps, handleExited) : _childMapping.getNextChildMapping(nextProps, prevChildMapping, handleExited),
+            firstRender: false
+        };
+    } // node is `undefined` when user provided `nodeRef` prop
+    ;
+    _proto.handleExited = function handleExited(child, node) {
+        var currentChildMapping = _childMapping.getChildMapping(this.props.children);
+        if (child.key in currentChildMapping) return;
+        if (child.props.onExited) child.props.onExited(node);
+        if (this.mounted) this.setState(function(state) {
+            var children = _extendsDefault.default({
+            }, state.children);
+            delete children[child.key];
+            return {
+                children: children
+            };
+        });
+    };
+    _proto.render = function render() {
+        var _this$props = this.props, Component = _this$props.component, childFactory = _this$props.childFactory, props = _objectWithoutPropertiesLooseDefault.default(_this$props, [
+            "component",
+            "childFactory"
+        ]);
+        var contextValue = this.state.contextValue;
+        var children = values(this.state.children).map(childFactory);
+        delete props.appear;
+        delete props.enter;
+        delete props.exit;
+        if (Component === null) return(/*#__PURE__*/ _reactDefault.default.createElement(_transitionGroupContextDefault.default.Provider, {
+            value: contextValue
+        }, children));
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_transitionGroupContextDefault.default.Provider, {
+            value: contextValue
+        }, /*#__PURE__*/ _reactDefault.default.createElement(Component, props, children)));
+    };
+    return TransitionGroup2;
+}(_reactDefault.default.Component);
+TransitionGroup1.propTypes = {
+    /**
+   * `<TransitionGroup>` renders a `<div>` by default. You can change this
+   * behavior by providing a `component` prop.
+   * If you use React v16+ and would like to avoid a wrapping `<div>` element
+   * you can pass in `component={null}`. This is useful if the wrapping div
+   * borks your css styles.
+   */ component: _propTypesDefault.default.any,
+    /**
+   * A set of `<Transition>` components, that are toggled `in` and out as they
+   * leave. the `<TransitionGroup>` will inject specific transition props, so
+   * remember to spread them through if you are wrapping the `<Transition>` as
+   * with our `<Fade>` example.
+   *
+   * While this component is meant for multiple `Transition` or `CSSTransition`
+   * children, sometimes you may want to have a single transition child with
+   * content that you want to be transitioned out and in when you change it
+   * (e.g. routes, images etc.) In that case you can change the `key` prop of
+   * the transition child as you change its content, this will cause
+   * `TransitionGroup` to transition the child out and back in.
+   */ children: _propTypesDefault.default.node,
+    /**
+   * A convenience prop that enables or disables appear animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */ appear: _propTypesDefault.default.bool,
+    /**
+   * A convenience prop that enables or disables enter animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */ enter: _propTypesDefault.default.bool,
+    /**
+   * A convenience prop that enables or disables exit animations
+   * for all children. Note that specifying this will override any defaults set
+   * on individual children Transitions.
+   */ exit: _propTypesDefault.default.bool,
+    /**
+   * You may need to apply reactive updates to a child as it is exiting.
+   * This is generally done by using `cloneElement` however in the case of an exiting
+   * child the element has already been removed and not accessible to the consumer.
+   *
+   * If you do need to update a child as it leaves you can provide a `childFactory`
+   * to wrap every child, even the ones that are leaving.
+   *
+   * @type Function(child: ReactElement) -> ReactElement
+   */ childFactory: _propTypesDefault.default.func
+};
+TransitionGroup1.defaultProps = defaultProps;
+exports.default = TransitionGroup1;
+
+},{"@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","@babel/runtime/helpers/esm/extends":"bKAu6","@babel/runtime/helpers/esm/assertThisInitialized":"iOcza","@babel/runtime/helpers/esm/inheritsLoose":"eO0be","prop-types":"1tgq3","react":"6TuXu","./TransitionGroupContext":"7XbAv","./utils/ChildMapping":"iBXKH","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"iOcza":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+exports.default = _assertThisInitialized;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"iBXKH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Given `this.props.children`, return an object mapping key to child.
+ *
+ * @param {*} children `this.props.children`
+ * @return {object} Mapping of key to child
+ */ parcelHelpers.export(exports, "getChildMapping", ()=>getChildMapping
+);
+/**
+ * When you're adding or removing children some may be added or removed in the
+ * same render pass. We want to show *both* since we want to simultaneously
+ * animate elements in and out. This function takes a previous set of keys
+ * and a new set of keys and merges them with its best guess of the correct
+ * ordering. In the future we may expose some of the utilities in
+ * ReactMultiChild to make this easy, but for now React itself does not
+ * directly have this concept of the union of prevChildren and nextChildren
+ * so we implement it here.
+ *
+ * @param {object} prev prev children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @param {object} next next children as returned from
+ * `ReactTransitionChildMapping.getChildMapping()`.
+ * @return {object} a key set that contains all keys in `prev` and all keys
+ * in `next` in a reasonable order.
+ */ parcelHelpers.export(exports, "mergeChildMappings", ()=>mergeChildMappings
+);
+parcelHelpers.export(exports, "getInitialChildMapping", ()=>getInitialChildMapping
+);
+parcelHelpers.export(exports, "getNextChildMapping", ()=>getNextChildMapping
+);
+var _react = require("react");
+function getChildMapping(children, mapFn) {
+    var mapper = function mapper1(child) {
+        return mapFn && _react.isValidElement(child) ? mapFn(child) : child;
+    };
+    var result = Object.create(null);
+    if (children) _react.Children.map(children, function(c) {
+        return c;
+    }).forEach(function(child) {
+        // run the map function here instead so that the key is the computed one
+        result[child.key] = mapper(child);
+    });
+    return result;
+}
+function mergeChildMappings(prev, next) {
+    prev = prev || {
+    };
+    next = next || {
+    };
+    function getValueForKey(key) {
+        return key in next ? next[key] : prev[key];
+    } // For each key of `next`, the list of keys to insert before that key in
+    // the combined list
+    var nextKeysPending = Object.create(null);
+    var pendingKeys = [];
+    for(var prevKey in prev){
+        if (prevKey in next) {
+            if (pendingKeys.length) {
+                nextKeysPending[prevKey] = pendingKeys;
+                pendingKeys = [];
+            }
+        } else pendingKeys.push(prevKey);
+    }
+    var i;
+    var childMapping = {
+    };
+    for(var nextKey in next){
+        if (nextKeysPending[nextKey]) for(i = 0; i < nextKeysPending[nextKey].length; i++){
+            var pendingNextKey = nextKeysPending[nextKey][i];
+            childMapping[nextKeysPending[nextKey][i]] = getValueForKey(pendingNextKey);
+        }
+        childMapping[nextKey] = getValueForKey(nextKey);
+    } // Finally, add the keys which didn't appear before any key in `next`
+    for(i = 0; i < pendingKeys.length; i++)childMapping[pendingKeys[i]] = getValueForKey(pendingKeys[i]);
+    return childMapping;
+}
+function getProp(child, prop, props) {
+    return props[prop] != null ? props[prop] : child.props[prop];
+}
+function getInitialChildMapping(props, onExited) {
+    return getChildMapping(props.children, function(child) {
+        return _react.cloneElement(child, {
+            onExited: onExited.bind(null, child),
+            in: true,
+            appear: getProp(child, 'appear', props),
+            enter: getProp(child, 'enter', props),
+            exit: getProp(child, 'exit', props)
+        });
+    });
+}
+function getNextChildMapping(nextProps, prevChildMapping, onExited) {
+    var nextChildMapping = getChildMapping(nextProps.children);
+    var children = mergeChildMappings(prevChildMapping, nextChildMapping);
+    Object.keys(children).forEach(function(key) {
+        var child = children[key];
+        if (!_react.isValidElement(child)) return;
+        var hasPrev = key in prevChildMapping;
+        var hasNext = key in nextChildMapping;
+        var prevChild = prevChildMapping[key];
+        var isLeaving = _react.isValidElement(prevChild) && !prevChild.props.in; // item is new (entering)
+        if (hasNext && (!hasPrev || isLeaving)) // console.log('entering', key)
+        children[key] = _react.cloneElement(child, {
+            onExited: onExited.bind(null, child),
+            in: true,
+            exit: getProp(child, 'exit', nextProps),
+            enter: getProp(child, 'enter', nextProps)
+        });
+        else if (!hasNext && hasPrev && !isLeaving) // item is old (exiting)
+        // console.log('leaving', key)
+        children[key] = _react.cloneElement(child, {
+            in: false
+        });
+        else if (hasNext && hasPrev && _react.isValidElement(prevChild)) // item hasn't changed transition states
+        // copy over the last transition props;
+        // console.log('unchanged', key)
+        children[key] = _react.cloneElement(child, {
+            onExited: onExited.bind(null, child),
+            in: prevChild.props.in,
+            exit: getProp(child, 'exit', nextProps),
+            enter: getProp(child, 'enter', nextProps)
+        });
+    });
+    return children;
+}
+
+},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2WsGH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "modes", ()=>modes
+);
+var _inheritsLoose = require("@babel/runtime/helpers/esm/inheritsLoose");
+var _inheritsLooseDefault = parcelHelpers.interopDefault(_inheritsLoose);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _transition = require("./Transition");
+var _transitionGroupContext = require("./TransitionGroupContext");
+var _transitionGroupContextDefault = parcelHelpers.interopDefault(_transitionGroupContext);
+var _leaveRenders, _enterRenders;
+function areChildrenDifferent(oldChildren, newChildren) {
+    if (oldChildren === newChildren) return false;
+    if (_reactDefault.default.isValidElement(oldChildren) && _reactDefault.default.isValidElement(newChildren) && oldChildren.key != null && oldChildren.key === newChildren.key) return false;
+    return true;
+}
+var modes = {
+    out: 'out-in',
+    in: 'in-out'
+};
+var callHook = function callHook1(element, name, cb) {
+    return function() {
+        var _element$props;
+        element.props[name] && (_element$props = element.props)[name].apply(_element$props, arguments);
+        cb();
+    };
+};
+var leaveRenders = (_leaveRenders = {
+}, _leaveRenders[modes.out] = function(_ref) {
+    var current = _ref.current, changeState = _ref.changeState;
+    return _reactDefault.default.cloneElement(current, {
+        in: false,
+        onExited: callHook(current, 'onExited', function() {
+            changeState(_transition.ENTERING, null);
+        })
+    });
+}, _leaveRenders[modes.in] = function(_ref2) {
+    var current = _ref2.current, changeState = _ref2.changeState, children = _ref2.children;
+    return [
+        current,
+        _reactDefault.default.cloneElement(children, {
+            in: true,
+            onEntered: callHook(children, 'onEntered', function() {
+                changeState(_transition.ENTERING);
+            })
+        })
+    ];
+}, _leaveRenders);
+var enterRenders = (_enterRenders = {
+}, _enterRenders[modes.out] = function(_ref3) {
+    var children = _ref3.children, changeState = _ref3.changeState;
+    return _reactDefault.default.cloneElement(children, {
+        in: true,
+        onEntered: callHook(children, 'onEntered', function() {
+            changeState(_transition.ENTERED, _reactDefault.default.cloneElement(children, {
+                in: true
+            }));
+        })
+    });
+}, _enterRenders[modes.in] = function(_ref4) {
+    var current = _ref4.current, children = _ref4.children, changeState = _ref4.changeState;
+    return [
+        _reactDefault.default.cloneElement(current, {
+            in: false,
+            onExited: callHook(current, 'onExited', function() {
+                changeState(_transition.ENTERED, _reactDefault.default.cloneElement(children, {
+                    in: true
+                }));
+            })
+        }),
+        _reactDefault.default.cloneElement(children, {
+            in: true
+        })
+    ];
+}, _enterRenders);
+/**
+ * A transition component inspired by the [vue transition modes](https://vuejs.org/v2/guide/transitions.html#Transition-Modes).
+ * You can use it when you want to control the render between state transitions.
+ * Based on the selected mode and the child's key which is the `Transition` or `CSSTransition` component, the `SwitchTransition` makes a consistent transition between them.
+ *
+ * If the `out-in` mode is selected, the `SwitchTransition` waits until the old child leaves and then inserts a new child.
+ * If the `in-out` mode is selected, the `SwitchTransition` inserts a new child first, waits for the new child to enter and then removes the old child.
+ *
+ * **Note**: If you want the animation to happen simultaneously
+ * (that is, to have the old child removed and a new child inserted **at the same time**),
+ * you should use
+ * [`TransitionGroup`](https://reactcommunity.org/react-transition-group/transition-group)
+ * instead.
+ *
+ * ```jsx
+ * function App() {
+ *  const [state, setState] = useState(false);
+ *  return (
+ *    <SwitchTransition>
+ *      <CSSTransition
+ *        key={state ? "Goodbye, world!" : "Hello, world!"}
+ *        addEndListener={(node, done) => node.addEventListener("transitionend", done, false)}
+ *        classNames='fade'
+ *      >
+ *        <button onClick={() => setState(state => !state)}>
+ *          {state ? "Goodbye, world!" : "Hello, world!"}
+ *        </button>
+ *      </CSSTransition>
+ *    </SwitchTransition>
+ *  );
+ * }
+ * ```
+ *
+ * ```css
+ * .fade-enter{
+ *    opacity: 0;
+ * }
+ * .fade-exit{
+ *    opacity: 1;
+ * }
+ * .fade-enter-active{
+ *    opacity: 1;
+ * }
+ * .fade-exit-active{
+ *    opacity: 0;
+ * }
+ * .fade-enter-active,
+ * .fade-exit-active{
+ *    transition: opacity 500ms;
+ * }
+ * ```
+ */ var SwitchTransition1 = /*#__PURE__*/ function(_React$Component) {
+    _inheritsLooseDefault.default(SwitchTransition2, _React$Component);
+    function SwitchTransition2() {
+        var _this;
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
+        _this = _React$Component.call.apply(_React$Component, [
+            this
+        ].concat(args)) || this;
+        _this.state = {
+            status: _transition.ENTERED,
+            current: null
+        };
+        _this.appeared = false;
+        _this.changeState = function(status, current) {
+            if (current === void 0) current = _this.state.current;
+            _this.setState({
+                status: status,
+                current: current
+            });
+        };
+        return _this;
+    }
+    var _proto = SwitchTransition2.prototype;
+    _proto.componentDidMount = function componentDidMount() {
+        this.appeared = true;
+    };
+    SwitchTransition2.getDerivedStateFromProps = function getDerivedStateFromProps(props, state) {
+        if (props.children == null) return {
+            current: null
+        };
+        if (state.status === _transition.ENTERING && props.mode === modes.in) return {
+            status: _transition.ENTERING
+        };
+        if (state.current && areChildrenDifferent(state.current, props.children)) return {
+            status: _transition.EXITING
+        };
+        return {
+            current: _reactDefault.default.cloneElement(props.children, {
+                in: true
+            })
+        };
+    };
+    _proto.render = function render() {
+        var _this$props = this.props, children = _this$props.children, mode = _this$props.mode, _this$state = this.state, status = _this$state.status, current = _this$state.current;
+        var data = {
+            children: children,
+            current: current,
+            changeState: this.changeState,
+            status: status
+        };
+        var component;
+        switch(status){
+            case _transition.ENTERING:
+                component = enterRenders[mode](data);
+                break;
+            case _transition.EXITING:
+                component = leaveRenders[mode](data);
+                break;
+            case _transition.ENTERED:
+                component = current;
+        }
+        return(/*#__PURE__*/ _reactDefault.default.createElement(_transitionGroupContextDefault.default.Provider, {
+            value: {
+                isMounting: !this.appeared
+            }
+        }, component));
+    };
+    return SwitchTransition2;
+}(_reactDefault.default.Component);
+SwitchTransition1.propTypes = {
+    /**
+   * Transition modes.
+   * `out-in`: Current element transitions out first, then when complete, the new element transitions in.
+   * `in-out`: New element transitions in first, then when complete, the current element transitions out.
+   *
+   * @type {'out-in'|'in-out'}
+   */ mode: _propTypesDefault.default.oneOf([
+        modes.in,
+        modes.out
+    ]),
+    /**
+   * Any `Transition` or `CSSTransition` component.
+   */ children: _propTypesDefault.default.oneOfType([
+        _propTypesDefault.default.element.isRequired
+    ])
+};
+SwitchTransition1.defaultProps = {
+    mode: modes.out
+};
+exports.default = SwitchTransition1;
+
+},{"@babel/runtime/helpers/esm/inheritsLoose":"eO0be","react":"6TuXu","prop-types":"1tgq3","./Transition":"6qqDo","./TransitionGroupContext":"7XbAv","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"1kGQ5":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$2519 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -47649,18 +48765,22 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 var _reactRedux = require("react-redux");
+//components to import and render
 var _movieCard = require("../movie-card/movie-card");
 var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
-var _actions = require("../../actions/actions");
+var _visibilityFilterInput = require("../visibility-filter-input/visibility-filter-input");
+var _visibilityFilterInputDefault = parcelHelpers.interopDefault(_visibilityFilterInput);
+//styles for filters
+var _moviesListScss = require("./movies-list.scss");
+//mapping filter and favorites to props
 const mapStateToProps = (state)=>{
-    const { visibilityFilter , favorites  } = state;
+    const { visibilityFilter  } = state;
     return {
-        visibilityFilter,
-        favorites
+        visibilityFilter
     };
 };
 function MoviesList(props) {
-    const { movies , visibilityFilter , favorites  } = props;
+    const { movies , visibilityFilter  } = props;
     let filteredMovies = movies;
     if (visibilityFilter !== '') filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
@@ -47668,35 +48788,33 @@ function MoviesList(props) {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 25
+            lineNumber: 30
         },
         __self: this
     }));
-    return filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
-            md: 3,
-            className: "mcard",
-            __source: {
-                fileName: "src/components/movies-list/movies-list.jsx",
-                lineNumber: 29
-            },
-            __self: this,
-            children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                movie: m,
+    return(/*#__PURE__*/ _jsxRuntime.jsx(_jsxRuntime.Fragment, {
+        children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
+                md: 3,
+                className: "mcard",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 30
+                    lineNumber: 36
                 },
-                __self: this
-            })
-        }, m._id)
-    );
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                    movie: m,
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 37
+                    },
+                    __self: this
+                })
+            }, m._id)
+        )
+    }));
 }
 _c = MoviesList;
-exports.default = _reactRedux.connect(mapStateToProps, {
-    setMovies: _actions.setMovies,
-    setFavorites: _actions.setFavorites,
-    toggleFavorite: _actions.toggleFavorite
-})(MoviesList);
+exports.default = _reactRedux.connect(mapStateToProps)(MoviesList);
 var _c;
 $RefreshReg$(_c, "MoviesList");
 
@@ -47705,7 +48823,7 @@ $RefreshReg$(_c, "MoviesList");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap/Col":"fbam0","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../../actions/actions":"1Ttfj"}],"4d0QS":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap/Col":"fbam0","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","./movies-list.scss":"9gz3w","../visibility-filter-input/visibility-filter-input":"7ZxGS"}],"9gz3w":[function() {},{}],"4d0QS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes

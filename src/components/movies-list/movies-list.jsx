@@ -1,18 +1,23 @@
 import React from 'react';
 import Col from 'react-bootstrap/Col';
+
 import { connect } from 'react-redux';
 
+//components to import and render
 import MovieCard from '../movie-card/movie-card';
+import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 
-import { setMovies, setFavorites, toggleFavorite } from '../../actions/actions';
+//styles for filters
+import './movies-list.scss';
 
+//mapping filter and favorites to props
 const mapStateToProps = (state) => {
-  const { visibilityFilter, favorites } = state;
-  return { visibilityFilter, favorites };
+  const { visibilityFilter } = state;
+  return { visibilityFilter };
 };
 
 function MoviesList(props) {
-  const { movies, visibilityFilter, favorites } = props;
+  const { movies, visibilityFilter } = props;
   let filteredMovies = movies;
 
   if (visibilityFilter !== '') {
@@ -25,15 +30,15 @@ function MoviesList(props) {
     return <div className="main-view" />;
   }
 
-  return filteredMovies.map((m) => (
-    <Col md={3} key={m._id} className="mcard">
-      <MovieCard movie={m} />
-    </Col>
-  ));
+  return (
+    <>
+      {filteredMovies.map((m) => (
+        <Col md={3} key={m._id} className="mcard">
+          <MovieCard movie={m} />
+        </Col>
+      ))}
+    </>
+  );
 }
 
-export default connect(mapStateToProps, {
-  setMovies,
-  setFavorites,
-  toggleFavorite,
-})(MoviesList);
+export default connect(mapStateToProps)(MoviesList);
