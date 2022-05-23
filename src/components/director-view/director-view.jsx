@@ -20,7 +20,7 @@ export class DirectorView extends React.Component {
 
     //generator for movies by the same director.
     let directorCards = directorMovies.map((m) => (
-      <Col md={4} key={m._id}>
+      <Col md={3} key={m._id}>
         <MovieCard movie={m} />
       </Col>
     ));

@@ -78,25 +78,9 @@ export class MovieCard extends React.Component {
     } else {
       this.addFavMovie(movId);
     }
+    //toggle state to force refresh
     this.props.toggleFavorite(movId);
   }
-
-  // favMovieClick(e) {
-  //   e.preventDefault();
-  //   if (this.state.favorited) {
-  //     this.setState({
-  //       favorited: false,
-  //     });
-  //     this.removeFavMovie(this.state.movieId);
-  //     this.props.updateFavorites(this.state.movieId);
-  //   } else {
-  //     this.setState({
-  //       favorited: true,
-  //     });
-  //     this.addFavMovie(this.state.movieId);
-  //     this.props.updateFavorites(this.state.movieId);
-  //   }
-  // }
 
   favMovieHandle(mid) {
     if (this.props.favorites.includes(mid)) {
@@ -105,23 +89,6 @@ export class MovieCard extends React.Component {
       return heartEmpty;
     }
   }
-
-  // favMovieHandle(fav) {
-  //   if (fav) {
-  //     return heartFull;
-  //   } else {
-  //     return heartEmpty;
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   const accessToken = localStorage.getItem('token');
-  //   this.setState({
-  //     favorited: this.props.isFavorite,
-  //     movieId: this.props.movie._id,
-  //     favoriteMovies: this.props.favorites,
-  //   });
-  // }
 
   render() {
     const { movie, isFavorite, favorites } = this.props;

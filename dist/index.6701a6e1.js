@@ -12224,7 +12224,7 @@ class DirectorView extends _reactDefault.default.Component {
         const { director , onBackClick , directorMovies , accessFavorites  } = this.props;
         //generator for movies by the same director.
         let directorCards = directorMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
-                md: 4,
+                md: 3,
                 __source: {
                     fileName: "src/components/director-view/director-view.jsx",
                     lineNumber: 23
@@ -12427,50 +12427,20 @@ class MovieCard extends _reactDefault.default.Component {
         let movId = this.props.movie._id;
         if (this.props.favorites.includes(movId)) this.removeFavMovie(movId);
         else this.addFavMovie(movId);
+        //toggle state to force refresh
         this.props.toggleFavorite(movId);
     }
-    // favMovieClick(e) {
-    //   e.preventDefault();
-    //   if (this.state.favorited) {
-    //     this.setState({
-    //       favorited: false,
-    //     });
-    //     this.removeFavMovie(this.state.movieId);
-    //     this.props.updateFavorites(this.state.movieId);
-    //   } else {
-    //     this.setState({
-    //       favorited: true,
-    //     });
-    //     this.addFavMovie(this.state.movieId);
-    //     this.props.updateFavorites(this.state.movieId);
-    //   }
-    // }
     favMovieHandle(mid) {
         if (this.props.favorites.includes(mid)) return _heartFullPngDefault.default;
         else return _heartEmptyPngDefault.default;
     }
-    // favMovieHandle(fav) {
-    //   if (fav) {
-    //     return heartFull;
-    //   } else {
-    //     return heartEmpty;
-    //   }
-    // }
-    // componentDidMount() {
-    //   const accessToken = localStorage.getItem('token');
-    //   this.setState({
-    //     favorited: this.props.isFavorite,
-    //     movieId: this.props.movie._id,
-    //     favoriteMovies: this.props.favorites,
-    //   });
-    // }
     render() {
         const { movie , isFavorite , favorites  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
             className: "h-100 mcard",
             __source: {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 129
+                lineNumber: 96
             },
             __self: this,
             children: [
@@ -12478,7 +12448,7 @@ class MovieCard extends _reactDefault.default.Component {
                     className: "poster-wrapper",
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 130
+                        lineNumber: 97
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
@@ -12488,7 +12458,7 @@ class MovieCard extends _reactDefault.default.Component {
                         className: "poster-img",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 131
+                            lineNumber: 98
                         },
                         __self: this
                     })
@@ -12499,7 +12469,7 @@ class MovieCard extends _reactDefault.default.Component {
                     ,
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 139
+                        lineNumber: 106
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
@@ -12508,7 +12478,7 @@ class MovieCard extends _reactDefault.default.Component {
                         alt: "cam",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 140
+                            lineNumber: 107
                         },
                         __self: this
                     })
@@ -12517,14 +12487,14 @@ class MovieCard extends _reactDefault.default.Component {
                     className: "d-flex flex-column",
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 147
+                        lineNumber: 114
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 148
+                                lineNumber: 115
                             },
                             __self: this,
                             children: movie.Title
@@ -12532,7 +12502,7 @@ class MovieCard extends _reactDefault.default.Component {
                         /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 149
+                                lineNumber: 116
                             },
                             __self: this,
                             children: movie.Genre.Name
@@ -12542,7 +12512,7 @@ class MovieCard extends _reactDefault.default.Component {
                             to: `/movies/${movie._id}`,
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 150
+                                lineNumber: 117
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
@@ -12550,7 +12520,7 @@ class MovieCard extends _reactDefault.default.Component {
                                 variant: "secondary",
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 151
+                                    lineNumber: 118
                                 },
                                 __self: this,
                                 children: "Open"
@@ -35829,7 +35799,7 @@ class GenreView extends _reactDefault.default.Component {
         const { genre , onBackClick , genreMovies , favorites  } = this.props;
         //generator for movies of the same genre - finds them in the full list of movies
         let genreCards = genreMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
-                md: 4,
+                md: 3,
                 __source: {
                     fileName: "src/components/genre-view/genre-view.jsx",
                     lineNumber: 22
