@@ -11,6 +11,9 @@ import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+//redux actions
+import { toggleFavorite } from '../../actions/actions';
+
 //favorite asset images
 import heartEmpty from '../../img/heart-empty.png';
 import heartFull from '../../img/heart-full.png';
@@ -24,11 +27,10 @@ export class MovieCard extends React.Component {
     super(props);
     this.state = {
       movieId: '',
-      favoriteMovies: [],
-      favorited: '',
     };
   }
 
+  //calling the API to add a favorite Movie to the user
   addFavMovie(mid) {
     const userName = localStorage.getItem('user');
     const token = localStorage.getItem('token');
@@ -41,15 +43,13 @@ export class MovieCard extends React.Component {
       )
       .then((response) => {
         console.log(response);
-        this.setState({
-          favoriteMovies: response.data.FavoriteMovies,
-        });
       })
       .catch((e) => {
         console.log(e);
       });
   }
 
+  //calling API to remove movie from the users list
   removeFavMovie(mid) {
     const userName = localStorage.getItem('user');
     const token = localStorage.getItem('token');
@@ -62,48 +62,66 @@ export class MovieCard extends React.Component {
       )
       .then((response) => {
         console.log(response);
-        this.setState({
-          favoriteMovies: response.data.FavoriteMovies,
-        });
       })
       .catch((e) => {
         console.log(e);
       });
   }
 
+  //when clicked the movie is either added/removed from the user via the API
+  //the state is then updated to either add/remove the movie
   favMovieClick(e) {
     e.preventDefault();
-    if (this.state.favorited) {
-      this.setState({
-        favorited: false,
-      });
-      this.removeFavMovie(this.state.movieId);
-      this.props.updateFavorites(this.state.movieId);
+    let movId = this.props.movie._id;
+    if (this.props.favorites.includes(movId)) {
+      this.removeFavMovie(movId);
     } else {
-      this.setState({
-        favorited: true,
-      });
-      this.addFavMovie(this.state.movieId);
-      this.props.updateFavorites(this.state.movieId);
+      this.addFavMovie(movId);
     }
+    this.props.toggleFavorite(movId);
   }
 
-  favMovieHandle(fav) {
-    if (fav) {
+  // favMovieClick(e) {
+  //   e.preventDefault();
+  //   if (this.state.favorited) {
+  //     this.setState({
+  //       favorited: false,
+  //     });
+  //     this.removeFavMovie(this.state.movieId);
+  //     this.props.updateFavorites(this.state.movieId);
+  //   } else {
+  //     this.setState({
+  //       favorited: true,
+  //     });
+  //     this.addFavMovie(this.state.movieId);
+  //     this.props.updateFavorites(this.state.movieId);
+  //   }
+  // }
+
+  favMovieHandle(mid) {
+    if (this.props.favorites.includes(mid)) {
       return heartFull;
     } else {
       return heartEmpty;
     }
   }
 
-  componentDidMount() {
-    const accessToken = localStorage.getItem('token');
-    this.setState({
-      favorited: this.props.isFavorite,
-      movieId: this.props.movie._id,
-      favoriteMovies: this.props.favorites,
-    });
-  }
+  // favMovieHandle(fav) {
+  //   if (fav) {
+  //     return heartFull;
+  //   } else {
+  //     return heartEmpty;
+  //   }
+  // }
+
+  // componentDidMount() {
+  //   const accessToken = localStorage.getItem('token');
+  //   this.setState({
+  //     favorited: this.props.isFavorite,
+  //     movieId: this.props.movie._id,
+  //     favoriteMovies: this.props.favorites,
+  //   });
+  // }
 
   render() {
     const { movie, isFavorite, favorites } = this.props;
@@ -120,7 +138,7 @@ export class MovieCard extends React.Component {
 
         <a href="#" onClick={(e) => this.favMovieClick(e)}>
           <img
-            src={this.favMovieHandle(this.state.favorited)}
+            src={this.favMovieHandle(movie._id)}
             className="fav-icon"
             alt="cam"
           />
@@ -155,11 +173,13 @@ MovieCard.propTypes = {
   }).isRequired,
 };
 
-let mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     movies: state.movies,
     favorites: state.favorites,
   };
 };
 
-export default connect(mapStateToProps)(MovieCard);
+export default connect(mapStateToProps, {
+  toggleFavorite,
+})(MovieCard);

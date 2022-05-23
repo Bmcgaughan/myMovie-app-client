@@ -29,12 +29,21 @@ function favorites(state = [], action) {
     case SET_FAVORITE:
       return action.value;
     case TOGGLE_FAVORITE:
-      console.log('sate', state);
-      return state.filter((val) => val !== action.movieId);
+      if (state.includes(action.movieId)) {
+        return state.filter((val) => val !== action.movieId);
+      } else {
+        return [...state, action.movieId];
+      }
     default:
       return state;
   }
 }
+
+// function isFavorite(state = '', action){
+//     switch (action.type) {
+//         case:
+//     }
+// }
 
 const moviesApp = combineReducers({
   visibilityFilter,

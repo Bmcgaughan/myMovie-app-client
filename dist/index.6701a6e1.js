@@ -3954,7 +3954,6 @@ class MainView extends _reactDefault.default.Component {
             }
         }).then((response)=>{
             this.props.setFavorites(response.data.FavoriteMovies);
-            this.props.toggleFavorite('6263daf56eb9e4aff4e588b3');
         }).catch((e)=>console.log(e)
         );
     }
@@ -4008,7 +4007,7 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 134
+                lineNumber: 133
             },
             __self: this,
             children: [
@@ -4016,21 +4015,21 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 135
+                        lineNumber: 134
                     },
                     __self: this
                 }),
                 /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Container, {
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 136
+                        lineNumber: 135
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsxs(_rowDefault.default, {
                         className: "main-view justify-content-md-center",
                         __source: {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 137
+                            lineNumber: 136
                         },
                         __self: this,
                         children: [
@@ -4056,7 +4055,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 138
+                                    lineNumber: 137
                                 },
                                 __self: this
                             }),
@@ -4071,7 +4070,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 154
+                                    lineNumber: 153
                                 },
                                 __self: this
                             }),
@@ -4094,7 +4093,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 162
+                                    lineNumber: 161
                                 },
                                 __self: this
                             }),
@@ -4127,7 +4126,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 182
+                                    lineNumber: 181
                                 },
                                 __self: this
                             }),
@@ -4159,7 +4158,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 214
+                                    lineNumber: 213
                                 },
                                 __self: this
                             }),
@@ -4189,7 +4188,7 @@ class MainView extends _reactDefault.default.Component {
                                 },
                                 __source: {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 242
+                                    lineNumber: 241
                                 },
                                 __self: this
                             })
@@ -12380,6 +12379,8 @@ var _button = require("react-bootstrap/Button");
 var _buttonDefault = parcelHelpers.interopDefault(_button);
 var _card = require("react-bootstrap/Card");
 var _cardDefault = parcelHelpers.interopDefault(_card);
+//redux actions
+var _actions = require("../../actions/actions");
 //favorite asset images
 var _heartEmptyPng = require("../../img/heart-empty.png");
 var _heartEmptyPngDefault = parcelHelpers.interopDefault(_heartEmptyPng);
@@ -12391,11 +12392,10 @@ class MovieCard extends _reactDefault.default.Component {
     constructor(props){
         super(props);
         this.state = {
-            movieId: '',
-            favoriteMovies: [],
-            favorited: ''
+            movieId: ''
         };
     }
+    //calling the API to add a favorite Movie to the user
     addFavMovie(mid) {
         const userName = localStorage.getItem('user');
         const token = localStorage.getItem('token');
@@ -12405,13 +12405,11 @@ class MovieCard extends _reactDefault.default.Component {
             }
         }).then((response)=>{
             console.log(response);
-            this.setState({
-                favoriteMovies: response.data.FavoriteMovies
-            });
         }).catch((e)=>{
             console.log(e);
         });
     }
+    //calling API to remove movie from the users list
     removeFavMovie(mid) {
         const userName = localStorage.getItem('user');
         const token = localStorage.getItem('token');
@@ -12421,48 +12419,61 @@ class MovieCard extends _reactDefault.default.Component {
             }
         }).then((response)=>{
             console.log(response);
-            this.setState({
-                favoriteMovies: response.data.FavoriteMovies
-            });
         }).catch((e)=>{
             console.log(e);
         });
     }
+    //when clicked the movie is either added/removed from the user via the API
+    //the state is then updated to either add/remove the movie
     favMovieClick(e) {
         e.preventDefault();
-        if (this.state.favorited) {
-            this.setState({
-                favorited: false
-            });
-            this.removeFavMovie(this.state.movieId);
-            this.props.updateFavorites(this.state.movieId);
-        } else {
-            this.setState({
-                favorited: true
-            });
-            this.addFavMovie(this.state.movieId);
-            this.props.updateFavorites(this.state.movieId);
-        }
+        let movId = this.props.movie._id;
+        if (this.props.favorites.includes(movId)) this.removeFavMovie(movId);
+        else this.addFavMovie(movId);
+        this.props.toggleFavorite(movId);
     }
-    favMovieHandle(fav) {
-        if (fav) return _heartFullPngDefault.default;
+    // favMovieClick(e) {
+    //   e.preventDefault();
+    //   if (this.state.favorited) {
+    //     this.setState({
+    //       favorited: false,
+    //     });
+    //     this.removeFavMovie(this.state.movieId);
+    //     this.props.updateFavorites(this.state.movieId);
+    //   } else {
+    //     this.setState({
+    //       favorited: true,
+    //     });
+    //     this.addFavMovie(this.state.movieId);
+    //     this.props.updateFavorites(this.state.movieId);
+    //   }
+    // }
+    favMovieHandle(mid) {
+        if (this.props.favorites.includes(mid)) return _heartFullPngDefault.default;
         else return _heartEmptyPngDefault.default;
     }
-    componentDidMount() {
-        const accessToken = localStorage.getItem('token');
-        this.setState({
-            favorited: this.props.isFavorite,
-            movieId: this.props.movie._id,
-            favoriteMovies: this.props.favorites
-        });
-    }
+    // favMovieHandle(fav) {
+    //   if (fav) {
+    //     return heartFull;
+    //   } else {
+    //     return heartEmpty;
+    //   }
+    // }
+    // componentDidMount() {
+    //   const accessToken = localStorage.getItem('token');
+    //   this.setState({
+    //     favorited: this.props.isFavorite,
+    //     movieId: this.props.movie._id,
+    //     favoriteMovies: this.props.favorites,
+    //   });
+    // }
     render() {
         const { movie , isFavorite , favorites  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
             className: "h-100 mcard",
             __source: {
                 fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 111
+                lineNumber: 129
             },
             __self: this,
             children: [
@@ -12470,7 +12481,7 @@ class MovieCard extends _reactDefault.default.Component {
                     className: "poster-wrapper",
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 112
+                        lineNumber: 130
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
@@ -12480,7 +12491,7 @@ class MovieCard extends _reactDefault.default.Component {
                         className: "poster-img",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 113
+                            lineNumber: 131
                         },
                         __self: this
                     })
@@ -12491,16 +12502,16 @@ class MovieCard extends _reactDefault.default.Component {
                     ,
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 121
+                        lineNumber: 139
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
-                        src: this.favMovieHandle(this.state.favorited),
+                        src: this.favMovieHandle(movie._id),
                         className: "fav-icon",
                         alt: "cam",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 122
+                            lineNumber: 140
                         },
                         __self: this
                     })
@@ -12509,14 +12520,14 @@ class MovieCard extends _reactDefault.default.Component {
                     className: "d-flex flex-column",
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 129
+                        lineNumber: 147
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 130
+                                lineNumber: 148
                             },
                             __self: this,
                             children: movie.Title
@@ -12524,7 +12535,7 @@ class MovieCard extends _reactDefault.default.Component {
                         /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 131
+                                lineNumber: 149
                             },
                             __self: this,
                             children: movie.Genre.Name
@@ -12534,7 +12545,7 @@ class MovieCard extends _reactDefault.default.Component {
                             to: `/movies/${movie._id}`,
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 132
+                                lineNumber: 150
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
@@ -12542,7 +12553,7 @@ class MovieCard extends _reactDefault.default.Component {
                                 variant: "secondary",
                                 __source: {
                                     fileName: "src/components/movie-card/movie-card.jsx",
-                                    lineNumber: 133
+                                    lineNumber: 151
                                 },
                                 __self: this,
                                 children: "Open"
@@ -12568,20 +12579,22 @@ MovieCard.propTypes = {
         })
     }).isRequired
 };
-let mapStateToProps = (state)=>{
+const mapStateToProps = (state)=>{
     return {
         movies: state.movies,
         favorites: state.favorites
     };
 };
-exports.default = _reactRedux.connect(mapStateToProps)(MovieCard);
+exports.default = _reactRedux.connect(mapStateToProps, {
+    toggleFavorite: _actions.toggleFavorite
+})(MovieCard);
 
   $parcel$ReactRefreshHelpers$4249.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","prop-types":"1tgq3","react-bootstrap/Button":"9CzHT","react-bootstrap/Card":"MoOk8","react-router-dom":"cpyQW","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","axios":"iYoWk","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","react-redux":"2L0if"}],"MoOk8":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","prop-types":"1tgq3","react-bootstrap/Button":"9CzHT","react-bootstrap/Card":"MoOk8","react-router-dom":"cpyQW","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","axios":"iYoWk","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","react-redux":"2L0if","../../actions/actions":"1Ttfj"}],"MoOk8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -35739,6 +35752,54 @@ const useStore = /*#__PURE__*/ createStoreHook();
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"1Ttfj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
+);
+parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
+);
+parcelHelpers.export(exports, "SET_FAVORITE", ()=>SET_FAVORITE
+);
+parcelHelpers.export(exports, "TOGGLE_FAVORITE", ()=>TOGGLE_FAVORITE
+);
+parcelHelpers.export(exports, "setMovies", ()=>setMovies
+);
+parcelHelpers.export(exports, "setFilter", ()=>setFilter
+);
+parcelHelpers.export(exports, "setFavorites", ()=>setFavorites
+);
+parcelHelpers.export(exports, "toggleFavorite", ()=>toggleFavorite
+);
+const SET_MOVIES = 'SET_MOVIES';
+const SET_FILTER = 'SET_FILTER';
+const SET_FAVORITE = 'SET_FAVORITE';
+const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
+function setMovies(value) {
+    return {
+        type: SET_MOVIES,
+        value
+    };
+}
+function setFilter(value) {
+    return {
+        type: SET_FILTER,
+        value
+    };
+}
+function setFavorites(value) {
+    return {
+        type: SET_FAVORITE,
+        value
+    };
+}
+function toggleFavorite(movieId) {
+    return {
+        type: TOGGLE_FAVORITE,
+        movieId
+    };
+}
+
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"hWS1b":[function() {},{}],"8WCoL":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$5f0a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -47610,55 +47671,7 @@ $RefreshReg$(_c, "Menubar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kGl7g":[function() {},{}],"1Ttfj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
-);
-parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
-);
-parcelHelpers.export(exports, "SET_FAVORITE", ()=>SET_FAVORITE
-);
-parcelHelpers.export(exports, "TOGGLE_FAVORITE", ()=>TOGGLE_FAVORITE
-);
-parcelHelpers.export(exports, "setMovies", ()=>setMovies
-);
-parcelHelpers.export(exports, "setFilter", ()=>setFilter
-);
-parcelHelpers.export(exports, "setFavorites", ()=>setFavorites
-);
-parcelHelpers.export(exports, "toggleFavorite", ()=>toggleFavorite
-);
-const SET_MOVIES = 'SET_MOVIES';
-const SET_FILTER = 'SET_FILTER';
-const SET_FAVORITE = 'SET_FAVORITE';
-const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
-function setMovies(value) {
-    return {
-        type: SET_MOVIES,
-        value
-    };
-}
-function setFilter(value) {
-    return {
-        type: SET_FILTER,
-        value
-    };
-}
-function setFavorites(value) {
-    return {
-        type: SET_FAVORITE,
-        value
-    };
-}
-function toggleFavorite(movieId) {
-    return {
-        type: TOGGLE_FAVORITE,
-        movieId
-    };
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"1kGQ5":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kGl7g":[function() {},{}],"1kGQ5":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$2519 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -47674,6 +47687,8 @@ var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 var _reactRedux = require("react-redux");
 var _movieCard = require("../movie-card/movie-card");
+var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
+var _actions = require("../../actions/actions");
 const mapStateToProps = (state)=>{
     const { visibilityFilter , favorites  } = state;
     return {
@@ -47690,7 +47705,7 @@ function MoviesList(props) {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 23
+            lineNumber: 25
         },
         __self: this
     }));
@@ -47699,16 +47714,14 @@ function MoviesList(props) {
             className: "mcard",
             __source: {
                 fileName: "src/components/movies-list/movies-list.jsx",
-                lineNumber: 27
+                lineNumber: 29
             },
             __self: this,
-            children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCard.MovieCard, {
+            children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                 movie: m,
-                isFavorite: favorites.includes(m._id),
-                favorites: favorites,
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 28
+                    lineNumber: 30
                 },
                 __self: this
             })
@@ -47716,7 +47729,11 @@ function MoviesList(props) {
     );
 }
 _c = MoviesList;
-exports.default = _reactRedux.connect(mapStateToProps)(MoviesList);
+exports.default = _reactRedux.connect(mapStateToProps, {
+    setMovies: _actions.setMovies,
+    setFavorites: _actions.setFavorites,
+    toggleFavorite: _actions.toggleFavorite
+})(MoviesList);
 var _c;
 $RefreshReg$(_c, "MoviesList");
 
@@ -47725,7 +47742,7 @@ $RefreshReg$(_c, "MoviesList");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap/Col":"fbam0","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"4d0QS":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap/Col":"fbam0","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../../actions/actions":"1Ttfj"}],"4d0QS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes
@@ -48329,13 +48346,21 @@ function favorites(state = [], action) {
         case _actions.SET_FAVORITE:
             return action.value;
         case _actions.TOGGLE_FAVORITE:
-            console.log('sate', state);
-            return state.filter((val)=>val !== action.movieId
+            if (state.includes(action.movieId)) return state.filter((val)=>val !== action.movieId
             );
+            else return [
+                ...state,
+                action.movieId
+            ];
         default:
             return state;
     }
 }
+// function isFavorite(state = '', action){
+//     switch (action.type) {
+//         case:
+//     }
+// }
 const moviesApp = _redux.combineReducers({
     visibilityFilter,
     movies,

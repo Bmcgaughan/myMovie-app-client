@@ -2,7 +2,9 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import { connect } from 'react-redux';
 
-import { MovieCard } from '../movie-card/movie-card';
+import MovieCard from '../movie-card/movie-card';
+
+import { setMovies, setFavorites, toggleFavorite } from '../../actions/actions';
 
 const mapStateToProps = (state) => {
   const { visibilityFilter, favorites } = state;
@@ -25,14 +27,13 @@ function MoviesList(props) {
 
   return filteredMovies.map((m) => (
     <Col md={3} key={m._id} className="mcard">
-      <MovieCard
-        movie={m}
-        isFavorite={favorites.includes(m._id)}
-        favorites={favorites}
-        // updateFavorites={(mid) => this.updateFavorites(mid)}
-      />
+      <MovieCard movie={m} />
     </Col>
   ));
 }
 
-export default connect(mapStateToProps)(MoviesList);
+export default connect(mapStateToProps, {
+  setMovies,
+  setFavorites,
+  toggleFavorite,
+})(MoviesList);

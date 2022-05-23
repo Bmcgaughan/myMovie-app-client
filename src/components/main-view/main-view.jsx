@@ -70,7 +70,6 @@ class MainView extends React.Component {
       })
       .then((response) => {
         this.props.setFavorites(response.data.FavoriteMovies);
-        this.props.toggleFavorite('6263daf56eb9e4aff4e588b3');
       })
       .catch((e) => console.log(e));
   }
