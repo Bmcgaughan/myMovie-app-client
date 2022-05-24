@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { TransitionGroup } from 'react-transition-group';
-
 import { Navbar, Nav, Button } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
