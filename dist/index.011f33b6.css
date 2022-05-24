@@ -474,14 +474,8 @@ body {
   font-size: 55px !important;
 }
 
-.slick-prev,
-.slick-next {
-  top: 20% !important;
-}
-
-.slick-slide {
-  width: 250px;
-  margin: 0 5px;
+.show-section {
+  color: white;
 }
 /* Slider */
 .slick-slider

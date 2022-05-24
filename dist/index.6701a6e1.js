@@ -35645,8 +35645,6 @@ var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRouterDom = require("react-router-dom");
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
 var _reactSlick = require("react-slick");
 var _reactSlickDefault = parcelHelpers.interopDefault(_reactSlick);
 var _reactRedux = require("react-redux");
@@ -35658,27 +35656,39 @@ var _moviesListScss = require("./movies-list.scss");
 var _slickCss = require("../../../node_modules/slick-carousel/slick/slick.css");
 var _slickThemeCss = require("../../../node_modules/slick-carousel/slick/slick-theme.css");
 var _s = $RefreshSig$();
-//mapping filter and favorites to props
+//mapping filter and favorites to props ma
 const mapStateToProps = (state)=>{
     const { visibilityFilter  } = state;
     return {
         visibilityFilter
     };
 };
-const sliderSettings = {
-    dots: true,
-    infinite: true,
+let sliderSettings = {
+    dots: false,
+    infinite: false,
+    rows: 1,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    swipeToSlide: true,
-    variableWidth: true
+    swipeToSlide: true
+};
+const sliderInit = ()=>{
+    console.log('ok');
 };
 function MoviesList(props) {
     _s();
     const { movies , visibilityFilter  } = props;
     const [dragging, setDragging] = _react.useState(false);
+    //setting up to navigate to specific movie
     const history = _reactRouterDom.useHistory();
+    //allowing slider to reset to start when filter is applied
+    const refSlide = _react.useRef();
+    let slider = _react.useEffect(()=>{
+        refSlide.current.slickGoTo(0);
+    }, [
+        visibilityFilter
+    ]);
+    //callbacks to prevent a click when user is dragging slider
     const handleBeforeChange = _react.useCallback(()=>{
         setDragging(true);
     }, [
@@ -35705,40 +35715,63 @@ function MoviesList(props) {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 73
+            lineNumber: 85
         },
         __self: this
     }));
-    return(/*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
-        beforeChange: handleBeforeChange,
-        afterChange: handleAfterChange,
-        ...sliderSettings,
+    return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
+        className: "show-section",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 77
+            lineNumber: 89
         },
         __self: this,
-        children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
-                className: "mcard",
-                onClickCapture: handleOnItemClick(m._id),
+        children: [
+            /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 83
+                    lineNumber: 90
                 },
                 __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                    movie: m,
-                    __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 88
-                    },
-                    __self: this
-                })
-            }, m._id)
-        )
+                children: [
+                    "Movies and Shows (",
+                    filteredMovies.length,
+                    ")"
+                ]
+            }),
+            /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
+                beforeChange: handleBeforeChange,
+                afterChange: handleAfterChange,
+                ...sliderSettings,
+                ref: refSlide,
+                __source: {
+                    fileName: "src/components/movies-list/movies-list.jsx",
+                    lineNumber: 91
+                },
+                __self: this,
+                children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                        className: "mcard",
+                        onClickCapture: handleOnItemClick(m._id),
+                        __source: {
+                            fileName: "src/components/movies-list/movies-list.jsx",
+                            lineNumber: 98
+                        },
+                        __self: this,
+                        children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                            movie: m,
+                            __source: {
+                                fileName: "src/components/movies-list/movies-list.jsx",
+                                lineNumber: 103
+                            },
+                            __self: this
+                        })
+                    }, m._id)
+                )
+            })
+        ]
     }));
 }
-_s(MoviesList, "FpNtrOqGFu7PCC+KZYfRq/jnKZk=", false, function() {
+_s(MoviesList, "CT4pMG6PiMoMtdI70rdtffhotDg=", false, function() {
     return [_reactRouterDom.useHistory];
 });
 _c = MoviesList;
@@ -35751,7 +35784,7 @@ $RefreshReg$(_c, "MoviesList");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap/Col":"fbam0","react-slick":"kVkIB","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","react-router-dom":"cpyQW"}],"kVkIB":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-slick":"kVkIB","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","react-router-dom":"cpyQW"}],"kVkIB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
