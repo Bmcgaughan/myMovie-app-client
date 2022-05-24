@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../spinner/spinner';
 
 import '../../index.scss';
 import './login-view.scss';
@@ -18,6 +19,7 @@ export function LoginView(props) {
   const [password, setPassword] = useState('');
   const [usernameErr, setUsernameErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
+  const [loading, setLoading] = useState(false);
 
   //validation of registration data
   const validate = () => {
@@ -41,12 +43,11 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     //calling validation on user input
     const isReq = validate();
 
     if (isReq) {
-      console.log(username, password);
+      setLoading(true);
       //sending post request to API with Username and Password
       axios
         .post('https://whatdoiwatch.herokuapp.com/login', {
@@ -54,47 +55,57 @@ export function LoginView(props) {
           Password: password,
         })
         .then((response) => {
+          setLoading(false);
           const data = response.data;
           props.onLoggedIn(data);
         })
         .catch((e) => {
+          setLoading(false);
           console.log(e);
           console.log('User does not exist');
         });
     }
   };
 
-  return (
-    <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
-      <div>
-        <h1>What Do I Watch!</h1>
-      </div>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="text"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        {usernameErr && <p>{usernameErr}</p>}
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {passwordErr && <p>{passwordErr}</p>}
-      </Form.Group>
-      <Row className="buttons flex-column">
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Sign In
-        </Button>
-        <Link className="reg-button" to={`/register`}>
-          <Button variant="primary">Register</Button>
-        </Link>
-      </Row>
-    </Form>
-  );
+  if (loading) {
+    return (
+      <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
+        <LoadingSpinner />
+      </Form>
+    );
+  } else {
+    return (
+      <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
+        <div>
+          <h1>What Do I Watch!</h1>
+        </div>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          {usernameErr && <p>{usernameErr}</p>}
+        </Form.Group>
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {passwordErr && <p>{passwordErr}</p>}
+        </Form.Group>
+        <Row className="buttons flex-column">
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
+            Sign In
+          </Button>
+          <Link className="reg-button" to={`/register`}>
+            <Button variant="primary">Register</Button>
+          </Link>
+        </Row>
+      </Form>
+    );
+  }
 }
 
 LoginView.propTypes = {

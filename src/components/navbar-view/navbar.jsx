@@ -11,8 +11,11 @@ import './nav-bar.scss';
 
 //redux mapping filter to props for component
 const mapStateToProps = (state) => {
-  const { visibilityFilter } = state;
-  return { visibilityFilter };
+  const { visibilityFilter, user } = state;
+  return {
+    visibilityFilter,
+    user: state.user,
+  };
 };
 
 //main Menubar Function
@@ -24,6 +27,7 @@ function Menubar(props) {
 
   //getting route location to toggle search function
   const location = useLocation();
+  console.log(location);
 
   const onLogOut = () => {
     localStorage.clear();
@@ -59,7 +63,7 @@ function Menubar(props) {
       variant="light"
     >
       <Nav>
-        {location.pathname === '/' ? (
+        {location.pathname === '/' && props.user ? (
           <div className="search-expand d-flex align-items-center">
             <a
               className="search-link"

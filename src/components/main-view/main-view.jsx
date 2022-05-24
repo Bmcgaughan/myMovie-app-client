@@ -19,6 +19,7 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import ProfileView from '../profile-view/profile-view';
 import Menubar from '../navbar-view/navbar';
+import LoadingSpinner from '../spinner/spinner';
 
 import { Container } from 'react-bootstrap';
 
@@ -29,7 +30,6 @@ class MainView extends React.Component {
     //initial state for main-view
     this.state = {
       registered: null,
-      user: null,
     };
   }
 
@@ -107,7 +107,12 @@ class MainView extends React.Component {
                       <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                     </Col>
                   );
-                if (movies.length === 0) return <div className="main-view" />;
+                if (movies.length === 0)
+                  return (
+                    <div className="main-view">
+                      <LoadingSpinner />
+                    </div>
+                  );
                 if (!favorites) return <div className="main-view" />;
                 return <MoviesList movies={movies} favorites={favorites} />;
               }}
