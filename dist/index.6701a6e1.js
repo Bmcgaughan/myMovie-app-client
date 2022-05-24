@@ -47514,6 +47514,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
 var _reactTransitionGroup = require("react-transition-group");
 var _reactBootstrap = require("react-bootstrap");
 var _reactRedux = require("react-redux");
@@ -47534,6 +47535,8 @@ function Menubar(props) {
     const [searchBar, setSearchBar] = _react.useState(false);
     const [fade, setFade] = _react.useState('');
     const { visibilityFilter , user  } = props;
+    //getting route location to toggle search function
+    const location = _reactRouterDom.useLocation();
     const onLogOut = ()=>{
         localStorage.clear();
         window.open('/', '_self');
@@ -47556,22 +47559,22 @@ function Menubar(props) {
         variant: "light",
         __source: {
             fileName: "src/components/navbar-view/navbar.jsx",
-            lineNumber: 53
+            lineNumber: 56
         },
         __self: this,
         children: [
             /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Nav, {
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 60
+                    lineNumber: 63
                 },
                 __self: this,
                 children: [
-                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                    location.pathname === '/' ? /*#__PURE__*/ _jsxRuntime.jsx("div", {
                         className: "search-expand d-flex align-items-center",
                         __source: {
                             fileName: "src/components/navbar-view/navbar.jsx",
-                            lineNumber: 61
+                            lineNumber: 65
                         },
                         __self: this,
                         children: /*#__PURE__*/ _jsxRuntime.jsx("a", {
@@ -47583,7 +47586,7 @@ function Menubar(props) {
                             title: "Search by Title",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 62
+                                lineNumber: 66
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsx("svg", {
@@ -47595,31 +47598,37 @@ function Menubar(props) {
                                 viewBox: "0 0 16 16",
                                 __source: {
                                     fileName: "src/components/navbar-view/navbar.jsx",
-                                    lineNumber: 69
+                                    lineNumber: 73
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
                                     d: "M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z",
                                     __source: {
                                         fileName: "src/components/navbar-view/navbar.jsx",
-                                        lineNumber: 77
+                                        lineNumber: 81
                                     },
                                     __self: this
                                 })
                             })
                         })
+                    }) : /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                        __source: {
+                            fileName: "src/components/navbar-view/navbar.jsx",
+                            lineNumber: 86
+                        },
+                        __self: this
                     }),
                     /*#__PURE__*/ _jsxRuntime.jsx("div", {
                         className: `anim-search ${fade}`,
                         __source: {
                             fileName: "src/components/navbar-view/navbar.jsx",
-                            lineNumber: 81
+                            lineNumber: 90
                         },
                         __self: this,
                         children: searchBar && /*#__PURE__*/ _jsxRuntime.jsx(_visibilityFilterInputDefault.default, {
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 82
+                                lineNumber: 91
                             },
                             __self: this
                         })
@@ -47630,7 +47639,7 @@ function Menubar(props) {
                 className: "navbar-logo",
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 85
+                    lineNumber: 94
                 },
                 __self: this,
                 children: "What Do I Watch?"
@@ -47639,7 +47648,7 @@ function Menubar(props) {
                 "aria-controls": "responsive-navba-nav",
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 86
+                    lineNumber: 95
                 },
                 __self: this
             }),
@@ -47647,14 +47656,14 @@ function Menubar(props) {
                 id: "responsive-navbar-nav",
                 __source: {
                     fileName: "src/components/navbar-view/navbar.jsx",
-                    lineNumber: 87
+                    lineNumber: 96
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Nav, {
                     className: "ml-auto",
                     __source: {
                         fileName: "src/components/navbar-view/navbar.jsx",
-                        lineNumber: 88
+                        lineNumber: 97
                     },
                     __self: this,
                     children: [
@@ -47662,7 +47671,7 @@ function Menubar(props) {
                             href: `/`,
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 89
+                                lineNumber: 98
                             },
                             __self: this,
                             children: "Full List"
@@ -47671,7 +47680,7 @@ function Menubar(props) {
                             href: `/users/${user}`,
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 91
+                                lineNumber: 100
                             },
                             __self: this,
                             children: "Profile"
@@ -47683,7 +47692,7 @@ function Menubar(props) {
                             },
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 93
+                                lineNumber: 102
                             },
                             __self: this,
                             children: "Log Out"
@@ -47692,7 +47701,7 @@ function Menubar(props) {
                             href: "/",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 102
+                                lineNumber: 111
                             },
                             __self: this,
                             children: "Sign In"
@@ -47701,7 +47710,7 @@ function Menubar(props) {
                             href: "/register",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 103
+                                lineNumber: 112
                             },
                             __self: this,
                             children: "Register"
@@ -47712,7 +47721,9 @@ function Menubar(props) {
         ]
     }));
 }
-_s(Menubar, "5JcTnw9akekMqlRfGvKWQRRIBaw=");
+_s(Menubar, "yt9vpICT70FLUDDz+NHij8DxCTA=", false, function() {
+    return [_reactRouterDom.useLocation];
+});
 _c = Menubar;
 exports.default = _reactRedux.connect(mapStateToProps)(Menubar);
 var _c;
@@ -47723,7 +47734,7 @@ $RefreshReg$(_c, "Menubar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../visibility-filter-input/visibility-filter-input":"7ZxGS","react-transition-group":"gQu97"}],"kGl7g":[function() {},{}],"7ZxGS":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../visibility-filter-input/visibility-filter-input":"7ZxGS","react-transition-group":"gQu97","react-router-dom":"cpyQW"}],"kGl7g":[function() {},{}],"7ZxGS":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$9bc3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;

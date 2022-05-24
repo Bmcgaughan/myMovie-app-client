@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { TransitionGroup } from 'react-transition-group';
 
@@ -23,6 +24,9 @@ function Menubar(props) {
 
   const { visibilityFilter, user } = props;
 
+  //getting route location to toggle search function
+  const location = useLocation();
+
   const onLogOut = () => {
     localStorage.clear();
     window.open('/', '_self');
@@ -45,7 +49,6 @@ function Menubar(props) {
     } else {
       setFade('fade-in');
     }
-
     setSearchBar(!searchBar);
   };
 
@@ -58,26 +61,32 @@ function Menubar(props) {
       variant="light"
     >
       <Nav>
-        <div className="search-expand d-flex align-items-center">
-          <a
-            className="search-link"
-            onClick={(e) => toggleSearchBar(e)}
-            data-toggle="tooltip"
-            data-placement="top"
-            title="Search by Title"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="#000000"
-              className="bi bi-search"
-              viewBox="0 0 16 16"
+        {location.pathname === '/' ? (
+          <div className="search-expand d-flex align-items-center">
+            <a
+              className="search-link"
+              onClick={(e) => toggleSearchBar(e)}
+              data-toggle="tooltip"
+              data-placement="top"
+              title="Search by Title"
             >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
-          </a>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="#000000"
+                className="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+              </svg>
+            </a>
+          </div>
+        ) : (
+          <div></div>
+        )}
+
+        {/* adding div to display searchbar on click */}
         <div className={`anim-search ${fade}`}>
           {searchBar && <VisibilityFilterInput />}
         </div>
