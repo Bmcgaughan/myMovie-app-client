@@ -96,7 +96,7 @@ export class MovieCard extends React.Component {
       <Card className="h-100 mcard">
         <div className="poster-wrapper">
           <Card.Img
-            // crossOrigin="anonymous"
+            crossOrigin="anonymous"
             variant="top"
             src={movie.ImagePath}
             className="poster-img"

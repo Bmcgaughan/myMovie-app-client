@@ -35784,7 +35784,369 @@ $RefreshReg$(_c, "MoviesList");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-slick":"kVkIB","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","react-router-dom":"cpyQW"}],"kVkIB":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-router-dom":"cpyQW","react-slick":"kVkIB","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX"}],"6EiBJ":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4249 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$4249.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+//Basic display of movies that are rendered on MainView
+parcelHelpers.export(exports, "MovieCard", ()=>MovieCard
+);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+//connecting redux
+var _reactRedux = require("react-redux");
+//boostrap components
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _card = require("react-bootstrap/Card");
+var _cardDefault = parcelHelpers.interopDefault(_card);
+//redux actions
+var _actions = require("../../actions/actions");
+//favorite asset images
+var _heartEmptyPng = require("../../img/heart-empty.png");
+var _heartEmptyPngDefault = parcelHelpers.interopDefault(_heartEmptyPng);
+var _heartFullPng = require("../../img/heart-full.png");
+var _heartFullPngDefault = parcelHelpers.interopDefault(_heartFullPng);
+//importing stylesheet
+var _movieCardScss = require("./movie-card.scss");
+class MovieCard extends _reactDefault.default.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            movieId: ''
+        };
+    }
+    //calling the API to add a favorite Movie to the user
+    addFavMovie(mid) {
+        const userName = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        _axiosDefault.default.post(`https://whatdoiwatch.herokuapp.com/users/${userName}/favorites/${mid}`, '', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            console.log(response);
+        }).catch((e)=>{
+            console.log(e);
+        });
+    }
+    //calling API to remove movie from the users list
+    removeFavMovie(mid) {
+        const userName = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        _axiosDefault.default.delete(`https://whatdoiwatch.herokuapp.com/users/${userName}/favorites/${mid}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            console.log(response);
+        }).catch((e)=>{
+            console.log(e);
+        });
+    }
+    //when clicked the movie is either added/removed from the user via the API
+    //the state is then updated to either add/remove the movie
+    favMovieClick(e) {
+        e.preventDefault();
+        let movId = this.props.movie._id;
+        if (this.props.favorites.includes(movId)) this.removeFavMovie(movId);
+        else this.addFavMovie(movId);
+        //toggle state to force refresh
+        this.props.toggleFavorite(movId);
+    }
+    favMovieHandle(mid) {
+        if (this.props.favorites.includes(mid)) return _heartFullPngDefault.default;
+        else return _heartEmptyPngDefault.default;
+    }
+    render() {
+        const { movie , isFavorite , favorites  } = this.props;
+        return(/*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
+            className: "h-100 mcard",
+            __source: {
+                fileName: "src/components/movie-card/movie-card.jsx",
+                lineNumber: 96
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                    className: "poster-wrapper",
+                    __source: {
+                        fileName: "src/components/movie-card/movie-card.jsx",
+                        lineNumber: 97
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
+                        crossOrigin: "anonymous",
+                        variant: "top",
+                        src: movie.ImagePath,
+                        className: "poster-img",
+                        __source: {
+                            fileName: "src/components/movie-card/movie-card.jsx",
+                            lineNumber: 98
+                        },
+                        __self: this
+                    })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx("a", {
+                    href: "#",
+                    onClick: (e)=>this.favMovieClick(e)
+                    ,
+                    "data-toggle": "tooltip",
+                    "data-placement": "top",
+                    title: "Add to Favorites",
+                    __source: {
+                        fileName: "src/components/movie-card/movie-card.jsx",
+                        lineNumber: 105
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
+                        src: this.favMovieHandle(movie._id),
+                        className: "fav-icon",
+                        alt: "cam",
+                        __source: {
+                            fileName: "src/components/movie-card/movie-card.jsx",
+                            lineNumber: 112
+                        },
+                        __self: this
+                    })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Body, {
+                    className: "d-flex flex-column",
+                    __source: {
+                        fileName: "src/components/movie-card/movie-card.jsx",
+                        lineNumber: 119
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
+                        __source: {
+                            fileName: "src/components/movie-card/movie-card.jsx",
+                            lineNumber: 120
+                        },
+                        __self: this,
+                        children: movie.Title
+                    })
+                })
+            ]
+        }));
+    }
+}
+//setting up default values for the MovieCard properties
+//ensuring values are strings and required
+MovieCard.propTypes = {
+    movie: _propTypesDefault.default.shape({
+        Title: _propTypesDefault.default.string.isRequired,
+        Description: _propTypesDefault.default.string.isRequired,
+        Genre: _propTypesDefault.default.shape({
+            Name: _propTypesDefault.default.string
+        }),
+        Director: _propTypesDefault.default.shape({
+            Name: _propTypesDefault.default.string
+        })
+    }).isRequired
+};
+const mapStateToProps = (state)=>{
+    return {
+        movies: state.movies,
+        favorites: state.favorites
+    };
+};
+exports.default = _reactRedux.connect(mapStateToProps, {
+    toggleFavorite: _actions.toggleFavorite
+})(MovieCard);
+
+  $parcel$ReactRefreshHelpers$4249.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","axios":"iYoWk","react-redux":"2L0if","react-bootstrap/Button":"9CzHT","react-bootstrap/Card":"MoOk8","../../actions/actions":"1Ttfj","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"MoOk8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _createWithBsPrefix = require("./createWithBsPrefix");
+var _createWithBsPrefixDefault = parcelHelpers.interopDefault(_createWithBsPrefix);
+var _divWithClassName = require("./divWithClassName");
+var _divWithClassNameDefault = parcelHelpers.interopDefault(_divWithClassName);
+var _cardImg = require("./CardImg");
+var _cardImgDefault = parcelHelpers.interopDefault(_cardImg);
+var _cardHeader = require("./CardHeader");
+var _cardHeaderDefault = parcelHelpers.interopDefault(_cardHeader);
+var _jsxRuntime = require("react/jsx-runtime");
+const DivStyledAsH5 = _divWithClassNameDefault.default('h5');
+const DivStyledAsH6 = _divWithClassNameDefault.default('h6');
+const CardBody = _createWithBsPrefixDefault.default('card-body');
+const CardTitle = _createWithBsPrefixDefault.default('card-title', {
+    Component: DivStyledAsH5
+});
+const CardSubtitle = _createWithBsPrefixDefault.default('card-subtitle', {
+    Component: DivStyledAsH6
+});
+const CardLink = _createWithBsPrefixDefault.default('card-link', {
+    Component: 'a'
+});
+const CardText = _createWithBsPrefixDefault.default('card-text', {
+    Component: 'p'
+});
+const CardFooter = _createWithBsPrefixDefault.default('card-footer');
+const CardImgOverlay = _createWithBsPrefixDefault.default('card-img-overlay');
+const defaultProps = {
+    body: false
+};
+const Card = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , bg , text , border , body , children , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div' , ...props }, ref)=>{
+    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card');
+    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
+        ref: ref,
+        ...props,
+        className: _classnamesDefault.default(className, prefix, bg && `bg-${bg}`, text && `text-${text}`, border && `border-${border}`),
+        children: body ? /*#__PURE__*/ _jsxRuntime.jsx(CardBody, {
+            children: children
+        }) : children
+    }));
+});
+Card.displayName = 'Card';
+Card.defaultProps = defaultProps;
+exports.default = Object.assign(Card, {
+    Img: _cardImgDefault.default,
+    Title: CardTitle,
+    Subtitle: CardSubtitle,
+    Body: CardBody,
+    Link: CardLink,
+    Text: CardText,
+    Header: _cardHeaderDefault.default,
+    Footer: CardFooter,
+    ImgOverlay: CardImgOverlay
+});
+
+},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./createWithBsPrefix":"8AqEH","./divWithClassName":"GBmBH","./CardImg":"5GKOF","./CardHeader":"3O5Ma","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"GBmBH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _jsxRuntime = require("react/jsx-runtime");
+exports.default = (className)=>/*#__PURE__*/ _react.forwardRef((p, ref)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
+            ...p,
+            ref: ref,
+            className: _classnamesDefault.default(p.className, className)
+        })
+    )
+;
+
+},{"react":"6TuXu","classnames":"bOXOh","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"5GKOF":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _jsxRuntime = require("react/jsx-runtime");
+const CardImg = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , variant , as: Component = 'img' , ...props }, ref)=>{
+    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-img');
+    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
+        ref: ref,
+        className: _classnamesDefault.default(variant ? `${prefix}-${variant}` : prefix, className),
+        ...props
+    }));
+});
+CardImg.displayName = 'CardImg';
+exports.default = CardImg;
+
+},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"3O5Ma":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _classnames = require("classnames");
+var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
+var _react = require("react");
+var _themeProvider = require("./ThemeProvider");
+var _cardHeaderContext = require("./CardHeaderContext");
+var _cardHeaderContextDefault = parcelHelpers.interopDefault(_cardHeaderContext);
+var _jsxRuntime = require("react/jsx-runtime");
+const CardHeader = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+as: Component = 'div' , ...props }, ref)=>{
+    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-header');
+    const contextValue = _react.useMemo(()=>({
+            cardHeaderBsPrefix: prefix
+        })
+    , [
+        prefix
+    ]);
+    return(/*#__PURE__*/ _jsxRuntime.jsx(_cardHeaderContextDefault.default.Provider, {
+        value: contextValue,
+        children: /*#__PURE__*/ _jsxRuntime.jsx(Component, {
+            ref: ref,
+            ...props,
+            className: _classnamesDefault.default(className, prefix)
+        })
+    }));
+});
+CardHeader.displayName = 'CardHeader';
+exports.default = CardHeader;
+
+},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./CardHeaderContext":"axTEk","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"axTEk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+const context = /*#__PURE__*/ _react.createContext(null);
+context.displayName = 'CardHeaderContext';
+exports.default = context;
+
+},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"68Ejn":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('3VpAv') + "heart-empty.a93ca4aa.png";
+
+},{"./helpers/bundle-url":"jDaZY"}],"jDaZY":[function(require,module,exports) {
+"use strict";
+var bundleURL = {
+};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"fms7o":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('3VpAv') + "heart-full.31cdf4dc.png";
+
+},{"./helpers/bundle-url":"jDaZY"}],"cF5gT":[function() {},{}],"9gz3w":[function() {},{}],"kVkIB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -39885,369 +40247,7 @@ module.exports = {
     each: each
 };
 
-},{}],"6EiBJ":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$4249 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$4249.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-//Basic display of movies that are rendered on MainView
-parcelHelpers.export(exports, "MovieCard", ()=>MovieCard
-);
-var _jsxRuntime = require("react/jsx-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactRouterDom = require("react-router-dom");
-var _propTypes = require("prop-types");
-var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-//connecting redux
-var _reactRedux = require("react-redux");
-//boostrap components
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _card = require("react-bootstrap/Card");
-var _cardDefault = parcelHelpers.interopDefault(_card);
-//redux actions
-var _actions = require("../../actions/actions");
-//favorite asset images
-var _heartEmptyPng = require("../../img/heart-empty.png");
-var _heartEmptyPngDefault = parcelHelpers.interopDefault(_heartEmptyPng);
-var _heartFullPng = require("../../img/heart-full.png");
-var _heartFullPngDefault = parcelHelpers.interopDefault(_heartFullPng);
-//importing stylesheet
-var _movieCardScss = require("./movie-card.scss");
-class MovieCard extends _reactDefault.default.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            movieId: ''
-        };
-    }
-    //calling the API to add a favorite Movie to the user
-    addFavMovie(mid) {
-        const userName = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-        _axiosDefault.default.post(`https://whatdoiwatch.herokuapp.com/users/${userName}/favorites/${mid}`, '', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            console.log(response);
-        }).catch((e)=>{
-            console.log(e);
-        });
-    }
-    //calling API to remove movie from the users list
-    removeFavMovie(mid) {
-        const userName = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-        _axiosDefault.default.delete(`https://whatdoiwatch.herokuapp.com/users/${userName}/favorites/${mid}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            console.log(response);
-        }).catch((e)=>{
-            console.log(e);
-        });
-    }
-    //when clicked the movie is either added/removed from the user via the API
-    //the state is then updated to either add/remove the movie
-    favMovieClick(e) {
-        e.preventDefault();
-        let movId = this.props.movie._id;
-        if (this.props.favorites.includes(movId)) this.removeFavMovie(movId);
-        else this.addFavMovie(movId);
-        //toggle state to force refresh
-        this.props.toggleFavorite(movId);
-    }
-    favMovieHandle(mid) {
-        if (this.props.favorites.includes(mid)) return _heartFullPngDefault.default;
-        else return _heartEmptyPngDefault.default;
-    }
-    render() {
-        const { movie , isFavorite , favorites  } = this.props;
-        return(/*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
-            className: "h-100 mcard",
-            __source: {
-                fileName: "src/components/movie-card/movie-card.jsx",
-                lineNumber: 96
-            },
-            __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                    className: "poster-wrapper",
-                    __source: {
-                        fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 97
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Img, {
-                        crossOrigin: "anonymous",
-                        variant: "top",
-                        src: movie.ImagePath,
-                        className: "poster-img",
-                        __source: {
-                            fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 98
-                        },
-                        __self: this
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx("a", {
-                    href: "#",
-                    onClick: (e)=>this.favMovieClick(e)
-                    ,
-                    "data-toggle": "tooltip",
-                    "data-placement": "top",
-                    title: "Add to Favorites",
-                    __source: {
-                        fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 105
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
-                        src: this.favMovieHandle(movie._id),
-                        className: "fav-icon",
-                        alt: "cam",
-                        __source: {
-                            fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 112
-                        },
-                        __self: this
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Body, {
-                    className: "d-flex flex-column",
-                    __source: {
-                        fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 119
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
-                        __source: {
-                            fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 120
-                        },
-                        __self: this,
-                        children: movie.Title
-                    })
-                })
-            ]
-        }));
-    }
-}
-//setting up default values for the MovieCard properties
-//ensuring values are strings and required
-MovieCard.propTypes = {
-    movie: _propTypesDefault.default.shape({
-        Title: _propTypesDefault.default.string.isRequired,
-        Description: _propTypesDefault.default.string.isRequired,
-        Genre: _propTypesDefault.default.shape({
-            Name: _propTypesDefault.default.string
-        }),
-        Director: _propTypesDefault.default.shape({
-            Name: _propTypesDefault.default.string
-        })
-    }).isRequired
-};
-const mapStateToProps = (state)=>{
-    return {
-        movies: state.movies,
-        favorites: state.favorites
-    };
-};
-exports.default = _reactRedux.connect(mapStateToProps, {
-    toggleFavorite: _actions.toggleFavorite
-})(MovieCard);
-
-  $parcel$ReactRefreshHelpers$4249.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","axios":"iYoWk","react-redux":"2L0if","react-bootstrap/Button":"9CzHT","react-bootstrap/Card":"MoOk8","../../actions/actions":"1Ttfj","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"MoOk8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _createWithBsPrefix = require("./createWithBsPrefix");
-var _createWithBsPrefixDefault = parcelHelpers.interopDefault(_createWithBsPrefix);
-var _divWithClassName = require("./divWithClassName");
-var _divWithClassNameDefault = parcelHelpers.interopDefault(_divWithClassName);
-var _cardImg = require("./CardImg");
-var _cardImgDefault = parcelHelpers.interopDefault(_cardImg);
-var _cardHeader = require("./CardHeader");
-var _cardHeaderDefault = parcelHelpers.interopDefault(_cardHeader);
-var _jsxRuntime = require("react/jsx-runtime");
-const DivStyledAsH5 = _divWithClassNameDefault.default('h5');
-const DivStyledAsH6 = _divWithClassNameDefault.default('h6');
-const CardBody = _createWithBsPrefixDefault.default('card-body');
-const CardTitle = _createWithBsPrefixDefault.default('card-title', {
-    Component: DivStyledAsH5
-});
-const CardSubtitle = _createWithBsPrefixDefault.default('card-subtitle', {
-    Component: DivStyledAsH6
-});
-const CardLink = _createWithBsPrefixDefault.default('card-link', {
-    Component: 'a'
-});
-const CardText = _createWithBsPrefixDefault.default('card-text', {
-    Component: 'p'
-});
-const CardFooter = _createWithBsPrefixDefault.default('card-footer');
-const CardImgOverlay = _createWithBsPrefixDefault.default('card-img-overlay');
-const defaultProps = {
-    body: false
-};
-const Card = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , bg , text , border , body , children , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-as: Component = 'div' , ...props }, ref)=>{
-    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card');
-    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
-        ref: ref,
-        ...props,
-        className: _classnamesDefault.default(className, prefix, bg && `bg-${bg}`, text && `text-${text}`, border && `border-${border}`),
-        children: body ? /*#__PURE__*/ _jsxRuntime.jsx(CardBody, {
-            children: children
-        }) : children
-    }));
-});
-Card.displayName = 'Card';
-Card.defaultProps = defaultProps;
-exports.default = Object.assign(Card, {
-    Img: _cardImgDefault.default,
-    Title: CardTitle,
-    Subtitle: CardSubtitle,
-    Body: CardBody,
-    Link: CardLink,
-    Text: CardText,
-    Header: _cardHeaderDefault.default,
-    Footer: CardFooter,
-    ImgOverlay: CardImgOverlay
-});
-
-},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./createWithBsPrefix":"8AqEH","./divWithClassName":"GBmBH","./CardImg":"5GKOF","./CardHeader":"3O5Ma","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"GBmBH":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _react = require("react");
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _jsxRuntime = require("react/jsx-runtime");
-exports.default = (className)=>/*#__PURE__*/ _react.forwardRef((p, ref)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
-            ...p,
-            ref: ref,
-            className: _classnamesDefault.default(p.className, className)
-        })
-    )
-;
-
-},{"react":"6TuXu","classnames":"bOXOh","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"5GKOF":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _jsxRuntime = require("react/jsx-runtime");
-const CardImg = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , variant , as: Component = 'img' , ...props }, ref)=>{
-    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-img');
-    return(/*#__PURE__*/ _jsxRuntime.jsx(Component, {
-        ref: ref,
-        className: _classnamesDefault.default(variant ? `${prefix}-${variant}` : prefix, className),
-        ...props
-    }));
-});
-CardImg.displayName = 'CardImg';
-exports.default = CardImg;
-
-},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"3O5Ma":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _classnames = require("classnames");
-var _classnamesDefault = parcelHelpers.interopDefault(_classnames);
-var _react = require("react");
-var _themeProvider = require("./ThemeProvider");
-var _cardHeaderContext = require("./CardHeaderContext");
-var _cardHeaderContextDefault = parcelHelpers.interopDefault(_cardHeaderContext);
-var _jsxRuntime = require("react/jsx-runtime");
-const CardHeader = /*#__PURE__*/ _react.forwardRef(({ bsPrefix , className , // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-as: Component = 'div' , ...props }, ref)=>{
-    const prefix = _themeProvider.useBootstrapPrefix(bsPrefix, 'card-header');
-    const contextValue = _react.useMemo(()=>({
-            cardHeaderBsPrefix: prefix
-        })
-    , [
-        prefix
-    ]);
-    return(/*#__PURE__*/ _jsxRuntime.jsx(_cardHeaderContextDefault.default.Provider, {
-        value: contextValue,
-        children: /*#__PURE__*/ _jsxRuntime.jsx(Component, {
-            ref: ref,
-            ...props,
-            className: _classnamesDefault.default(className, prefix)
-        })
-    }));
-});
-CardHeader.displayName = 'CardHeader';
-exports.default = CardHeader;
-
-},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./CardHeaderContext":"axTEk","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"axTEk":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _react = require("react");
-const context = /*#__PURE__*/ _react.createContext(null);
-context.displayName = 'CardHeaderContext';
-exports.default = context;
-
-},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"68Ejn":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('3VpAv') + "heart-empty.a93ca4aa.png";
-
-},{"./helpers/bundle-url":"jDaZY"}],"jDaZY":[function(require,module,exports) {
-"use strict";
-var bundleURL = {
-};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
-    }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return '/';
-}
-function getBaseURL(url) {
-    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
-    if (!matches) throw new Error('Origin not found');
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"fms7o":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('3VpAv') + "heart-full.31cdf4dc.png";
-
-},{"./helpers/bundle-url":"jDaZY"}],"cF5gT":[function() {},{}],"9gz3w":[function() {},{}],"3nTPC":[function() {},{}],"6cDoX":[function() {},{}],"ikZdr":[function(require,module,exports) {
+},{}],"3nTPC":[function() {},{}],"6cDoX":[function() {},{}],"ikZdr":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$3741 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
