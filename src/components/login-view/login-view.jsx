@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import axios from 'axios';
 
 import Form from 'react-bootstrap/Form';
@@ -44,6 +46,7 @@ export function LoginView(props) {
     const isReq = validate();
 
     if (isReq) {
+      console.log(username, password);
       //sending post request to API with Username and Password
       axios
         .post('https://whatdoiwatch.herokuapp.com/login', {
@@ -55,15 +58,11 @@ export function LoginView(props) {
           props.onLoggedIn(data);
         })
         .catch((e) => {
+          console.log(e);
           console.log('User does not exist');
         });
     }
   };
-
-  // const handleRegister = (e) => {
-  //   e.preventDefault();
-  //   props.onRegister(true);
-  // };
 
   return (
     <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
@@ -97,3 +96,11 @@ export function LoginView(props) {
     </Form>
   );
 }
+
+LoginView.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }),
+  onLoggedIn: PropTypes.func.isRequired,
+};

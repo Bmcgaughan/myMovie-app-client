@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 //setting up redux and bringing in actions
 import { connect } from 'react-redux';
-import { setMovies, setFavorites, toggleFavorite } from '../../actions/actions';
+import { setMovies, setFavorites, setUser } from '../../actions/actions';
 
 //bootstrap imports
 import Row from 'react-bootstrap/Row';
@@ -31,15 +31,13 @@ class MainView extends React.Component {
       registered: null,
       user: null,
     };
-    this.accessFavorites = this.accessFavorites.bind(this);
   }
 
   componentDidMount() {
+    //seeing if user is logged in
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user'),
-      });
+      this.props.setUser(localStorage.getItem('user'));
       this.getMovies(accessToken);
       this.getFavorites(accessToken);
     }
@@ -74,43 +72,9 @@ class MainView extends React.Component {
       .catch((e) => console.log(e));
   }
 
-  //sets the selected movie state with value that is provided
-  setSelectedMovie(newSelectedMovie) {
-    this.setState({
-      selectedMovie: newSelectedMovie,
-    });
-  }
-
-  //allowing other component to reference favorite movies
-  accessFavorites() {
-    return this.state.favorites;
-  }
-
-  //allowing other components to update favorite movies list
-  updateFavorites(mid) {
-    let favArray = this.state.favorites;
-    if (!favArray) {
-      return;
-    }
-    if (favArray.includes(mid)) {
-      let index = favArray.indexOf(mid);
-      console.log(index);
-      favArray.splice(index, 1);
-      this.setState({
-        favorites: favArray,
-      });
-    } else {
-      this.setState({
-        favorites: [...this.state.favorites, mid],
-      });
-    }
-  }
-
   //when user is verified set state to current user
   onLoggedIn(userAuth) {
-    this.setState({
-      user: userAuth.user.Username,
-    });
+    this.props.setUser(userAuth.user.Username);
     localStorage.setItem('token', userAuth.token),
       localStorage.setItem('user', userAuth.user.Username);
     this.getMovies(userAuth.token);
@@ -125,8 +89,7 @@ class MainView extends React.Component {
   }
 
   render() {
-    const { user } = this.state;
-    let { movies, favorites } = this.props;
+    let { user, movies, favorites } = this.props;
 
     //if a movie is selected show the Movie View details
     return (
@@ -197,12 +160,9 @@ class MainView extends React.Component {
                           (m) => m.Director.Name === match.params.name
                         ).Director
                       }
-                      updateFavorites={(mid) => this.updateFavorites(mid)}
-                      favorites={favorites}
                       directorMovies={movies.filter((m) => {
                         return m.Director.Name === match.params.name;
                       })}
-                      accessFavorites={this.accessFavorites}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>
@@ -230,8 +190,6 @@ class MainView extends React.Component {
                       genreMovies={movies.filter((m) => {
                         return m.Genre.Name === match.params.name;
                       })}
-                      accessFavorites={this.accessFavorites}
-                      updateFavorites={(mid) => this.updateFavorites(mid)}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>
@@ -271,11 +229,12 @@ let mapStateToProps = (state) => {
   return {
     movies: state.movies,
     favorites: state.favorites,
+    user: state.user,
   };
 };
 
 export default connect(mapStateToProps, {
   setMovies,
   setFavorites,
-  toggleFavorite,
+  setUser,
 })(MainView);

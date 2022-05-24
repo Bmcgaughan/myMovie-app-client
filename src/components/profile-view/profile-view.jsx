@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
 
 import MovieCard from '../movie-card/movie-card';
@@ -372,3 +374,13 @@ let mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(ProfileView);
+
+ProfileView.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      imagePath: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};

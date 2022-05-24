@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import MovieCard from '../movie-card/movie-card';
 
@@ -44,6 +45,7 @@ export class DirectorView extends React.Component {
           </Button>
         </div>
         <div className="movie-view bt-movie">
+          {/* returning list of movies directed by current director */}
           <div className="cards-header">Also directed by {director.Name}:</div>
           <Row>{directorCards}</Row>
         </div>
@@ -51,3 +53,11 @@ export class DirectorView extends React.Component {
     );
   }
 }
+
+DirectorView.propTypes = {
+  director: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    bio: PropTypes.string.isRequired,
+  }).isRequired,
+  onBackClick: PropTypes.func.isRequired,
+};

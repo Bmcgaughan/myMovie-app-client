@@ -2,6 +2,7 @@ export const SET_MOVIES = 'SET_MOVIES';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_FAVORITE = 'SET_FAVORITE';
 export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
+export const SET_USER = 'SET_USER';
 
 export function setMovies(value) {
   return { type: SET_MOVIES, value };
@@ -17,4 +18,8 @@ export function setFavorites(value) {
 
 export function toggleFavorite(movieId) {
   return { type: TOGGLE_FAVORITE, movieId };
+}
+
+export function setUser(user) {
+  return { type: SET_USER, user };
 }

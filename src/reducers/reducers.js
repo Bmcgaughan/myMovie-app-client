@@ -4,8 +4,10 @@ import {
   SET_FILTER,
   SET_MOVIES,
   TOGGLE_FAVORITE,
+  SET_USER,
 } from '../actions/actions';
 
+//used for filtering movies
 function visibilityFilter(state = '', action) {
   switch (action.type) {
     case SET_FILTER:
@@ -24,6 +26,7 @@ function movies(state = [], action) {
   }
 }
 
+//handles setting array of favorites and updating favorites
 function favorites(state = [], action) {
   switch (action.type) {
     case SET_FAVORITE:
@@ -39,16 +42,21 @@ function favorites(state = [], action) {
   }
 }
 
-// function isFavorite(state = '', action){
-//     switch (action.type) {
-//         case:
-//     }
-// }
+//stores logged in user
+function user(state = '', action) {
+  switch (action.type) {
+    case SET_USER:
+      return action.user;
+    default:
+      return state;
+  }
+}
 
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
   favorites,
+  user,
 });
 
 export default moviesApp;

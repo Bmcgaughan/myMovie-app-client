@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 //components to import and render
 import MovieCard from '../movie-card/movie-card';
-import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
 
 //styles for filters
 import './movies-list.scss';
