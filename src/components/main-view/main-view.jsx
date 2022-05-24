@@ -96,8 +96,7 @@ class MainView extends React.Component {
       <Router>
         <Menubar user={user} />
         <Container>
-          <Row className="main-view justify-content-md-center">
-            <Route
+        <Route
               exact
               path="/"
               render={() => {
@@ -117,6 +116,8 @@ class MainView extends React.Component {
                 return <MoviesList movies={movies} favorites={favorites} />;
               }}
             />
+          <Row className="main-view justify-content-md-center">
+            
 
             <Route
               path="/register"

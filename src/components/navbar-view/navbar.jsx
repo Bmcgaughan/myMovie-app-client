@@ -27,7 +27,6 @@ function Menubar(props) {
 
   //getting route location to toggle search function
   const location = useLocation();
-  console.log(location);
 
   const onLogOut = () => {
     localStorage.clear();
