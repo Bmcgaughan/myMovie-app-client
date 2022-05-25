@@ -912,8 +912,8 @@ body {
 .movie-view {
   margin-top: 5px;
   margin-bottom: 5px;
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   padding: 10px;
   border-radius: 5px;
 }
@@ -928,6 +928,15 @@ body {
 
 .movie-opt button {
   width: 100%;
+}
+
+.movie-poster {
+  height: 450px;
+  margin-bottom: 5px;
+}
+
+.button-wrapper {
+  margin-top: auto;
 }
 .bt-movie {
   background: black;
