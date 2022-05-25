@@ -477,6 +477,58 @@ body {
 .show-section {
   color: white;
 }
+
+.filter {
+  margin-left: 10px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.btn-success {
+  color: white;
+  background-color: black;
+  border: none;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+
+.btn-success:hover {
+  color: black;
+  background-color: black;
+  border-color: black;
+  opacity: 75%;
+}
+
+.btn-success:not(:disabled):not(.disabled).active,
+.btn-success:not(:disabled):not(.disabled):active,
+.show > .btn-success.dropdown-toggle {
+  color: #fff;
+  background-color: black;
+  border-color: black;
+  border: none;
+}
+
+.btn-success:not(:disabled):not(.disabled).active:focus,
+.btn-success:not(:disabled):not(.disabled):active:focus,
+.show > .btn-success.dropdown-toggle:focus {
+  box-shadow: none;
+}
+
+.btn-success.focus,
+.btn-success:focus {
+  box-shadow: none;
+}
+
+.sortitem {
+  align-items: center;
+  justify-content: space-between;
+}
 /* Slider */
 .slick-slider
 {
@@ -912,8 +964,8 @@ body {
 .movie-view {
   margin-top: 5px;
   margin-bottom: 5px;
-  color: black;
-  background-color: white;
+  color: white;
+  background-color: black;
   padding: 10px;
   border-radius: 5px;
 }
@@ -929,12 +981,25 @@ body {
 .movie-opt button {
   width: 100%;
 }
+
+.movie-poster {
+  height: 450px;
+  margin-bottom: 5px;
+}
+
+.button-wrapper {
+  margin-top: auto;
+}
 .bt-movie {
   background: black;
   color: white;
 }
 .bt-movie {
   margin-top: 10px;
+}
+
+.movie-opt a:hover {
+  text-decoration: none;
 }
 .register-title {
   margin-top: 10px;

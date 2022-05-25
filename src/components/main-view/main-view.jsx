@@ -90,35 +90,42 @@ class MainView extends React.Component {
 
   render() {
     let { user, movies, favorites } = this.props;
+    console.log();
 
     //if a movie is selected show the Movie View details
     return (
       <Router>
         <Menubar user={user} />
         <Container>
-        <Route
-              exact
-              path="/"
-              render={() => {
-                if (!user)
-                  return (
-                    <Col>
-                      <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
-                    </Col>
-                  );
-                if (movies.length === 0)
-                  return (
-                    <div className="main-view">
-                      <LoadingSpinner />
-                    </div>
-                  );
-                if (!favorites) return <div className="main-view" />;
-                return <MoviesList movies={movies} favorites={favorites} />;
-              }}
-            />
+          <Route
+            exact
+            path="/"
+            render={() => {
+              if (!user)
+                return (
+                  <Col>
+                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                  </Col>
+                );
+              if (movies.length === 0)
+                return (
+                  <div className="main-view">
+                    <LoadingSpinner />
+                  </div>
+                );
+              if (!favorites) return <div className="main-view" />;
+              return (
+                <MoviesList
+                  movies={movies}
+                  favorites={favorites}
+                  trending={movies.filter((m) => {
+                    return m.Trending;
+                  })}
+                />
+              );
+            }}
+          />
           <Row className="main-view justify-content-md-center">
-            
-
             <Route
               path="/register"
               render={() => {
@@ -135,6 +142,12 @@ class MainView extends React.Component {
                     <Col>
                       <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                     </Col>
+                  );
+                if (movies.length === 0)
+                  return (
+                    <div className="main-view">
+                      <LoadingSpinner />
+                    </div>
                   );
                 return (
                   <Col md={8}>
