@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
   return { visibilityFilter };
 };
 
+//settings for the slider
 let sliderSettings = {
   dots: false,
   infinite: false,
@@ -32,6 +33,32 @@ let sliderSettings = {
   slidesToShow: 5,
   slidesToScroll: 1,
   swipeToSlide: true,
+  responsive: [
+    {
+      breakpoint: 1220,
+      settings: {
+        slidesToShow: 4,
+      },
+    },
+    {
+      breakpoint: 990,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 770,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 470,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
   // variableWidth: true,
 };
 
@@ -198,7 +225,6 @@ function MoviesList(props) {
 
   //setting filtered to default prop
   let filteredMovies = [];
-
 
   if (visibilityFilter !== '') {
     filteredMovies = movies.filter((m) =>

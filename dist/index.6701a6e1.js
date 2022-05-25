@@ -983,7 +983,7 @@ _reactDomDefault.default.render(/*#__PURE__*/ _reactDefault.default.createElemen
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-dom":"gkWJK","react-bootstrap/Container":"2PRIq","redux":"4d0QS","react-redux":"2L0if","./reducers/reducers":"btgQW","./components/main-view/main-view":"2zHas","./index.scss":"jUTZ8","redux-devtools-extension":"8GWVf","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"8xIwr":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-dom":"gkWJK","react-bootstrap/Container":"2PRIq","./components/main-view/main-view":"2zHas","./index.scss":"jUTZ8","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","redux":"4d0QS","react-redux":"2L0if","./reducers/reducers":"btgQW","redux-devtools-extension":"8GWVf"}],"8xIwr":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-runtime.development.js');
 
@@ -25346,2510 +25346,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"4d0QS":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes
-);
-parcelHelpers.export(exports, "applyMiddleware", ()=>applyMiddleware
-);
-parcelHelpers.export(exports, "bindActionCreators", ()=>bindActionCreators
-);
-parcelHelpers.export(exports, "combineReducers", ()=>combineReducers
-);
-parcelHelpers.export(exports, "compose", ()=>compose
-);
-parcelHelpers.export(exports, "createStore", ()=>createStore
-);
-parcelHelpers.export(exports, "legacy_createStore", ()=>legacy_createStore
-);
-var _objectSpread2 = require("@babel/runtime/helpers/esm/objectSpread2");
-var _objectSpread2Default = parcelHelpers.interopDefault(_objectSpread2);
-/**
- * Adapted from React: https://github.com/facebook/react/blob/master/packages/shared/formatProdErrorMessage.js
- *
- * Do not require this module directly! Use normal throw error calls. These messages will be replaced with error codes
- * during build.
- * @param {number} code
- */ function formatProdErrorMessage(code) {
-    return "Minified Redux error #" + code + "; visit https://redux.js.org/Errors?code=" + code + " for the full message or " + 'use the non-minified dev environment for full errors. ';
-}
-// Inlined version of the `symbol-observable` polyfill
-var $$observable = function() {
-    return typeof Symbol === 'function' && Symbol.observable || '@@observable';
-}();
-/**
- * These are private action types reserved by Redux.
- * For any unknown actions, you must return the current state.
- * If the current state is undefined, you must return the initial state.
- * Do not reference these action types directly in your code.
- */ var randomString = function randomString1() {
-    return Math.random().toString(36).substring(7).split('').join('.');
-};
-var ActionTypes = {
-    INIT: "@@redux/INIT" + randomString(),
-    REPLACE: "@@redux/REPLACE" + randomString(),
-    PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
-        return "@@redux/PROBE_UNKNOWN_ACTION" + randomString();
-    }
-};
-/**
- * @param {any} obj The object to inspect.
- * @returns {boolean} True if the argument appears to be a plain object.
- */ function isPlainObject(obj) {
-    if (typeof obj !== 'object' || obj === null) return false;
-    var proto = obj;
-    while(Object.getPrototypeOf(proto) !== null)proto = Object.getPrototypeOf(proto);
-    return Object.getPrototypeOf(obj) === proto;
-}
-// Inlined / shortened version of `kindOf` from https://github.com/jonschlinkert/kind-of
-function miniKindOf(val) {
-    if (val === void 0) return 'undefined';
-    if (val === null) return 'null';
-    var type = typeof val;
-    switch(type){
-        case 'boolean':
-        case 'string':
-        case 'number':
-        case 'symbol':
-        case 'function':
-            return type;
-    }
-    if (Array.isArray(val)) return 'array';
-    if (isDate(val)) return 'date';
-    if (isError(val)) return 'error';
-    var constructorName = ctorName(val);
-    switch(constructorName){
-        case 'Symbol':
-        case 'Promise':
-        case 'WeakMap':
-        case 'WeakSet':
-        case 'Map':
-        case 'Set':
-            return constructorName;
-    } // other
-    return type.slice(8, -1).toLowerCase().replace(/\s/g, '');
-}
-function ctorName(val) {
-    return typeof val.constructor === 'function' ? val.constructor.name : null;
-}
-function isError(val) {
-    return val instanceof Error || typeof val.message === 'string' && val.constructor && typeof val.constructor.stackTraceLimit === 'number';
-}
-function isDate(val) {
-    if (val instanceof Date) return true;
-    return typeof val.toDateString === 'function' && typeof val.getDate === 'function' && typeof val.setDate === 'function';
-}
-function kindOf(val) {
-    var typeOfVal = typeof val;
-    typeOfVal = miniKindOf(val);
-    return typeOfVal;
-}
-/**
- * @deprecated
- *
- * **We recommend using the `configureStore` method
- * of the `@reduxjs/toolkit` package**, which replaces `createStore`.
- *
- * Redux Toolkit is our recommended approach for writing Redux logic today,
- * including store setup, reducers, data fetching, and more.
- *
- * **For more details, please read this Redux docs page:**
- * **https://redux.js.org/introduction/why-rtk-is-redux-today**
- *
- * `configureStore` from Redux Toolkit is an improved version of `createStore` that
- * simplifies setup and helps avoid common bugs.
- *
- * You should not be using the `redux` core package by itself today, except for learning purposes.
- * The `createStore` method from the core `redux` package will not be removed, but we encourage
- * all users to migrate to using Redux Toolkit for all Redux code.
- *
- * If you want to use `createStore` without this visual deprecation warning, use
- * the `legacy_createStore` import instead:
- *
- * `import { legacy_createStore as createStore} from 'redux'`
- *
- */ function createStore(reducer, preloadedState, enhancer) {
-    var _ref2;
-    if (typeof preloadedState === 'function' && typeof enhancer === 'function' || typeof enhancer === 'function' && typeof arguments[3] === 'function') throw new Error("It looks like you are passing several store enhancers to createStore(). This is not supported. Instead, compose them together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.");
-    if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
-        enhancer = preloadedState;
-        preloadedState = undefined;
-    }
-    if (typeof enhancer !== 'undefined') {
-        if (typeof enhancer !== 'function') throw new Error("Expected the enhancer to be a function. Instead, received: '" + kindOf(enhancer) + "'");
-        return enhancer(createStore)(reducer, preloadedState);
-    }
-    if (typeof reducer !== 'function') throw new Error("Expected the root reducer to be a function. Instead, received: '" + kindOf(reducer) + "'");
-    var currentReducer = reducer;
-    var currentState = preloadedState;
-    var currentListeners = [];
-    var nextListeners = currentListeners;
-    var isDispatching = false;
-    /**
-   * This makes a shallow copy of currentListeners so we can use
-   * nextListeners as a temporary list while dispatching.
-   *
-   * This prevents any bugs around consumers calling
-   * subscribe/unsubscribe in the middle of a dispatch.
-   */ function ensureCanMutateNextListeners() {
-        if (nextListeners === currentListeners) nextListeners = currentListeners.slice();
-    }
-    /**
-   * Reads the state tree managed by the store.
-   *
-   * @returns {any} The current state tree of your application.
-   */ function getState() {
-        if (isDispatching) throw new Error("You may not call store.getState() while the reducer is executing. The reducer has already received the state as an argument. Pass it down from the top reducer instead of reading it from the store.");
-        return currentState;
-    }
-    /**
-   * Adds a change listener. It will be called any time an action is dispatched,
-   * and some part of the state tree may potentially have changed. You may then
-   * call `getState()` to read the current state tree inside the callback.
-   *
-   * You may call `dispatch()` from a change listener, with the following
-   * caveats:
-   *
-   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
-   * If you subscribe or unsubscribe while the listeners are being invoked, this
-   * will not have any effect on the `dispatch()` that is currently in progress.
-   * However, the next `dispatch()` call, whether nested or not, will use a more
-   * recent snapshot of the subscription list.
-   *
-   * 2. The listener should not expect to see all state changes, as the state
-   * might have been updated multiple times during a nested `dispatch()` before
-   * the listener is called. It is, however, guaranteed that all subscribers
-   * registered before the `dispatch()` started will be called with the latest
-   * state by the time it exits.
-   *
-   * @param {Function} listener A callback to be invoked on every dispatch.
-   * @returns {Function} A function to remove this change listener.
-   */ function subscribe(listener) {
-        if (typeof listener !== 'function') throw new Error("Expected the listener to be a function. Instead, received: '" + kindOf(listener) + "'");
-        if (isDispatching) throw new Error("You may not call store.subscribe() while the reducer is executing. If you would like to be notified after the store has been updated, subscribe from a component and invoke store.getState() in the callback to access the latest state. See https://redux.js.org/api/store#subscribelistener for more details.");
-        var isSubscribed = true;
-        ensureCanMutateNextListeners();
-        nextListeners.push(listener);
-        return function unsubscribe() {
-            if (!isSubscribed) return;
-            if (isDispatching) throw new Error("You may not unsubscribe from a store listener while the reducer is executing. See https://redux.js.org/api/store#subscribelistener for more details.");
-            isSubscribed = false;
-            ensureCanMutateNextListeners();
-            var index = nextListeners.indexOf(listener);
-            nextListeners.splice(index, 1);
-            currentListeners = null;
-        };
-    }
-    /**
-   * Dispatches an action. It is the only way to trigger a state change.
-   *
-   * The `reducer` function, used to create the store, will be called with the
-   * current state tree and the given `action`. Its return value will
-   * be considered the **next** state of the tree, and the change listeners
-   * will be notified.
-   *
-   * The base implementation only supports plain object actions. If you want to
-   * dispatch a Promise, an Observable, a thunk, or something else, you need to
-   * wrap your store creating function into the corresponding middleware. For
-   * example, see the documentation for the `redux-thunk` package. Even the
-   * middleware will eventually dispatch plain object actions using this method.
-   *
-   * @param {Object} action A plain object representing “what changed”. It is
-   * a good idea to keep actions serializable so you can record and replay user
-   * sessions, or use the time travelling `redux-devtools`. An action must have
-   * a `type` property which may not be `undefined`. It is a good idea to use
-   * string constants for action types.
-   *
-   * @returns {Object} For convenience, the same action object you dispatched.
-   *
-   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
-   * return something else (for example, a Promise you can await).
-   */ function dispatch(action) {
-        if (!isPlainObject(action)) throw new Error("Actions must be plain objects. Instead, the actual type was: '" + kindOf(action) + "'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.");
-        if (typeof action.type === 'undefined') throw new Error('Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
-        if (isDispatching) throw new Error('Reducers may not dispatch actions.');
-        try {
-            isDispatching = true;
-            currentState = currentReducer(currentState, action);
-        } finally{
-            isDispatching = false;
-        }
-        var listeners = currentListeners = nextListeners;
-        for(var i = 0; i < listeners.length; i++){
-            var listener = listeners[i];
-            listener();
-        }
-        return action;
-    }
-    /**
-   * Replaces the reducer currently used by the store to calculate the state.
-   *
-   * You might need this if your app implements code splitting and you want to
-   * load some of the reducers dynamically. You might also need this if you
-   * implement a hot reloading mechanism for Redux.
-   *
-   * @param {Function} nextReducer The reducer for the store to use instead.
-   * @returns {void}
-   */ function replaceReducer(nextReducer) {
-        if (typeof nextReducer !== 'function') throw new Error("Expected the nextReducer to be a function. Instead, received: '" + kindOf(nextReducer));
-        currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
-        // Any reducers that existed in both the new and old rootReducer
-        // will receive the previous state. This effectively populates
-        // the new state tree with any relevant data from the old one.
-        dispatch({
-            type: ActionTypes.REPLACE
-        });
-    }
-    /**
-   * Interoperability point for observable/reactive libraries.
-   * @returns {observable} A minimal observable of state changes.
-   * For more information, see the observable proposal:
-   * https://github.com/tc39/proposal-observable
-   */ function observable() {
-        var _ref;
-        var outerSubscribe = subscribe;
-        return _ref = {
-            /**
-       * The minimal observable subscription method.
-       * @param {Object} observer Any object that can be used as an observer.
-       * The observer object should have a `next` method.
-       * @returns {subscription} An object with an `unsubscribe` method that can
-       * be used to unsubscribe the observable from the store, and prevent further
-       * emission of values from the observable.
-       */ subscribe: function subscribe1(observer) {
-                if (typeof observer !== 'object' || observer === null) throw new Error("Expected the observer to be an object. Instead, received: '" + kindOf(observer) + "'");
-                function observeState() {
-                    if (observer.next) observer.next(getState());
-                }
-                observeState();
-                var unsubscribe = outerSubscribe(observeState);
-                return {
-                    unsubscribe: unsubscribe
-                };
-            }
-        }, _ref[$$observable] = function() {
-            return this;
-        }, _ref;
-    } // When a store is created, an "INIT" action is dispatched so that every
-    // reducer returns their initial state. This effectively populates
-    // the initial state tree.
-    dispatch({
-        type: ActionTypes.INIT
-    });
-    return _ref2 = {
-        dispatch: dispatch,
-        subscribe: subscribe,
-        getState: getState,
-        replaceReducer: replaceReducer
-    }, _ref2[$$observable] = observable, _ref2;
-}
-/**
- * Creates a Redux store that holds the state tree.
- *
- * **We recommend using `configureStore` from the
- * `@reduxjs/toolkit` package**, which replaces `createStore`:
- * **https://redux.js.org/introduction/why-rtk-is-redux-today**
- *
- * The only way to change the data in the store is to call `dispatch()` on it.
- *
- * There should only be a single store in your app. To specify how different
- * parts of the state tree respond to actions, you may combine several reducers
- * into a single reducer function by using `combineReducers`.
- *
- * @param {Function} reducer A function that returns the next state tree, given
- * the current state tree and the action to handle.
- *
- * @param {any} [preloadedState] The initial state. You may optionally specify it
- * to hydrate the state from the server in universal apps, or to restore a
- * previously serialized user session.
- * If you use `combineReducers` to produce the root reducer function, this must be
- * an object with the same shape as `combineReducers` keys.
- *
- * @param {Function} [enhancer] The store enhancer. You may optionally specify it
- * to enhance the store with third-party capabilities such as middleware,
- * time travel, persistence, etc. The only store enhancer that ships with Redux
- * is `applyMiddleware()`.
- *
- * @returns {Store} A Redux store that lets you read the state, dispatch actions
- * and subscribe to changes.
- */ var legacy_createStore = createStore;
-/**
- * Prints a warning in the console if it exists.
- *
- * @param {String} message The warning message.
- * @returns {void}
- */ function warning(message) {
-    /* eslint-disable no-console */ if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(message);
-    /* eslint-enable no-console */ try {
-        // This error was thrown as a convenience so that if you enable
-        // "break on all exceptions" in your console,
-        // it would pause the execution at this line.
-        throw new Error(message);
-    } catch (e) {
-    } // eslint-disable-line no-empty
-}
-function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
-    var reducerKeys = Object.keys(reducers);
-    var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
-    if (reducerKeys.length === 0) return "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";
-    if (!isPlainObject(inputState)) return "The " + argumentName + " has unexpected type of \"" + kindOf(inputState) + "\". Expected argument to be an object with the following " + ("keys: \"" + reducerKeys.join('", "') + "\"");
-    var unexpectedKeys = Object.keys(inputState).filter(function(key) {
-        return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
-    });
-    unexpectedKeys.forEach(function(key) {
-        unexpectedKeyCache[key] = true;
-    });
-    if (action && action.type === ActionTypes.REPLACE) return;
-    if (unexpectedKeys.length > 0) return "Unexpected " + (unexpectedKeys.length > 1 ? 'keys' : 'key') + " " + ("\"" + unexpectedKeys.join('", "') + "\" found in " + argumentName + ". ") + "Expected to find one of the known reducer keys instead: " + ("\"" + reducerKeys.join('", "') + "\". Unexpected keys will be ignored.");
-}
-function assertReducerShape(reducers) {
-    Object.keys(reducers).forEach(function(key) {
-        var reducer = reducers[key];
-        var initialState = reducer(undefined, {
-            type: ActionTypes.INIT
-        });
-        if (typeof initialState === 'undefined') throw new Error("The slice reducer for key \"" + key + "\" returned undefined during initialization. " + "If the state passed to the reducer is undefined, you must " + "explicitly return the initial state. The initial state may " + "not be undefined. If you don't want to set a value for this reducer, " + "you can use null instead of undefined.");
-        if (typeof reducer(undefined, {
-            type: ActionTypes.PROBE_UNKNOWN_ACTION()
-        }) === 'undefined') throw new Error("The slice reducer for key \"" + key + "\" returned undefined when probed with a random type. " + ("Don't try to handle '" + ActionTypes.INIT + "' or other actions in \"redux/*\" ") + "namespace. They are considered private. Instead, you must return the " + "current state for any unknown actions, unless it is undefined, " + "in which case you must return the initial state, regardless of the " + "action type. The initial state may not be undefined, but can be null.");
-    });
-}
-/**
- * Turns an object whose values are different reducer functions, into a single
- * reducer function. It will call every child reducer, and gather their results
- * into a single state object, whose keys correspond to the keys of the passed
- * reducer functions.
- *
- * @param {Object} reducers An object whose values correspond to different
- * reducer functions that need to be combined into one. One handy way to obtain
- * it is to use ES6 `import * as reducers` syntax. The reducers may never return
- * undefined for any action. Instead, they should return their initial state
- * if the state passed to them was undefined, and the current state for any
- * unrecognized action.
- *
- * @returns {Function} A reducer function that invokes every reducer inside the
- * passed object, and builds a state object with the same shape.
- */ function combineReducers(reducers) {
-    var reducerKeys = Object.keys(reducers);
-    var finalReducers = {
-    };
-    for(var i = 0; i < reducerKeys.length; i++){
-        var key = reducerKeys[i];
-        if (typeof reducers[key] === 'undefined') warning("No reducer provided for key \"" + key + "\"");
-        if (typeof reducers[key] === 'function') finalReducers[key] = reducers[key];
-    }
-    var finalReducerKeys = Object.keys(finalReducers); // This is used to make sure we don't warn about the same
-    // keys multiple times.
-    var unexpectedKeyCache;
-    unexpectedKeyCache = {
-    };
-    var shapeAssertionError;
-    try {
-        assertReducerShape(finalReducers);
-    } catch (e) {
-        shapeAssertionError = e;
-    }
-    return function combination(state, action) {
-        if (state === void 0) state = {
-        };
-        if (shapeAssertionError) throw shapeAssertionError;
-        var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
-        if (warningMessage) warning(warningMessage);
-        var hasChanged = false;
-        var nextState = {
-        };
-        for(var _i = 0; _i < finalReducerKeys.length; _i++){
-            var _key = finalReducerKeys[_i];
-            var reducer = finalReducers[_key];
-            var previousStateForKey = state[_key];
-            var nextStateForKey = reducer(previousStateForKey, action);
-            if (typeof nextStateForKey === 'undefined') {
-                var actionType = action && action.type;
-                throw new Error("When called with an action of type " + (actionType ? "\"" + String(actionType) + "\"" : '(unknown type)') + ", the slice reducer for key \"" + _key + "\" returned undefined. " + "To ignore an action, you must explicitly return the previous state. " + "If you want this reducer to hold no value, you can return null instead of undefined.");
-            }
-            nextState[_key] = nextStateForKey;
-            hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
-        }
-        hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
-        return hasChanged ? nextState : state;
-    };
-}
-function bindActionCreator(actionCreator, dispatch) {
-    return function() {
-        return dispatch(actionCreator.apply(this, arguments));
-    };
-}
-/**
- * Turns an object whose values are action creators, into an object with the
- * same keys, but with every function wrapped into a `dispatch` call so they
- * may be invoked directly. This is just a convenience method, as you can call
- * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
- *
- * For convenience, you can also pass an action creator as the first argument,
- * and get a dispatch wrapped function in return.
- *
- * @param {Function|Object} actionCreators An object whose values are action
- * creator functions. One handy way to obtain it is to use ES6 `import * as`
- * syntax. You may also pass a single function.
- *
- * @param {Function} dispatch The `dispatch` function available on your Redux
- * store.
- *
- * @returns {Function|Object} The object mimicking the original object, but with
- * every action creator wrapped into the `dispatch` call. If you passed a
- * function as `actionCreators`, the return value will also be a single
- * function.
- */ function bindActionCreators(actionCreators, dispatch) {
-    if (typeof actionCreators === 'function') return bindActionCreator(actionCreators, dispatch);
-    if (typeof actionCreators !== 'object' || actionCreators === null) throw new Error("bindActionCreators expected an object or a function, but instead received: '" + kindOf(actionCreators) + "'. " + "Did you write \"import ActionCreators from\" instead of \"import * as ActionCreators from\"?");
-    var boundActionCreators = {
-    };
-    for(var key in actionCreators){
-        var actionCreator = actionCreators[key];
-        if (typeof actionCreator === 'function') boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
-    }
-    return boundActionCreators;
-}
-/**
- * Composes single-argument functions from right to left. The rightmost
- * function can take multiple arguments as it provides the signature for
- * the resulting composite function.
- *
- * @param {...Function} funcs The functions to compose.
- * @returns {Function} A function obtained by composing the argument functions
- * from right to left. For example, compose(f, g, h) is identical to doing
- * (...args) => f(g(h(...args))).
- */ function compose() {
-    for(var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++)funcs[_key] = arguments[_key];
-    if (funcs.length === 0) return function(arg) {
-        return arg;
-    };
-    if (funcs.length === 1) return funcs[0];
-    return funcs.reduce(function(a, b) {
-        return function() {
-            return a(b.apply(void 0, arguments));
-        };
-    });
-}
-/**
- * Creates a store enhancer that applies middleware to the dispatch method
- * of the Redux store. This is handy for a variety of tasks, such as expressing
- * asynchronous actions in a concise manner, or logging every action payload.
- *
- * See `redux-thunk` package as an example of the Redux middleware.
- *
- * Because middleware is potentially asynchronous, this should be the first
- * store enhancer in the composition chain.
- *
- * Note that each middleware will be given the `dispatch` and `getState` functions
- * as named arguments.
- *
- * @param {...Function} middlewares The middleware chain to be applied.
- * @returns {Function} A store enhancer applying the middleware.
- */ function applyMiddleware() {
-    for(var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++)middlewares[_key] = arguments[_key];
-    return function(createStore1) {
-        return function() {
-            var store = createStore1.apply(void 0, arguments);
-            var _dispatch = function dispatch() {
-                throw new Error("Dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.");
-            };
-            var middlewareAPI = {
-                getState: store.getState,
-                dispatch: function dispatch1() {
-                    return _dispatch.apply(void 0, arguments);
-                }
-            };
-            var chain = middlewares.map(function(middleware) {
-                return middleware(middlewareAPI);
-            });
-            _dispatch = compose.apply(void 0, chain)(store.dispatch);
-            return _objectSpread2Default.default(_objectSpread2Default.default({
-            }, store), {
-            }, {
-                dispatch: _dispatch
-            });
-        };
-    };
-}
-/*
- * This is a dummy function to check if the function name has been altered by minification.
- * If the function has been minified and NODE_ENV !== 'production', warn the user.
- */ function isCrushed() {
-}
-if (typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') warning("You are currently using minified code outside of NODE_ENV === \"production\". This means that you are running a slower development build of Redux. You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) to ensure you have the correct code for your production build.");
-
-},{"@babel/runtime/helpers/esm/objectSpread2":"bSD1u","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bSD1u":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _definePropertyJs = require("./defineProperty.js");
-var _definePropertyJsDefault = parcelHelpers.interopDefault(_definePropertyJs);
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread2(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _definePropertyJsDefault.default(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-exports.default = _objectSpread2;
-
-},{"./defineProperty.js":"7s3FO","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"7s3FO":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-exports.default = _defineProperty;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2L0if":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "batch", ()=>_reactBatchedUpdates.unstable_batchedUpdates
-);
-// The primary entry point assumes we're working with standard ReactDOM/RN, but
-// older versions that do not include `useSyncExternalStore` (React 16.9 - 17.x).
-// Because of that, the useSyncExternalStore compat shim is needed.
-var _shim = require("use-sync-external-store/shim");
-var _withSelector = require("use-sync-external-store/shim/with-selector");
-var _reactBatchedUpdates = require("./utils/reactBatchedUpdates");
-var _batch = require("./utils/batch");
-var _useSelector = require("./hooks/useSelector");
-var _connect = require("./components/connect");
-var _exports = require("./exports");
-parcelHelpers.exportAll(_exports, exports);
-_useSelector.initializeUseSelector(_withSelector.useSyncExternalStoreWithSelector);
-_connect.initializeConnect(_shim.useSyncExternalStore); // Enable batched updates in our subscriptions for use
-// with standard React renderers (ReactDOM, React Native)
-_batch.setBatch(_reactBatchedUpdates.unstable_batchedUpdates);
-
-},{"use-sync-external-store/shim":"fjotV","use-sync-external-store/shim/with-selector":"6noz1","./utils/reactBatchedUpdates":"kaP8a","./utils/batch":"2g3ZY","./hooks/useSelector":"27k1i","./components/connect":"gr7nQ","./exports":"amFLd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fjotV":[function(require,module,exports) {
-'use strict';
-module.exports = require('../cjs/use-sync-external-store-shim.development.js');
-
-},{"../cjs/use-sync-external-store-shim.development.js":"8th8w"}],"8th8w":[function(require,module,exports) {
-/**
- * @license React
- * use-sync-external-store-shim.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */ 'use strict';
-(function() {
-    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-    var React = require('react');
-    var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function error(format) {
-        for(var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)args[_key2 - 1] = arguments[_key2];
-        printWarning('error', format, args);
-    }
-    function printWarning(level, format, args) {
-        var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
-        var stack = ReactDebugCurrentFrame.getStackAddendum();
-        if (stack !== '') {
-            format += '%s';
-            args = args.concat([
-                stack
-            ]);
-        } // eslint-disable-next-line react-internal/safe-string-coercion
-        var argsWithFormat = args.map(function(item) {
-            return String(item);
-        }); // Careful: RN currently depends on this prefix
-        argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
-        // breaks IE9: https://github.com/facebook/react/issues/13610
-        // eslint-disable-next-line react-internal/no-production-logging
-        Function.prototype.apply.call(console[level], console, argsWithFormat);
-    }
-    /**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */ function is(x, y) {
-        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
-        ;
-    }
-    var objectIs = typeof Object.is === 'function' ? Object.is : is;
-    // dispatch for CommonJS interop named imports.
-    var useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
-    var didWarnOld18Alpha = false;
-    var didWarnUncachedGetSnapshot = false; // Disclaimer: This shim breaks many of the rules of React, and only works
-    // because of a very particular set of implementation details and assumptions
-    // -- change any one of them and it will break. The most important assumption
-    // is that updates are always synchronous, because concurrent rendering is
-    // only available in versions of React that also have a built-in
-    // useSyncExternalStore API. And we only use this shim when the built-in API
-    // does not exist.
-    //
-    // Do not assume that the clever hacks used by this hook also work in general.
-    // The point of this shim is to replace the need for hacks by other libraries.
-    function useSyncExternalStore(subscribe, getSnapshot, // React do not expose a way to check if we're hydrating. So users of the shim
-    // will need to track that themselves and return the correct value
-    // from `getSnapshot`.
-    getServerSnapshot) {
-        if (!didWarnOld18Alpha) {
-            if (React.startTransition !== undefined) {
-                didWarnOld18Alpha = true;
-                error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
-            }
-        }
-        // breaks the rules of React, and only works here because of specific
-        // implementation details, most importantly that updates are
-        // always synchronous.
-        var value = getSnapshot();
-        if (!didWarnUncachedGetSnapshot) {
-            var cachedValue = getSnapshot();
-            if (!objectIs(value, cachedValue)) {
-                error('The result of getSnapshot should be cached to avoid an infinite loop');
-                didWarnUncachedGetSnapshot = true;
-            }
-        }
-        // re-render whenever the subscribed state changes by updating an some
-        // arbitrary useState hook. Then, during render, we call getSnapshot to read
-        // the current value.
-        //
-        // Because we don't actually use the state returned by the useState hook, we
-        // can save a bit of memory by storing other stuff in that slot.
-        //
-        // To implement the early bailout, we need to track some things on a mutable
-        // object. Usually, we would put that in a useRef hook, but we can stash it in
-        // our useState hook instead.
-        //
-        // To force a re-render, we call forceUpdate({inst}). That works because the
-        // new object always fails an equality check.
-        var _useState = useState({
-            inst: {
-                value: value,
-                getSnapshot: getSnapshot
-            }
-        }), inst = _useState[0].inst, forceUpdate = _useState[1]; // Track the latest getSnapshot function with a ref. This needs to be updated
-        // in the layout phase so we can access it during the tearing check that
-        // happens on subscribe.
-        useLayoutEffect(function() {
-            inst.value = value;
-            inst.getSnapshot = getSnapshot; // Whenever getSnapshot or subscribe changes, we need to check in the
-            // commit phase if there was an interleaved mutation. In concurrent mode
-            // this can happen all the time, but even in synchronous mode, an earlier
-            // effect may have mutated the store.
-            if (checkIfSnapshotChanged(inst)) // Force a re-render.
-            forceUpdate({
-                inst: inst
-            });
-        }, [
-            subscribe,
-            value,
-            getSnapshot
-        ]);
-        useEffect(function() {
-            // Check for changes right before subscribing. Subsequent changes will be
-            // detected in the subscription handler.
-            if (checkIfSnapshotChanged(inst)) // Force a re-render.
-            forceUpdate({
-                inst: inst
-            });
-            var handleStoreChange = function() {
-                // TODO: Because there is no cross-renderer API for batching updates, it's
-                // up to the consumer of this library to wrap their subscription event
-                // with unstable_batchedUpdates. Should we try to detect when this isn't
-                // the case and print a warning in development?
-                // The store changed. Check if the snapshot changed since the last time we
-                // read from the store.
-                if (checkIfSnapshotChanged(inst)) // Force a re-render.
-                forceUpdate({
-                    inst: inst
-                });
-            }; // Subscribe to the store and return a clean-up function.
-            return subscribe(handleStoreChange);
-        }, [
-            subscribe
-        ]);
-        useDebugValue(value);
-        return value;
-    }
-    function checkIfSnapshotChanged(inst) {
-        var latestGetSnapshot = inst.getSnapshot;
-        var prevValue = inst.value;
-        try {
-            var nextValue = latestGetSnapshot();
-            return !objectIs(prevValue, nextValue);
-        } catch (error1) {
-            return true;
-        }
-    }
-    function useSyncExternalStore$1(subscribe, getSnapshot, getServerSnapshot) {
-        // Note: The shim does not use getServerSnapshot, because pre-18 versions of
-        // React do not expose a way to check if we're hydrating. So users of the shim
-        // will need to track that themselves and return the correct value
-        // from `getSnapshot`.
-        return getSnapshot();
-    }
-    var canUseDOM = !!(typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined');
-    var isServerEnvironment = !canUseDOM;
-    var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
-    var useSyncExternalStore$2 = React.useSyncExternalStore !== undefined ? React.useSyncExternalStore : shim;
-    exports.useSyncExternalStore = useSyncExternalStore$2;
-    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
-})();
-
-},{"react":"6TuXu"}],"6noz1":[function(require,module,exports) {
-'use strict';
-module.exports = require('../cjs/use-sync-external-store-shim/with-selector.development.js');
-
-},{"../cjs/use-sync-external-store-shim/with-selector.development.js":"7DU9q"}],"7DU9q":[function(require,module,exports) {
-/**
- * @license React
- * use-sync-external-store-shim/with-selector.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */ 'use strict';
-(function() {
-    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-    var React = require('react');
-    var shim = require('use-sync-external-store/shim');
-    /**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */ function is(x, y) {
-        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
-        ;
-    }
-    var objectIs = typeof Object.is === 'function' ? Object.is : is;
-    var useSyncExternalStore = shim.useSyncExternalStore;
-    // for CommonJS interop.
-    var useRef = React.useRef, useEffect = React.useEffect, useMemo = React.useMemo, useDebugValue = React.useDebugValue; // Same as useSyncExternalStore, but supports selector and isEqual arguments.
-    function useSyncExternalStoreWithSelector(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
-        // Use this to track the rendered snapshot.
-        var instRef = useRef(null);
-        var inst;
-        if (instRef.current === null) {
-            inst = {
-                hasValue: false,
-                value: null
-            };
-            instRef.current = inst;
-        } else inst = instRef.current;
-        var _useMemo = useMemo(function() {
-            // Track the memoized state using closure variables that are local to this
-            // memoized instance of a getSnapshot function. Intentionally not using a
-            // useRef hook, because that state would be shared across all concurrent
-            // copies of the hook/component.
-            var hasMemo = false;
-            var memoizedSnapshot;
-            var memoizedSelection;
-            var memoizedSelector = function(nextSnapshot) {
-                if (!hasMemo) {
-                    // The first time the hook is called, there is no memoized result.
-                    hasMemo = true;
-                    memoizedSnapshot = nextSnapshot;
-                    var _nextSelection = selector(nextSnapshot);
-                    if (isEqual !== undefined) // Even if the selector has changed, the currently rendered selection
-                    // may be equal to the new selection. We should attempt to reuse the
-                    // current value if possible, to preserve downstream memoizations.
-                    {
-                        if (inst.hasValue) {
-                            var currentSelection = inst.value;
-                            if (isEqual(currentSelection, _nextSelection)) {
-                                memoizedSelection = currentSelection;
-                                return currentSelection;
-                            }
-                        }
-                    }
-                    memoizedSelection = _nextSelection;
-                    return _nextSelection;
-                } // We may be able to reuse the previous invocation's result.
-                // We may be able to reuse the previous invocation's result.
-                var prevSnapshot = memoizedSnapshot;
-                var prevSelection = memoizedSelection;
-                if (objectIs(prevSnapshot, nextSnapshot)) // The snapshot is the same as last time. Reuse the previous selection.
-                return prevSelection;
-                 // The snapshot has changed, so we need to compute a new selection.
-                // The snapshot has changed, so we need to compute a new selection.
-                var nextSelection = selector(nextSnapshot); // If a custom isEqual function is provided, use that to check if the data
-                // has changed. If it hasn't, return the previous selection. That signals
-                // to React that the selections are conceptually equal, and we can bail
-                // out of rendering.
-                // If a custom isEqual function is provided, use that to check if the data
-                // has changed. If it hasn't, return the previous selection. That signals
-                // to React that the selections are conceptually equal, and we can bail
-                // out of rendering.
-                if (isEqual !== undefined && isEqual(prevSelection, nextSelection)) return prevSelection;
-                memoizedSnapshot = nextSnapshot;
-                memoizedSelection = nextSelection;
-                return nextSelection;
-            }; // Assigning this to a constant so that Flow knows it can't change.
-            // Assigning this to a constant so that Flow knows it can't change.
-            var maybeGetServerSnapshot = getServerSnapshot === undefined ? null : getServerSnapshot;
-            var getSnapshotWithSelector = function() {
-                return memoizedSelector(getSnapshot());
-            };
-            var getServerSnapshotWithSelector = maybeGetServerSnapshot === null ? undefined : function() {
-                return memoizedSelector(maybeGetServerSnapshot());
-            };
-            return [
-                getSnapshotWithSelector,
-                getServerSnapshotWithSelector
-            ];
-        }, [
-            getSnapshot,
-            getServerSnapshot,
-            selector,
-            isEqual
-        ]), getSelection = _useMemo[0], getServerSelection = _useMemo[1];
-        var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
-        useEffect(function() {
-            inst.hasValue = true;
-            inst.value = value;
-        }, [
-            value
-        ]);
-        useDebugValue(value);
-        return value;
-    }
-    exports.useSyncExternalStoreWithSelector = useSyncExternalStoreWithSelector;
-    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
-})();
-
-},{"react":"6TuXu","use-sync-external-store/shim":"fjotV"}],"kaP8a":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "unstable_batchedUpdates", ()=>_reactDom.unstable_batchedUpdates
-);
-var _reactDom = require("react-dom");
-
-},{"react-dom":"gkWJK","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2g3ZY":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "setBatch", ()=>setBatch
-);
-parcelHelpers.export(exports, "getBatch", ()=>getBatch
-);
-// Default to a dummy "batch" implementation that just runs the callback
-function defaultNoopBatch(callback) {
-    callback();
-}
-let batch = defaultNoopBatch; // Allow injecting another batching function later
-const setBatch = (newBatch)=>batch = newBatch
-; // Supply a getter just to skip dealing with ESM bindings
-const getBatch = ()=>batch
-;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"27k1i":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initializeUseSelector", ()=>initializeUseSelector
-);
-/**
- * Hook factory, which creates a `useSelector` hook bound to a given context.
- *
- * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
- * @returns {Function} A `useSelector` hook bound to the specified context.
- */ parcelHelpers.export(exports, "createSelectorHook", ()=>createSelectorHook
-);
-parcelHelpers.export(exports, "useSelector", ()=>useSelector
-);
-var _react = require("react");
-var _useReduxContext = require("./useReduxContext");
-var _context = require("../components/Context");
-var _useSyncExternalStore = require("../utils/useSyncExternalStore");
-let useSyncExternalStoreWithSelector = _useSyncExternalStore.notInitialized;
-const initializeUseSelector = (fn)=>{
-    useSyncExternalStoreWithSelector = fn;
-};
-const refEquality = (a, b)=>a === b
-;
-function createSelectorHook(context = _context.ReactReduxContext) {
-    const useReduxContext = context === _context.ReactReduxContext ? _useReduxContext.useReduxContext : ()=>_react.useContext(context)
-    ;
-    return function useSelector(selector, equalityFn = refEquality) {
-        if (!selector) throw new Error(`You must pass a selector to useSelector`);
-        if (typeof selector !== 'function') throw new Error(`You must pass a function as a selector to useSelector`);
-        if (typeof equalityFn !== 'function') throw new Error(`You must pass a function as an equality function to useSelector`);
-        const { store , subscription , getServerState  } = useReduxContext();
-        const selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, selector, equalityFn);
-        _react.useDebugValue(selectedState);
-        return selectedState;
-    };
-}
-const useSelector = /*#__PURE__*/ createSelectorHook();
-
-},{"react":"6TuXu","./useReduxContext":"516XC","../components/Context":"gT1Jg","../utils/useSyncExternalStore":"dadZ1","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"516XC":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * A hook to access the value of the `ReactReduxContext`. This is a low-level
- * hook that you should usually not need to call directly.
- *
- * @returns {any} the value of the `ReactReduxContext`
- *
- * @example
- *
- * import React from 'react'
- * import { useReduxContext } from 'react-redux'
- *
- * export const CounterComponent = () => {
- *   const { store } = useReduxContext()
- *   return <div>{store.getState()}</div>
- * }
- */ parcelHelpers.export(exports, "useReduxContext", ()=>useReduxContext
-);
-var _react = require("react");
-var _context = require("../components/Context");
-function useReduxContext() {
-    const contextValue = _react.useContext(_context.ReactReduxContext);
-    if (!contextValue) throw new Error('could not find react-redux context value; please ensure the component is wrapped in a <Provider>');
-    return contextValue;
-}
-
-},{"react":"6TuXu","../components/Context":"gT1Jg","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"gT1Jg":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ReactReduxContext", ()=>ReactReduxContext
-);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-const ReactReduxContext = /*#__PURE__*/ _reactDefault.default.createContext(null);
-ReactReduxContext.displayName = 'ReactRedux';
-exports.default = ReactReduxContext;
-
-},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"dadZ1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "notInitialized", ()=>notInitialized
-);
-const notInitialized = ()=>{
-    throw new Error('uSES not initialized!');
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"gr7nQ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initializeConnect", ()=>initializeConnect
-);
-var _extends = require("@babel/runtime/helpers/esm/extends");
-var _extendsDefault = parcelHelpers.interopDefault(_extends);
-var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
-var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
-/* eslint-disable valid-jsdoc, @typescript-eslint/no-unused-vars */ var _hoistNonReactStatics = require("hoist-non-react-statics");
-var _hoistNonReactStaticsDefault = parcelHelpers.interopDefault(_hoistNonReactStatics);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactIs = require("react-is");
-var _selectorFactory = require("../connect/selectorFactory");
-var _selectorFactoryDefault = parcelHelpers.interopDefault(_selectorFactory);
-var _mapDispatchToProps = require("../connect/mapDispatchToProps");
-var _mapStateToProps = require("../connect/mapStateToProps");
-var _mergeProps = require("../connect/mergeProps");
-var _subscription = require("../utils/Subscription");
-var _useIsomorphicLayoutEffect = require("../utils/useIsomorphicLayoutEffect");
-var _shallowEqual = require("../utils/shallowEqual");
-var _shallowEqualDefault = parcelHelpers.interopDefault(_shallowEqual);
-var _context = require("./Context");
-var _useSyncExternalStore = require("../utils/useSyncExternalStore");
-const _excluded = [
-    "reactReduxForwardedRef"
-];
-let useSyncExternalStore = _useSyncExternalStore.notInitialized;
-const initializeConnect = (fn)=>{
-    useSyncExternalStore = fn;
-}; // Define some constant arrays just to avoid re-creating these
-const EMPTY_ARRAY = [
-    null,
-    0
-];
-const NO_SUBSCRIPTION_ARRAY = [
-    null,
-    null
-]; // Attempts to stringify whatever not-really-a-component value we were given
-// for logging in an error message
-const stringifyComponent = (Comp)=>{
-    try {
-        return JSON.stringify(Comp);
-    } catch (err) {
-        return String(Comp);
-    }
-};
-// This is "just" a `useLayoutEffect`, but with two modifications:
-// - we need to fall back to `useEffect` in SSR to avoid annoying warnings
-// - we extract this to a separate function to avoid closing over values
-//   and causing memory leaks
-function useIsomorphicLayoutEffectWithArgs(effectFunc, effectArgs, dependencies) {
-    _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>effectFunc(...effectArgs)
-    , dependencies);
-} // Effect callback, extracted: assign the latest props values to refs for later usage
-function captureWrapperProps(lastWrapperProps, lastChildProps, renderIsScheduled, wrapperProps, childPropsFromStoreUpdate, notifyNestedSubs) {
-    // We want to capture the wrapper props and child props we used for later comparisons
-    lastWrapperProps.current = wrapperProps;
-    renderIsScheduled.current = false; // If the render was from a store update, clear out that reference and cascade the subscriber update
-    if (childPropsFromStoreUpdate.current) {
-        childPropsFromStoreUpdate.current = null;
-        notifyNestedSubs();
-    }
-} // Effect callback, extracted: subscribe to the Redux store or nearest connected ancestor,
-// check for updates after dispatched actions, and trigger re-renders.
-function subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, additionalSubscribeListener) {
-    // If we're not subscribed to the store, nothing to do here
-    if (!shouldHandleStateChanges) return ()=>{
-    }; // Capture values for checking if and when this component unmounts
-    let didUnsubscribe = false;
-    let lastThrownError = null; // We'll run this callback every time a store subscription update propagates to this component
-    const checkForUpdates = ()=>{
-        if (didUnsubscribe || !isMounted.current) // Don't run stale listeners.
-        // Redux doesn't guarantee unsubscriptions happen until next dispatch.
-        return;
-         // TODO We're currently calling getState ourselves here, rather than letting `uSES` do it
-        const latestStoreState = store.getState();
-        let newChildProps, error;
-        try {
-            // Actually run the selector with the most recent store state and wrapper props
-            // to determine what the child props should be
-            newChildProps = childPropsSelector(latestStoreState, lastWrapperProps.current);
-        } catch (e) {
-            error = e;
-            lastThrownError = e;
-        }
-        if (!error) lastThrownError = null;
-         // If the child props haven't changed, nothing to do here - cascade the subscription update
-        if (newChildProps === lastChildProps.current) {
-            if (!renderIsScheduled.current) notifyNestedSubs();
-        } else {
-            // Save references to the new child props.  Note that we track the "child props from store update"
-            // as a ref instead of a useState/useReducer because we need a way to determine if that value has
-            // been processed.  If this went into useState/useReducer, we couldn't clear out the value without
-            // forcing another re-render, which we don't want.
-            lastChildProps.current = newChildProps;
-            childPropsFromStoreUpdate.current = newChildProps;
-            renderIsScheduled.current = true; // TODO This is hacky and not how `uSES` is meant to be used
-            // Trigger the React `useSyncExternalStore` subscriber
-            additionalSubscribeListener();
-        }
-    }; // Actually subscribe to the nearest connected ancestor (or store)
-    subscription.onStateChange = checkForUpdates;
-    subscription.trySubscribe(); // Pull data from the store after first render in case the store has
-    // changed since we began.
-    checkForUpdates();
-    const unsubscribeWrapper = ()=>{
-        didUnsubscribe = true;
-        subscription.tryUnsubscribe();
-        subscription.onStateChange = null;
-        if (lastThrownError) // It's possible that we caught an error due to a bad mapState function, but the
-        // parent re-rendered without this component and we're about to unmount.
-        // This shouldn't happen as long as we do top-down subscriptions correctly, but
-        // if we ever do those wrong, this throw will surface the error in our tests.
-        // In that case, throw the error from here so it doesn't get lost.
-        throw lastThrownError;
-    };
-    return unsubscribeWrapper;
-} // Reducer initial state creation for our update reducer
-const initStateUpdates = ()=>EMPTY_ARRAY
-;
-function strictEqual(a, b) {
-    return a === b;
-}
-/**
- * Infers the type of props that a connector will inject into a component.
- */ /**
- * Connects a React component to a Redux store.
- *
- * - Without arguments, just wraps the component, without changing the behavior / props
- *
- * - If 2 params are passed (3rd param, mergeProps, is skipped), default behavior
- * is to override ownProps (as stated in the docs), so what remains is everything that's
- * not a state or dispatch prop
- *
- * - When 3rd param is passed, we don't know if ownProps propagate and whether they
- * should be valid component props, because it depends on mergeProps implementation.
- * As such, it is the user's responsibility to extend ownProps interface from state or
- * dispatch props or both when applicable
- *
- * @param mapStateToProps A function that extracts values from state
- * @param mapDispatchToProps Setup for dispatching actions
- * @param mergeProps Optional callback to merge state and dispatch props together
- * @param options Options for configuring the connection
- *
- */ function connect(mapStateToProps, mapDispatchToProps, mergeProps, { // The `pure` option has been removed, so TS doesn't like us destructuring this to check its existence.
-// @ts-ignore
-pure , areStatesEqual =strictEqual , areOwnPropsEqual =_shallowEqualDefault.default , areStatePropsEqual =_shallowEqualDefault.default , areMergedPropsEqual =_shallowEqualDefault.default , // use React's forwardRef to expose a ref of the wrapped component
-forwardRef =false , // the context consumer to use
-context =_context.ReactReduxContext  } = {
-}) {
-    if (pure !== undefined) throw new Error('The `pure` option has been removed. `connect` is now always a "pure/memoized" component');
-    const Context = context;
-    const initMapStateToProps = _mapStateToProps.mapStateToPropsFactory(mapStateToProps);
-    const initMapDispatchToProps = _mapDispatchToProps.mapDispatchToPropsFactory(mapDispatchToProps);
-    const initMergeProps = _mergeProps.mergePropsFactory(mergeProps);
-    const shouldHandleStateChanges = Boolean(mapStateToProps);
-    const wrapWithConnect = (WrappedComponent)=>{
-        if (!_reactIs.isValidElementType(WrappedComponent)) throw new Error(`You must pass a component to the function returned by connect. Instead received ${stringifyComponent(WrappedComponent)}`);
-        const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
-        const displayName = `Connect(${wrappedComponentName})`;
-        const selectorFactoryOptions = {
-            shouldHandleStateChanges,
-            displayName,
-            wrappedComponentName,
-            WrappedComponent,
-            // @ts-ignore
-            initMapStateToProps,
-            // @ts-ignore
-            initMapDispatchToProps,
-            initMergeProps,
-            areStatesEqual,
-            areStatePropsEqual,
-            areOwnPropsEqual,
-            areMergedPropsEqual
-        };
-        function ConnectFunction(props) {
-            const [propsContext, reactReduxForwardedRef, wrapperProps] = _react.useMemo(()=>{
-                // Distinguish between actual "data" props that were passed to the wrapper component,
-                // and values needed to control behavior (forwarded refs, alternate context instances).
-                // To maintain the wrapperProps object reference, memoize this destructuring.
-                const { reactReduxForwardedRef: reactReduxForwardedRef1  } = props, wrapperProps1 = _objectWithoutPropertiesLooseDefault.default(props, _excluded);
-                return [
-                    props.context,
-                    reactReduxForwardedRef1,
-                    wrapperProps1
-                ];
-            }, [
-                props
-            ]);
-            const ContextToUse = _react.useMemo(()=>{
-                // Users may optionally pass in a custom context instance to use instead of our ReactReduxContext.
-                // Memoize the check that determines which context instance we should use.
-                return propsContext && propsContext.Consumer && _reactIs.isContextConsumer(/*#__PURE__*/ _reactDefault.default.createElement(propsContext.Consumer, null)) ? propsContext : Context;
-            }, [
-                propsContext,
-                Context
-            ]); // Retrieve the store and ancestor subscription via context, if available
-            const contextValue = _react.useContext(ContextToUse); // The store _must_ exist as either a prop or in context.
-            // We'll check to see if it _looks_ like a Redux store first.
-            // This allows us to pass through a `store` prop that is just a plain value.
-            const didStoreComeFromProps = Boolean(props.store) && Boolean(props.store.getState) && Boolean(props.store.dispatch);
-            const didStoreComeFromContext = Boolean(contextValue) && Boolean(contextValue.store);
-            if (!didStoreComeFromProps && !didStoreComeFromContext) throw new Error(`Could not find "store" in the context of ` + `"${displayName}". Either wrap the root component in a <Provider>, ` + `or pass a custom React context provider to <Provider> and the corresponding ` + `React context consumer to ${displayName} in connect options.`);
-             // Based on the previous check, one of these must be true
-            const store = didStoreComeFromProps ? props.store : contextValue.store;
-            const getServerState = didStoreComeFromContext ? contextValue.getServerState : store.getState;
-            const childPropsSelector = _react.useMemo(()=>{
-                // The child props selector needs the store reference as an input.
-                // Re-create this selector whenever the store changes.
-                return _selectorFactoryDefault.default(store.dispatch, selectorFactoryOptions);
-            }, [
-                store
-            ]);
-            const [subscription, notifyNestedSubs] = _react.useMemo(()=>{
-                if (!shouldHandleStateChanges) return NO_SUBSCRIPTION_ARRAY; // This Subscription's source should match where store came from: props vs. context. A component
-                // connected to the store via props shouldn't use subscription from context, or vice versa.
-                const subscription1 = _subscription.createSubscription(store, didStoreComeFromProps ? undefined : contextValue.subscription); // `notifyNestedSubs` is duplicated to handle the case where the component is unmounted in
-                // the middle of the notification loop, where `subscription` will then be null. This can
-                // probably be avoided if Subscription's listeners logic is changed to not call listeners
-                // that have been unsubscribed in the  middle of the notification loop.
-                const notifyNestedSubs1 = subscription1.notifyNestedSubs.bind(subscription1);
-                return [
-                    subscription1,
-                    notifyNestedSubs1
-                ];
-            }, [
-                store,
-                didStoreComeFromProps,
-                contextValue
-            ]); // Determine what {store, subscription} value should be put into nested context, if necessary,
-            // and memoize that value to avoid unnecessary context updates.
-            const overriddenContextValue = _react.useMemo(()=>{
-                if (didStoreComeFromProps) // This component is directly subscribed to a store from props.
-                // We don't want descendants reading from this store - pass down whatever
-                // the existing context value is from the nearest connected ancestor.
-                return contextValue;
-                 // Otherwise, put this component's subscription instance into context, so that
-                // connected descendants won't update until after this component is done
-                return _extendsDefault.default({
-                }, contextValue, {
-                    subscription
-                });
-            }, [
-                didStoreComeFromProps,
-                contextValue,
-                subscription
-            ]); // Set up refs to coordinate values between the subscription effect and the render logic
-            const lastChildProps = _react.useRef();
-            const lastWrapperProps = _react.useRef(wrapperProps);
-            const childPropsFromStoreUpdate = _react.useRef();
-            const renderIsScheduled = _react.useRef(false);
-            const isProcessingDispatch = _react.useRef(false);
-            const isMounted = _react.useRef(false);
-            const latestSubscriptionCallbackError = _react.useRef();
-            _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>{
-                isMounted.current = true;
-                return ()=>{
-                    isMounted.current = false;
-                };
-            }, []);
-            const actualChildPropsSelector = _react.useMemo(()=>{
-                const selector = ()=>{
-                    // Tricky logic here:
-                    // - This render may have been triggered by a Redux store update that produced new child props
-                    // - However, we may have gotten new wrapper props after that
-                    // If we have new child props, and the same wrapper props, we know we should use the new child props as-is.
-                    // But, if we have new wrapper props, those might change the child props, so we have to recalculate things.
-                    // So, we'll use the child props from store update only if the wrapper props are the same as last time.
-                    if (childPropsFromStoreUpdate.current && wrapperProps === lastWrapperProps.current) return childPropsFromStoreUpdate.current;
-                     // TODO We're reading the store directly in render() here. Bad idea?
-                    // This will likely cause Bad Things (TM) to happen in Concurrent Mode.
-                    // Note that we do this because on renders _not_ caused by store updates, we need the latest store state
-                    // to determine what the child props should be.
-                    return childPropsSelector(store.getState(), wrapperProps);
-                };
-                return selector;
-            }, [
-                store,
-                wrapperProps
-            ]); // We need this to execute synchronously every time we re-render. However, React warns
-            // about useLayoutEffect in SSR, so we try to detect environment and fall back to
-            // just useEffect instead to avoid the warning, since neither will run anyway.
-            const subscribeForReact = _react.useMemo(()=>{
-                const subscribe = (reactListener)=>{
-                    if (!subscription) return ()=>{
-                    };
-                    return subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, reactListener);
-                };
-                return subscribe;
-            }, [
-                subscription
-            ]);
-            useIsomorphicLayoutEffectWithArgs(captureWrapperProps, [
-                lastWrapperProps,
-                lastChildProps,
-                renderIsScheduled,
-                wrapperProps,
-                childPropsFromStoreUpdate,
-                notifyNestedSubs
-            ]);
-            let actualChildProps;
-            try {
-                actualChildProps = useSyncExternalStore(subscribeForReact, // TODO and we're just passing that through so it triggers a re-render for us rather than relying on `uSES`.
-                actualChildPropsSelector, getServerState ? ()=>childPropsSelector(getServerState(), wrapperProps)
-                 : actualChildPropsSelector);
-            } catch (err) {
-                if (latestSubscriptionCallbackError.current) err.message += `\nThe error may be correlated with this previous error:\n${latestSubscriptionCallbackError.current.stack}\n\n`;
-                throw err;
-            }
-            _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>{
-                latestSubscriptionCallbackError.current = undefined;
-                childPropsFromStoreUpdate.current = undefined;
-                lastChildProps.current = actualChildProps;
-            }); // Now that all that's done, we can finally try to actually render the child component.
-            // We memoize the elements for the rendered child component as an optimization.
-            const renderedWrappedComponent = _react.useMemo(()=>{
-                return(/*#__PURE__*/ // @ts-ignore
-                _reactDefault.default.createElement(WrappedComponent, _extendsDefault.default({
-                }, actualChildProps, {
-                    ref: reactReduxForwardedRef
-                })));
-            }, [
-                reactReduxForwardedRef,
-                WrappedComponent,
-                actualChildProps
-            ]); // If React sees the exact same element reference as last time, it bails out of re-rendering
-            // that child, same as if it was wrapped in React.memo() or returned false from shouldComponentUpdate.
-            const renderedChild = _react.useMemo(()=>{
-                if (shouldHandleStateChanges) // If this component is subscribed to store updates, we need to pass its own
-                // subscription instance down to our descendants. That means rendering the same
-                // Context instance, and putting a different value into the context.
-                return(/*#__PURE__*/ _reactDefault.default.createElement(ContextToUse.Provider, {
-                    value: overriddenContextValue
-                }, renderedWrappedComponent));
-                return renderedWrappedComponent;
-            }, [
-                ContextToUse,
-                renderedWrappedComponent,
-                overriddenContextValue
-            ]);
-            return renderedChild;
-        }
-        const _Connect = _reactDefault.default.memo(ConnectFunction);
-        // Add a hacky cast to get the right output type
-        const Connect = _Connect;
-        Connect.WrappedComponent = WrappedComponent;
-        Connect.displayName = ConnectFunction.displayName = displayName;
-        if (forwardRef) {
-            const _forwarded = _reactDefault.default.forwardRef(function forwardConnectRef(props, ref) {
-                // @ts-ignore
-                return(/*#__PURE__*/ _reactDefault.default.createElement(Connect, _extendsDefault.default({
-                }, props, {
-                    reactReduxForwardedRef: ref
-                })));
-            });
-            const forwarded = _forwarded;
-            forwarded.displayName = displayName;
-            forwarded.WrappedComponent = WrappedComponent;
-            return _hoistNonReactStaticsDefault.default(forwarded, WrappedComponent);
-        }
-        return _hoistNonReactStaticsDefault.default(Connect, WrappedComponent);
-    };
-    return wrapWithConnect;
-}
-exports.default = connect;
-
-},{"@babel/runtime/helpers/esm/extends":"bKAu6","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","hoist-non-react-statics":"jfzb6","react":"6TuXu","react-is":"bCfxJ","../connect/selectorFactory":"2XZ1a","../connect/mapDispatchToProps":"5WOJW","../connect/mapStateToProps":"fi6QF","../connect/mergeProps":"j48TE","../utils/Subscription":"6rtcC","../utils/useIsomorphicLayoutEffect":"2TWoQ","../utils/shallowEqual":"leLul","./Context":"gT1Jg","../utils/useSyncExternalStore":"dadZ1","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bKAu6":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function _extends() {
-    _extends = Object.assign || function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-exports.default = _extends;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"3Rubg":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {
-    };
-    var target = {
-    };
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-exports.default = _objectWithoutPropertiesLoose;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"jfzb6":[function(require,module,exports) {
-'use strict';
-var reactIs = require('react-is');
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */ var REACT_STATICS = {
-    childContextTypes: true,
-    contextType: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    getDerivedStateFromError: true,
-    getDerivedStateFromProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
-var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    callee: true,
-    arguments: true,
-    arity: true
-};
-var FORWARD_REF_STATICS = {
-    '$$typeof': true,
-    render: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true
-};
-var MEMO_STATICS = {
-    '$$typeof': true,
-    compare: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true,
-    type: true
-};
-var TYPE_STATICS = {
-};
-TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
-TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
-function getStatics(component) {
-    // React v16.11 and below
-    if (reactIs.isMemo(component)) return MEMO_STATICS;
-     // React v16.12 and above
-    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
-}
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = Object.prototype;
-function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-    if (typeof sourceComponent !== 'string') {
-        // don't hoist over string (html) components
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-        }
-        var keys = getOwnPropertyNames(sourceComponent);
-        if (getOwnPropertySymbols) keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-        var targetStatics = getStatics(targetComponent);
-        var sourceStatics = getStatics(sourceComponent);
-        for(var i = 0; i < keys.length; ++i){
-            var key = keys[i];
-            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try {
-                    // Avoid failures from read-only properties
-                    defineProperty(targetComponent, key, descriptor);
-                } catch (e) {
-                }
-            }
-        }
-    }
-    return targetComponent;
-}
-module.exports = hoistNonReactStatics;
-
-},{"react-is":"5wFcP"}],"5wFcP":[function(require,module,exports) {
-'use strict';
-module.exports = require('./cjs/react-is.development.js');
-
-},{"./cjs/react-is.development.js":"dxS2U"}],"dxS2U":[function(require,module,exports) {
-/** @license React v16.13.1
- * react-is.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */ 'use strict';
-(function() {
-    // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
-    // nor polyfill, then a plain number is used for performance.
-    var hasSymbol = typeof Symbol === 'function' && Symbol.for;
-    var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 60103;
-    var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 60106;
-    var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 60107;
-    var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 60108;
-    var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 60114;
-    var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 60109;
-    var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 60110; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
-    // (unstable) APIs that have been removed. Can we remove the symbols?
-    var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 60111;
-    var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 60111;
-    var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 60112;
-    var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 60113;
-    var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 60120;
-    var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 60115;
-    var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 60116;
-    var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 60121;
-    var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 60117;
-    var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 60118;
-    var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 60119;
-    function isValidElementType(type) {
-        return typeof type === 'string' || typeof type === 'function' || type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
-    }
-    function typeOf(object) {
-        if (typeof object === 'object' && object !== null) {
-            var $$typeof = object.$$typeof;
-            switch($$typeof){
-                case REACT_ELEMENT_TYPE:
-                    var type = object.type;
-                    switch(type){
-                        case REACT_ASYNC_MODE_TYPE:
-                        case REACT_CONCURRENT_MODE_TYPE:
-                        case REACT_FRAGMENT_TYPE:
-                        case REACT_PROFILER_TYPE:
-                        case REACT_STRICT_MODE_TYPE:
-                        case REACT_SUSPENSE_TYPE:
-                            return type;
-                        default:
-                            var $$typeofType = type && type.$$typeof;
-                            switch($$typeofType){
-                                case REACT_CONTEXT_TYPE:
-                                case REACT_FORWARD_REF_TYPE:
-                                case REACT_LAZY_TYPE:
-                                case REACT_MEMO_TYPE:
-                                case REACT_PROVIDER_TYPE:
-                                    return $$typeofType;
-                                default:
-                                    return $$typeof;
-                            }
-                    }
-                case REACT_PORTAL_TYPE:
-                    return $$typeof;
-            }
-        }
-        return undefined;
-    } // AsyncMode is deprecated along with isAsyncMode
-    var AsyncMode = REACT_ASYNC_MODE_TYPE;
-    var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
-    var ContextConsumer = REACT_CONTEXT_TYPE;
-    var ContextProvider = REACT_PROVIDER_TYPE;
-    var Element1 = REACT_ELEMENT_TYPE;
-    var ForwardRef = REACT_FORWARD_REF_TYPE;
-    var Fragment = REACT_FRAGMENT_TYPE;
-    var Lazy = REACT_LAZY_TYPE;
-    var Memo = REACT_MEMO_TYPE;
-    var Portal = REACT_PORTAL_TYPE;
-    var Profiler = REACT_PROFILER_TYPE;
-    var StrictMode = REACT_STRICT_MODE_TYPE;
-    var Suspense = REACT_SUSPENSE_TYPE;
-    var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
-    function isAsyncMode(object) {
-        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
-            console['warn']("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
-        }
-        return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
-    }
-    function isConcurrentMode(object) {
-        return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
-    }
-    function isContextConsumer(object) {
-        return typeOf(object) === REACT_CONTEXT_TYPE;
-    }
-    function isContextProvider(object) {
-        return typeOf(object) === REACT_PROVIDER_TYPE;
-    }
-    function isElement(object) {
-        return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-    }
-    function isForwardRef(object) {
-        return typeOf(object) === REACT_FORWARD_REF_TYPE;
-    }
-    function isFragment(object) {
-        return typeOf(object) === REACT_FRAGMENT_TYPE;
-    }
-    function isLazy(object) {
-        return typeOf(object) === REACT_LAZY_TYPE;
-    }
-    function isMemo(object) {
-        return typeOf(object) === REACT_MEMO_TYPE;
-    }
-    function isPortal(object) {
-        return typeOf(object) === REACT_PORTAL_TYPE;
-    }
-    function isProfiler(object) {
-        return typeOf(object) === REACT_PROFILER_TYPE;
-    }
-    function isStrictMode(object) {
-        return typeOf(object) === REACT_STRICT_MODE_TYPE;
-    }
-    function isSuspense(object) {
-        return typeOf(object) === REACT_SUSPENSE_TYPE;
-    }
-    exports.AsyncMode = AsyncMode;
-    exports.ConcurrentMode = ConcurrentMode;
-    exports.ContextConsumer = ContextConsumer;
-    exports.ContextProvider = ContextProvider;
-    exports.Element = Element1;
-    exports.ForwardRef = ForwardRef;
-    exports.Fragment = Fragment;
-    exports.Lazy = Lazy;
-    exports.Memo = Memo;
-    exports.Portal = Portal;
-    exports.Profiler = Profiler;
-    exports.StrictMode = StrictMode;
-    exports.Suspense = Suspense;
-    exports.isAsyncMode = isAsyncMode;
-    exports.isConcurrentMode = isConcurrentMode;
-    exports.isContextConsumer = isContextConsumer;
-    exports.isContextProvider = isContextProvider;
-    exports.isElement = isElement;
-    exports.isForwardRef = isForwardRef;
-    exports.isFragment = isFragment;
-    exports.isLazy = isLazy;
-    exports.isMemo = isMemo;
-    exports.isPortal = isPortal;
-    exports.isProfiler = isProfiler;
-    exports.isStrictMode = isStrictMode;
-    exports.isSuspense = isSuspense;
-    exports.isValidElementType = isValidElementType;
-    exports.typeOf = typeOf;
-})();
-
-},{}],"bCfxJ":[function(require,module,exports) {
-'use strict';
-module.exports = require('./cjs/react-is.development.js');
-
-},{"./cjs/react-is.development.js":"eyUIi"}],"eyUIi":[function(require,module,exports) {
-/**
- * @license React
- * react-is.development.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */ 'use strict';
-(function() {
-    // -----------------------------------------------------------------------------
-    var enableScopeAPI = false; // Experimental Create Event Handle API.
-    var enableCacheElement = false;
-    var enableTransitionTracing = false; // No known bugs, but needs performance testing
-    var enableLegacyHidden = false; // Enables unstable_avoidThisFallback feature in Fiber
-    // stuff. Intended to enable React core members to more easily debug scheduling
-    // issues in DEV builds.
-    var enableDebugTracing = false; // Track which Fiber(s) schedule render work.
-    // ATTENTION
-    var REACT_ELEMENT_TYPE = Symbol.for('react.element');
-    var REACT_PORTAL_TYPE = Symbol.for('react.portal');
-    var REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
-    var REACT_STRICT_MODE_TYPE = Symbol.for('react.strict_mode');
-    var REACT_PROFILER_TYPE = Symbol.for('react.profiler');
-    var REACT_PROVIDER_TYPE = Symbol.for('react.provider');
-    var REACT_CONTEXT_TYPE = Symbol.for('react.context');
-    var REACT_SERVER_CONTEXT_TYPE = Symbol.for('react.server_context');
-    var REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
-    var REACT_SUSPENSE_TYPE = Symbol.for('react.suspense');
-    var REACT_SUSPENSE_LIST_TYPE = Symbol.for('react.suspense_list');
-    var REACT_MEMO_TYPE = Symbol.for('react.memo');
-    var REACT_LAZY_TYPE = Symbol.for('react.lazy');
-    var REACT_OFFSCREEN_TYPE = Symbol.for('react.offscreen');
-    var REACT_MODULE_REFERENCE;
-    REACT_MODULE_REFERENCE = Symbol.for('react.module.reference');
-    function isValidElementType(type) {
-        if (typeof type === 'string' || typeof type === 'function') return true;
-         // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
-        if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) return true;
-        if (typeof type === 'object' && type !== null) {
-            if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // types supported by any Flight configuration anywhere since
-            // we don't know which Flight build this will end up being used
-            // with.
-            type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== undefined) return true;
-        }
-        return false;
-    }
-    function typeOf(object) {
-        if (typeof object === 'object' && object !== null) {
-            var $$typeof = object.$$typeof;
-            switch($$typeof){
-                case REACT_ELEMENT_TYPE:
-                    var type = object.type;
-                    switch(type){
-                        case REACT_FRAGMENT_TYPE:
-                        case REACT_PROFILER_TYPE:
-                        case REACT_STRICT_MODE_TYPE:
-                        case REACT_SUSPENSE_TYPE:
-                        case REACT_SUSPENSE_LIST_TYPE:
-                            return type;
-                        default:
-                            var $$typeofType = type && type.$$typeof;
-                            switch($$typeofType){
-                                case REACT_SERVER_CONTEXT_TYPE:
-                                case REACT_CONTEXT_TYPE:
-                                case REACT_FORWARD_REF_TYPE:
-                                case REACT_LAZY_TYPE:
-                                case REACT_MEMO_TYPE:
-                                case REACT_PROVIDER_TYPE:
-                                    return $$typeofType;
-                                default:
-                                    return $$typeof;
-                            }
-                    }
-                case REACT_PORTAL_TYPE:
-                    return $$typeof;
-            }
-        }
-        return undefined;
-    }
-    var ContextConsumer = REACT_CONTEXT_TYPE;
-    var ContextProvider = REACT_PROVIDER_TYPE;
-    var Element1 = REACT_ELEMENT_TYPE;
-    var ForwardRef = REACT_FORWARD_REF_TYPE;
-    var Fragment = REACT_FRAGMENT_TYPE;
-    var Lazy = REACT_LAZY_TYPE;
-    var Memo = REACT_MEMO_TYPE;
-    var Portal = REACT_PORTAL_TYPE;
-    var Profiler = REACT_PROFILER_TYPE;
-    var StrictMode = REACT_STRICT_MODE_TYPE;
-    var Suspense = REACT_SUSPENSE_TYPE;
-    var SuspenseList = REACT_SUSPENSE_LIST_TYPE;
-    var hasWarnedAboutDeprecatedIsAsyncMode = false;
-    var hasWarnedAboutDeprecatedIsConcurrentMode = false; // AsyncMode should be deprecated
-    function isAsyncMode(object) {
-        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
-            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
-            console['warn']("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 18+.");
-        }
-        return false;
-    }
-    function isConcurrentMode(object) {
-        if (!hasWarnedAboutDeprecatedIsConcurrentMode) {
-            hasWarnedAboutDeprecatedIsConcurrentMode = true; // Using console['warn'] to evade Babel and ESLint
-            console['warn']("The ReactIs.isConcurrentMode() alias has been deprecated, and will be removed in React 18+.");
-        }
-        return false;
-    }
-    function isContextConsumer(object) {
-        return typeOf(object) === REACT_CONTEXT_TYPE;
-    }
-    function isContextProvider(object) {
-        return typeOf(object) === REACT_PROVIDER_TYPE;
-    }
-    function isElement(object) {
-        return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-    }
-    function isForwardRef(object) {
-        return typeOf(object) === REACT_FORWARD_REF_TYPE;
-    }
-    function isFragment(object) {
-        return typeOf(object) === REACT_FRAGMENT_TYPE;
-    }
-    function isLazy(object) {
-        return typeOf(object) === REACT_LAZY_TYPE;
-    }
-    function isMemo(object) {
-        return typeOf(object) === REACT_MEMO_TYPE;
-    }
-    function isPortal(object) {
-        return typeOf(object) === REACT_PORTAL_TYPE;
-    }
-    function isProfiler(object) {
-        return typeOf(object) === REACT_PROFILER_TYPE;
-    }
-    function isStrictMode(object) {
-        return typeOf(object) === REACT_STRICT_MODE_TYPE;
-    }
-    function isSuspense(object) {
-        return typeOf(object) === REACT_SUSPENSE_TYPE;
-    }
-    function isSuspenseList(object) {
-        return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
-    }
-    exports.ContextConsumer = ContextConsumer;
-    exports.ContextProvider = ContextProvider;
-    exports.Element = Element1;
-    exports.ForwardRef = ForwardRef;
-    exports.Fragment = Fragment;
-    exports.Lazy = Lazy;
-    exports.Memo = Memo;
-    exports.Portal = Portal;
-    exports.Profiler = Profiler;
-    exports.StrictMode = StrictMode;
-    exports.Suspense = Suspense;
-    exports.SuspenseList = SuspenseList;
-    exports.isAsyncMode = isAsyncMode;
-    exports.isConcurrentMode = isConcurrentMode;
-    exports.isContextConsumer = isContextConsumer;
-    exports.isContextProvider = isContextProvider;
-    exports.isElement = isElement;
-    exports.isForwardRef = isForwardRef;
-    exports.isFragment = isFragment;
-    exports.isLazy = isLazy;
-    exports.isMemo = isMemo;
-    exports.isPortal = isPortal;
-    exports.isProfiler = isProfiler;
-    exports.isStrictMode = isStrictMode;
-    exports.isSuspense = isSuspense;
-    exports.isSuspenseList = isSuspenseList;
-    exports.isValidElementType = isValidElementType;
-    exports.typeOf = typeOf;
-})();
-
-},{}],"2XZ1a":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "pureFinalPropsSelectorFactory", ()=>pureFinalPropsSelectorFactory
-);
-var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
-var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
-var _verifySubselectors = require("./verifySubselectors");
-var _verifySubselectorsDefault = parcelHelpers.interopDefault(_verifySubselectors);
-const _excluded = [
-    "initMapStateToProps",
-    "initMapDispatchToProps",
-    "initMergeProps"
-];
-function pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, { areStatesEqual , areOwnPropsEqual , areStatePropsEqual  }) {
-    let hasRunAtLeastOnce = false;
-    let state;
-    let ownProps;
-    let stateProps;
-    let dispatchProps;
-    let mergedProps;
-    function handleFirstCall(firstState, firstOwnProps) {
-        state = firstState;
-        ownProps = firstOwnProps;
-        stateProps = mapStateToProps(state, ownProps);
-        dispatchProps = mapDispatchToProps(dispatch, ownProps);
-        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
-        hasRunAtLeastOnce = true;
-        return mergedProps;
-    }
-    function handleNewPropsAndNewState() {
-        stateProps = mapStateToProps(state, ownProps);
-        if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
-        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
-        return mergedProps;
-    }
-    function handleNewProps() {
-        if (mapStateToProps.dependsOnOwnProps) stateProps = mapStateToProps(state, ownProps);
-        if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
-        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
-        return mergedProps;
-    }
-    function handleNewState() {
-        const nextStateProps = mapStateToProps(state, ownProps);
-        const statePropsChanged = !areStatePropsEqual(nextStateProps, stateProps);
-        stateProps = nextStateProps;
-        if (statePropsChanged) mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
-        return mergedProps;
-    }
-    function handleSubsequentCalls(nextState, nextOwnProps) {
-        const propsChanged = !areOwnPropsEqual(nextOwnProps, ownProps);
-        const stateChanged = !areStatesEqual(nextState, state);
-        state = nextState;
-        ownProps = nextOwnProps;
-        if (propsChanged && stateChanged) return handleNewPropsAndNewState();
-        if (propsChanged) return handleNewProps();
-        if (stateChanged) return handleNewState();
-        return mergedProps;
-    }
-    return function pureFinalPropsSelector(nextState, nextOwnProps) {
-        return hasRunAtLeastOnce ? handleSubsequentCalls(nextState, nextOwnProps) : handleFirstCall(nextState, nextOwnProps);
-    };
-}
-function finalPropsSelectorFactory(dispatch, _ref) {
-    let { initMapStateToProps , initMapDispatchToProps , initMergeProps  } = _ref, options = _objectWithoutPropertiesLooseDefault.default(_ref, _excluded);
-    const mapStateToProps = initMapStateToProps(dispatch, options);
-    const mapDispatchToProps = initMapDispatchToProps(dispatch, options);
-    const mergeProps = initMergeProps(dispatch, options);
-    _verifySubselectorsDefault.default(mapStateToProps, mapDispatchToProps, mergeProps);
-    return pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
-}
-exports.default = finalPropsSelectorFactory;
-
-},{"@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","./verifySubselectors":"lInRo","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"lInRo":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _warning = require("../utils/warning");
-var _warningDefault = parcelHelpers.interopDefault(_warning);
-function verify(selector, methodName) {
-    if (!selector) throw new Error(`Unexpected value for ${methodName} in connect.`);
-    else if (methodName === 'mapStateToProps' || methodName === 'mapDispatchToProps') {
-        if (!Object.prototype.hasOwnProperty.call(selector, 'dependsOnOwnProps')) _warningDefault.default(`The selector for ${methodName} of connect did not specify a value for dependsOnOwnProps.`);
-    }
-}
-function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps) {
-    verify(mapStateToProps, 'mapStateToProps');
-    verify(mapDispatchToProps, 'mapDispatchToProps');
-    verify(mergeProps, 'mergeProps');
-}
-exports.default = verifySubselectors;
-
-},{"../utils/warning":"fl0jd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fl0jd":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function warning(message) {
-    /* eslint-disable no-console */ if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(message);
-    /* eslint-enable no-console */ try {
-        // This error was thrown as a convenience so that if you enable
-        // "break on all exceptions" in your console,
-        // it would pause the execution at this line.
-        throw new Error(message);
-    /* eslint-disable no-empty */ } catch (e) {
-    }
-/* eslint-enable no-empty */ }
-exports.default = warning;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"5WOJW":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "mapDispatchToPropsFactory", ()=>mapDispatchToPropsFactory
-);
-var _bindActionCreators = require("../utils/bindActionCreators");
-var _bindActionCreatorsDefault = parcelHelpers.interopDefault(_bindActionCreators);
-var _wrapMapToProps = require("./wrapMapToProps");
-var _invalidArgFactory = require("./invalidArgFactory");
-function mapDispatchToPropsFactory(mapDispatchToProps) {
-    return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? _wrapMapToProps.wrapMapToPropsConstant((dispatch)=>_bindActionCreatorsDefault.default(mapDispatchToProps, dispatch)
-    ) : !mapDispatchToProps ? _wrapMapToProps.wrapMapToPropsConstant((dispatch)=>({
-            dispatch
-        })
-    ) : typeof mapDispatchToProps === 'function' ? _wrapMapToProps.wrapMapToPropsFunc(mapDispatchToProps, 'mapDispatchToProps') : _invalidArgFactory.createInvalidArgFactory(mapDispatchToProps, 'mapDispatchToProps');
-}
-
-},{"../utils/bindActionCreators":"dTgYQ","./wrapMapToProps":"cK0KG","./invalidArgFactory":"9AF5b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"dTgYQ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function bindActionCreators(actionCreators, dispatch) {
-    const boundActionCreators = {
-    };
-    for(const key in actionCreators){
-        const actionCreator = actionCreators[key];
-        if (typeof actionCreator === 'function') boundActionCreators[key] = (...args)=>dispatch(actionCreator(...args))
-        ;
-    }
-    return boundActionCreators;
-}
-exports.default = bindActionCreators;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"cK0KG":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "wrapMapToPropsConstant", ()=>wrapMapToPropsConstant
-) // dependsOnOwnProps is used by createMapToPropsProxy to determine whether to pass props as args
-;
-// to the mapToProps function being wrapped. It is also used by makePurePropsSelector to determine
-// whether mapToProps needs to be invoked when props have changed.
-//
-// A length of one signals that mapToProps does not depend on props from the parent component.
-// A length of zero is assumed to mean mapToProps is getting args via arguments or ...args and
-// therefore not reporting its length accurately..
-// TODO Can this get pulled out so that we can subscribe directly to the store if we don't need ownProps?
-parcelHelpers.export(exports, "getDependsOnOwnProps", ()=>getDependsOnOwnProps
-) // Used by whenMapStateToPropsIsFunction and whenMapDispatchToPropsIsFunction,
-;
-// this function wraps mapToProps in a proxy function which does several things:
-//
-//  * Detects whether the mapToProps function being called depends on props, which
-//    is used by selectorFactory to decide if it should reinvoke on props changes.
-//
-//  * On first call, handles mapToProps if returns another function, and treats that
-//    new function as the true mapToProps for subsequent calls.
-//
-//  * On first call, verifies the first result is a plain object, in order to warn
-//    the developer that their mapToProps function is not returning a valid result.
-//
-parcelHelpers.export(exports, "wrapMapToPropsFunc", ()=>wrapMapToPropsFunc
-);
-var _verifyPlainObject = require("../utils/verifyPlainObject");
-var _verifyPlainObjectDefault = parcelHelpers.interopDefault(_verifyPlainObject);
-function wrapMapToPropsConstant(//  It seems that the dispatch argument
-//  could be a dispatch function in some cases (ex: whenMapDispatchToPropsIsMissing)
-//  and a state object in some others (ex: whenMapStateToPropsIsMissing)
-// eslint-disable-next-line no-unused-vars
-getConstant) {
-    return function initConstantSelector(dispatch) {
-        const constant = getConstant(dispatch);
-        function constantSelector() {
-            return constant;
-        }
-        constantSelector.dependsOnOwnProps = false;
-        return constantSelector;
-    };
-}
-function getDependsOnOwnProps(mapToProps) {
-    return mapToProps.dependsOnOwnProps ? Boolean(mapToProps.dependsOnOwnProps) : mapToProps.length !== 1;
-}
-function wrapMapToPropsFunc(mapToProps, methodName) {
-    return function initProxySelector(dispatch, { displayName  }) {
-        const proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
-            return proxy.dependsOnOwnProps ? proxy.mapToProps(stateOrDispatch, ownProps) : proxy.mapToProps(stateOrDispatch, undefined);
-        }; // allow detectFactoryAndVerify to get ownProps
-        proxy.dependsOnOwnProps = true;
-        proxy.mapToProps = function detectFactoryAndVerify(stateOrDispatch, ownProps) {
-            proxy.mapToProps = mapToProps;
-            proxy.dependsOnOwnProps = getDependsOnOwnProps(mapToProps);
-            let props = proxy(stateOrDispatch, ownProps);
-            if (typeof props === 'function') {
-                proxy.mapToProps = props;
-                proxy.dependsOnOwnProps = getDependsOnOwnProps(props);
-                props = proxy(stateOrDispatch, ownProps);
-            }
-            _verifyPlainObjectDefault.default(props, displayName, methodName);
-            return props;
-        };
-        return proxy;
-    };
-}
-
-},{"../utils/verifyPlainObject":"8txK0","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"8txK0":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _isPlainObject = require("./isPlainObject");
-var _isPlainObjectDefault = parcelHelpers.interopDefault(_isPlainObject);
-var _warning = require("./warning");
-var _warningDefault = parcelHelpers.interopDefault(_warning);
-function verifyPlainObject(value, displayName, methodName) {
-    if (!_isPlainObjectDefault.default(value)) _warningDefault.default(`${methodName}() in ${displayName} must return a plain object. Instead received ${value}.`);
-}
-exports.default = verifyPlainObject;
-
-},{"./isPlainObject":"awooc","./warning":"fl0jd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"awooc":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function isPlainObject(obj) {
-    if (typeof obj !== 'object' || obj === null) return false;
-    let proto = Object.getPrototypeOf(obj);
-    if (proto === null) return true;
-    let baseProto = proto;
-    while(Object.getPrototypeOf(baseProto) !== null)baseProto = Object.getPrototypeOf(baseProto);
-    return proto === baseProto;
-}
-exports.default = isPlainObject;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"9AF5b":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "createInvalidArgFactory", ()=>createInvalidArgFactory
-);
-function createInvalidArgFactory(arg, name) {
-    return (dispatch, options)=>{
-        throw new Error(`Invalid value of type ${typeof arg} for ${name} argument when connecting component ${options.wrappedComponentName}.`);
-    };
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fi6QF":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "mapStateToPropsFactory", ()=>mapStateToPropsFactory
-);
-var _wrapMapToProps = require("./wrapMapToProps");
-var _invalidArgFactory = require("./invalidArgFactory");
-function mapStateToPropsFactory(mapStateToProps) {
-    return !mapStateToProps ? _wrapMapToProps.wrapMapToPropsConstant(()=>({
-        })
-    ) : typeof mapStateToProps === 'function' ? _wrapMapToProps.wrapMapToPropsFunc(mapStateToProps, 'mapStateToProps') : _invalidArgFactory.createInvalidArgFactory(mapStateToProps, 'mapStateToProps');
-}
-
-},{"./wrapMapToProps":"cK0KG","./invalidArgFactory":"9AF5b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"j48TE":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "defaultMergeProps", ()=>defaultMergeProps
-);
-parcelHelpers.export(exports, "wrapMergePropsFunc", ()=>wrapMergePropsFunc
-);
-parcelHelpers.export(exports, "mergePropsFactory", ()=>mergePropsFactory
-);
-var _extends = require("@babel/runtime/helpers/esm/extends");
-var _extendsDefault = parcelHelpers.interopDefault(_extends);
-var _verifyPlainObject = require("../utils/verifyPlainObject");
-var _verifyPlainObjectDefault = parcelHelpers.interopDefault(_verifyPlainObject);
-var _invalidArgFactory = require("./invalidArgFactory");
-function defaultMergeProps(stateProps, dispatchProps, ownProps) {
-    // @ts-ignore
-    return _extendsDefault.default({
-    }, ownProps, stateProps, dispatchProps);
-}
-function wrapMergePropsFunc(mergeProps) {
-    return function initMergePropsProxy(dispatch, { displayName , areMergedPropsEqual  }) {
-        let hasRunOnce = false;
-        let mergedProps;
-        return function mergePropsProxy(stateProps, dispatchProps, ownProps) {
-            const nextMergedProps = mergeProps(stateProps, dispatchProps, ownProps);
-            if (hasRunOnce) {
-                if (!areMergedPropsEqual(nextMergedProps, mergedProps)) mergedProps = nextMergedProps;
-            } else {
-                hasRunOnce = true;
-                mergedProps = nextMergedProps;
-                _verifyPlainObjectDefault.default(mergedProps, displayName, 'mergeProps');
-            }
-            return mergedProps;
-        };
-    };
-}
-function mergePropsFactory(mergeProps) {
-    return !mergeProps ? ()=>defaultMergeProps
-     : typeof mergeProps === 'function' ? wrapMergePropsFunc(mergeProps) : _invalidArgFactory.createInvalidArgFactory(mergeProps, 'mergeProps');
-}
-
-},{"@babel/runtime/helpers/esm/extends":"bKAu6","../utils/verifyPlainObject":"8txK0","./invalidArgFactory":"9AF5b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"6rtcC":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "createSubscription", ()=>createSubscription
-);
-var _batch = require("./batch"); // encapsulates the subscription logic for connecting a component to the redux store, as
-// well as nesting subscriptions of descendant components, so that we can ensure the
-// ancestor components re-render before descendants
-function createListenerCollection() {
-    const batch = _batch.getBatch();
-    let first = null;
-    let last = null;
-    return {
-        clear () {
-            first = null;
-            last = null;
-        },
-        notify () {
-            batch(()=>{
-                let listener = first;
-                while(listener){
-                    listener.callback();
-                    listener = listener.next;
-                }
-            });
-        },
-        get () {
-            let listeners = [];
-            let listener = first;
-            while(listener){
-                listeners.push(listener);
-                listener = listener.next;
-            }
-            return listeners;
-        },
-        subscribe (callback) {
-            let isSubscribed = true;
-            let listener = last = {
-                callback,
-                next: null,
-                prev: last
-            };
-            if (listener.prev) listener.prev.next = listener;
-            else first = listener;
-            return function unsubscribe() {
-                if (!isSubscribed || first === null) return;
-                isSubscribed = false;
-                if (listener.next) listener.next.prev = listener.prev;
-                else last = listener.prev;
-                if (listener.prev) listener.prev.next = listener.next;
-                else first = listener.next;
-            };
-        }
-    };
-}
-const nullListeners = {
-    notify () {
-    },
-    get: ()=>[]
-};
-function createSubscription(store, parentSub) {
-    let unsubscribe;
-    let listeners = nullListeners;
-    function addNestedSub(listener) {
-        trySubscribe();
-        return listeners.subscribe(listener);
-    }
-    function notifyNestedSubs() {
-        listeners.notify();
-    }
-    function handleChangeWrapper() {
-        if (subscription.onStateChange) subscription.onStateChange();
-    }
-    function isSubscribed() {
-        return Boolean(unsubscribe);
-    }
-    function trySubscribe() {
-        if (!unsubscribe) {
-            unsubscribe = parentSub ? parentSub.addNestedSub(handleChangeWrapper) : store.subscribe(handleChangeWrapper);
-            listeners = createListenerCollection();
-        }
-    }
-    function tryUnsubscribe() {
-        if (unsubscribe) {
-            unsubscribe();
-            unsubscribe = undefined;
-            listeners.clear();
-            listeners = nullListeners;
-        }
-    }
-    const subscription = {
-        addNestedSub,
-        notifyNestedSubs,
-        handleChangeWrapper,
-        isSubscribed,
-        trySubscribe,
-        tryUnsubscribe,
-        getListeners: ()=>listeners
-    };
-    return subscription;
-}
-
-},{"./batch":"2g3ZY","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2TWoQ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "canUseDOM", ()=>canUseDOM
-);
-parcelHelpers.export(exports, "useIsomorphicLayoutEffect", ()=>useIsomorphicLayoutEffect
-);
-var _react = require("react"); // React currently throws a warning when using useLayoutEffect on the server.
-const canUseDOM = !!(typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined');
-const useIsomorphicLayoutEffect = canUseDOM ? _react.useLayoutEffect : _react.useEffect;
-
-},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"leLul":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-function is(x, y) {
-    if (x === y) return x !== 0 || y !== 0 || 1 / x === 1 / y;
-    else return x !== x && y !== y;
-}
-function shallowEqual(objA, objB) {
-    if (is(objA, objB)) return true;
-    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) return false;
-    const keysA = Object.keys(objA);
-    const keysB = Object.keys(objB);
-    if (keysA.length !== keysB.length) return false;
-    for(let i = 0; i < keysA.length; i++){
-        if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) return false;
-    }
-    return true;
-}
-exports.default = shallowEqual;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"amFLd":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Provider", ()=>_providerDefault.default
-);
-parcelHelpers.export(exports, "ReactReduxContext", ()=>_context.ReactReduxContext
-);
-parcelHelpers.export(exports, "connect", ()=>_connectDefault.default
-);
-parcelHelpers.export(exports, "useDispatch", ()=>_useDispatch.useDispatch
-);
-parcelHelpers.export(exports, "createDispatchHook", ()=>_useDispatch.createDispatchHook
-);
-parcelHelpers.export(exports, "useSelector", ()=>_useSelector.useSelector
-);
-parcelHelpers.export(exports, "createSelectorHook", ()=>_useSelector.createSelectorHook
-);
-parcelHelpers.export(exports, "useStore", ()=>_useStore.useStore
-);
-parcelHelpers.export(exports, "createStoreHook", ()=>_useStore.createStoreHook
-);
-parcelHelpers.export(exports, "shallowEqual", ()=>_shallowEqualDefault.default
-);
-var _provider = require("./components/Provider");
-var _providerDefault = parcelHelpers.interopDefault(_provider);
-var _connect = require("./components/connect");
-var _connectDefault = parcelHelpers.interopDefault(_connect);
-var _context = require("./components/Context");
-var _useDispatch = require("./hooks/useDispatch");
-var _useSelector = require("./hooks/useSelector");
-var _useStore = require("./hooks/useStore");
-var _shallowEqual = require("./utils/shallowEqual");
-var _shallowEqualDefault = parcelHelpers.interopDefault(_shallowEqual);
-var _types = require("./types");
-parcelHelpers.exportAll(_types, exports);
-
-},{"./components/Provider":"efEZ1","./components/connect":"gr7nQ","./components/Context":"gT1Jg","./hooks/useDispatch":"2CDvn","./hooks/useSelector":"27k1i","./hooks/useStore":"fDPAT","./utils/shallowEqual":"leLul","./types":"jOi9b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"efEZ1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _context = require("./Context");
-var _subscription = require("../utils/Subscription");
-var _useIsomorphicLayoutEffect = require("../utils/useIsomorphicLayoutEffect");
-function Provider({ store , context , children , serverState  }) {
-    const contextValue = _react.useMemo(()=>{
-        const subscription = _subscription.createSubscription(store);
-        return {
-            store,
-            subscription,
-            getServerState: serverState ? ()=>serverState
-             : undefined
-        };
-    }, [
-        store,
-        serverState
-    ]);
-    const previousState = _react.useMemo(()=>store.getState()
-    , [
-        store
-    ]);
-    _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>{
-        const { subscription  } = contextValue;
-        subscription.onStateChange = subscription.notifyNestedSubs;
-        subscription.trySubscribe();
-        if (previousState !== store.getState()) subscription.notifyNestedSubs();
-        return ()=>{
-            subscription.tryUnsubscribe();
-            subscription.onStateChange = undefined;
-        };
-    }, [
-        contextValue,
-        previousState
-    ]);
-    const Context = context || _context.ReactReduxContext; // @ts-ignore 'AnyAction' is assignable to the constraint of type 'A', but 'A' could be instantiated with a different subtype
-    return(/*#__PURE__*/ _reactDefault.default.createElement(Context.Provider, {
-        value: contextValue
-    }, children));
-}
-exports.default = Provider;
-
-},{"react":"6TuXu","./Context":"gT1Jg","../utils/Subscription":"6rtcC","../utils/useIsomorphicLayoutEffect":"2TWoQ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2CDvn":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Hook factory, which creates a `useDispatch` hook bound to a given context.
- *
- * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
- * @returns {Function} A `useDispatch` hook bound to the specified context.
- */ parcelHelpers.export(exports, "createDispatchHook", ()=>createDispatchHook
-);
-parcelHelpers.export(exports, "useDispatch", ()=>useDispatch
-);
-var _context = require("../components/Context");
-var _useStore = require("./useStore");
-function createDispatchHook(context = _context.ReactReduxContext) {
-    const useStore = context === _context.ReactReduxContext ? _useStore.useStore : _useStore.createStoreHook(context);
-    return function useDispatch() {
-        const store = useStore(); // @ts-ignore
-        return store.dispatch;
-    };
-}
-const useDispatch = /*#__PURE__*/ createDispatchHook();
-
-},{"../components/Context":"gT1Jg","./useStore":"fDPAT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fDPAT":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-/**
- * Hook factory, which creates a `useStore` hook bound to a given context.
- *
- * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
- * @returns {Function} A `useStore` hook bound to the specified context.
- */ parcelHelpers.export(exports, "createStoreHook", ()=>createStoreHook
-);
-parcelHelpers.export(exports, "useStore", ()=>useStore
-);
-var _react = require("react");
-var _context = require("../components/Context");
-var _useReduxContext = require("./useReduxContext");
-function createStoreHook(context = _context.ReactReduxContext) {
-    const useReduxContext = context === _context.ReactReduxContext ? _useReduxContext.useReduxContext : ()=>_react.useContext(context)
-    ;
-    return function useStore() {
-        const { store  } = useReduxContext(); // @ts-ignore
-        return store;
-    };
-}
-const useStore = /*#__PURE__*/ createStoreHook();
-
-},{"react":"6TuXu","../components/Context":"gT1Jg","./useReduxContext":"516XC","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"jOi9b":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"btgQW":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _redux = require("redux");
-var _actions = require("../actions/actions");
-//used for filtering movies
-function visibilityFilter(state = '', action) {
-    switch(action.type){
-        case _actions.SET_FILTER:
-            return action.value;
-        default:
-            return state;
-    }
-}
-function movies(state = [], action) {
-    switch(action.type){
-        case _actions.SET_MOVIES:
-            return action.value;
-        default:
-            return state;
-    }
-}
-//handles setting array of favorites and updating favorites
-function favorites(state = [], action) {
-    switch(action.type){
-        case _actions.SET_FAVORITE:
-            return action.value;
-        case _actions.TOGGLE_FAVORITE:
-            if (state.includes(action.movieId)) return state.filter((val)=>val !== action.movieId
-            );
-            else return [
-                ...state,
-                action.movieId
-            ];
-        default:
-            return state;
-    }
-}
-//stores logged in user
-function user(state = '', action) {
-    switch(action.type){
-        case _actions.SET_USER:
-            return action.user;
-        default:
-            return state;
-    }
-}
-const moviesApp = _redux.combineReducers({
-    visibilityFilter,
-    movies,
-    favorites,
-    user
-});
-exports.default = moviesApp;
-
-},{"redux":"4d0QS","../actions/actions":"1Ttfj","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"1Ttfj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
-);
-parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
-);
-parcelHelpers.export(exports, "SET_FAVORITE", ()=>SET_FAVORITE
-);
-parcelHelpers.export(exports, "TOGGLE_FAVORITE", ()=>TOGGLE_FAVORITE
-);
-parcelHelpers.export(exports, "SET_USER", ()=>SET_USER
-);
-parcelHelpers.export(exports, "setMovies", ()=>setMovies
-);
-parcelHelpers.export(exports, "setFilter", ()=>setFilter
-);
-parcelHelpers.export(exports, "setFavorites", ()=>setFavorites
-);
-parcelHelpers.export(exports, "toggleFavorite", ()=>toggleFavorite
-);
-parcelHelpers.export(exports, "setUser", ()=>setUser
-);
-const SET_MOVIES = 'SET_MOVIES';
-const SET_FILTER = 'SET_FILTER';
-const SET_FAVORITE = 'SET_FAVORITE';
-const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
-const SET_USER = 'SET_USER';
-function setMovies(value) {
-    return {
-        type: SET_MOVIES,
-        value
-    };
-}
-function setFilter(value) {
-    return {
-        type: SET_FILTER,
-        value
-    };
-}
-function setFavorites(value) {
-    return {
-        type: SET_FAVORITE,
-        value
-    };
-}
-function toggleFavorite(movieId) {
-    return {
-        type: TOGGLE_FAVORITE,
-        movieId
-    };
-}
-function setUser(user) {
-    return {
-        type: SET_USER,
-        user
-    };
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2zHas":[function(require,module,exports) {
+},{}],"2zHas":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$35bf = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -28163,7 +25660,7 @@ exports.default = _reactRedux.connect(mapStateToProps, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","axios":"iYoWk","react-router-dom":"cpyQW","react-redux":"2L0if","../../actions/actions":"1Ttfj","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","../registration-view/registration-view":"aP2YV","../login-view/login-view":"054li","../movies-list/movies-list":"1kGQ5","../movie-view/movie-view":"ikZdr","../director-view/director-view":"ck15y","../genre-view/genre-view":"8WCoL","../profile-view/profile-view":"2E7Aw","../navbar-view/navbar":"bicRv","react-bootstrap":"h2YVd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../spinner/spinner":"eZvtp"}],"iYoWk":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","axios":"iYoWk","react-router-dom":"cpyQW","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","../registration-view/registration-view":"aP2YV","../login-view/login-view":"054li","../movie-view/movie-view":"ikZdr","../director-view/director-view":"ck15y","../genre-view/genre-view":"8WCoL","../profile-view/profile-view":"2E7Aw","../navbar-view/navbar":"bicRv","react-bootstrap":"h2YVd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../../actions/actions":"1Ttfj","../movies-list/movies-list":"1kGQ5","../spinner/spinner":"eZvtp"}],"iYoWk":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 
 },{"./lib/axios":"3QmO2"}],"3QmO2":[function(require,module,exports) {
@@ -32301,7 +29798,166 @@ var ReactIs = require('react-is');
 var throwOnDirectAccess = true;
 module.exports = require('./factoryWithTypeCheckers')(ReactIs.isElement, throwOnDirectAccess);
 
-},{"react-is":"5wFcP","./factoryWithTypeCheckers":"gMSjX"}],"gMSjX":[function(require,module,exports) {
+},{"react-is":"5wFcP","./factoryWithTypeCheckers":"gMSjX"}],"5wFcP":[function(require,module,exports) {
+'use strict';
+module.exports = require('./cjs/react-is.development.js');
+
+},{"./cjs/react-is.development.js":"dxS2U"}],"dxS2U":[function(require,module,exports) {
+/** @license React v16.13.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 'use strict';
+(function() {
+    // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+    // nor polyfill, then a plain number is used for performance.
+    var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+    var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 60103;
+    var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 60106;
+    var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 60107;
+    var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 60108;
+    var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 60114;
+    var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 60109;
+    var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 60110; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
+    // (unstable) APIs that have been removed. Can we remove the symbols?
+    var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 60111;
+    var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 60111;
+    var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 60112;
+    var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 60113;
+    var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 60120;
+    var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 60115;
+    var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 60116;
+    var REACT_BLOCK_TYPE = hasSymbol ? Symbol.for('react.block') : 60121;
+    var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 60117;
+    var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 60118;
+    var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 60119;
+    function isValidElementType(type) {
+        return typeof type === 'string' || typeof type === 'function' || type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE || type.$$typeof === REACT_BLOCK_TYPE);
+    }
+    function typeOf(object) {
+        if (typeof object === 'object' && object !== null) {
+            var $$typeof = object.$$typeof;
+            switch($$typeof){
+                case REACT_ELEMENT_TYPE:
+                    var type = object.type;
+                    switch(type){
+                        case REACT_ASYNC_MODE_TYPE:
+                        case REACT_CONCURRENT_MODE_TYPE:
+                        case REACT_FRAGMENT_TYPE:
+                        case REACT_PROFILER_TYPE:
+                        case REACT_STRICT_MODE_TYPE:
+                        case REACT_SUSPENSE_TYPE:
+                            return type;
+                        default:
+                            var $$typeofType = type && type.$$typeof;
+                            switch($$typeofType){
+                                case REACT_CONTEXT_TYPE:
+                                case REACT_FORWARD_REF_TYPE:
+                                case REACT_LAZY_TYPE:
+                                case REACT_MEMO_TYPE:
+                                case REACT_PROVIDER_TYPE:
+                                    return $$typeofType;
+                                default:
+                                    return $$typeof;
+                            }
+                    }
+                case REACT_PORTAL_TYPE:
+                    return $$typeof;
+            }
+        }
+        return undefined;
+    } // AsyncMode is deprecated along with isAsyncMode
+    var AsyncMode = REACT_ASYNC_MODE_TYPE;
+    var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+    var ContextConsumer = REACT_CONTEXT_TYPE;
+    var ContextProvider = REACT_PROVIDER_TYPE;
+    var Element1 = REACT_ELEMENT_TYPE;
+    var ForwardRef = REACT_FORWARD_REF_TYPE;
+    var Fragment = REACT_FRAGMENT_TYPE;
+    var Lazy = REACT_LAZY_TYPE;
+    var Memo = REACT_MEMO_TYPE;
+    var Portal = REACT_PORTAL_TYPE;
+    var Profiler = REACT_PROFILER_TYPE;
+    var StrictMode = REACT_STRICT_MODE_TYPE;
+    var Suspense = REACT_SUSPENSE_TYPE;
+    var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
+    function isAsyncMode(object) {
+        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+            console['warn']("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.");
+        }
+        return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+    }
+    function isConcurrentMode(object) {
+        return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+    }
+    function isContextConsumer(object) {
+        return typeOf(object) === REACT_CONTEXT_TYPE;
+    }
+    function isContextProvider(object) {
+        return typeOf(object) === REACT_PROVIDER_TYPE;
+    }
+    function isElement(object) {
+        return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+    function isForwardRef(object) {
+        return typeOf(object) === REACT_FORWARD_REF_TYPE;
+    }
+    function isFragment(object) {
+        return typeOf(object) === REACT_FRAGMENT_TYPE;
+    }
+    function isLazy(object) {
+        return typeOf(object) === REACT_LAZY_TYPE;
+    }
+    function isMemo(object) {
+        return typeOf(object) === REACT_MEMO_TYPE;
+    }
+    function isPortal(object) {
+        return typeOf(object) === REACT_PORTAL_TYPE;
+    }
+    function isProfiler(object) {
+        return typeOf(object) === REACT_PROFILER_TYPE;
+    }
+    function isStrictMode(object) {
+        return typeOf(object) === REACT_STRICT_MODE_TYPE;
+    }
+    function isSuspense(object) {
+        return typeOf(object) === REACT_SUSPENSE_TYPE;
+    }
+    exports.AsyncMode = AsyncMode;
+    exports.ConcurrentMode = ConcurrentMode;
+    exports.ContextConsumer = ContextConsumer;
+    exports.ContextProvider = ContextProvider;
+    exports.Element = Element1;
+    exports.ForwardRef = ForwardRef;
+    exports.Fragment = Fragment;
+    exports.Lazy = Lazy;
+    exports.Memo = Memo;
+    exports.Portal = Portal;
+    exports.Profiler = Profiler;
+    exports.StrictMode = StrictMode;
+    exports.Suspense = Suspense;
+    exports.isAsyncMode = isAsyncMode;
+    exports.isConcurrentMode = isConcurrentMode;
+    exports.isContextConsumer = isContextConsumer;
+    exports.isContextProvider = isContextProvider;
+    exports.isElement = isElement;
+    exports.isForwardRef = isForwardRef;
+    exports.isFragment = isFragment;
+    exports.isLazy = isLazy;
+    exports.isMemo = isMemo;
+    exports.isPortal = isPortal;
+    exports.isProfiler = isProfiler;
+    exports.isStrictMode = isStrictMode;
+    exports.isSuspense = isSuspense;
+    exports.isValidElementType = isValidElementType;
+    exports.typeOf = typeOf;
+})();
+
+},{}],"gMSjX":[function(require,module,exports) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -33617,7 +31273,22 @@ function clamp(n, lowerBound, upperBound) {
     return history;
 }
 
-},{"@babel/runtime/helpers/esm/extends":"bKAu6","resolve-pathname":"8Bknh","value-equal":"j68cW","tiny-warning":"4xDJt","tiny-invariant":"kiE0c","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"8Bknh":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/extends":"bKAu6","resolve-pathname":"8Bknh","value-equal":"j68cW","tiny-warning":"4xDJt","tiny-invariant":"kiE0c","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bKAu6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _extends() {
+    _extends = Object.assign || function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+exports.default = _extends;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"8Bknh":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function isAbsolute(pathname) {
@@ -34175,7 +31846,112 @@ module.exports = Array.isArray || function(arr) {
     return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],"c0x1x":[function(require,module,exports) {
+},{}],"3Rubg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {
+    };
+    var target = {
+    };
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+exports.default = _objectWithoutPropertiesLoose;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"jfzb6":[function(require,module,exports) {
+'use strict';
+var reactIs = require('react-is');
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */ var REACT_STATICS = {
+    childContextTypes: true,
+    contextType: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    getDerivedStateFromError: true,
+    getDerivedStateFromProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    callee: true,
+    arguments: true,
+    arity: true
+};
+var FORWARD_REF_STATICS = {
+    '$$typeof': true,
+    render: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true
+};
+var MEMO_STATICS = {
+    '$$typeof': true,
+    compare: true,
+    defaultProps: true,
+    displayName: true,
+    propTypes: true,
+    type: true
+};
+var TYPE_STATICS = {
+};
+TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
+TYPE_STATICS[reactIs.Memo] = MEMO_STATICS;
+function getStatics(component) {
+    // React v16.11 and below
+    if (reactIs.isMemo(component)) return MEMO_STATICS;
+     // React v16.12 and above
+    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
+}
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = Object.prototype;
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== 'string') {
+        // don't hoist over string (html) components
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+        }
+        var keys = getOwnPropertyNames(sourceComponent);
+        if (getOwnPropertySymbols) keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        var targetStatics = getStatics(targetComponent);
+        var sourceStatics = getStatics(sourceComponent);
+        for(var i = 0; i < keys.length; ++i){
+            var key = keys[i];
+            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try {
+                    // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {
+                }
+            }
+        }
+    }
+    return targetComponent;
+}
+module.exports = hoistNonReactStatics;
+
+},{"react-is":"5wFcP"}],"c0x1x":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -35641,555 +33417,489 @@ $RefreshReg$(_c, "LoadingSpinner");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","./spinner.scss":"7kyy3","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"7kyy3":[function() {},{}],"1kGQ5":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$2519 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","./spinner.scss":"7kyy3","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"7kyy3":[function() {},{}],"ikZdr":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$3741 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$2519.prelude(module);
+$parcel$ReactRefreshHelpers$3741.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+//showing details once MovieCard is clicked
+parcelHelpers.export(exports, "MovieView", ()=>MovieView
+);
 var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRouterDom = require("react-router-dom");
-var _reactSlick = require("react-slick");
-var _reactSlickDefault = parcelHelpers.interopDefault(_reactSlick);
-var _reactRedux = require("react-redux");
-var _reactBootstrap = require("react-bootstrap");
-//components to import and render
-var _movieCard = require("../movie-card/movie-card");
-var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
-//styles for filters
-var _moviesListScss = require("./movies-list.scss");
-var _slickCss = require("../../../node_modules/slick-carousel/slick/slick.css");
-var _slickThemeCss = require("../../../node_modules/slick-carousel/slick/slick-theme.css");
-var _s = $RefreshSig$();
-//mapping filter and favorites to props ma
-const mapStateToProps = (state)=>{
-    const { visibilityFilter  } = state;
-    return {
-        visibilityFilter
-    };
-};
-let sliderSettings = {
-    dots: false,
-    infinite: false,
-    rows: 1,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    swipeToSlide: true
-};
-function MoviesList(props) {
-    _s();
-    const { movies , visibilityFilter  } = props;
-    const [trendingList, setTrending] = _react.useState([]);
-    const [dragging, setDragging] = _react.useState(false);
-    const [sort, setSort] = _react.useState('');
-    const [activeFilter, setActiveFilter] = _react.useState('');
-    //setting up to navigate to specific movie
-    const history = _reactRouterDom.useHistory();
-    //allowing slider to reset to start when filter is applied
-    const totalSlide = _react.useRef();
-    const trendSlide = _react.useRef();
-    let slider = _react.useEffect(()=>{
-        if (totalSlide.current) {
-            totalSlide.current.slickGoTo(0);
-            setDragging(false);
-        }
-    }, [
-        visibilityFilter
-    ]);
-    //to prevent a click when user is dragging slider using before and after change functions
-    function handleBeforeChange(curr, next) {
-        if (curr === next) setDragging(false);
-        else setDragging(true);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _movieViewScss = require("./movie-view.scss");
+class MovieView extends _reactDefault.default.Component {
+    //resetting window to top for component
+    componentDidMount() {
+        window.scrollTo(0, 0);
     }
-    const filterGenerator = (srcForFilter)=>{
-        return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Dropdown, {
+    render() {
+        const { movie , onBackClick  } = this.props;
+        return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
+            className: "movie-view",
             __source: {
-                fileName: "src/components/movies-list/movies-list.jsx",
-                lineNumber: 70
+                fileName: "src/components/movie-view/movie-view.jsx",
+                lineNumber: 22
             },
             __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Dropdown.Toggle, {
-                    variant: "success",
-                    id: "dropdown-basic",
-                    __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 71
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsxs("svg", {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "25",
-                        height: "25",
-                        fill: "#fff",
-                        className: "filter bi bi-filter-circle",
-                        viewBox: "0 0 16 16",
+            children: /*#__PURE__*/ _jsxRuntime.jsxs(_rowDefault.default, {
+                className: "details-wrapper",
+                __source: {
+                    fileName: "src/components/movie-view/movie-view.jsx",
+                    lineNumber: 23
+                },
+                __self: this,
+                children: [
+                    /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
+                        lg: 6,
                         __source: {
-                            fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 72
+                            fileName: "src/components/movie-view/movie-view.jsx",
+                            lineNumber: 24
+                        },
+                        __self: this,
+                        children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                            className: "movie-poster d-flex",
+                            __source: {
+                                fileName: "src/components/movie-view/movie-view.jsx",
+                                lineNumber: 25
+                            },
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
+                                src: movie.ImagePath,
+                                crossOrigin: "anonymous",
+                                __source: {
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 26
+                                },
+                                __self: this
+                            })
+                        })
+                    }),
+                    /*#__PURE__*/ _jsxRuntime.jsxs(_colDefault.default, {
+                        lg: 6,
+                        className: "d-flex flex-column",
+                        __source: {
+                            fileName: "src/components/movie-view/movie-view.jsx",
+                            lineNumber: 29
                         },
                         __self: this,
                         children: [
-                            /*#__PURE__*/ _jsxRuntime.jsx("path", {
-                                d: "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z",
+                            /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                className: "movie-details align-self-center",
                                 __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 80
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 30
                                 },
-                                __self: this
+                                __self: this,
+                                children: [
+                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                        className: "movie-title mov-section",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 31
+                                        },
+                                        __self: this,
+                                        children: [
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "value",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 32
+                                                },
+                                                __self: this,
+                                                children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
+                                                    __source: {
+                                                        fileName: "src/components/movie-view/movie-view.jsx",
+                                                        lineNumber: 33
+                                                    },
+                                                    __self: this,
+                                                    children: movie.Title
+                                                })
+                                            }),
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "value",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 35
+                                                },
+                                                __self: this,
+                                                children: movie.Genre.Name
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                        className: "movie-actors mov-section",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 37
+                                        },
+                                        __self: this,
+                                        children: /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                            className: "value",
+                                            __source: {
+                                                fileName: "src/components/movie-view/movie-view.jsx",
+                                                lineNumber: 38
+                                            },
+                                            __self: this,
+                                            children: movie.Actors ? movie.Actors.join(' / ') : ''
+                                        })
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                        className: "movie-description mov-section",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 42
+                                        },
+                                        __self: this,
+                                        children: /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                            className: "value",
+                                            __source: {
+                                                fileName: "src/components/movie-view/movie-view.jsx",
+                                                lineNumber: 43
+                                            },
+                                            __self: this,
+                                            children: movie.Description
+                                        })
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                        className: "movie-director mov-section",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 45
+                                        },
+                                        __self: this,
+                                        children: [
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "label",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 46
+                                                },
+                                                __self: this,
+                                                children: "Director: "
+                                            }),
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "value",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 47
+                                                },
+                                                __self: this,
+                                                children: movie.Director.Name ? movie.Director.Name : 'N/A'
+                                            })
+                                        ]
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                        className: "movie-rating mov-section",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 51
+                                        },
+                                        __self: this,
+                                        children: [
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "label",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 52
+                                                },
+                                                __self: this,
+                                                children: "Rating: "
+                                            }),
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "value",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 53
+                                                },
+                                                __self: this,
+                                                children: movie.Rating ? movie.Rating : 'N/A'
+                                            })
+                                        ]
+                                    })
+                                ]
                             }),
-                            /*#__PURE__*/ _jsxRuntime.jsx("path", {
-                                d: "M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z",
+                            /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                className: "button-wrapper",
                                 __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 81
+                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                    lineNumber: 58
+                                },
+                                __self: this,
+                                children: [
+                                    /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+                                        to: `/directors/${movie.Director.Name}`,
+                                        className: "movie-opt",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 59
+                                        },
+                                        __self: this,
+                                        children: movie.Director.Name ? /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                                            variant: "secondary",
+                                            __source: {
+                                                fileName: "src/components/movie-view/movie-view.jsx",
+                                                lineNumber: 64
+                                            },
+                                            __self: this,
+                                            children: "More from this Director"
+                                        }) : /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                                            disabled: true,
+                                            variant: "secondary",
+                                            __source: {
+                                                fileName: "src/components/movie-view/movie-view.jsx",
+                                                lineNumber: 66
+                                            },
+                                            __self: this,
+                                            children: "More from this Director"
+                                        })
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+                                        to: `/genres/${movie.Genre.Name}`,
+                                        className: "movie-opt",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 71
+                                        },
+                                        __self: this,
+                                        children: /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                                            variant: "secondary",
+                                            __source: {
+                                                fileName: "src/components/movie-view/movie-view.jsx",
+                                                lineNumber: 72
+                                            },
+                                            __self: this,
+                                            children: "More from this Genre"
+                                        })
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                                        variant: "secondary",
+                                        className: "back-btn",
+                                        onClick: ()=>{
+                                            onBackClick();
+                                        },
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 74
+                                        },
+                                        __self: this,
+                                        children: "Back"
+                                    })
+                                ]
+                            })
+                        ]
+                    })
+                ]
+            })
+        }));
+    }
+}
+MovieView.propTypes = {
+    movie: _propTypesDefault.default.shape({
+        Title: _propTypesDefault.default.string.isRequired,
+        Description: _propTypesDefault.default.string.isRequired,
+        Genre: _propTypesDefault.default.shape({
+            Name: _propTypesDefault.default.string
+        }),
+        Director: _propTypesDefault.default.shape({
+            Name: _propTypesDefault.default.string
+        })
+    }).isRequired,
+    onBackClick: _propTypesDefault.default.func.isRequired
+};
+
+  $parcel$ReactRefreshHelpers$3741.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","react-bootstrap/Button":"9CzHT","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","./movie-view.scss":"kvL93","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kvL93":[function() {},{}],"ck15y":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f8cc = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f8cc.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "DirectorView", ()=>DirectorView
+);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _movieCard = require("../movie-card/movie-card");
+var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _reactRouterDom = require("react-router-dom");
+var _directorViewScss = require("./director-view.scss");
+class DirectorView extends _reactDefault.default.Component {
+    //resetting window to top for component
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+    render() {
+        const { director , onBackClick , directorMovies , accessFavorites  } = this.props;
+        //generator for movies by the same director.
+        let directorCards = directorMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
+                md: 3,
+                __source: {
+                    fileName: "src/components/director-view/director-view.jsx",
+                    lineNumber: 26
+                },
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+                    to: `/movies/${m._id}`,
+                    className: "movie-opt",
+                    __source: {
+                        fileName: "src/components/director-view/director-view.jsx",
+                        lineNumber: 27
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                        movie: m,
+                        __source: {
+                            fileName: "src/components/director-view/director-view.jsx",
+                            lineNumber: 28
+                        },
+                        __self: this
+                    })
+                })
+            }, m._id)
+        );
+        return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
+            className: "director-wrapper",
+            __source: {
+                fileName: "src/components/director-view/director-view.jsx",
+                lineNumber: 34
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                    className: "movie-view tp-movie",
+                    __source: {
+                        fileName: "src/components/director-view/director-view.jsx",
+                        lineNumber: 35
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                        className: "movie-genre mov-section",
+                        __source: {
+                            fileName: "src/components/director-view/director-view.jsx",
+                            lineNumber: 36
+                        },
+                        __self: this,
+                        children: [
+                            /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                __source: {
+                                    fileName: "src/components/director-view/director-view.jsx",
+                                    lineNumber: 37
+                                },
+                                __self: this,
+                                children: [
+                                    /*#__PURE__*/ _jsxRuntime.jsx("h3", {
+                                        __source: {
+                                            fileName: "src/components/director-view/director-view.jsx",
+                                            lineNumber: 38
+                                        },
+                                        __self: this,
+                                        children: director.Name
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                                        variant: "secondary",
+                                        onClick: ()=>{
+                                            onBackClick();
+                                        },
+                                        __source: {
+                                            fileName: "src/components/director-view/director-view.jsx",
+                                            lineNumber: 39
+                                        },
+                                        __self: this,
+                                        children: "Back"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ _jsxRuntime.jsx("br", {
+                                __source: {
+                                    fileName: "src/components/director-view/director-view.jsx",
+                                    lineNumber: 48
                                 },
                                 __self: this
                             })
                         ]
                     })
                 }),
-                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Dropdown.Menu, {
-                    style: {
-                        margin: 0
-                    },
+                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "movie-view bt-movie",
                     __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 84
+                        fileName: "src/components/director-view/director-view.jsx",
+                        lineNumber: 51
                     },
                     __self: this,
                     children: [
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Dropdown.Item, {
-                            filterclick: srcForFilter,
-                            onClick: (e)=>sortHandler(e)
-                            ,
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "cards-header",
                             __source: {
-                                fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 85
+                                fileName: "src/components/director-view/director-view.jsx",
+                                lineNumber: 53
                             },
                             __self: this,
-                            children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-                                className: "sortitem d-flex alpha",
-                                __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 89
-                                },
-                                __self: this,
-                                children: [
-                                    "Sort By Title",
-                                    activeFilter.target && activeFilter.target === 'Sort By Title' && setSortArrow()
-                                ]
-                            })
+                            children: [
+                                "Also directed by ",
+                                director.Name,
+                                " (",
+                                directorMovies.length,
+                                "):"
+                            ]
                         }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Dropdown.Item, {
-                            filterclick: srcForFilter,
-                            onClick: (e)=>sortHandler(e)
-                            ,
+                        /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
                             __source: {
-                                fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 96
+                                fileName: "src/components/director-view/director-view.jsx",
+                                lineNumber: 56
                             },
                             __self: this,
-                            children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-                                className: "sortitem d-flex alpha",
-                                __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 100
-                                },
-                                __self: this,
-                                children: [
-                                    "Sort By Rating",
-                                    activeFilter.target && activeFilter.target === 'Sort By Rating' && setSortArrow()
-                                ]
-                            })
+                            children: directorCards
                         })
                     ]
                 })
             ]
         }));
-    };
-    //handling the sorting click and updating the method and target of sorting
-    const sortHandler = (e)=>{
-        let targetSort = e.target.innerText;
-        let filterOrigin = e.target.parentNode.getAttribute('filterclick');
-        //to prevent racing against the state update
-        let sortVal = sort;
-        if (activeFilter.target && activeFilter.target !== targetSort) {
-            sortVal = '';
-            setSort('');
-        }
-        switch(sortVal){
-            case '':
-                setSort('asc');
-                setActiveFilter({
-                    target: targetSort,
-                    direction: 'asc',
-                    origin: filterOrigin
-                });
-                break;
-            case 'asc':
-                setSort('desc');
-                setActiveFilter({
-                    target: targetSort,
-                    direction: 'desc',
-                    origin: filterOrigin
-                });
-                break;
-            case 'desc':
-                setSort('');
-                setActiveFilter('');
-                break;
-        }
-    };
-    //storing and returning the sort direction arrows
-    const setSortArrow = ()=>{
-        switch(sort){
-            case 'asc':
-                return(/*#__PURE__*/ _jsxRuntime.jsx("svg", {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "16",
-                    height: "16",
-                    fill: "#00000",
-                    className: "bi bi-arrow-up",
-                    viewBox: "0 0 16 16",
-                    __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 151
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
-                        fillRule: "evenodd",
-                        d: "M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z",
-                        __source: {
-                            fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 159
-                        },
-                        __self: this
-                    })
-                }));
-            case 'desc':
-                return(/*#__PURE__*/ _jsxRuntime.jsx("svg", {
-                    xmlns: "http://www.w3.org/2000/svg",
-                    width: "16",
-                    height: "16",
-                    fillRule: "#00000",
-                    className: "bi bi-arrow-down",
-                    viewBox: "0 0 16 16",
-                    __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 167
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
-                        fillRule: "evenodd",
-                        d: "M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z",
-                        __source: {
-                            fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 175
-                        },
-                        __self: this
-                    })
-                }));
-            default:
-                return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
-                    __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 182
-                    },
-                    __self: this
-                }));
-        }
-    };
-    const handleAfterChange = _react.useCallback(()=>{
-        setDragging(false);
-    }, [
-        setDragging
-    ]);
-    //pushing movie details on click
-    const handleOnItemClick = (param)=>(e)=>{
-            if (dragging) e.stopPropagation();
-            else history.push(`/movies/${param}`);
-        }
-    ;
-    //setting filtered to default prop
-    let filteredMovies = [];
-    if (visibilityFilter !== '') {
-        filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
-        );
-        filteredTrending = props.trending.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
-        );
     }
-    const runFilters = (toFilter)=>{
-        if (activeFilter.target === 'Sort By Title') {
-            if (activeFilter.direction === 'asc') toFilter.sort((a, b)=>a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
-            );
-            else if (activeFilter.direction === 'desc') toFilter.sort((a, b)=>b.Title > a.Title ? 1 : a.Title > b.Title ? -1 : 0
-            );
-        } else if (activeFilter.target === 'Sort By Rating') {
-            if (activeFilter.direction === 'asc') toFilter.sort((a, b)=>b.Rating > a.Rating ? 1 : a.Rating > b.Rating ? -1 : 0
-            );
-            else if (activeFilter.direction === 'desc') toFilter.sort((a, b)=>a.Rating > b.Rating ? 1 : b.Rating > a.Rating ? -1 : 0
-            );
-        }
-    };
-    //handling active filers and applying the sort order -- sending with correct array
-    if (activeFilter !== '') switch(activeFilter.origin){
-        case 'filteredMovies':
-            runFilters(filteredMovies);
-            break;
-        case 'trendingmovies':
-            runFilters(props.trending);
-            break;
-        case 'movies':
-            runFilters(movies);
-            break;
-    }
-    if (!movies) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
-        className: "main-view",
-        __source: {
-            fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 252
-        },
-        __self: this
-    }));
-    return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
-        className: "shows-wrapper",
-        __source: {
-            fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 256
-        },
-        __self: this,
-        children: [
-            filteredMovies.length > 0 && /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                className: "filtered",
-                __source: {
-                    fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 258
-                },
-                __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                    className: "show-section",
-                    __source: {
-                        fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 259
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-                            className: "d-flex align-items-center",
-                            __source: {
-                                fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 260
-                            },
-                            __self: this,
-                            children: [
-                                /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
-                                    __source: {
-                                        fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 261
-                                    },
-                                    __self: this,
-                                    children: [
-                                        "Search Results (",
-                                        filteredMovies.length,
-                                        ")"
-                                    ]
-                                }),
-                                filterGenerator('filteredMovies')
-                            ]
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
-                            beforeChange: (current, next)=>handleBeforeChange(current, next)
-                            ,
-                            afterChange: handleAfterChange,
-                            ...sliderSettings,
-                            ref: trendSlide,
-                            __source: {
-                                fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 265
-                            },
-                            __self: this,
-                            children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                    className: "mcard",
-                                    onClickCapture: handleOnItemClick(m._id),
-                                    __source: {
-                                        fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 274
-                                    },
-                                    __self: this,
-                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                                        movie: m,
-                                        __source: {
-                                            fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 279
-                                        },
-                                        __self: this
-                                    })
-                                }, m._id)
-                            )
-                        })
-                    ]
-                })
-            }),
-            filteredMovies.length < 1 && /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                className: "unfilter",
-                __source: {
-                    fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 287
-                },
-                __self: this,
-                children: [
-                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                        className: "show-section",
-                        __source: {
-                            fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 288
-                        },
-                        __self: this,
-                        children: [
-                            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-                                className: "d-flex align-items-center",
-                                __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 289
-                                },
-                                __self: this,
-                                children: [
-                                    /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
-                                        __source: {
-                                            fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 290
-                                        },
-                                        __self: this,
-                                        children: [
-                                            "Trending (",
-                                            props.trending.length,
-                                            ")"
-                                        ]
-                                    }),
-                                    filterGenerator('trendingmovies')
-                                ]
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
-                                beforeChange: (current, next)=>handleBeforeChange(current, next)
-                                ,
-                                afterChange: handleAfterChange,
-                                ...sliderSettings,
-                                ref: trendSlide,
-                                __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 293
-                                },
-                                __self: this,
-                                children: props.trending.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                        className: "mcard",
-                                        onClickCapture: handleOnItemClick(m._id),
-                                        __source: {
-                                            fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 302
-                                        },
-                                        __self: this,
-                                        children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                                            movie: m,
-                                            __source: {
-                                                fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 307
-                                            },
-                                            __self: this
-                                        })
-                                    }, m._id)
-                                )
-                            })
-                        ]
-                    }),
-                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                        className: "show-section",
-                        __source: {
-                            fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 312
-                        },
-                        __self: this,
-                        children: [
-                            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-                                className: "d-flex align-items-center",
-                                __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 313
-                                },
-                                __self: this,
-                                children: [
-                                    /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
-                                        __source: {
-                                            fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 314
-                                        },
-                                        __self: this,
-                                        children: [
-                                            "Movies and Shows Total (",
-                                            movies.length,
-                                            ")"
-                                        ]
-                                    }),
-                                    filterGenerator('movies')
-                                ]
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
-                                beforeChange: (current, next)=>handleBeforeChange(current, next)
-                                ,
-                                afterChange: handleAfterChange,
-                                ...sliderSettings,
-                                ref: totalSlide,
-                                __source: {
-                                    fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 317
-                                },
-                                __self: this,
-                                children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                        className: "mcard",
-                                        onClickCapture: handleOnItemClick(m._id),
-                                        __source: {
-                                            fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 326
-                                        },
-                                        __self: this,
-                                        children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                                            movie: m,
-                                            __source: {
-                                                fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 331
-                                            },
-                                            __self: this
-                                        })
-                                    }, m._id)
-                                )
-                            })
-                        ]
-                    })
-                ]
-            })
-        ]
-    }));
 }
-_s(MoviesList, "+5+UoY4aKwKfPA8DoVUlnZ6zdjk=", false, function() {
-    return [_reactRouterDom.useHistory];
-});
-_c = MoviesList;
-exports.default = _reactRedux.connect(mapStateToProps)(MoviesList);
-var _c;
-$RefreshReg$(_c, "MoviesList");
+DirectorView.propTypes = {
+    director: _propTypesDefault.default.shape({
+        name: _propTypesDefault.default.string.isRequired,
+        bio: _propTypesDefault.default.string.isRequired
+    }).isRequired,
+    onBackClick: _propTypesDefault.default.func.isRequired
+};
 
-  $parcel$ReactRefreshHelpers$2519.postlude(module);
+  $parcel$ReactRefreshHelpers$f8cc.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-router-dom":"cpyQW","react-slick":"kVkIB","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","react-bootstrap":"h2YVd"}],"6EiBJ":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../movie-card/movie-card":"6EiBJ","react-bootstrap/Button":"9CzHT","react-bootstrap/Col":"fbam0","react-bootstrap/Row":"c0x1x","./director-view.scss":"hWS1b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","prop-types":"1tgq3","react-router-dom":"cpyQW"}],"6EiBJ":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$4249 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -36385,7 +34095,7 @@ exports.default = _reactRedux.connect(mapStateToProps, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","axios":"iYoWk","react-redux":"2L0if","react-bootstrap/Button":"9CzHT","react-bootstrap/Card":"MoOk8","../../actions/actions":"1Ttfj","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"MoOk8":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","axios":"iYoWk","react-bootstrap/Button":"9CzHT","react-bootstrap/Card":"MoOk8","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../../actions/actions":"1Ttfj"}],"MoOk8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -36561,4108 +34271,2430 @@ exports.getOrigin = getOrigin;
 },{}],"fms7o":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('3VpAv') + "heart-full.31cdf4dc.png";
 
-},{"./helpers/bundle-url":"jDaZY"}],"cF5gT":[function() {},{}],"9gz3w":[function() {},{}],"kVkIB":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _slider = _interopRequireDefault(require("./slider"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-var _default = _slider["default"];
-exports["default"] = _default;
-
-},{"./slider":"eYAMz"}],"eYAMz":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
-        return typeof obj1;
-    } : function(obj1) {
-        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-var _innerSlider = require("./inner-slider");
-var _json2mq = _interopRequireDefault(require("json2mq"));
-var _defaultProps = _interopRequireDefault(require("./default-props"));
-var _innerSliderUtils = require("./utils/innerSliderUtils");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _extends() {
-    _extends = Object.assign || function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
-}
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
-        o1.__proto__ = p1;
-        return o1;
-    };
-    return _setPrototypeOf(o, p);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-    try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
-        return o1.__proto__ || Object.getPrototypeOf(o1);
-    };
-    return _getPrototypeOf(o);
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-var enquire = _innerSliderUtils.canUseDOM() && require("enquire.js");
-var Slider1 = /*#__PURE__*/ function(_React$Component) {
-    _inherits(Slider2, _React$Component);
-    var _super = _createSuper(Slider2);
-    function Slider2(props) {
-        var _this;
-        _classCallCheck(this, Slider2);
-        _this = _super.call(this, props);
-        _defineProperty(_assertThisInitialized(_this), "innerSliderRefHandler", function(ref) {
-            return _this.innerSlider = ref;
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickPrev", function() {
-            return _this.innerSlider.slickPrev();
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickNext", function() {
-            return _this.innerSlider.slickNext();
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickGoTo", function(slide) {
-            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-            return _this.innerSlider.slickGoTo(slide, dontAnimate);
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickPause", function() {
-            return _this.innerSlider.pause("paused");
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickPlay", function() {
-            return _this.innerSlider.autoPlay("play");
-        });
-        _this.state = {
-            breakpoint: null
-        };
-        _this._responsiveMediaHandlers = [];
-        return _this;
-    }
-    _createClass(Slider2, [
-        {
-            key: "media",
-            value: function media(query, handler) {
-                // javascript handler for  css media query
-                enquire.register(query, handler);
-                this._responsiveMediaHandlers.push({
-                    query: query,
-                    handler: handler
-                });
-            } // handles responsive breakpoints
-        },
-        {
-            key: "componentDidMount",
-            value: function componentDidMount() {
-                var _this2 = this;
-                // performance monitoring
-                //if (process.env.NODE_ENV !== 'production') {
-                //const { whyDidYouUpdate } = require('why-did-you-update')
-                //whyDidYouUpdate(React)
-                //}
-                if (this.props.responsive) {
-                    var breakpoints = this.props.responsive.map(function(breakpt) {
-                        return breakpt.breakpoint;
-                    }); // sort them in increasing order of their numerical value
-                    breakpoints.sort(function(x, y) {
-                        return x - y;
-                    });
-                    breakpoints.forEach(function(breakpoint, index) {
-                        // media query for each breakpoint
-                        var bQuery;
-                        if (index === 0) bQuery = _json2mq["default"]({
-                            minWidth: 0,
-                            maxWidth: breakpoint
-                        });
-                        else bQuery = _json2mq["default"]({
-                            minWidth: breakpoints[index - 1] + 1,
-                            maxWidth: breakpoint
-                        });
-                         // when not using server side rendering
-                        _innerSliderUtils.canUseDOM() && _this2.media(bQuery, function() {
-                            _this2.setState({
-                                breakpoint: breakpoint
-                            });
-                        });
-                    }); // Register media query for full screen. Need to support resize from small to large
-                    // convert javascript object to media query string
-                    var query = _json2mq["default"]({
-                        minWidth: breakpoints.slice(-1)[0]
-                    });
-                    _innerSliderUtils.canUseDOM() && this.media(query, function() {
-                        _this2.setState({
-                            breakpoint: null
-                        });
-                    });
-                }
-            }
-        },
-        {
-            key: "componentWillUnmount",
-            value: function componentWillUnmount() {
-                this._responsiveMediaHandlers.forEach(function(obj) {
-                    enquire.unregister(obj.query, obj.handler);
-                });
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                var _this3 = this;
-                var settings;
-                var newProps;
-                if (this.state.breakpoint) {
-                    newProps = this.props.responsive.filter(function(resp) {
-                        return resp.breakpoint === _this3.state.breakpoint;
-                    });
-                    settings = newProps[0].settings === "unslick" ? "unslick" : _objectSpread(_objectSpread(_objectSpread({
-                    }, _defaultProps["default"]), this.props), newProps[0].settings);
-                } else settings = _objectSpread(_objectSpread({
-                }, _defaultProps["default"]), this.props);
-                 // force scrolling by one if centerMode is on
-                if (settings.centerMode) {
-                    if (settings.slidesToScroll > 1 && true) console.warn("slidesToScroll should be equal to 1 in centerMode, you are using ".concat(settings.slidesToScroll));
-                    settings.slidesToScroll = 1;
-                } // force showing one slide and scrolling by one if the fade mode is on
-                if (settings.fade) {
-                    if (settings.slidesToShow > 1 && true) console.warn("slidesToShow should be equal to 1 when fade is true, you're using ".concat(settings.slidesToShow));
-                    if (settings.slidesToScroll > 1 && true) console.warn("slidesToScroll should be equal to 1 when fade is true, you're using ".concat(settings.slidesToScroll));
-                    settings.slidesToShow = 1;
-                    settings.slidesToScroll = 1;
-                } // makes sure that children is an array, even when there is only 1 child
-                var children = _react["default"].Children.toArray(this.props.children); // Children may contain false or null, so we should filter them
-                // children may also contain string filled with spaces (in certain cases where we use jsx strings)
-                children = children.filter(function(child) {
-                    if (typeof child === "string") return !!child.trim();
-                    return !!child;
-                }); // rows and slidesPerRow logic is handled here
-                if (settings.variableWidth && (settings.rows > 1 || settings.slidesPerRow > 1)) {
-                    console.warn("variableWidth is not supported in case of rows > 1 or slidesPerRow > 1");
-                    settings.variableWidth = false;
-                }
-                var newChildren = [];
-                var currentWidth = null;
-                for(var i = 0; i < children.length; i += settings.rows * settings.slidesPerRow){
-                    var newSlide = [];
-                    for(var j = i; j < i + settings.rows * settings.slidesPerRow; j += settings.slidesPerRow){
-                        var row = [];
-                        for(var k = j; k < j + settings.slidesPerRow; k += 1){
-                            if (settings.variableWidth && children[k].props.style) currentWidth = children[k].props.style.width;
-                            if (k >= children.length) break;
-                            row.push(/*#__PURE__*/ _react["default"].cloneElement(children[k], {
-                                key: 100 * i + 10 * j + k,
-                                tabIndex: -1,
-                                style: {
-                                    width: "".concat(100 / settings.slidesPerRow, "%"),
-                                    display: "inline-block"
-                                }
-                            }));
-                        }
-                        newSlide.push(/*#__PURE__*/ _react["default"].createElement("div", {
-                            key: 10 * i + j
-                        }, row));
-                    }
-                    if (settings.variableWidth) newChildren.push(/*#__PURE__*/ _react["default"].createElement("div", {
-                        key: i,
-                        style: {
-                            width: currentWidth
-                        }
-                    }, newSlide));
-                    else newChildren.push(/*#__PURE__*/ _react["default"].createElement("div", {
-                        key: i
-                    }, newSlide));
-                }
-                if (settings === "unslick") {
-                    var className = "regular slider " + (this.props.className || "");
-                    return(/*#__PURE__*/ _react["default"].createElement("div", {
-                        className: className
-                    }, children));
-                } else if (newChildren.length <= settings.slidesToShow) settings.unslick = true;
-                return(/*#__PURE__*/ _react["default"].createElement(_innerSlider.InnerSlider, _extends({
-                    style: this.props.style,
-                    ref: this.innerSliderRefHandler
-                }, settings), newChildren));
-            }
-        }
-    ]);
-    return Slider2;
-}(_react["default"].Component);
-exports["default"] = Slider1;
-
-},{"react":"6TuXu","./inner-slider":"l2LYu","json2mq":"bZKop","./default-props":"8bzBk","./utils/innerSliderUtils":"7EteA","enquire.js":"jUNp6"}],"l2LYu":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.InnerSlider = void 0;
-var _react = _interopRequireDefault(require("react"));
-var _initialState = _interopRequireDefault(require("./initial-state"));
-var _lodash = _interopRequireDefault(require("lodash.debounce"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _innerSliderUtils = require("./utils/innerSliderUtils");
-var _track = require("./track");
-var _dots = require("./dots");
-var _arrows = require("./arrows");
-var _resizeObserverPolyfill = _interopRequireDefault(require("resize-observer-polyfill"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _typeof(obj) {
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
-        return typeof obj1;
-    } : function(obj1) {
-        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
-    }, _typeof(obj);
-}
-function _extends() {
-    _extends = Object.assign || function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-function _objectWithoutProperties(source, excluded) {
-    if (source == null) return {
-    };
-    var target = _objectWithoutPropertiesLoose(source, excluded);
-    var key, i;
-    if (Object.getOwnPropertySymbols) {
-        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-        for(i = 0; i < sourceSymbolKeys.length; i++){
-            key = sourceSymbolKeys[i];
-            if (excluded.indexOf(key) >= 0) continue;
-            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-            target[key] = source[key];
-        }
-    }
-    return target;
-}
-function _objectWithoutPropertiesLoose(source, excluded) {
-    if (source == null) return {
-    };
-    var target = {
-    };
-    var sourceKeys = Object.keys(source);
-    var key, i;
-    for(i = 0; i < sourceKeys.length; i++){
-        key = sourceKeys[i];
-        if (excluded.indexOf(key) >= 0) continue;
-        target[key] = source[key];
-    }
-    return target;
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
-}
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
-        o1.__proto__ = p1;
-        return o1;
-    };
-    return _setPrototypeOf(o, p);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-    try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
-        return o1.__proto__ || Object.getPrototypeOf(o1);
-    };
-    return _getPrototypeOf(o);
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-var InnerSlider1 = /*#__PURE__*/ function(_React$Component) {
-    _inherits(InnerSlider2, _React$Component);
-    var _super = _createSuper(InnerSlider2);
-    function InnerSlider2(props) {
-        var _this;
-        _classCallCheck(this, InnerSlider2);
-        _this = _super.call(this, props);
-        _defineProperty(_assertThisInitialized(_this), "listRefHandler", function(ref) {
-            return _this.list = ref;
-        });
-        _defineProperty(_assertThisInitialized(_this), "trackRefHandler", function(ref) {
-            return _this.track = ref;
-        });
-        _defineProperty(_assertThisInitialized(_this), "adaptHeight", function() {
-            if (_this.props.adaptiveHeight && _this.list) {
-                var elem = _this.list.querySelector("[data-index=\"".concat(_this.state.currentSlide, "\"]"));
-                _this.list.style.height = _innerSliderUtils.getHeight(elem) + "px";
-            }
-        });
-        _defineProperty(_assertThisInitialized(_this), "componentDidMount", function() {
-            _this.props.onInit && _this.props.onInit();
-            if (_this.props.lazyLoad) {
-                var slidesToLoad = _innerSliderUtils.getOnDemandLazySlides(_objectSpread(_objectSpread({
-                }, _this.props), _this.state));
-                if (slidesToLoad.length > 0) {
-                    _this.setState(function(prevState) {
-                        return {
-                            lazyLoadedList: prevState.lazyLoadedList.concat(slidesToLoad)
-                        };
-                    });
-                    if (_this.props.onLazyLoad) _this.props.onLazyLoad(slidesToLoad);
-                }
-            }
-            var spec = _objectSpread({
-                listRef: _this.list,
-                trackRef: _this.track
-            }, _this.props);
-            _this.updateState(spec, true, function() {
-                _this.adaptHeight();
-                _this.props.autoplay && _this.autoPlay("update");
-            });
-            if (_this.props.lazyLoad === "progressive") _this.lazyLoadTimer = setInterval(_this.progressiveLazyLoad, 1000);
-            _this.ro = new _resizeObserverPolyfill["default"](function() {
-                if (_this.state.animating) {
-                    _this.onWindowResized(false); // don't set trackStyle hence don't break animation
-                    _this.callbackTimers.push(setTimeout(function() {
-                        return _this.onWindowResized();
-                    }, _this.props.speed));
-                } else _this.onWindowResized();
-            });
-            _this.ro.observe(_this.list);
-            document.querySelectorAll && Array.prototype.forEach.call(document.querySelectorAll(".slick-slide"), function(slide) {
-                slide.onfocus = _this.props.pauseOnFocus ? _this.onSlideFocus : null;
-                slide.onblur = _this.props.pauseOnFocus ? _this.onSlideBlur : null;
-            });
-            if (window.addEventListener) window.addEventListener("resize", _this.onWindowResized);
-            else window.attachEvent("onresize", _this.onWindowResized);
-        });
-        _defineProperty(_assertThisInitialized(_this), "componentWillUnmount", function() {
-            if (_this.animationEndCallback) clearTimeout(_this.animationEndCallback);
-            if (_this.lazyLoadTimer) clearInterval(_this.lazyLoadTimer);
-            if (_this.callbackTimers.length) {
-                _this.callbackTimers.forEach(function(timer) {
-                    return clearTimeout(timer);
-                });
-                _this.callbackTimers = [];
-            }
-            if (window.addEventListener) window.removeEventListener("resize", _this.onWindowResized);
-            else window.detachEvent("onresize", _this.onWindowResized);
-            if (_this.autoplayTimer) clearInterval(_this.autoplayTimer);
-            _this.ro.disconnect();
-        });
-        _defineProperty(_assertThisInitialized(_this), "componentDidUpdate", function(prevProps) {
-            _this.checkImagesLoad();
-            _this.props.onReInit && _this.props.onReInit();
-            if (_this.props.lazyLoad) {
-                var slidesToLoad = _innerSliderUtils.getOnDemandLazySlides(_objectSpread(_objectSpread({
-                }, _this.props), _this.state));
-                if (slidesToLoad.length > 0) {
-                    _this.setState(function(prevState) {
-                        return {
-                            lazyLoadedList: prevState.lazyLoadedList.concat(slidesToLoad)
-                        };
-                    });
-                    if (_this.props.onLazyLoad) _this.props.onLazyLoad(slidesToLoad);
-                }
-            } // if (this.props.onLazyLoad) {
-            //   this.props.onLazyLoad([leftMostSlide])
-            // }
-            _this.adaptHeight();
-            var spec = _objectSpread(_objectSpread({
-                listRef: _this.list,
-                trackRef: _this.track
-            }, _this.props), _this.state);
-            var setTrackStyle = _this.didPropsChange(prevProps);
-            setTrackStyle && _this.updateState(spec, setTrackStyle, function() {
-                if (_this.state.currentSlide >= _react["default"].Children.count(_this.props.children)) _this.changeSlide({
-                    message: "index",
-                    index: _react["default"].Children.count(_this.props.children) - _this.props.slidesToShow,
-                    currentSlide: _this.state.currentSlide
-                });
-                if (_this.props.autoplay) _this.autoPlay("update");
-                else _this.pause("paused");
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "onWindowResized", function(setTrackStyle) {
-            if (_this.debouncedResize) _this.debouncedResize.cancel();
-            _this.debouncedResize = _lodash["default"](function() {
-                return _this.resizeWindow(setTrackStyle);
-            }, 50);
-            _this.debouncedResize();
-        });
-        _defineProperty(_assertThisInitialized(_this), "resizeWindow", function() {
-            var setTrackStyle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-            var isTrackMounted = Boolean(_this.track && _this.track.node); // prevent warning: setting state on unmounted component (server side rendering)
-            if (!isTrackMounted) return;
-            var spec = _objectSpread(_objectSpread({
-                listRef: _this.list,
-                trackRef: _this.track
-            }, _this.props), _this.state);
-            _this.updateState(spec, setTrackStyle, function() {
-                if (_this.props.autoplay) _this.autoPlay("update");
-                else _this.pause("paused");
-            }); // animating state should be cleared while resizing, otherwise autoplay stops working
-            _this.setState({
-                animating: false
-            });
-            clearTimeout(_this.animationEndCallback);
-            delete _this.animationEndCallback;
-        });
-        _defineProperty(_assertThisInitialized(_this), "updateState", function(spec, setTrackStyle, callback) {
-            var updatedState = _innerSliderUtils.initializedState(spec);
-            spec = _objectSpread(_objectSpread(_objectSpread({
-            }, spec), updatedState), {
-            }, {
-                slideIndex: updatedState.currentSlide
-            });
-            var targetLeft = _innerSliderUtils.getTrackLeft(spec);
-            spec = _objectSpread(_objectSpread({
-            }, spec), {
-            }, {
-                left: targetLeft
-            });
-            var trackStyle = _innerSliderUtils.getTrackCSS(spec);
-            if (setTrackStyle || _react["default"].Children.count(_this.props.children) !== _react["default"].Children.count(spec.children)) updatedState["trackStyle"] = trackStyle;
-            _this.setState(updatedState, callback);
-        });
-        _defineProperty(_assertThisInitialized(_this), "ssrInit", function() {
-            if (_this.props.variableWidth) {
-                var _trackWidth = 0, _trackLeft = 0;
-                var childrenWidths = [];
-                var preClones = _innerSliderUtils.getPreClones(_objectSpread(_objectSpread(_objectSpread({
-                }, _this.props), _this.state), {
-                }, {
-                    slideCount: _this.props.children.length
-                }));
-                var postClones = _innerSliderUtils.getPostClones(_objectSpread(_objectSpread(_objectSpread({
-                }, _this.props), _this.state), {
-                }, {
-                    slideCount: _this.props.children.length
-                }));
-                _this.props.children.forEach(function(child) {
-                    childrenWidths.push(child.props.style.width);
-                    _trackWidth += child.props.style.width;
-                });
-                for(var i = 0; i < preClones; i++){
-                    _trackLeft += childrenWidths[childrenWidths.length - 1 - i];
-                    _trackWidth += childrenWidths[childrenWidths.length - 1 - i];
-                }
-                for(var _i = 0; _i < postClones; _i++)_trackWidth += childrenWidths[_i];
-                for(var _i2 = 0; _i2 < _this.state.currentSlide; _i2++)_trackLeft += childrenWidths[_i2];
-                var _trackStyle = {
-                    width: _trackWidth + "px",
-                    left: -_trackLeft + "px"
-                };
-                if (_this.props.centerMode) {
-                    var currentWidth = "".concat(childrenWidths[_this.state.currentSlide], "px");
-                    _trackStyle.left = "calc(".concat(_trackStyle.left, " + (100% - ").concat(currentWidth, ") / 2 ) ");
-                }
-                return {
-                    trackStyle: _trackStyle
-                };
-            }
-            var childrenCount = _react["default"].Children.count(_this.props.children);
-            var spec = _objectSpread(_objectSpread(_objectSpread({
-            }, _this.props), _this.state), {
-            }, {
-                slideCount: childrenCount
-            });
-            var slideCount = _innerSliderUtils.getPreClones(spec) + _innerSliderUtils.getPostClones(spec) + childrenCount;
-            var trackWidth = 100 / _this.props.slidesToShow * slideCount;
-            var slideWidth = 100 / slideCount;
-            var trackLeft = -slideWidth * (_innerSliderUtils.getPreClones(spec) + _this.state.currentSlide) * trackWidth / 100;
-            if (_this.props.centerMode) trackLeft += (100 - slideWidth * trackWidth / 100) / 2;
-            var trackStyle = {
-                width: trackWidth + "%",
-                left: trackLeft + "%"
-            };
-            return {
-                slideWidth: slideWidth + "%",
-                trackStyle: trackStyle
-            };
-        });
-        _defineProperty(_assertThisInitialized(_this), "checkImagesLoad", function() {
-            var images = _this.list && _this.list.querySelectorAll && _this.list.querySelectorAll(".slick-slide img") || [];
-            var imagesCount = images.length, loadedCount = 0;
-            Array.prototype.forEach.call(images, function(image) {
-                var handler = function handler1() {
-                    return (++loadedCount) && loadedCount >= imagesCount && _this.onWindowResized();
-                };
-                if (!image.onclick) image.onclick = function() {
-                    return image.parentNode.focus();
-                };
-                else {
-                    var prevClickHandler = image.onclick;
-                    image.onclick = function() {
-                        prevClickHandler();
-                        image.parentNode.focus();
-                    };
-                }
-                if (!image.onload) {
-                    if (_this.props.lazyLoad) image.onload = function() {
-                        _this.adaptHeight();
-                        _this.callbackTimers.push(setTimeout(_this.onWindowResized, _this.props.speed));
-                    };
-                    else {
-                        image.onload = handler;
-                        image.onerror = function() {
-                            handler();
-                            _this.props.onLazyLoadError && _this.props.onLazyLoadError();
-                        };
-                    }
-                }
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "progressiveLazyLoad", function() {
-            var slidesToLoad = [];
-            var spec = _objectSpread(_objectSpread({
-            }, _this.props), _this.state);
-            for(var index = _this.state.currentSlide; index < _this.state.slideCount + _innerSliderUtils.getPostClones(spec); index++)if (_this.state.lazyLoadedList.indexOf(index) < 0) {
-                slidesToLoad.push(index);
-                break;
-            }
-            for(var _index = _this.state.currentSlide - 1; _index >= -_innerSliderUtils.getPreClones(spec); _index--)if (_this.state.lazyLoadedList.indexOf(_index) < 0) {
-                slidesToLoad.push(_index);
-                break;
-            }
-            if (slidesToLoad.length > 0) {
-                _this.setState(function(state) {
-                    return {
-                        lazyLoadedList: state.lazyLoadedList.concat(slidesToLoad)
-                    };
-                });
-                if (_this.props.onLazyLoad) _this.props.onLazyLoad(slidesToLoad);
-            } else if (_this.lazyLoadTimer) {
-                clearInterval(_this.lazyLoadTimer);
-                delete _this.lazyLoadTimer;
-            }
-        });
-        _defineProperty(_assertThisInitialized(_this), "slideHandler", function(index) {
-            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-            var _this$props = _this.props, asNavFor = _this$props.asNavFor, beforeChange = _this$props.beforeChange, onLazyLoad = _this$props.onLazyLoad, speed = _this$props.speed, afterChange = _this$props.afterChange; // capture currentslide before state is updated
-            var currentSlide = _this.state.currentSlide;
-            var _slideHandler = _innerSliderUtils.slideHandler(_objectSpread(_objectSpread(_objectSpread({
-                index: index
-            }, _this.props), _this.state), {
-            }, {
-                trackRef: _this.track,
-                useCSS: _this.props.useCSS && !dontAnimate
-            })), state = _slideHandler.state, nextState = _slideHandler.nextState;
-            if (!state) return;
-            beforeChange && beforeChange(currentSlide, state.currentSlide);
-            var slidesToLoad = state.lazyLoadedList.filter(function(value) {
-                return _this.state.lazyLoadedList.indexOf(value) < 0;
-            });
-            onLazyLoad && slidesToLoad.length > 0 && onLazyLoad(slidesToLoad);
-            if (!_this.props.waitForAnimate && _this.animationEndCallback) {
-                clearTimeout(_this.animationEndCallback);
-                afterChange && afterChange(currentSlide);
-                delete _this.animationEndCallback;
-            }
-            _this.setState(state, function() {
-                // asNavForIndex check is to avoid recursive calls of slideHandler in waitForAnimate=false mode
-                if (asNavFor && _this.asNavForIndex !== index) {
-                    _this.asNavForIndex = index;
-                    asNavFor.innerSlider.slideHandler(index);
-                }
-                if (!nextState) return;
-                _this.animationEndCallback = setTimeout(function() {
-                    var animating = nextState.animating, firstBatch = _objectWithoutProperties(nextState, [
-                        "animating"
-                    ]);
-                    _this.setState(firstBatch, function() {
-                        _this.callbackTimers.push(setTimeout(function() {
-                            return _this.setState({
-                                animating: animating
-                            });
-                        }, 10));
-                        afterChange && afterChange(state.currentSlide);
-                        delete _this.animationEndCallback;
-                    });
-                }, speed);
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "changeSlide", function(options) {
-            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-            var spec = _objectSpread(_objectSpread({
-            }, _this.props), _this.state);
-            var targetSlide = _innerSliderUtils.changeSlide(spec, options);
-            if (targetSlide !== 0 && !targetSlide) return;
-            if (dontAnimate === true) _this.slideHandler(targetSlide, dontAnimate);
-            else _this.slideHandler(targetSlide);
-            _this.props.autoplay && _this.autoPlay("update");
-            if (_this.props.focusOnSelect) {
-                var nodes = _this.list.querySelectorAll(".slick-current");
-                nodes[0] && nodes[0].focus();
-            }
-        });
-        _defineProperty(_assertThisInitialized(_this), "clickHandler", function(e) {
-            if (_this.clickable === false) {
-                e.stopPropagation();
-                e.preventDefault();
-            }
-            _this.clickable = true;
-        });
-        _defineProperty(_assertThisInitialized(_this), "keyHandler", function(e) {
-            var dir = _innerSliderUtils.keyHandler(e, _this.props.accessibility, _this.props.rtl);
-            dir !== "" && _this.changeSlide({
-                message: dir
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "selectHandler", function(options) {
-            _this.changeSlide(options);
-        });
-        _defineProperty(_assertThisInitialized(_this), "disableBodyScroll", function() {
-            var preventDefault = function preventDefault1(e) {
-                e = e || window.event;
-                if (e.preventDefault) e.preventDefault();
-                e.returnValue = false;
-            };
-            window.ontouchmove = preventDefault;
-        });
-        _defineProperty(_assertThisInitialized(_this), "enableBodyScroll", function() {
-            window.ontouchmove = null;
-        });
-        _defineProperty(_assertThisInitialized(_this), "swipeStart", function(e) {
-            if (_this.props.verticalSwiping) _this.disableBodyScroll();
-            var state = _innerSliderUtils.swipeStart(e, _this.props.swipe, _this.props.draggable);
-            state !== "" && _this.setState(state);
-        });
-        _defineProperty(_assertThisInitialized(_this), "swipeMove", function(e) {
-            var state = _innerSliderUtils.swipeMove(e, _objectSpread(_objectSpread(_objectSpread({
-            }, _this.props), _this.state), {
-            }, {
-                trackRef: _this.track,
-                listRef: _this.list,
-                slideIndex: _this.state.currentSlide
-            }));
-            if (!state) return;
-            if (state["swiping"]) _this.clickable = false;
-            _this.setState(state);
-        });
-        _defineProperty(_assertThisInitialized(_this), "swipeEnd", function(e) {
-            var state = _innerSliderUtils.swipeEnd(e, _objectSpread(_objectSpread(_objectSpread({
-            }, _this.props), _this.state), {
-            }, {
-                trackRef: _this.track,
-                listRef: _this.list,
-                slideIndex: _this.state.currentSlide
-            }));
-            if (!state) return;
-            var triggerSlideHandler = state["triggerSlideHandler"];
-            delete state["triggerSlideHandler"];
-            _this.setState(state);
-            if (triggerSlideHandler === undefined) return;
-            _this.slideHandler(triggerSlideHandler);
-            if (_this.props.verticalSwiping) _this.enableBodyScroll();
-        });
-        _defineProperty(_assertThisInitialized(_this), "touchEnd", function(e) {
-            _this.swipeEnd(e);
-            _this.clickable = true;
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickPrev", function() {
-            // this and fellow methods are wrapped in setTimeout
-            // to make sure initialize setState has happened before
-            // any of such methods are called
-            _this.callbackTimers.push(setTimeout(function() {
-                return _this.changeSlide({
-                    message: "previous"
-                });
-            }, 0));
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickNext", function() {
-            _this.callbackTimers.push(setTimeout(function() {
-                return _this.changeSlide({
-                    message: "next"
-                });
-            }, 0));
-        });
-        _defineProperty(_assertThisInitialized(_this), "slickGoTo", function(slide) {
-            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-            slide = Number(slide);
-            if (isNaN(slide)) return "";
-            _this.callbackTimers.push(setTimeout(function() {
-                return _this.changeSlide({
-                    message: "index",
-                    index: slide,
-                    currentSlide: _this.state.currentSlide
-                }, dontAnimate);
-            }, 0));
-        });
-        _defineProperty(_assertThisInitialized(_this), "play", function() {
-            var nextIndex;
-            if (_this.props.rtl) nextIndex = _this.state.currentSlide - _this.props.slidesToScroll;
-            else {
-                if (_innerSliderUtils.canGoNext(_objectSpread(_objectSpread({
-                }, _this.props), _this.state))) nextIndex = _this.state.currentSlide + _this.props.slidesToScroll;
-                else return false;
-            }
-            _this.slideHandler(nextIndex);
-        });
-        _defineProperty(_assertThisInitialized(_this), "autoPlay", function(playType) {
-            if (_this.autoplayTimer) clearInterval(_this.autoplayTimer);
-            var autoplaying = _this.state.autoplaying;
-            if (playType === "update") {
-                if (autoplaying === "hovered" || autoplaying === "focused" || autoplaying === "paused") return;
-            } else if (playType === "leave") {
-                if (autoplaying === "paused" || autoplaying === "focused") return;
-            } else if (playType === "blur") {
-                if (autoplaying === "paused" || autoplaying === "hovered") return;
-            }
-            _this.autoplayTimer = setInterval(_this.play, _this.props.autoplaySpeed + 50);
-            _this.setState({
-                autoplaying: "playing"
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "pause", function(pauseType) {
-            if (_this.autoplayTimer) {
-                clearInterval(_this.autoplayTimer);
-                _this.autoplayTimer = null;
-            }
-            var autoplaying = _this.state.autoplaying;
-            if (pauseType === "paused") _this.setState({
-                autoplaying: "paused"
-            });
-            else if (pauseType === "focused") {
-                if (autoplaying === "hovered" || autoplaying === "playing") _this.setState({
-                    autoplaying: "focused"
-                });
-            } else // pauseType  is 'hovered'
-            if (autoplaying === "playing") _this.setState({
-                autoplaying: "hovered"
-            });
-        });
-        _defineProperty(_assertThisInitialized(_this), "onDotsOver", function() {
-            return _this.props.autoplay && _this.pause("hovered");
-        });
-        _defineProperty(_assertThisInitialized(_this), "onDotsLeave", function() {
-            return _this.props.autoplay && _this.state.autoplaying === "hovered" && _this.autoPlay("leave");
-        });
-        _defineProperty(_assertThisInitialized(_this), "onTrackOver", function() {
-            return _this.props.autoplay && _this.pause("hovered");
-        });
-        _defineProperty(_assertThisInitialized(_this), "onTrackLeave", function() {
-            return _this.props.autoplay && _this.state.autoplaying === "hovered" && _this.autoPlay("leave");
-        });
-        _defineProperty(_assertThisInitialized(_this), "onSlideFocus", function() {
-            return _this.props.autoplay && _this.pause("focused");
-        });
-        _defineProperty(_assertThisInitialized(_this), "onSlideBlur", function() {
-            return _this.props.autoplay && _this.state.autoplaying === "focused" && _this.autoPlay("blur");
-        });
-        _defineProperty(_assertThisInitialized(_this), "render", function() {
-            var className = _classnames["default"]("slick-slider", _this.props.className, {
-                "slick-vertical": _this.props.vertical,
-                "slick-initialized": true
-            });
-            var spec = _objectSpread(_objectSpread({
-            }, _this.props), _this.state);
-            var trackProps = _innerSliderUtils.extractObject(spec, [
-                "fade",
-                "cssEase",
-                "speed",
-                "infinite",
-                "centerMode",
-                "focusOnSelect",
-                "currentSlide",
-                "lazyLoad",
-                "lazyLoadedList",
-                "rtl",
-                "slideWidth",
-                "slideHeight",
-                "listHeight",
-                "vertical",
-                "slidesToShow",
-                "slidesToScroll",
-                "slideCount",
-                "trackStyle",
-                "variableWidth",
-                "unslick",
-                "centerPadding",
-                "targetSlide",
-                "useCSS"
-            ]);
-            var pauseOnHover = _this.props.pauseOnHover;
-            trackProps = _objectSpread(_objectSpread({
-            }, trackProps), {
-            }, {
-                onMouseEnter: pauseOnHover ? _this.onTrackOver : null,
-                onMouseLeave: pauseOnHover ? _this.onTrackLeave : null,
-                onMouseOver: pauseOnHover ? _this.onTrackOver : null,
-                focusOnSelect: _this.props.focusOnSelect && _this.clickable ? _this.selectHandler : null
-            });
-            var dots;
-            if (_this.props.dots === true && _this.state.slideCount >= _this.props.slidesToShow) {
-                var dotProps = _innerSliderUtils.extractObject(spec, [
-                    "dotsClass",
-                    "slideCount",
-                    "slidesToShow",
-                    "currentSlide",
-                    "slidesToScroll",
-                    "clickHandler",
-                    "children",
-                    "customPaging",
-                    "infinite",
-                    "appendDots"
-                ]);
-                var pauseOnDotsHover = _this.props.pauseOnDotsHover;
-                dotProps = _objectSpread(_objectSpread({
-                }, dotProps), {
-                }, {
-                    clickHandler: _this.changeSlide,
-                    onMouseEnter: pauseOnDotsHover ? _this.onDotsLeave : null,
-                    onMouseOver: pauseOnDotsHover ? _this.onDotsOver : null,
-                    onMouseLeave: pauseOnDotsHover ? _this.onDotsLeave : null
-                });
-                dots = /*#__PURE__*/ _react["default"].createElement(_dots.Dots, dotProps);
-            }
-            var prevArrow, nextArrow;
-            var arrowProps = _innerSliderUtils.extractObject(spec, [
-                "infinite",
-                "centerMode",
-                "currentSlide",
-                "slideCount",
-                "slidesToShow",
-                "prevArrow",
-                "nextArrow"
-            ]);
-            arrowProps.clickHandler = _this.changeSlide;
-            if (_this.props.arrows) {
-                prevArrow = /*#__PURE__*/ _react["default"].createElement(_arrows.PrevArrow, arrowProps);
-                nextArrow = /*#__PURE__*/ _react["default"].createElement(_arrows.NextArrow, arrowProps);
-            }
-            var verticalHeightStyle = null;
-            if (_this.props.vertical) verticalHeightStyle = {
-                height: _this.state.listHeight
-            };
-            var centerPaddingStyle = null;
-            if (_this.props.vertical === false) {
-                if (_this.props.centerMode === true) centerPaddingStyle = {
-                    padding: "0px " + _this.props.centerPadding
-                };
-            } else if (_this.props.centerMode === true) centerPaddingStyle = {
-                padding: _this.props.centerPadding + " 0px"
-            };
-            var listStyle = _objectSpread(_objectSpread({
-            }, verticalHeightStyle), centerPaddingStyle);
-            var touchMove = _this.props.touchMove;
-            var listProps = {
-                className: "slick-list",
-                style: listStyle,
-                onClick: _this.clickHandler,
-                onMouseDown: touchMove ? _this.swipeStart : null,
-                onMouseMove: _this.state.dragging && touchMove ? _this.swipeMove : null,
-                onMouseUp: touchMove ? _this.swipeEnd : null,
-                onMouseLeave: _this.state.dragging && touchMove ? _this.swipeEnd : null,
-                onTouchStart: touchMove ? _this.swipeStart : null,
-                onTouchMove: _this.state.dragging && touchMove ? _this.swipeMove : null,
-                onTouchEnd: touchMove ? _this.touchEnd : null,
-                onTouchCancel: _this.state.dragging && touchMove ? _this.swipeEnd : null,
-                onKeyDown: _this.props.accessibility ? _this.keyHandler : null
-            };
-            var innerSliderProps = {
-                className: className,
-                dir: "ltr",
-                style: _this.props.style
-            };
-            if (_this.props.unslick) {
-                listProps = {
-                    className: "slick-list"
-                };
-                innerSliderProps = {
-                    className: className
-                };
-            }
-            return(/*#__PURE__*/ _react["default"].createElement("div", innerSliderProps, !_this.props.unslick ? prevArrow : "", /*#__PURE__*/ _react["default"].createElement("div", _extends({
-                ref: _this.listRefHandler
-            }, listProps), /*#__PURE__*/ _react["default"].createElement(_track.Track, _extends({
-                ref: _this.trackRefHandler
-            }, trackProps), _this.props.children)), !_this.props.unslick ? nextArrow : "", !_this.props.unslick ? dots : ""));
-        });
-        _this.list = null;
-        _this.track = null;
-        _this.state = _objectSpread(_objectSpread({
-        }, _initialState["default"]), {
-        }, {
-            currentSlide: _this.props.initialSlide,
-            slideCount: _react["default"].Children.count(_this.props.children)
-        });
-        _this.callbackTimers = [];
-        _this.clickable = true;
-        _this.debouncedResize = null;
-        var ssrState = _this.ssrInit();
-        _this.state = _objectSpread(_objectSpread({
-        }, _this.state), ssrState);
-        return _this;
-    }
-    _createClass(InnerSlider2, [
-        {
-            key: "didPropsChange",
-            value: function didPropsChange(prevProps) {
-                var setTrackStyle = false;
-                for(var _i3 = 0, _Object$keys = Object.keys(this.props); _i3 < _Object$keys.length; _i3++){
-                    var key = _Object$keys[_i3];
-                    if (!prevProps.hasOwnProperty(key)) {
-                        setTrackStyle = true;
-                        break;
-                    }
-                    if (_typeof(prevProps[key]) === "object" || typeof prevProps[key] === "function") continue;
-                    if (prevProps[key] !== this.props[key]) {
-                        setTrackStyle = true;
-                        break;
-                    }
-                }
-                return setTrackStyle || _react["default"].Children.count(this.props.children) !== _react["default"].Children.count(prevProps.children);
-            }
-        }
-    ]);
-    return InnerSlider2;
-}(_react["default"].Component);
-exports.InnerSlider = InnerSlider1;
-
-},{"react":"6TuXu","./initial-state":"j9WrN","lodash.debounce":"fwP7H","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA","./track":"6DHmH","./dots":"h2xzK","./arrows":"jdJ4A","resize-observer-polyfill":"AHOwr"}],"j9WrN":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var initialState = {
-    animating: false,
-    autoplaying: null,
-    currentDirection: 0,
-    currentLeft: null,
-    currentSlide: 0,
-    direction: 1,
-    dragging: false,
-    edgeDragged: false,
-    initialized: false,
-    lazyLoadedList: [],
-    listHeight: null,
-    listWidth: null,
-    scrolling: false,
-    slideCount: null,
-    slideHeight: null,
-    slideWidth: null,
-    swipeLeft: null,
-    swiped: false,
-    // used by swipeEvent. differentites between touch and swipe.
-    swiping: false,
-    touchObject: {
-        startX: 0,
-        startY: 0,
-        curX: 0,
-        curY: 0
-    },
-    trackStyle: {
-    },
-    trackWidth: 0,
-    targetSlide: 0
-};
-var _default = initialState;
-exports["default"] = _default;
-
-},{}],"fwP7H":[function(require,module,exports) {
-var global = arguments[3];
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */ /** Used as the `TypeError` message for "Functions" methods. */ var FUNC_ERROR_TEXT = 'Expected a function';
-/** Used as references for various `Number` constants. */ var NAN = 0 / 0;
-/** `Object#toString` result references. */ var symbolTag = '[object Symbol]';
-/** Used to match leading and trailing whitespace. */ var reTrim = /^\s+|\s+$/g;
-/** Used to detect bad signed hexadecimal string values. */ var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-/** Used to detect binary string values. */ var reIsBinary = /^0b[01]+$/i;
-/** Used to detect octal string values. */ var reIsOctal = /^0o[0-7]+$/i;
-/** Built-in method references without a dependency on `root`. */ var freeParseInt = parseInt;
-/** Detect free variable `global` from Node.js. */ var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-/** Detect free variable `self`. */ var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-/** Used as a reference to the global object. */ var root = freeGlobal || freeSelf || Function('return this')();
-/** Used for built-in method references. */ var objectProto = Object.prototype;
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */ var objectToString = objectProto.toString;
-/* Built-in method references for those with the same name as other `lodash` methods. */ var nativeMax = Math.max, nativeMin = Math.min;
-/**
- * Gets the timestamp of the number of milliseconds that have elapsed since
- * the Unix epoch (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Date
- * @returns {number} Returns the timestamp.
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => Logs the number of milliseconds it took for the deferred invocation.
- */ var now = function() {
-    return root.Date.now();
-};
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked. The debounced function comes with a `cancel` method to cancel
- * delayed `func` invocations and a `flush` method to immediately invoke them.
- * Provide `options` to indicate whether `func` should be invoked on the
- * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
- * with the last arguments provided to the debounced function. Subsequent
- * calls to the debounced function return the result of the last `func`
- * invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the debounced function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=false]
- *  Specify invoking on the leading edge of the timeout.
- * @param {number} [options.maxWait]
- *  The maximum time `func` is allowed to be delayed before it's invoked.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // Avoid costly calculations while the window size is in flux.
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // Invoke `sendMail` when clicked, debouncing subsequent calls.
- * jQuery(element).on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
- * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', debounced);
- *
- * // Cancel the trailing debounced invocation.
- * jQuery(window).on('popstate', debounced.cancel);
- */ function debounce(func, wait, options) {
-    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
-    if (typeof func != 'function') throw new TypeError(FUNC_ERROR_TEXT);
-    wait = toNumber(wait) || 0;
-    if (isObject(options)) {
-        leading = !!options.leading;
-        maxing = 'maxWait' in options;
-        maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-        trailing = 'trailing' in options ? !!options.trailing : trailing;
-    }
-    function invokeFunc(time) {
-        var args = lastArgs, thisArg = lastThis;
-        lastArgs = lastThis = undefined;
-        lastInvokeTime = time;
-        result = func.apply(thisArg, args);
-        return result;
-    }
-    function leadingEdge(time) {
-        // Reset any `maxWait` timer.
-        lastInvokeTime = time;
-        // Start the timer for the trailing edge.
-        timerId = setTimeout(timerExpired, wait);
-        // Invoke the leading edge.
-        return leading ? invokeFunc(time) : result;
-    }
-    function remainingWait(time) {
-        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime, result1 = wait - timeSinceLastCall;
-        return maxing ? nativeMin(result1, maxWait - timeSinceLastInvoke) : result1;
-    }
-    function shouldInvoke(time) {
-        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime;
-        // Either this is the first call, activity has stopped and we're at the
-        // trailing edge, the system time has gone backwards and we're treating
-        // it as the trailing edge, or we've hit the `maxWait` limit.
-        return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
-    }
-    function timerExpired() {
-        var time = now();
-        if (shouldInvoke(time)) return trailingEdge(time);
-        // Restart the timer.
-        timerId = setTimeout(timerExpired, remainingWait(time));
-    }
-    function trailingEdge(time) {
-        timerId = undefined;
-        // Only invoke if we have `lastArgs` which means `func` has been
-        // debounced at least once.
-        if (trailing && lastArgs) return invokeFunc(time);
-        lastArgs = lastThis = undefined;
-        return result;
-    }
-    function cancel() {
-        if (timerId !== undefined) clearTimeout(timerId);
-        lastInvokeTime = 0;
-        lastArgs = lastCallTime = lastThis = timerId = undefined;
-    }
-    function flush() {
-        return timerId === undefined ? result : trailingEdge(now());
-    }
-    function debounced() {
-        var time = now(), isInvoking = shouldInvoke(time);
-        lastArgs = arguments;
-        lastThis = this;
-        lastCallTime = time;
-        if (isInvoking) {
-            if (timerId === undefined) return leadingEdge(lastCallTime);
-            if (maxing) {
-                // Handle invocations in a tight loop.
-                timerId = setTimeout(timerExpired, wait);
-                return invokeFunc(lastCallTime);
-            }
-        }
-        if (timerId === undefined) timerId = setTimeout(timerExpired, wait);
-        return result;
-    }
-    debounced.cancel = cancel;
-    debounced.flush = flush;
-    return debounced;
-}
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */ function isObject(value) {
-    var type = typeof value;
-    return !!value && (type == 'object' || type == 'function');
-}
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */ function isObjectLike(value) {
-    return !!value && typeof value == 'object';
-}
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */ function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
-}
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */ function toNumber(value) {
-    if (typeof value == 'number') return value;
-    if (isSymbol(value)) return NAN;
-    if (isObject(value)) {
-        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-        value = isObject(other) ? other + '' : other;
-    }
-    if (typeof value != 'string') return value === 0 ? value : +value;
-    value = value.replace(reTrim, '');
-    var isBinary = reIsBinary.test(value);
-    return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
-}
-module.exports = debounce;
-
-},{}],"7EteA":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.checkSpecKeys = exports.checkNavigable = exports.changeSlide = exports.canUseDOM = exports.canGoNext = void 0;
-exports.clamp = clamp;
-exports.swipeStart = exports.swipeMove = exports.swipeEnd = exports.slidesOnRight = exports.slidesOnLeft = exports.slideHandler = exports.siblingDirection = exports.safePreventDefault = exports.lazyStartIndex = exports.lazySlidesOnRight = exports.lazySlidesOnLeft = exports.lazyEndIndex = exports.keyHandler = exports.initializedState = exports.getWidth = exports.getTrackLeft = exports.getTrackCSS = exports.getTrackAnimateCSS = exports.getTotalSlides = exports.getSwipeDirection = exports.getSlideCount = exports.getRequiredLazySlides = exports.getPreClones = exports.getPostClones = exports.getOnDemandLazySlides = exports.getNavigableIndexes = exports.getHeight = exports.extractObject = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function clamp(number, lowerBound, upperBound) {
-    return Math.max(lowerBound, Math.min(number, upperBound));
-}
-var safePreventDefault = function safePreventDefault1(event) {
-    var passiveEvents = [
-        "onTouchStart",
-        "onTouchMove",
-        "onWheel"
-    ];
-    if (!passiveEvents.includes(event._reactName)) event.preventDefault();
-};
-exports.safePreventDefault = safePreventDefault;
-var getOnDemandLazySlides = function getOnDemandLazySlides1(spec) {
-    var onDemandSlides = [];
-    var startIndex = lazyStartIndex(spec);
-    var endIndex = lazyEndIndex(spec);
-    for(var slideIndex = startIndex; slideIndex < endIndex; slideIndex++)if (spec.lazyLoadedList.indexOf(slideIndex) < 0) onDemandSlides.push(slideIndex);
-    return onDemandSlides;
-}; // return list of slides that need to be present
-exports.getOnDemandLazySlides = getOnDemandLazySlides;
-var getRequiredLazySlides = function getRequiredLazySlides1(spec) {
-    var requiredSlides = [];
-    var startIndex = lazyStartIndex(spec);
-    var endIndex = lazyEndIndex(spec);
-    for(var slideIndex = startIndex; slideIndex < endIndex; slideIndex++)requiredSlides.push(slideIndex);
-    return requiredSlides;
-}; // startIndex that needs to be present
-exports.getRequiredLazySlides = getRequiredLazySlides;
-var lazyStartIndex = function lazyStartIndex1(spec) {
-    return spec.currentSlide - lazySlidesOnLeft(spec);
-};
-exports.lazyStartIndex = lazyStartIndex;
-var lazyEndIndex = function lazyEndIndex1(spec) {
-    return spec.currentSlide + lazySlidesOnRight(spec);
-};
-exports.lazyEndIndex = lazyEndIndex;
-var lazySlidesOnLeft = function lazySlidesOnLeft1(spec) {
-    return spec.centerMode ? Math.floor(spec.slidesToShow / 2) + (parseInt(spec.centerPadding) > 0 ? 1 : 0) : 0;
-};
-exports.lazySlidesOnLeft = lazySlidesOnLeft;
-var lazySlidesOnRight = function lazySlidesOnRight1(spec) {
-    return spec.centerMode ? Math.floor((spec.slidesToShow - 1) / 2) + 1 + (parseInt(spec.centerPadding) > 0 ? 1 : 0) : spec.slidesToShow;
-}; // get width of an element
-exports.lazySlidesOnRight = lazySlidesOnRight;
-var getWidth = function getWidth1(elem) {
-    return elem && elem.offsetWidth || 0;
-};
-exports.getWidth = getWidth;
-var getHeight = function getHeight1(elem) {
-    return elem && elem.offsetHeight || 0;
-};
-exports.getHeight = getHeight;
-var getSwipeDirection = function getSwipeDirection1(touchObject) {
-    var verticalSwiping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var xDist, yDist, r, swipeAngle;
-    xDist = touchObject.startX - touchObject.curX;
-    yDist = touchObject.startY - touchObject.curY;
-    r = Math.atan2(yDist, xDist);
-    swipeAngle = Math.round(r * 180 / Math.PI);
-    if (swipeAngle < 0) swipeAngle = 360 - Math.abs(swipeAngle);
-    if (swipeAngle <= 45 && swipeAngle >= 0 || swipeAngle <= 360 && swipeAngle >= 315) return "left";
-    if (swipeAngle >= 135 && swipeAngle <= 225) return "right";
-    if (verticalSwiping === true) {
-        if (swipeAngle >= 35 && swipeAngle <= 135) return "up";
-        else return "down";
-    }
-    return "vertical";
-}; // whether or not we can go next
-exports.getSwipeDirection = getSwipeDirection;
-var canGoNext = function canGoNext1(spec) {
-    var canGo = true;
-    if (!spec.infinite) {
-        if (spec.centerMode && spec.currentSlide >= spec.slideCount - 1) canGo = false;
-        else if (spec.slideCount <= spec.slidesToShow || spec.currentSlide >= spec.slideCount - spec.slidesToShow) canGo = false;
-    }
-    return canGo;
-}; // given an object and a list of keys, return new object with given keys
-exports.canGoNext = canGoNext;
-var extractObject = function extractObject1(spec, keys) {
-    var newObject = {
-    };
-    keys.forEach(function(key) {
-        return newObject[key] = spec[key];
-    });
-    return newObject;
-}; // get initialized state
-exports.extractObject = extractObject;
-var initializedState = function initializedState1(spec) {
-    // spec also contains listRef, trackRef
-    var slideCount = _react["default"].Children.count(spec.children);
-    var listNode = spec.listRef;
-    var listWidth = Math.ceil(getWidth(listNode));
-    var trackNode = spec.trackRef && spec.trackRef.node;
-    var trackWidth = Math.ceil(getWidth(trackNode));
-    var slideWidth;
-    if (!spec.vertical) {
-        var centerPaddingAdj = spec.centerMode && parseInt(spec.centerPadding) * 2;
-        if (typeof spec.centerPadding === "string" && spec.centerPadding.slice(-1) === "%") centerPaddingAdj *= listWidth / 100;
-        slideWidth = Math.ceil((listWidth - centerPaddingAdj) / spec.slidesToShow);
-    } else slideWidth = listWidth;
-    var slideHeight = listNode && getHeight(listNode.querySelector('[data-index="0"]'));
-    var listHeight = slideHeight * spec.slidesToShow;
-    var currentSlide = spec.currentSlide === undefined ? spec.initialSlide : spec.currentSlide;
-    if (spec.rtl && spec.currentSlide === undefined) currentSlide = slideCount - 1 - spec.initialSlide;
-    var lazyLoadedList = spec.lazyLoadedList || [];
-    var slidesToLoad = getOnDemandLazySlides(_objectSpread(_objectSpread({
-    }, spec), {
-    }, {
-        currentSlide: currentSlide,
-        lazyLoadedList: lazyLoadedList
-    }));
-    lazyLoadedList = lazyLoadedList.concat(slidesToLoad);
-    var state = {
-        slideCount: slideCount,
-        slideWidth: slideWidth,
-        listWidth: listWidth,
-        trackWidth: trackWidth,
-        currentSlide: currentSlide,
-        slideHeight: slideHeight,
-        listHeight: listHeight,
-        lazyLoadedList: lazyLoadedList
-    };
-    if (spec.autoplaying === null && spec.autoplay) state["autoplaying"] = "playing";
-    return state;
-};
-exports.initializedState = initializedState;
-var slideHandler = function slideHandler1(spec) {
-    var waitForAnimate = spec.waitForAnimate, animating = spec.animating, fade = spec.fade, infinite = spec.infinite, index = spec.index, slideCount = spec.slideCount, lazyLoad = spec.lazyLoad, currentSlide = spec.currentSlide, centerMode = spec.centerMode, slidesToScroll = spec.slidesToScroll, slidesToShow = spec.slidesToShow, useCSS = spec.useCSS;
-    var lazyLoadedList = spec.lazyLoadedList;
-    if (waitForAnimate && animating) return {
-    };
-    var animationSlide = index, finalSlide, animationLeft, finalLeft;
-    var state = {
-    }, nextState = {
-    };
-    var targetSlide = infinite ? index : clamp(index, 0, slideCount - 1);
-    if (fade) {
-        if (!infinite && (index < 0 || index >= slideCount)) return {
-        };
-        if (index < 0) animationSlide = index + slideCount;
-        else if (index >= slideCount) animationSlide = index - slideCount;
-        if (lazyLoad && lazyLoadedList.indexOf(animationSlide) < 0) lazyLoadedList = lazyLoadedList.concat(animationSlide);
-        state = {
-            animating: true,
-            currentSlide: animationSlide,
-            lazyLoadedList: lazyLoadedList,
-            targetSlide: animationSlide
-        };
-        nextState = {
-            animating: false,
-            targetSlide: animationSlide
-        };
-    } else {
-        finalSlide = animationSlide;
-        if (animationSlide < 0) {
-            finalSlide = animationSlide + slideCount;
-            if (!infinite) finalSlide = 0;
-            else if (slideCount % slidesToScroll !== 0) finalSlide = slideCount - slideCount % slidesToScroll;
-        } else if (!canGoNext(spec) && animationSlide > currentSlide) animationSlide = finalSlide = currentSlide;
-        else if (centerMode && animationSlide >= slideCount) {
-            animationSlide = infinite ? slideCount : slideCount - 1;
-            finalSlide = infinite ? 0 : slideCount - 1;
-        } else if (animationSlide >= slideCount) {
-            finalSlide = animationSlide - slideCount;
-            if (!infinite) finalSlide = slideCount - slidesToShow;
-            else if (slideCount % slidesToScroll !== 0) finalSlide = 0;
-        }
-        if (!infinite && animationSlide + slidesToShow >= slideCount) finalSlide = slideCount - slidesToShow;
-        animationLeft = getTrackLeft(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            slideIndex: animationSlide
-        }));
-        finalLeft = getTrackLeft(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            slideIndex: finalSlide
-        }));
-        if (!infinite) {
-            if (animationLeft === finalLeft) animationSlide = finalSlide;
-            animationLeft = finalLeft;
-        }
-        if (lazyLoad) lazyLoadedList = lazyLoadedList.concat(getOnDemandLazySlides(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            currentSlide: animationSlide
-        })));
-        if (!useCSS) state = {
-            currentSlide: finalSlide,
-            trackStyle: getTrackCSS(_objectSpread(_objectSpread({
-            }, spec), {
-            }, {
-                left: finalLeft
-            })),
-            lazyLoadedList: lazyLoadedList,
-            targetSlide: targetSlide
-        };
-        else {
-            state = {
-                animating: true,
-                currentSlide: finalSlide,
-                trackStyle: getTrackAnimateCSS(_objectSpread(_objectSpread({
-                }, spec), {
-                }, {
-                    left: animationLeft
-                })),
-                lazyLoadedList: lazyLoadedList,
-                targetSlide: targetSlide
-            };
-            nextState = {
-                animating: false,
-                currentSlide: finalSlide,
-                trackStyle: getTrackCSS(_objectSpread(_objectSpread({
-                }, spec), {
-                }, {
-                    left: finalLeft
-                })),
-                swipeLeft: null,
-                targetSlide: targetSlide
-            };
-        }
-    }
-    return {
-        state: state,
-        nextState: nextState
-    };
-};
-exports.slideHandler = slideHandler;
-var changeSlide = function changeSlide1(spec, options) {
-    var indexOffset, previousInt, slideOffset, unevenOffset, targetSlide;
-    var slidesToScroll = spec.slidesToScroll, slidesToShow = spec.slidesToShow, slideCount = spec.slideCount, currentSlide = spec.currentSlide, previousTargetSlide = spec.targetSlide, lazyLoad = spec.lazyLoad, infinite = spec.infinite;
-    unevenOffset = slideCount % slidesToScroll !== 0;
-    indexOffset = unevenOffset ? 0 : (slideCount - currentSlide) % slidesToScroll;
-    if (options.message === "previous") {
-        slideOffset = indexOffset === 0 ? slidesToScroll : slidesToShow - indexOffset;
-        targetSlide = currentSlide - slideOffset;
-        if (lazyLoad && !infinite) {
-            previousInt = currentSlide - slideOffset;
-            targetSlide = previousInt === -1 ? slideCount - 1 : previousInt;
-        }
-        if (!infinite) targetSlide = previousTargetSlide - slidesToScroll;
-    } else if (options.message === "next") {
-        slideOffset = indexOffset === 0 ? slidesToScroll : indexOffset;
-        targetSlide = currentSlide + slideOffset;
-        if (lazyLoad && !infinite) targetSlide = (currentSlide + slidesToScroll) % slideCount + indexOffset;
-        if (!infinite) targetSlide = previousTargetSlide + slidesToScroll;
-    } else if (options.message === "dots") // Click on dots
-    targetSlide = options.index * options.slidesToScroll;
-    else if (options.message === "children") {
-        // Click on the slides
-        targetSlide = options.index;
-        if (infinite) {
-            var direction = siblingDirection(_objectSpread(_objectSpread({
-            }, spec), {
-            }, {
-                targetSlide: targetSlide
-            }));
-            if (targetSlide > options.currentSlide && direction === "left") targetSlide = targetSlide - slideCount;
-            else if (targetSlide < options.currentSlide && direction === "right") targetSlide = targetSlide + slideCount;
-        }
-    } else if (options.message === "index") targetSlide = Number(options.index);
-    return targetSlide;
-};
-exports.changeSlide = changeSlide;
-var keyHandler = function keyHandler1(e, accessibility, rtl) {
-    if (e.target.tagName.match("TEXTAREA|INPUT|SELECT") || !accessibility) return "";
-    if (e.keyCode === 37) return rtl ? "next" : "previous";
-    if (e.keyCode === 39) return rtl ? "previous" : "next";
-    return "";
-};
-exports.keyHandler = keyHandler;
-var swipeStart = function swipeStart1(e, swipe, draggable) {
-    e.target.tagName === "IMG" && safePreventDefault(e);
-    if (!swipe || !draggable && e.type.indexOf("mouse") !== -1) return "";
-    return {
-        dragging: true,
-        touchObject: {
-            startX: e.touches ? e.touches[0].pageX : e.clientX,
-            startY: e.touches ? e.touches[0].pageY : e.clientY,
-            curX: e.touches ? e.touches[0].pageX : e.clientX,
-            curY: e.touches ? e.touches[0].pageY : e.clientY
-        }
-    };
-};
-exports.swipeStart = swipeStart;
-var swipeMove = function swipeMove1(e, spec) {
-    // spec also contains, trackRef and slideIndex
-    var scrolling = spec.scrolling, animating = spec.animating, vertical = spec.vertical, swipeToSlide = spec.swipeToSlide, verticalSwiping = spec.verticalSwiping, rtl = spec.rtl, currentSlide = spec.currentSlide, edgeFriction = spec.edgeFriction, edgeDragged = spec.edgeDragged, onEdge = spec.onEdge, swiped = spec.swiped, swiping = spec.swiping, slideCount = spec.slideCount, slidesToScroll = spec.slidesToScroll, infinite = spec.infinite, touchObject = spec.touchObject, swipeEvent = spec.swipeEvent, listHeight = spec.listHeight, listWidth = spec.listWidth;
-    if (scrolling) return;
-    if (animating) return safePreventDefault(e);
-    if (vertical && swipeToSlide && verticalSwiping) safePreventDefault(e);
-    var swipeLeft, state = {
-    };
-    var curLeft = getTrackLeft(spec);
-    touchObject.curX = e.touches ? e.touches[0].pageX : e.clientX;
-    touchObject.curY = e.touches ? e.touches[0].pageY : e.clientY;
-    touchObject.swipeLength = Math.round(Math.sqrt(Math.pow(touchObject.curX - touchObject.startX, 2)));
-    var verticalSwipeLength = Math.round(Math.sqrt(Math.pow(touchObject.curY - touchObject.startY, 2)));
-    if (!verticalSwiping && !swiping && verticalSwipeLength > 10) return {
-        scrolling: true
-    };
-    if (verticalSwiping) touchObject.swipeLength = verticalSwipeLength;
-    var positionOffset = (!rtl ? 1 : -1) * (touchObject.curX > touchObject.startX ? 1 : -1);
-    if (verticalSwiping) positionOffset = touchObject.curY > touchObject.startY ? 1 : -1;
-    var dotCount = Math.ceil(slideCount / slidesToScroll);
-    var swipeDirection = getSwipeDirection(spec.touchObject, verticalSwiping);
-    var touchSwipeLength = touchObject.swipeLength;
-    if (!infinite) {
-        if (currentSlide === 0 && (swipeDirection === "right" || swipeDirection === "down") || currentSlide + 1 >= dotCount && (swipeDirection === "left" || swipeDirection === "up") || !canGoNext(spec) && (swipeDirection === "left" || swipeDirection === "up")) {
-            touchSwipeLength = touchObject.swipeLength * edgeFriction;
-            if (edgeDragged === false && onEdge) {
-                onEdge(swipeDirection);
-                state["edgeDragged"] = true;
-            }
-        }
-    }
-    if (!swiped && swipeEvent) {
-        swipeEvent(swipeDirection);
-        state["swiped"] = true;
-    }
-    if (!vertical) {
-        if (!rtl) swipeLeft = curLeft + touchSwipeLength * positionOffset;
-        else swipeLeft = curLeft - touchSwipeLength * positionOffset;
-    } else swipeLeft = curLeft + touchSwipeLength * (listHeight / listWidth) * positionOffset;
-    if (verticalSwiping) swipeLeft = curLeft + touchSwipeLength * positionOffset;
-    state = _objectSpread(_objectSpread({
-    }, state), {
-    }, {
-        touchObject: touchObject,
-        swipeLeft: swipeLeft,
-        trackStyle: getTrackCSS(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            left: swipeLeft
-        }))
-    });
-    if (Math.abs(touchObject.curX - touchObject.startX) < Math.abs(touchObject.curY - touchObject.startY) * 0.8) return state;
-    if (touchObject.swipeLength > 10) {
-        state["swiping"] = true;
-        safePreventDefault(e);
-    }
-    return state;
-};
-exports.swipeMove = swipeMove;
-var swipeEnd = function swipeEnd1(e, spec) {
-    var dragging = spec.dragging, swipe = spec.swipe, touchObject = spec.touchObject, listWidth = spec.listWidth, touchThreshold = spec.touchThreshold, verticalSwiping = spec.verticalSwiping, listHeight = spec.listHeight, swipeToSlide = spec.swipeToSlide, scrolling = spec.scrolling, onSwipe = spec.onSwipe, targetSlide = spec.targetSlide, currentSlide = spec.currentSlide, infinite = spec.infinite;
-    if (!dragging) {
-        if (swipe) safePreventDefault(e);
-        return {
-        };
-    }
-    var minSwipe = verticalSwiping ? listHeight / touchThreshold : listWidth / touchThreshold;
-    var swipeDirection = getSwipeDirection(touchObject, verticalSwiping); // reset the state of touch related state variables.
-    var state = {
-        dragging: false,
-        edgeDragged: false,
-        scrolling: false,
-        swiping: false,
-        swiped: false,
-        swipeLeft: null,
-        touchObject: {
-        }
-    };
-    if (scrolling) return state;
-    if (!touchObject.swipeLength) return state;
-    if (touchObject.swipeLength > minSwipe) {
-        safePreventDefault(e);
-        if (onSwipe) onSwipe(swipeDirection);
-        var slideCount, newSlide;
-        var activeSlide = infinite ? currentSlide : targetSlide;
-        switch(swipeDirection){
-            case "left":
-            case "up":
-                newSlide = activeSlide + getSlideCount(spec);
-                slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide;
-                state["currentDirection"] = 0;
-                break;
-            case "right":
-            case "down":
-                newSlide = activeSlide - getSlideCount(spec);
-                slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide;
-                state["currentDirection"] = 1;
-                break;
-            default:
-                slideCount = activeSlide;
-        }
-        state["triggerSlideHandler"] = slideCount;
-    } else {
-        // Adjust the track back to it's original position.
-        var currentLeft = getTrackLeft(spec);
-        state["trackStyle"] = getTrackAnimateCSS(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            left: currentLeft
-        }));
-    }
-    return state;
-};
-exports.swipeEnd = swipeEnd;
-var getNavigableIndexes = function getNavigableIndexes1(spec) {
-    var max = spec.infinite ? spec.slideCount * 2 : spec.slideCount;
-    var breakpoint = spec.infinite ? spec.slidesToShow * -1 : 0;
-    var counter = spec.infinite ? spec.slidesToShow * -1 : 0;
-    var indexes = [];
-    while(breakpoint < max){
-        indexes.push(breakpoint);
-        breakpoint = counter + spec.slidesToScroll;
-        counter += Math.min(spec.slidesToScroll, spec.slidesToShow);
-    }
-    return indexes;
-};
-exports.getNavigableIndexes = getNavigableIndexes;
-var checkNavigable = function checkNavigable1(spec, index) {
-    var navigables = getNavigableIndexes(spec);
-    var prevNavigable = 0;
-    if (index > navigables[navigables.length - 1]) index = navigables[navigables.length - 1];
-    else for(var n in navigables){
-        if (index < navigables[n]) {
-            index = prevNavigable;
-            break;
-        }
-        prevNavigable = navigables[n];
-    }
-    return index;
-};
-exports.checkNavigable = checkNavigable;
-var getSlideCount = function getSlideCount1(spec) {
-    var centerOffset = spec.centerMode ? spec.slideWidth * Math.floor(spec.slidesToShow / 2) : 0;
-    if (spec.swipeToSlide) {
-        var swipedSlide;
-        var slickList = spec.listRef;
-        var slides = slickList.querySelectorAll && slickList.querySelectorAll(".slick-slide") || [];
-        Array.from(slides).every(function(slide) {
-            if (!spec.vertical) {
-                if (slide.offsetLeft - centerOffset + getWidth(slide) / 2 > spec.swipeLeft * -1) {
-                    swipedSlide = slide;
-                    return false;
-                }
-            } else if (slide.offsetTop + getHeight(slide) / 2 > spec.swipeLeft * -1) {
-                swipedSlide = slide;
-                return false;
-            }
-            return true;
-        });
-        if (!swipedSlide) return 0;
-        var currentIndex = spec.rtl === true ? spec.slideCount - spec.currentSlide : spec.currentSlide;
-        var slidesTraversed = Math.abs(swipedSlide.dataset.index - currentIndex) || 1;
-        return slidesTraversed;
-    } else return spec.slidesToScroll;
-};
-exports.getSlideCount = getSlideCount;
-var checkSpecKeys = function checkSpecKeys1(spec, keysArray) {
-    return keysArray.reduce(function(value, key) {
-        return value && spec.hasOwnProperty(key);
-    }, true) ? null : console.error("Keys Missing:", spec);
-};
-exports.checkSpecKeys = checkSpecKeys;
-var getTrackCSS = function getTrackCSS1(spec) {
-    checkSpecKeys(spec, [
-        "left",
-        "variableWidth",
-        "slideCount",
-        "slidesToShow",
-        "slideWidth"
-    ]);
-    var trackWidth, trackHeight;
-    var trackChildren = spec.slideCount + 2 * spec.slidesToShow;
-    if (!spec.vertical) trackWidth = getTotalSlides(spec) * spec.slideWidth;
-    else trackHeight = trackChildren * spec.slideHeight;
-    var style = {
-        opacity: 1,
-        transition: "",
-        WebkitTransition: ""
-    };
-    if (spec.useTransform) {
-        var WebkitTransform = !spec.vertical ? "translate3d(" + spec.left + "px, 0px, 0px)" : "translate3d(0px, " + spec.left + "px, 0px)";
-        var transform = !spec.vertical ? "translate3d(" + spec.left + "px, 0px, 0px)" : "translate3d(0px, " + spec.left + "px, 0px)";
-        var msTransform = !spec.vertical ? "translateX(" + spec.left + "px)" : "translateY(" + spec.left + "px)";
-        style = _objectSpread(_objectSpread({
-        }, style), {
-        }, {
-            WebkitTransform: WebkitTransform,
-            transform: transform,
-            msTransform: msTransform
-        });
-    } else if (spec.vertical) style["top"] = spec.left;
-    else style["left"] = spec.left;
-    if (spec.fade) style = {
-        opacity: 1
-    };
-    if (trackWidth) style.width = trackWidth;
-    if (trackHeight) style.height = trackHeight; // Fallback for IE8
-    if (window && !window.addEventListener && window.attachEvent) {
-        if (!spec.vertical) style.marginLeft = spec.left + "px";
-        else style.marginTop = spec.left + "px";
-    }
-    return style;
-};
-exports.getTrackCSS = getTrackCSS;
-var getTrackAnimateCSS = function getTrackAnimateCSS1(spec) {
-    checkSpecKeys(spec, [
-        "left",
-        "variableWidth",
-        "slideCount",
-        "slidesToShow",
-        "slideWidth",
-        "speed",
-        "cssEase"
-    ]);
-    var style = getTrackCSS(spec); // useCSS is true by default so it can be undefined
-    if (spec.useTransform) {
-        style.WebkitTransition = "-webkit-transform " + spec.speed + "ms " + spec.cssEase;
-        style.transition = "transform " + spec.speed + "ms " + spec.cssEase;
-    } else if (spec.vertical) style.transition = "top " + spec.speed + "ms " + spec.cssEase;
-    else style.transition = "left " + spec.speed + "ms " + spec.cssEase;
-    return style;
-};
-exports.getTrackAnimateCSS = getTrackAnimateCSS;
-var getTrackLeft = function getTrackLeft1(spec) {
-    if (spec.unslick) return 0;
-    checkSpecKeys(spec, [
-        "slideIndex",
-        "trackRef",
-        "infinite",
-        "centerMode",
-        "slideCount",
-        "slidesToShow",
-        "slidesToScroll",
-        "slideWidth",
-        "listWidth",
-        "variableWidth",
-        "slideHeight"
-    ]);
-    var slideIndex = spec.slideIndex, trackRef = spec.trackRef, infinite = spec.infinite, centerMode = spec.centerMode, slideCount = spec.slideCount, slidesToShow = spec.slidesToShow, slidesToScroll = spec.slidesToScroll, slideWidth = spec.slideWidth, listWidth = spec.listWidth, variableWidth = spec.variableWidth, slideHeight = spec.slideHeight, fade = spec.fade, vertical = spec.vertical;
-    var slideOffset = 0;
-    var targetLeft;
-    var targetSlide;
-    var verticalOffset = 0;
-    if (fade || spec.slideCount === 1) return 0;
-    var slidesToOffset = 0;
-    if (infinite) {
-        slidesToOffset = -getPreClones(spec); // bring active slide to the beginning of visual area
-        // if next scroll doesn't have enough children, just reach till the end of original slides instead of shifting slidesToScroll children
-        if (slideCount % slidesToScroll !== 0 && slideIndex + slidesToScroll > slideCount) slidesToOffset = -(slideIndex > slideCount ? slidesToShow - (slideIndex - slideCount) : slideCount % slidesToScroll);
-         // shift current slide to center of the frame
-        if (centerMode) slidesToOffset += parseInt(slidesToShow / 2);
-    } else {
-        if (slideCount % slidesToScroll !== 0 && slideIndex + slidesToScroll > slideCount) slidesToOffset = slidesToShow - slideCount % slidesToScroll;
-        if (centerMode) slidesToOffset = parseInt(slidesToShow / 2);
-    }
-    slideOffset = slidesToOffset * slideWidth;
-    verticalOffset = slidesToOffset * slideHeight;
-    if (!vertical) targetLeft = slideIndex * slideWidth * -1 + slideOffset;
-    else targetLeft = slideIndex * slideHeight * -1 + verticalOffset;
-    if (variableWidth === true) {
-        var targetSlideIndex;
-        var trackElem = trackRef && trackRef.node;
-        targetSlideIndex = slideIndex + getPreClones(spec);
-        targetSlide = trackElem && trackElem.childNodes[targetSlideIndex];
-        targetLeft = targetSlide ? targetSlide.offsetLeft * -1 : 0;
-        if (centerMode === true) {
-            targetSlideIndex = infinite ? slideIndex + getPreClones(spec) : slideIndex;
-            targetSlide = trackElem && trackElem.children[targetSlideIndex];
-            targetLeft = 0;
-            for(var slide = 0; slide < targetSlideIndex; slide++)targetLeft -= trackElem && trackElem.children[slide] && trackElem.children[slide].offsetWidth;
-            targetLeft -= parseInt(spec.centerPadding);
-            targetLeft += targetSlide && (listWidth - targetSlide.offsetWidth) / 2;
-        }
-    }
-    return targetLeft;
-};
-exports.getTrackLeft = getTrackLeft;
-var getPreClones = function getPreClones1(spec) {
-    if (spec.unslick || !spec.infinite) return 0;
-    if (spec.variableWidth) return spec.slideCount;
-    return spec.slidesToShow + (spec.centerMode ? 1 : 0);
-};
-exports.getPreClones = getPreClones;
-var getPostClones = function getPostClones1(spec) {
-    if (spec.unslick || !spec.infinite) return 0;
-    return spec.slideCount;
-};
-exports.getPostClones = getPostClones;
-var getTotalSlides = function getTotalSlides1(spec) {
-    return spec.slideCount === 1 ? 1 : getPreClones(spec) + spec.slideCount + getPostClones(spec);
-};
-exports.getTotalSlides = getTotalSlides;
-var siblingDirection = function siblingDirection1(spec) {
-    if (spec.targetSlide > spec.currentSlide) {
-        if (spec.targetSlide > spec.currentSlide + slidesOnRight(spec)) return "left";
-        return "right";
-    } else {
-        if (spec.targetSlide < spec.currentSlide - slidesOnLeft(spec)) return "right";
-        return "left";
-    }
-};
-exports.siblingDirection = siblingDirection;
-var slidesOnRight = function slidesOnRight1(_ref) {
-    var slidesToShow = _ref.slidesToShow, centerMode = _ref.centerMode, rtl = _ref.rtl, centerPadding = _ref.centerPadding;
-    // returns no of slides on the right of active slide
-    if (centerMode) {
-        var right = (slidesToShow - 1) / 2 + 1;
-        if (parseInt(centerPadding) > 0) right += 1;
-        if (rtl && slidesToShow % 2 === 0) right += 1;
-        return right;
-    }
-    if (rtl) return 0;
-    return slidesToShow - 1;
-};
-exports.slidesOnRight = slidesOnRight;
-var slidesOnLeft = function slidesOnLeft1(_ref2) {
-    var slidesToShow = _ref2.slidesToShow, centerMode = _ref2.centerMode, rtl = _ref2.rtl, centerPadding = _ref2.centerPadding;
-    // returns no of slides on the left of active slide
-    if (centerMode) {
-        var left = (slidesToShow - 1) / 2 + 1;
-        if (parseInt(centerPadding) > 0) left += 1;
-        if (!rtl && slidesToShow % 2 === 0) left += 1;
-        return left;
-    }
-    if (rtl) return slidesToShow - 1;
-    return 0;
-};
-exports.slidesOnLeft = slidesOnLeft;
-var canUseDOM = function canUseDOM1() {
-    return !!(typeof window !== "undefined" && window.document && window.document.createElement);
-};
-exports.canUseDOM = canUseDOM;
-
-},{"react":"6TuXu"}],"6DHmH":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
-        return typeof obj1;
-    } : function(obj1) {
-        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Track = void 0;
-var _react = _interopRequireDefault(require("react"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _innerSliderUtils = require("./utils/innerSliderUtils");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _extends() {
-    _extends = Object.assign || function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
-}
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
-        o1.__proto__ = p1;
-        return o1;
-    };
-    return _setPrototypeOf(o, p);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-    try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
-        return o1.__proto__ || Object.getPrototypeOf(o1);
-    };
-    return _getPrototypeOf(o);
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-// given specifications/props for a slide, fetch all the classes that need to be applied to the slide
-var getSlideClasses = function getSlideClasses1(spec) {
-    var slickActive, slickCenter, slickCloned;
-    var centerOffset, index;
-    if (spec.rtl) index = spec.slideCount - 1 - spec.index;
-    else index = spec.index;
-    slickCloned = index < 0 || index >= spec.slideCount;
-    if (spec.centerMode) {
-        centerOffset = Math.floor(spec.slidesToShow / 2);
-        slickCenter = (index - spec.currentSlide) % spec.slideCount === 0;
-        if (index > spec.currentSlide - centerOffset - 1 && index <= spec.currentSlide + centerOffset) slickActive = true;
-    } else slickActive = spec.currentSlide <= index && index < spec.currentSlide + spec.slidesToShow;
-    var focusedSlide;
-    if (spec.targetSlide < 0) focusedSlide = spec.targetSlide + spec.slideCount;
-    else if (spec.targetSlide >= spec.slideCount) focusedSlide = spec.targetSlide - spec.slideCount;
-    else focusedSlide = spec.targetSlide;
-    var slickCurrent = index === focusedSlide;
-    return {
-        "slick-slide": true,
-        "slick-active": slickActive,
-        "slick-center": slickCenter,
-        "slick-cloned": slickCloned,
-        "slick-current": slickCurrent // dubious in case of RTL
-    };
-};
-var getSlideStyle = function getSlideStyle1(spec) {
-    var style = {
-    };
-    if (spec.variableWidth === undefined || spec.variableWidth === false) style.width = spec.slideWidth;
-    if (spec.fade) {
-        style.position = "relative";
-        if (spec.vertical) style.top = -spec.index * parseInt(spec.slideHeight);
-        else style.left = -spec.index * parseInt(spec.slideWidth);
-        style.opacity = spec.currentSlide === spec.index ? 1 : 0;
-        if (spec.useCSS) style.transition = "opacity " + spec.speed + "ms " + spec.cssEase + ", " + "visibility " + spec.speed + "ms " + spec.cssEase;
-    }
-    return style;
-};
-var getKey = function getKey1(child, fallbackKey) {
-    return child.key || fallbackKey;
-};
-var renderSlides = function renderSlides1(spec) {
-    var key;
-    var slides = [];
-    var preCloneSlides = [];
-    var postCloneSlides = [];
-    var childrenCount = _react["default"].Children.count(spec.children);
-    var startIndex = _innerSliderUtils.lazyStartIndex(spec);
-    var endIndex = _innerSliderUtils.lazyEndIndex(spec);
-    _react["default"].Children.forEach(spec.children, function(elem, index) {
-        var child;
-        var childOnClickOptions = {
-            message: "children",
-            index: index,
-            slidesToScroll: spec.slidesToScroll,
-            currentSlide: spec.currentSlide
-        }; // in case of lazyLoad, whether or not we want to fetch the slide
-        if (!spec.lazyLoad || spec.lazyLoad && spec.lazyLoadedList.indexOf(index) >= 0) child = elem;
-        else child = /*#__PURE__*/ _react["default"].createElement("div", null);
-        var childStyle = getSlideStyle(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            index: index
-        }));
-        var slideClass = child.props.className || "";
-        var slideClasses = getSlideClasses(_objectSpread(_objectSpread({
-        }, spec), {
-        }, {
-            index: index
-        })); // push a cloned element of the desired slide
-        slides.push(/*#__PURE__*/ _react["default"].cloneElement(child, {
-            key: "original" + getKey(child, index),
-            "data-index": index,
-            className: _classnames["default"](slideClasses, slideClass),
-            tabIndex: "-1",
-            "aria-hidden": !slideClasses["slick-active"],
-            style: _objectSpread(_objectSpread({
-                outline: "none"
-            }, child.props.style || {
-            }), childStyle),
-            onClick: function onClick(e) {
-                child.props && child.props.onClick && child.props.onClick(e);
-                if (spec.focusOnSelect) spec.focusOnSelect(childOnClickOptions);
-            }
-        })); // if slide needs to be precloned or postcloned
-        if (spec.infinite && spec.fade === false) {
-            var preCloneNo = childrenCount - index;
-            if (preCloneNo <= _innerSliderUtils.getPreClones(spec) && childrenCount !== spec.slidesToShow) {
-                key = -preCloneNo;
-                if (key >= startIndex) child = elem;
-                slideClasses = getSlideClasses(_objectSpread(_objectSpread({
-                }, spec), {
-                }, {
-                    index: key
-                }));
-                preCloneSlides.push(/*#__PURE__*/ _react["default"].cloneElement(child, {
-                    key: "precloned" + getKey(child, key),
-                    "data-index": key,
-                    tabIndex: "-1",
-                    className: _classnames["default"](slideClasses, slideClass),
-                    "aria-hidden": !slideClasses["slick-active"],
-                    style: _objectSpread(_objectSpread({
-                    }, child.props.style || {
-                    }), childStyle),
-                    onClick: function onClick(e) {
-                        child.props && child.props.onClick && child.props.onClick(e);
-                        if (spec.focusOnSelect) spec.focusOnSelect(childOnClickOptions);
-                    }
-                }));
-            }
-            if (childrenCount !== spec.slidesToShow) {
-                key = childrenCount + index;
-                if (key < endIndex) child = elem;
-                slideClasses = getSlideClasses(_objectSpread(_objectSpread({
-                }, spec), {
-                }, {
-                    index: key
-                }));
-                postCloneSlides.push(/*#__PURE__*/ _react["default"].cloneElement(child, {
-                    key: "postcloned" + getKey(child, key),
-                    "data-index": key,
-                    tabIndex: "-1",
-                    className: _classnames["default"](slideClasses, slideClass),
-                    "aria-hidden": !slideClasses["slick-active"],
-                    style: _objectSpread(_objectSpread({
-                    }, child.props.style || {
-                    }), childStyle),
-                    onClick: function onClick(e) {
-                        child.props && child.props.onClick && child.props.onClick(e);
-                        if (spec.focusOnSelect) spec.focusOnSelect(childOnClickOptions);
-                    }
-                }));
-            }
-        }
-    });
-    if (spec.rtl) return preCloneSlides.concat(slides, postCloneSlides).reverse();
-    else return preCloneSlides.concat(slides, postCloneSlides);
-};
-var Track1 = /*#__PURE__*/ function(_React$PureComponent) {
-    _inherits(Track2, _React$PureComponent);
-    var _super = _createSuper(Track2);
-    function Track2() {
-        var _this;
-        _classCallCheck(this, Track2);
-        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
-        _this = _super.call.apply(_super, [
-            this
-        ].concat(args));
-        _defineProperty(_assertThisInitialized(_this), "node", null);
-        _defineProperty(_assertThisInitialized(_this), "handleRef", function(ref) {
-            _this.node = ref;
-        });
-        return _this;
-    }
-    _createClass(Track2, [
-        {
-            key: "render",
-            value: function render() {
-                var slides = renderSlides(this.props);
-                var _this$props = this.props, onMouseEnter = _this$props.onMouseEnter, onMouseOver = _this$props.onMouseOver, onMouseLeave = _this$props.onMouseLeave;
-                var mouseEvents = {
-                    onMouseEnter: onMouseEnter,
-                    onMouseOver: onMouseOver,
-                    onMouseLeave: onMouseLeave
-                };
-                return(/*#__PURE__*/ _react["default"].createElement("div", _extends({
-                    ref: this.handleRef,
-                    className: "slick-track",
-                    style: this.props.trackStyle
-                }, mouseEvents), slides));
-            }
-        }
-    ]);
-    return Track2;
-}(_react["default"].PureComponent);
-exports.Track = Track1;
-
-},{"react":"6TuXu","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA"}],"h2xzK":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
-        return typeof obj1;
-    } : function(obj1) {
-        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Dots = void 0;
-var _react = _interopRequireDefault(require("react"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _innerSliderUtils = require("./utils/innerSliderUtils");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
-}
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
-        o1.__proto__ = p1;
-        return o1;
-    };
-    return _setPrototypeOf(o, p);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-    try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
-        return o1.__proto__ || Object.getPrototypeOf(o1);
-    };
-    return _getPrototypeOf(o);
-}
-var getDotCount = function getDotCount1(spec) {
-    var dots;
-    if (spec.infinite) dots = Math.ceil(spec.slideCount / spec.slidesToScroll);
-    else dots = Math.ceil((spec.slideCount - spec.slidesToShow) / spec.slidesToScroll) + 1;
-    return dots;
-};
-var Dots1 = /*#__PURE__*/ function(_React$PureComponent) {
-    _inherits(Dots2, _React$PureComponent);
-    var _super = _createSuper(Dots2);
-    function Dots2() {
-        _classCallCheck(this, Dots2);
-        return _super.apply(this, arguments);
-    }
-    _createClass(Dots2, [
-        {
-            key: "clickHandler",
-            value: function clickHandler(options, e) {
-                // In Autoplay the focus stays on clicked button even after transition
-                // to next slide. That only goes away by click somewhere outside
-                e.preventDefault();
-                this.props.clickHandler(options);
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                var _this$props = this.props, onMouseEnter = _this$props.onMouseEnter, onMouseOver = _this$props.onMouseOver, onMouseLeave = _this$props.onMouseLeave, infinite = _this$props.infinite, slidesToScroll = _this$props.slidesToScroll, slidesToShow = _this$props.slidesToShow, slideCount = _this$props.slideCount, currentSlide = _this$props.currentSlide;
-                var dotCount = getDotCount({
-                    slideCount: slideCount,
-                    slidesToScroll: slidesToScroll,
-                    slidesToShow: slidesToShow,
-                    infinite: infinite
-                });
-                var mouseEvents = {
-                    onMouseEnter: onMouseEnter,
-                    onMouseOver: onMouseOver,
-                    onMouseLeave: onMouseLeave
-                };
-                var dots = [];
-                for(var i = 0; i < dotCount; i++){
-                    var _rightBound = (i + 1) * slidesToScroll - 1;
-                    var rightBound = infinite ? _rightBound : _innerSliderUtils.clamp(_rightBound, 0, slideCount - 1);
-                    var _leftBound = rightBound - (slidesToScroll - 1);
-                    var leftBound = infinite ? _leftBound : _innerSliderUtils.clamp(_leftBound, 0, slideCount - 1);
-                    var className = _classnames["default"]({
-                        "slick-active": infinite ? currentSlide >= leftBound && currentSlide <= rightBound : currentSlide === leftBound
-                    });
-                    var dotOptions = {
-                        message: "dots",
-                        index: i,
-                        slidesToScroll: slidesToScroll,
-                        currentSlide: currentSlide
-                    };
-                    var onClick = this.clickHandler.bind(this, dotOptions);
-                    dots = dots.concat(/*#__PURE__*/ _react["default"].createElement("li", {
-                        key: i,
-                        className: className
-                    }, /*#__PURE__*/ _react["default"].cloneElement(this.props.customPaging(i), {
-                        onClick: onClick
-                    })));
-                }
-                return(/*#__PURE__*/ _react["default"].cloneElement(this.props.appendDots(dots), _objectSpread({
-                    className: this.props.dotsClass
-                }, mouseEvents)));
-            }
-        }
-    ]);
-    return Dots2;
-}(_react["default"].PureComponent);
-exports.Dots = Dots1;
-
-},{"react":"6TuXu","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA"}],"jdJ4A":[function(require,module,exports) {
-"use strict";
-function _typeof(obj) {
-    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
-        return typeof obj1;
-    } : function(obj1) {
-        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
-    }, _typeof(obj);
-}
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.PrevArrow = exports.NextArrow = void 0;
-var _react = _interopRequireDefault(require("react"));
-var _classnames = _interopRequireDefault(require("classnames"));
-var _innerSliderUtils = require("./utils/innerSliderUtils");
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-function _extends() {
-    _extends = Object.assign || function(target) {
-        for(var i = 1; i < arguments.length; i++){
-            var source = arguments[i];
-            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
-        }
-        return target;
-    };
-    return _extends.apply(this, arguments);
-}
-function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-    if (Object.getOwnPropertySymbols) {
-        var symbols = Object.getOwnPropertySymbols(object);
-        enumerableOnly && (symbols = symbols.filter(function(sym) {
-            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        })), keys.push.apply(keys, symbols);
-    }
-    return keys;
-}
-function _objectSpread(target) {
-    for(var i = 1; i < arguments.length; i++){
-        var source = null != arguments[i] ? arguments[i] : {
-        };
-        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
-            _defineProperty(target, key, source[key]);
-        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
-            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-    }
-    return target;
-}
-function _defineProperty(obj, key, value) {
-    if (key in obj) Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-    });
-    else obj[key] = value;
-    return obj;
-}
-function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-}
-function _defineProperties(target, props) {
-    for(var i = 0; i < props.length; i++){
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-    }
-}
-function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    Object.defineProperty(Constructor, "prototype", {
-        writable: false
-    });
-    return Constructor;
-}
-function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-        constructor: {
-            value: subClass,
-            writable: true,
-            configurable: true
-        }
-    });
-    Object.defineProperty(subClass, "prototype", {
-        writable: false
-    });
-    if (superClass) _setPrototypeOf(subClass, superClass);
-}
-function _setPrototypeOf(o, p) {
-    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
-        o1.__proto__ = p1;
-        return o1;
-    };
-    return _setPrototypeOf(o, p);
-}
-function _createSuper(Derived) {
-    var hasNativeReflectConstruct = _isNativeReflectConstruct();
-    return function _createSuperInternal() {
-        var Super = _getPrototypeOf(Derived), result;
-        if (hasNativeReflectConstruct) {
-            var NewTarget = _getPrototypeOf(this).constructor;
-            result = Reflect.construct(Super, arguments, NewTarget);
-        } else result = Super.apply(this, arguments);
-        return _possibleConstructorReturn(this, result);
-    };
-}
-function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
-    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
-    return _assertThisInitialized(self);
-}
-function _assertThisInitialized(self) {
-    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    return self;
-}
-function _isNativeReflectConstruct() {
-    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-    if (Reflect.construct.sham) return false;
-    if (typeof Proxy === "function") return true;
-    try {
-        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
-        }));
-        return true;
-    } catch (e) {
-        return false;
-    }
-}
-function _getPrototypeOf(o) {
-    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
-        return o1.__proto__ || Object.getPrototypeOf(o1);
-    };
-    return _getPrototypeOf(o);
-}
-var PrevArrow1 = /*#__PURE__*/ function(_React$PureComponent) {
-    _inherits(PrevArrow2, _React$PureComponent);
-    var _super = _createSuper(PrevArrow2);
-    function PrevArrow2() {
-        _classCallCheck(this, PrevArrow2);
-        return _super.apply(this, arguments);
-    }
-    _createClass(PrevArrow2, [
-        {
-            key: "clickHandler",
-            value: function clickHandler(options, e) {
-                if (e) e.preventDefault();
-                this.props.clickHandler(options, e);
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                var prevClasses = {
-                    "slick-arrow": true,
-                    "slick-prev": true
-                };
-                var prevHandler = this.clickHandler.bind(this, {
-                    message: "previous"
-                });
-                if (!this.props.infinite && (this.props.currentSlide === 0 || this.props.slideCount <= this.props.slidesToShow)) {
-                    prevClasses["slick-disabled"] = true;
-                    prevHandler = null;
-                }
-                var prevArrowProps = {
-                    key: "0",
-                    "data-role": "none",
-                    className: _classnames["default"](prevClasses),
-                    style: {
-                        display: "block"
-                    },
-                    onClick: prevHandler
-                };
-                var customProps = {
-                    currentSlide: this.props.currentSlide,
-                    slideCount: this.props.slideCount
-                };
-                var prevArrow;
-                if (this.props.prevArrow) prevArrow = /*#__PURE__*/ _react["default"].cloneElement(this.props.prevArrow, _objectSpread(_objectSpread({
-                }, prevArrowProps), customProps));
-                else prevArrow = /*#__PURE__*/ _react["default"].createElement("button", _extends({
-                    key: "0",
-                    type: "button"
-                }, prevArrowProps), " ", "Previous");
-                return prevArrow;
-            }
-        }
-    ]);
-    return PrevArrow2;
-}(_react["default"].PureComponent);
-exports.PrevArrow = PrevArrow1;
-var NextArrow1 = /*#__PURE__*/ function(_React$PureComponent2) {
-    _inherits(NextArrow2, _React$PureComponent2);
-    var _super2 = _createSuper(NextArrow2);
-    function NextArrow2() {
-        _classCallCheck(this, NextArrow2);
-        return _super2.apply(this, arguments);
-    }
-    _createClass(NextArrow2, [
-        {
-            key: "clickHandler",
-            value: function clickHandler(options, e) {
-                if (e) e.preventDefault();
-                this.props.clickHandler(options, e);
-            }
-        },
-        {
-            key: "render",
-            value: function render() {
-                var nextClasses = {
-                    "slick-arrow": true,
-                    "slick-next": true
-                };
-                var nextHandler = this.clickHandler.bind(this, {
-                    message: "next"
-                });
-                if (!_innerSliderUtils.canGoNext(this.props)) {
-                    nextClasses["slick-disabled"] = true;
-                    nextHandler = null;
-                }
-                var nextArrowProps = {
-                    key: "1",
-                    "data-role": "none",
-                    className: _classnames["default"](nextClasses),
-                    style: {
-                        display: "block"
-                    },
-                    onClick: nextHandler
-                };
-                var customProps = {
-                    currentSlide: this.props.currentSlide,
-                    slideCount: this.props.slideCount
-                };
-                var nextArrow;
-                if (this.props.nextArrow) nextArrow = /*#__PURE__*/ _react["default"].cloneElement(this.props.nextArrow, _objectSpread(_objectSpread({
-                }, nextArrowProps), customProps));
-                else nextArrow = /*#__PURE__*/ _react["default"].createElement("button", _extends({
-                    key: "1",
-                    type: "button"
-                }, nextArrowProps), " ", "Next");
-                return nextArrow;
-            }
-        }
-    ]);
-    return NextArrow2;
-}(_react["default"].PureComponent);
-exports.NextArrow = NextArrow1;
-
-},{"react":"6TuXu","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA"}],"AHOwr":[function(require,module,exports) {
+},{"./helpers/bundle-url":"jDaZY"}],"cF5gT":[function() {},{}],"2L0if":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var global = arguments[3];
+parcelHelpers.export(exports, "batch", ()=>_reactBatchedUpdates.unstable_batchedUpdates
+);
+// The primary entry point assumes we're working with standard ReactDOM/RN, but
+// older versions that do not include `useSyncExternalStore` (React 16.9 - 17.x).
+// Because of that, the useSyncExternalStore compat shim is needed.
+var _shim = require("use-sync-external-store/shim");
+var _withSelector = require("use-sync-external-store/shim/with-selector");
+var _reactBatchedUpdates = require("./utils/reactBatchedUpdates");
+var _batch = require("./utils/batch");
+var _useSelector = require("./hooks/useSelector");
+var _connect = require("./components/connect");
+var _exports = require("./exports");
+parcelHelpers.exportAll(_exports, exports);
+_useSelector.initializeUseSelector(_withSelector.useSyncExternalStoreWithSelector);
+_connect.initializeConnect(_shim.useSyncExternalStore); // Enable batched updates in our subscriptions for use
+// with standard React renderers (ReactDOM, React Native)
+_batch.setBatch(_reactBatchedUpdates.unstable_batchedUpdates);
+
+},{"use-sync-external-store/shim":"fjotV","use-sync-external-store/shim/with-selector":"6noz1","./utils/reactBatchedUpdates":"kaP8a","./utils/batch":"2g3ZY","./hooks/useSelector":"27k1i","./components/connect":"gr7nQ","./exports":"amFLd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fjotV":[function(require,module,exports) {
+'use strict';
+module.exports = require('../cjs/use-sync-external-store-shim.development.js');
+
+},{"../cjs/use-sync-external-store-shim.development.js":"8th8w"}],"8th8w":[function(require,module,exports) {
 /**
- * A collection of shims that provide minimal functionality of the ES6 collections.
+ * @license React
+ * use-sync-external-store-shim.development.js
  *
- * These implementations are not meant to be used outside of the ResizeObserver
- * modules as they cover only a limited range of use cases.
- */ /* eslint-disable require-jsdoc, valid-jsdoc */ var MapShim = function() {
-    if (typeof Map !== 'undefined') return Map;
-    /**
-     * Returns index in provided array that matches the specified key.
-     *
-     * @param {Array<Array>} arr
-     * @param {*} key
-     * @returns {number}
-     */ function getIndex(arr, key) {
-        var result = -1;
-        arr.some(function(entry, index) {
-            if (entry[0] === key) {
-                result = index;
-                return true;
-            }
-            return false;
-        });
-        return result;
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 'use strict';
+(function() {
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+    var React = require('react');
+    var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function error(format) {
+        for(var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)args[_key2 - 1] = arguments[_key2];
+        printWarning('error', format, args);
     }
-    return (function() {
-        function class_1() {
-            this.__entries__ = [];
-        }
-        Object.defineProperty(class_1.prototype, "size", {
-            /**
-             * @returns {boolean}
-             */ get: function() {
-                return this.__entries__.length;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        /**
-         * @param {*} key
-         * @returns {*}
-         */ class_1.prototype.get = function(key) {
-            var index = getIndex(this.__entries__, key);
-            var entry = this.__entries__[index];
-            return entry && entry[1];
-        };
-        /**
-         * @param {*} key
-         * @param {*} value
-         * @returns {void}
-         */ class_1.prototype.set = function(key, value) {
-            var index = getIndex(this.__entries__, key);
-            if (~index) this.__entries__[index][1] = value;
-            else this.__entries__.push([
-                key,
-                value
+    function printWarning(level, format, args) {
+        var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
+        var stack = ReactDebugCurrentFrame.getStackAddendum();
+        if (stack !== '') {
+            format += '%s';
+            args = args.concat([
+                stack
             ]);
-        };
-        /**
-         * @param {*} key
-         * @returns {void}
-         */ class_1.prototype.delete = function(key) {
-            var entries = this.__entries__;
-            var index = getIndex(entries, key);
-            if (~index) entries.splice(index, 1);
-        };
-        /**
-         * @param {*} key
-         * @returns {void}
-         */ class_1.prototype.has = function(key) {
-            return !!~getIndex(this.__entries__, key);
-        };
-        /**
-         * @returns {void}
-         */ class_1.prototype.clear = function() {
-            this.__entries__.splice(0);
-        };
-        /**
-         * @param {Function} callback
-         * @param {*} [ctx=null]
-         * @returns {void}
-         */ class_1.prototype.forEach = function(callback, ctx) {
-            if (ctx === void 0) ctx = null;
-            for(var _i = 0, _a = this.__entries__; _i < _a.length; _i++){
-                var entry = _a[_i];
-                callback.call(ctx, entry[1], entry[0]);
-            }
-        };
-        return class_1;
-    })();
-}();
-/**
- * Detects whether window and document objects are available in current environment.
- */ var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
-// Returns global object of a current environment.
-var global$1 = function() {
-    if (typeof global !== 'undefined' && global.Math === Math) return global;
-    if (typeof self !== 'undefined' && self.Math === Math) return self;
-    if (typeof window !== 'undefined' && window.Math === Math) return window;
-    // eslint-disable-next-line no-new-func
-    return Function('return this')();
-}();
-/**
- * A shim for the requestAnimationFrame which falls back to the setTimeout if
- * first one is not supported.
- *
- * @returns {number} Requests' identifier.
- */ var requestAnimationFrame$1 = function() {
-    if (typeof requestAnimationFrame === 'function') // It's required to use a bounded function because IE sometimes throws
-    // an "Invalid calling object" error if rAF is invoked without the global
-    // object on the left hand side.
-    return requestAnimationFrame.bind(global$1);
-    return function(callback) {
-        return setTimeout(function() {
-            return callback(Date.now());
-        }, 1000 / 60);
-    };
-}();
-// Defines minimum timeout before adding a trailing call.
-var trailingTimeout = 2;
-/**
- * Creates a wrapper function which ensures that provided callback will be
- * invoked only once during the specified delay period.
- *
- * @param {Function} callback - Function to be invoked after the delay period.
- * @param {number} delay - Delay after which to invoke callback.
- * @returns {Function}
- */ function throttle(callback, delay) {
-    var leadingCall = false, trailingCall = false, lastCallTime = 0;
-    /**
-     * Invokes the original callback function and schedules new invocation if
-     * the "proxy" was called during current request.
-     *
-     * @returns {void}
-     */ function resolvePending() {
-        if (leadingCall) {
-            leadingCall = false;
-            callback();
-        }
-        if (trailingCall) proxy();
+        } // eslint-disable-next-line react-internal/safe-string-coercion
+        var argsWithFormat = args.map(function(item) {
+            return String(item);
+        }); // Careful: RN currently depends on this prefix
+        argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
+        // breaks IE9: https://github.com/facebook/react/issues/13610
+        // eslint-disable-next-line react-internal/no-production-logging
+        Function.prototype.apply.call(console[level], console, argsWithFormat);
     }
     /**
-     * Callback invoked after the specified delay. It will further postpone
-     * invocation of the original function delegating it to the
-     * requestAnimationFrame.
-     *
-     * @returns {void}
-     */ function timeoutCallback() {
-        requestAnimationFrame$1(resolvePending);
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */ function is(x, y) {
+        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+        ;
     }
-    /**
-     * Schedules invocation of the original function.
-     *
-     * @returns {void}
-     */ function proxy() {
-        var timeStamp = Date.now();
-        if (leadingCall) {
-            // Reject immediately following calls.
-            if (timeStamp - lastCallTime < trailingTimeout) return;
-            // Schedule new call to be in invoked when the pending one is resolved.
-            // This is important for "transitions" which never actually start
-            // immediately so there is a chance that we might miss one if change
-            // happens amids the pending invocation.
-            trailingCall = true;
-        } else {
-            leadingCall = true;
-            trailingCall = false;
-            setTimeout(timeoutCallback, delay);
-        }
-        lastCallTime = timeStamp;
-    }
-    return proxy;
-}
-// Minimum delay before invoking the update of observers.
-var REFRESH_DELAY = 20;
-// A list of substrings of CSS properties used to find transition events that
-// might affect dimensions of observed elements.
-var transitionKeys = [
-    'top',
-    'right',
-    'bottom',
-    'left',
-    'width',
-    'height',
-    'size',
-    'weight'
-];
-// Check if MutationObserver is available.
-var mutationObserverSupported = typeof MutationObserver !== 'undefined';
-/**
- * Singleton controller class which handles updates of ResizeObserver instances.
- */ var ResizeObserverController = function() {
-    /**
-     * Creates a new instance of ResizeObserverController.
-     *
-     * @private
-     */ function ResizeObserverController1() {
-        /**
-         * Indicates whether DOM listeners have been added.
-         *
-         * @private {boolean}
-         */ this.connected_ = false;
-        /**
-         * Tells that controller has subscribed for Mutation Events.
-         *
-         * @private {boolean}
-         */ this.mutationEventsAdded_ = false;
-        /**
-         * Keeps reference to the instance of MutationObserver.
-         *
-         * @private {MutationObserver}
-         */ this.mutationsObserver_ = null;
-        /**
-         * A list of connected observers.
-         *
-         * @private {Array<ResizeObserverSPI>}
-         */ this.observers_ = [];
-        this.onTransitionEnd_ = this.onTransitionEnd_.bind(this);
-        this.refresh = throttle(this.refresh.bind(this), REFRESH_DELAY);
-    }
-    /**
-     * Adds observer to observers list.
-     *
-     * @param {ResizeObserverSPI} observer - Observer to be added.
-     * @returns {void}
-     */ ResizeObserverController1.prototype.addObserver = function(observer) {
-        if (!~this.observers_.indexOf(observer)) this.observers_.push(observer);
-        // Add listeners if they haven't been added yet.
-        if (!this.connected_) this.connect_();
-    };
-    /**
-     * Removes observer from observers list.
-     *
-     * @param {ResizeObserverSPI} observer - Observer to be removed.
-     * @returns {void}
-     */ ResizeObserverController1.prototype.removeObserver = function(observer) {
-        var observers = this.observers_;
-        var index = observers.indexOf(observer);
-        // Remove observer if it's present in registry.
-        if (~index) observers.splice(index, 1);
-        // Remove listeners if controller has no connected observers.
-        if (!observers.length && this.connected_) this.disconnect_();
-    };
-    /**
-     * Invokes the update of observers. It will continue running updates insofar
-     * it detects changes.
-     *
-     * @returns {void}
-     */ ResizeObserverController1.prototype.refresh = function() {
-        var changesDetected = this.updateObservers_();
-        // Continue running updates if changes have been detected as there might
-        // be future ones caused by CSS transitions.
-        if (changesDetected) this.refresh();
-    };
-    /**
-     * Updates every observer from observers list and notifies them of queued
-     * entries.
-     *
-     * @private
-     * @returns {boolean} Returns "true" if any observer has detected changes in
-     *      dimensions of it's elements.
-     */ ResizeObserverController1.prototype.updateObservers_ = function() {
-        // Collect observers that have active observations.
-        var activeObservers = this.observers_.filter(function(observer) {
-            return observer.gatherActive(), observer.hasActive();
-        });
-        // Deliver notifications in a separate cycle in order to avoid any
-        // collisions between observers, e.g. when multiple instances of
-        // ResizeObserver are tracking the same element and the callback of one
-        // of them changes content dimensions of the observed target. Sometimes
-        // this may result in notifications being blocked for the rest of observers.
-        activeObservers.forEach(function(observer) {
-            return observer.broadcastActive();
-        });
-        return activeObservers.length > 0;
-    };
-    /**
-     * Initializes DOM listeners.
-     *
-     * @private
-     * @returns {void}
-     */ ResizeObserverController1.prototype.connect_ = function() {
-        // Do nothing if running in a non-browser environment or if listeners
-        // have been already added.
-        if (!isBrowser || this.connected_) return;
-        // Subscription to the "Transitionend" event is used as a workaround for
-        // delayed transitions. This way it's possible to capture at least the
-        // final state of an element.
-        document.addEventListener('transitionend', this.onTransitionEnd_);
-        window.addEventListener('resize', this.refresh);
-        if (mutationObserverSupported) {
-            this.mutationsObserver_ = new MutationObserver(this.refresh);
-            this.mutationsObserver_.observe(document, {
-                attributes: true,
-                childList: true,
-                characterData: true,
-                subtree: true
-            });
-        } else {
-            document.addEventListener('DOMSubtreeModified', this.refresh);
-            this.mutationEventsAdded_ = true;
-        }
-        this.connected_ = true;
-    };
-    /**
-     * Removes DOM listeners.
-     *
-     * @private
-     * @returns {void}
-     */ ResizeObserverController1.prototype.disconnect_ = function() {
-        // Do nothing if running in a non-browser environment or if listeners
-        // have been already removed.
-        if (!isBrowser || !this.connected_) return;
-        document.removeEventListener('transitionend', this.onTransitionEnd_);
-        window.removeEventListener('resize', this.refresh);
-        if (this.mutationsObserver_) this.mutationsObserver_.disconnect();
-        if (this.mutationEventsAdded_) document.removeEventListener('DOMSubtreeModified', this.refresh);
-        this.mutationsObserver_ = null;
-        this.mutationEventsAdded_ = false;
-        this.connected_ = false;
-    };
-    /**
-     * "Transitionend" event handler.
-     *
-     * @private
-     * @param {TransitionEvent} event
-     * @returns {void}
-     */ ResizeObserverController1.prototype.onTransitionEnd_ = function(_a) {
-        var _b = _a.propertyName, propertyName = _b === void 0 ? '' : _b;
-        // Detect whether transition may affect dimensions of an element.
-        var isReflowProperty = transitionKeys.some(function(key) {
-            return !!~propertyName.indexOf(key);
-        });
-        if (isReflowProperty) this.refresh();
-    };
-    /**
-     * Returns instance of the ResizeObserverController.
-     *
-     * @returns {ResizeObserverController}
-     */ ResizeObserverController1.getInstance = function() {
-        if (!this.instance_) this.instance_ = new ResizeObserverController1();
-        return this.instance_;
-    };
-    /**
-     * Holds reference to the controller's instance.
-     *
-     * @private {ResizeObserverController}
-     */ ResizeObserverController1.instance_ = null;
-    return ResizeObserverController1;
-}();
-/**
- * Defines non-writable/enumerable properties of the provided target object.
- *
- * @param {Object} target - Object for which to define properties.
- * @param {Object} props - Properties to be defined.
- * @returns {Object} Target object.
- */ var defineConfigurable = function(target, props) {
-    for(var _i = 0, _a = Object.keys(props); _i < _a.length; _i++){
-        var key = _a[_i];
-        Object.defineProperty(target, key, {
-            value: props[key],
-            enumerable: false,
-            writable: false,
-            configurable: true
-        });
-    }
-    return target;
-};
-/**
- * Returns the global object associated with provided element.
- *
- * @param {Object} target
- * @returns {Object}
- */ var getWindowOf = function(target) {
-    // Assume that the element is an instance of Node, which means that it
-    // has the "ownerDocument" property from which we can retrieve a
-    // corresponding global object.
-    var ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
-    // Return the local global object if it's not possible extract one from
-    // provided element.
-    return ownerGlobal || global$1;
-};
-// Placeholder of an empty content rectangle.
-var emptyRect = createRectInit(0, 0, 0, 0);
-/**
- * Converts provided string to a number.
- *
- * @param {number|string} value
- * @returns {number}
- */ function toFloat(value) {
-    return parseFloat(value) || 0;
-}
-/**
- * Extracts borders size from provided styles.
- *
- * @param {CSSStyleDeclaration} styles
- * @param {...string} positions - Borders positions (top, right, ...)
- * @returns {number}
- */ function getBordersSize(styles) {
-    var positions = [];
-    for(var _i = 1; _i < arguments.length; _i++)positions[_i - 1] = arguments[_i];
-    return positions.reduce(function(size, position) {
-        var value = styles['border-' + position + '-width'];
-        return size + toFloat(value);
-    }, 0);
-}
-/**
- * Extracts paddings sizes from provided styles.
- *
- * @param {CSSStyleDeclaration} styles
- * @returns {Object} Paddings box.
- */ function getPaddings(styles) {
-    var positions = [
-        'top',
-        'right',
-        'bottom',
-        'left'
-    ];
-    var paddings = {
-    };
-    for(var _i = 0, positions_1 = positions; _i < positions_1.length; _i++){
-        var position = positions_1[_i];
-        var value = styles['padding-' + position];
-        paddings[position] = toFloat(value);
-    }
-    return paddings;
-}
-/**
- * Calculates content rectangle of provided SVG element.
- *
- * @param {SVGGraphicsElement} target - Element content rectangle of which needs
- *      to be calculated.
- * @returns {DOMRectInit}
- */ function getSVGContentRect(target) {
-    var bbox = target.getBBox();
-    return createRectInit(0, 0, bbox.width, bbox.height);
-}
-/**
- * Calculates content rectangle of provided HTMLElement.
- *
- * @param {HTMLElement} target - Element for which to calculate the content rectangle.
- * @returns {DOMRectInit}
- */ function getHTMLElementContentRect(target) {
-    // Client width & height properties can't be
-    // used exclusively as they provide rounded values.
-    var clientWidth = target.clientWidth, clientHeight = target.clientHeight;
-    // By this condition we can catch all non-replaced inline, hidden and
-    // detached elements. Though elements with width & height properties less
-    // than 0.5 will be discarded as well.
+    var objectIs = typeof Object.is === 'function' ? Object.is : is;
+    // dispatch for CommonJS interop named imports.
+    var useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
+    var didWarnOld18Alpha = false;
+    var didWarnUncachedGetSnapshot = false; // Disclaimer: This shim breaks many of the rules of React, and only works
+    // because of a very particular set of implementation details and assumptions
+    // -- change any one of them and it will break. The most important assumption
+    // is that updates are always synchronous, because concurrent rendering is
+    // only available in versions of React that also have a built-in
+    // useSyncExternalStore API. And we only use this shim when the built-in API
+    // does not exist.
     //
-    // Without it we would need to implement separate methods for each of
-    // those cases and it's not possible to perform a precise and performance
-    // effective test for hidden elements. E.g. even jQuery's ':visible' filter
-    // gives wrong results for elements with width & height less than 0.5.
-    if (!clientWidth && !clientHeight) return emptyRect;
-    var styles = getWindowOf(target).getComputedStyle(target);
-    var paddings = getPaddings(styles);
-    var horizPad = paddings.left + paddings.right;
-    var vertPad = paddings.top + paddings.bottom;
-    // Computed styles of width & height are being used because they are the
-    // only dimensions available to JS that contain non-rounded values. It could
-    // be possible to utilize the getBoundingClientRect if only it's data wasn't
-    // affected by CSS transformations let alone paddings, borders and scroll bars.
-    var width = toFloat(styles.width), height = toFloat(styles.height);
-    // Width & height include paddings and borders when the 'border-box' box
-    // model is applied (except for IE).
-    if (styles.boxSizing === 'border-box') {
-        // Following conditions are required to handle Internet Explorer which
-        // doesn't include paddings and borders to computed CSS dimensions.
-        //
-        // We can say that if CSS dimensions + paddings are equal to the "client"
-        // properties then it's either IE, and thus we don't need to subtract
-        // anything, or an element merely doesn't have paddings/borders styles.
-        if (Math.round(width + horizPad) !== clientWidth) width -= getBordersSize(styles, 'left', 'right') + horizPad;
-        if (Math.round(height + vertPad) !== clientHeight) height -= getBordersSize(styles, 'top', 'bottom') + vertPad;
-    }
-    // Following steps can't be applied to the document's root element as its
-    // client[Width/Height] properties represent viewport area of the window.
-    // Besides, it's as well not necessary as the <html> itself neither has
-    // rendered scroll bars nor it can be clipped.
-    if (!isDocumentElement(target)) {
-        // In some browsers (only in Firefox, actually) CSS width & height
-        // include scroll bars size which can be removed at this step as scroll
-        // bars are the only difference between rounded dimensions + paddings
-        // and "client" properties, though that is not always true in Chrome.
-        var vertScrollbar = Math.round(width + horizPad) - clientWidth;
-        var horizScrollbar = Math.round(height + vertPad) - clientHeight;
-        // Chrome has a rather weird rounding of "client" properties.
-        // E.g. for an element with content width of 314.2px it sometimes gives
-        // the client width of 315px and for the width of 314.7px it may give
-        // 314px. And it doesn't happen all the time. So just ignore this delta
-        // as a non-relevant.
-        if (Math.abs(vertScrollbar) !== 1) width -= vertScrollbar;
-        if (Math.abs(horizScrollbar) !== 1) height -= horizScrollbar;
-    }
-    return createRectInit(paddings.left, paddings.top, width, height);
-}
-/**
- * Checks whether provided element is an instance of the SVGGraphicsElement.
- *
- * @param {Element} target - Element to be checked.
- * @returns {boolean}
- */ var isSVGGraphicsElement = function() {
-    // Some browsers, namely IE and Edge, don't have the SVGGraphicsElement
-    // interface.
-    if (typeof SVGGraphicsElement !== 'undefined') return function(target) {
-        return target instanceof getWindowOf(target).SVGGraphicsElement;
-    };
-    // If it's so, then check that element is at least an instance of the
-    // SVGElement and that it has the "getBBox" method.
-    // eslint-disable-next-line no-extra-parens
-    return function(target) {
-        return target instanceof getWindowOf(target).SVGElement && typeof target.getBBox === 'function';
-    };
-}();
-/**
- * Checks whether provided element is a document element (<html>).
- *
- * @param {Element} target - Element to be checked.
- * @returns {boolean}
- */ function isDocumentElement(target) {
-    return target === getWindowOf(target).document.documentElement;
-}
-/**
- * Calculates an appropriate content rectangle for provided html or svg element.
- *
- * @param {Element} target - Element content rectangle of which needs to be calculated.
- * @returns {DOMRectInit}
- */ function getContentRect(target) {
-    if (!isBrowser) return emptyRect;
-    if (isSVGGraphicsElement(target)) return getSVGContentRect(target);
-    return getHTMLElementContentRect(target);
-}
-/**
- * Creates rectangle with an interface of the DOMRectReadOnly.
- * Spec: https://drafts.fxtf.org/geometry/#domrectreadonly
- *
- * @param {DOMRectInit} rectInit - Object with rectangle's x/y coordinates and dimensions.
- * @returns {DOMRectReadOnly}
- */ function createReadOnlyRect(_a) {
-    var x = _a.x, y = _a.y, width = _a.width, height = _a.height;
-    // If DOMRectReadOnly is available use it as a prototype for the rectangle.
-    var Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
-    var rect = Object.create(Constr.prototype);
-    // Rectangle's properties are not writable and non-enumerable.
-    defineConfigurable(rect, {
-        x: x,
-        y: y,
-        width: width,
-        height: height,
-        top: y,
-        right: x + width,
-        bottom: height + y,
-        left: x
-    });
-    return rect;
-}
-/**
- * Creates DOMRectInit object based on the provided dimensions and the x/y coordinates.
- * Spec: https://drafts.fxtf.org/geometry/#dictdef-domrectinit
- *
- * @param {number} x - X coordinate.
- * @param {number} y - Y coordinate.
- * @param {number} width - Rectangle's width.
- * @param {number} height - Rectangle's height.
- * @returns {DOMRectInit}
- */ function createRectInit(x, y, width, height) {
-    return {
-        x: x,
-        y: y,
-        width: width,
-        height: height
-    };
-}
-/**
- * Class that is responsible for computations of the content rectangle of
- * provided DOM element and for keeping track of it's changes.
- */ var ResizeObservation = function() {
-    /**
-     * Creates an instance of ResizeObservation.
-     *
-     * @param {Element} target - Element to be observed.
-     */ function ResizeObservation1(target) {
-        /**
-         * Broadcasted width of content rectangle.
-         *
-         * @type {number}
-         */ this.broadcastWidth = 0;
-        /**
-         * Broadcasted height of content rectangle.
-         *
-         * @type {number}
-         */ this.broadcastHeight = 0;
-        /**
-         * Reference to the last observed content rectangle.
-         *
-         * @private {DOMRectInit}
-         */ this.contentRect_ = createRectInit(0, 0, 0, 0);
-        this.target = target;
-    }
-    /**
-     * Updates content rectangle and tells whether it's width or height properties
-     * have changed since the last broadcast.
-     *
-     * @returns {boolean}
-     */ ResizeObservation1.prototype.isActive = function() {
-        var rect = getContentRect(this.target);
-        this.contentRect_ = rect;
-        return rect.width !== this.broadcastWidth || rect.height !== this.broadcastHeight;
-    };
-    /**
-     * Updates 'broadcastWidth' and 'broadcastHeight' properties with a data
-     * from the corresponding properties of the last observed content rectangle.
-     *
-     * @returns {DOMRectInit} Last observed content rectangle.
-     */ ResizeObservation1.prototype.broadcastRect = function() {
-        var rect = this.contentRect_;
-        this.broadcastWidth = rect.width;
-        this.broadcastHeight = rect.height;
-        return rect;
-    };
-    return ResizeObservation1;
-}();
-var ResizeObserverEntry1 = function() {
-    /**
-     * Creates an instance of ResizeObserverEntry.
-     *
-     * @param {Element} target - Element that is being observed.
-     * @param {DOMRectInit} rectInit - Data of the element's content rectangle.
-     */ function ResizeObserverEntry2(target, rectInit) {
-        var contentRect = createReadOnlyRect(rectInit);
-        // According to the specification following properties are not writable
-        // and are also not enumerable in the native implementation.
-        //
-        // Property accessors are not being used as they'd require to define a
-        // private WeakMap storage which may cause memory leaks in browsers that
-        // don't support this type of collections.
-        defineConfigurable(this, {
-            target: target,
-            contentRect: contentRect
-        });
-    }
-    return ResizeObserverEntry2;
-}();
-var ResizeObserverSPI = function() {
-    /**
-     * Creates a new instance of ResizeObserver.
-     *
-     * @param {ResizeObserverCallback} callback - Callback function that is invoked
-     *      when one of the observed elements changes it's content dimensions.
-     * @param {ResizeObserverController} controller - Controller instance which
-     *      is responsible for the updates of observer.
-     * @param {ResizeObserver} callbackCtx - Reference to the public
-     *      ResizeObserver instance which will be passed to callback function.
-     */ function ResizeObserverSPI1(callback, controller, callbackCtx) {
-        /**
-         * Collection of resize observations that have detected changes in dimensions
-         * of elements.
-         *
-         * @private {Array<ResizeObservation>}
-         */ this.activeObservations_ = [];
-        /**
-         * Registry of the ResizeObservation instances.
-         *
-         * @private {Map<Element, ResizeObservation>}
-         */ this.observations_ = new MapShim();
-        if (typeof callback !== 'function') throw new TypeError('The callback provided as parameter 1 is not a function.');
-        this.callback_ = callback;
-        this.controller_ = controller;
-        this.callbackCtx_ = callbackCtx;
-    }
-    /**
-     * Starts observing provided element.
-     *
-     * @param {Element} target - Element to be observed.
-     * @returns {void}
-     */ ResizeObserverSPI1.prototype.observe = function(target) {
-        if (!arguments.length) throw new TypeError('1 argument required, but only 0 present.');
-        // Do nothing if current environment doesn't have the Element interface.
-        if (typeof Element === 'undefined' || !(Element instanceof Object)) return;
-        if (!(target instanceof getWindowOf(target).Element)) throw new TypeError('parameter 1 is not of type "Element".');
-        var observations = this.observations_;
-        // Do nothing if element is already being observed.
-        if (observations.has(target)) return;
-        observations.set(target, new ResizeObservation(target));
-        this.controller_.addObserver(this);
-        // Force the update of observations.
-        this.controller_.refresh();
-    };
-    /**
-     * Stops observing provided element.
-     *
-     * @param {Element} target - Element to stop observing.
-     * @returns {void}
-     */ ResizeObserverSPI1.prototype.unobserve = function(target) {
-        if (!arguments.length) throw new TypeError('1 argument required, but only 0 present.');
-        // Do nothing if current environment doesn't have the Element interface.
-        if (typeof Element === 'undefined' || !(Element instanceof Object)) return;
-        if (!(target instanceof getWindowOf(target).Element)) throw new TypeError('parameter 1 is not of type "Element".');
-        var observations = this.observations_;
-        // Do nothing if element is not being observed.
-        if (!observations.has(target)) return;
-        observations.delete(target);
-        if (!observations.size) this.controller_.removeObserver(this);
-    };
-    /**
-     * Stops observing all elements.
-     *
-     * @returns {void}
-     */ ResizeObserverSPI1.prototype.disconnect = function() {
-        this.clearActive();
-        this.observations_.clear();
-        this.controller_.removeObserver(this);
-    };
-    /**
-     * Collects observation instances the associated element of which has changed
-     * it's content rectangle.
-     *
-     * @returns {void}
-     */ ResizeObserverSPI1.prototype.gatherActive = function() {
-        var _this = this;
-        this.clearActive();
-        this.observations_.forEach(function(observation) {
-            if (observation.isActive()) _this.activeObservations_.push(observation);
-        });
-    };
-    /**
-     * Invokes initial callback function with a list of ResizeObserverEntry
-     * instances collected from active resize observations.
-     *
-     * @returns {void}
-     */ ResizeObserverSPI1.prototype.broadcastActive = function() {
-        // Do nothing if observer doesn't have active observations.
-        if (!this.hasActive()) return;
-        var ctx = this.callbackCtx_;
-        // Create ResizeObserverEntry instance for every active observation.
-        var entries = this.activeObservations_.map(function(observation) {
-            return new ResizeObserverEntry1(observation.target, observation.broadcastRect());
-        });
-        this.callback_.call(ctx, entries, ctx);
-        this.clearActive();
-    };
-    /**
-     * Clears the collection of active observations.
-     *
-     * @returns {void}
-     */ ResizeObserverSPI1.prototype.clearActive = function() {
-        this.activeObservations_.splice(0);
-    };
-    /**
-     * Tells whether observer has active observations.
-     *
-     * @returns {boolean}
-     */ ResizeObserverSPI1.prototype.hasActive = function() {
-        return this.activeObservations_.length > 0;
-    };
-    return ResizeObserverSPI1;
-}();
-// Registry of internal observers. If WeakMap is not available use current shim
-// for the Map collection as it has all required methods and because WeakMap
-// can't be fully polyfilled anyway.
-var observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
-/**
- * ResizeObserver API. Encapsulates the ResizeObserver SPI implementation
- * exposing only those methods and properties that are defined in the spec.
- */ var ResizeObserver1 = function() {
-    /**
-     * Creates a new instance of ResizeObserver.
-     *
-     * @param {ResizeObserverCallback} callback - Callback that is invoked when
-     *      dimensions of the observed elements change.
-     */ function ResizeObserver2(callback) {
-        if (!(this instanceof ResizeObserver2)) throw new TypeError('Cannot call a class as a function.');
-        if (!arguments.length) throw new TypeError('1 argument required, but only 0 present.');
-        var controller = ResizeObserverController.getInstance();
-        var observer = new ResizeObserverSPI(callback, controller, this);
-        observers.set(this, observer);
-    }
-    return ResizeObserver2;
-}();
-// Expose public methods of ResizeObserver.
-[
-    'observe',
-    'unobserve',
-    'disconnect'
-].forEach(function(method) {
-    ResizeObserver1.prototype[method] = function() {
-        var _a;
-        return (_a = observers.get(this))[method].apply(_a, arguments);
-    };
-});
-var index = function() {
-    // Export existing implementation if available.
-    if (typeof global$1.ResizeObserver !== 'undefined') return global$1.ResizeObserver;
-    return ResizeObserver1;
-}();
-exports.default = index;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bZKop":[function(require,module,exports) {
-var camel2hyphen = require('string-convert/camel2hyphen');
-var isDimension = function(feature) {
-    var re = /[height|width]$/;
-    return re.test(feature);
-};
-var obj2mq = function(obj) {
-    var mq = '';
-    var features = Object.keys(obj);
-    features.forEach(function(feature, index) {
-        var value = obj[feature];
-        feature = camel2hyphen(feature);
-        // Add px to dimension features
-        if (isDimension(feature) && typeof value === 'number') value = value + 'px';
-        if (value === true) mq += feature;
-        else if (value === false) mq += 'not ' + feature;
-        else mq += '(' + feature + ': ' + value + ')';
-        if (index < features.length - 1) mq += ' and ';
-    });
-    return mq;
-};
-var json2mq = function(query) {
-    var mq = '';
-    if (typeof query === 'string') return query;
-    // Handling array of media queries
-    if (query instanceof Array) {
-        query.forEach(function(q, index) {
-            mq += obj2mq(q);
-            if (index < query.length - 1) mq += ', ';
-        });
-        return mq;
-    }
-    // Handling single media query
-    return obj2mq(query);
-};
-module.exports = json2mq;
-
-},{"string-convert/camel2hyphen":"f86Jg"}],"f86Jg":[function(require,module,exports) {
-var camel2hyphen = function(str) {
-    return str.replace(/[A-Z]/g, function(match) {
-        return '-' + match.toLowerCase();
-    }).toLowerCase();
-};
-module.exports = camel2hyphen;
-
-},{}],"8bzBk":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports["default"] = void 0;
-var _react = _interopRequireDefault(require("react"));
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-        "default": obj
-    };
-}
-var defaultProps = {
-    accessibility: true,
-    adaptiveHeight: false,
-    afterChange: null,
-    appendDots: function appendDots(dots) {
-        return(/*#__PURE__*/ _react["default"].createElement("ul", {
-            style: {
-                display: "block"
-            }
-        }, dots));
-    },
-    arrows: true,
-    autoplay: false,
-    autoplaySpeed: 3000,
-    beforeChange: null,
-    centerMode: false,
-    centerPadding: "50px",
-    className: "",
-    cssEase: "ease",
-    customPaging: function customPaging(i) {
-        return(/*#__PURE__*/ _react["default"].createElement("button", null, i + 1));
-    },
-    dots: false,
-    dotsClass: "slick-dots",
-    draggable: true,
-    easing: "linear",
-    edgeFriction: 0.35,
-    fade: false,
-    focusOnSelect: false,
-    infinite: true,
-    initialSlide: 0,
-    lazyLoad: null,
-    nextArrow: null,
-    onEdge: null,
-    onInit: null,
-    onLazyLoadError: null,
-    onReInit: null,
-    pauseOnDotsHover: false,
-    pauseOnFocus: false,
-    pauseOnHover: true,
-    prevArrow: null,
-    responsive: null,
-    rows: 1,
-    rtl: false,
-    slide: "div",
-    slidesPerRow: 1,
-    slidesToScroll: 1,
-    slidesToShow: 1,
-    speed: 500,
-    swipe: true,
-    swipeEvent: null,
-    swipeToSlide: false,
-    touchMove: true,
-    touchThreshold: 5,
-    useCSS: true,
-    useTransform: true,
-    variableWidth: false,
-    vertical: false,
-    waitForAnimate: true
-};
-var _default = defaultProps;
-exports["default"] = _default;
-
-},{"react":"6TuXu"}],"jUNp6":[function(require,module,exports) {
-var MediaQueryDispatch = require('./MediaQueryDispatch');
-module.exports = new MediaQueryDispatch();
-
-},{"./MediaQueryDispatch":"b1Ykj"}],"b1Ykj":[function(require,module,exports) {
-var MediaQuery = require('./MediaQuery');
-var Util = require('./Util');
-var each = Util.each;
-var isFunction = Util.isFunction;
-var isArray = Util.isArray;
-/**
- * Allows for registration of query handlers.
- * Manages the query handler's state and is responsible for wiring up browser events
- *
- * @constructor
- */ function MediaQueryDispatch() {
-    if (!window.matchMedia) throw new Error('matchMedia not present, legacy browsers require a polyfill');
-    this.queries = {
-    };
-    this.browserIsIncapable = !window.matchMedia('only all').matches;
-}
-MediaQueryDispatch.prototype = {
-    constructor: MediaQueryDispatch,
-    /**
-     * Registers a handler for the given media query
-     *
-     * @param {string} q the media query
-     * @param {object || Array || Function} options either a single query handler object, a function, or an array of query handlers
-     * @param {function} options.match fired when query matched
-     * @param {function} [options.unmatch] fired when a query is no longer matched
-     * @param {function} [options.setup] fired when handler first triggered
-     * @param {boolean} [options.deferSetup=false] whether setup should be run immediately or deferred until query is first matched
-     * @param {boolean} [shouldDegrade=false] whether this particular media query should always run on incapable browsers
-     */ register: function(q, options, shouldDegrade) {
-        var queries = this.queries, isUnconditional = shouldDegrade && this.browserIsIncapable;
-        if (!queries[q]) queries[q] = new MediaQuery(q, isUnconditional);
-        //normalise to object in an array
-        if (isFunction(options)) options = {
-            match: options
-        };
-        if (!isArray(options)) options = [
-            options
-        ];
-        each(options, function(handler) {
-            if (isFunction(handler)) handler = {
-                match: handler
-            };
-            queries[q].addHandler(handler);
-        });
-        return this;
-    },
-    /**
-     * unregisters a query and all it's handlers, or a specific handler for a query
-     *
-     * @param {string} q the media query to target
-     * @param {object || function} [handler] specific handler to unregister
-     */ unregister: function(q, handler) {
-        var query = this.queries[q];
-        if (query) {
-            if (handler) query.removeHandler(handler);
-            else {
-                query.clear();
-                delete this.queries[q];
+    // Do not assume that the clever hacks used by this hook also work in general.
+    // The point of this shim is to replace the need for hacks by other libraries.
+    function useSyncExternalStore(subscribe, getSnapshot, // React do not expose a way to check if we're hydrating. So users of the shim
+    // will need to track that themselves and return the correct value
+    // from `getSnapshot`.
+    getServerSnapshot) {
+        if (!didWarnOld18Alpha) {
+            if (React.startTransition !== undefined) {
+                didWarnOld18Alpha = true;
+                error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
             }
         }
-        return this;
-    }
-};
-module.exports = MediaQueryDispatch;
-
-},{"./MediaQuery":"riKd8","./Util":"66r82"}],"riKd8":[function(require,module,exports) {
-var QueryHandler = require('./QueryHandler');
-var each = require('./Util').each;
-/**
- * Represents a single media query, manages it's state and registered handlers for this query
- *
- * @constructor
- * @param {string} query the media query string
- * @param {boolean} [isUnconditional=false] whether the media query should run regardless of whether the conditions are met. Primarily for helping older browsers deal with mobile-first design
- */ function MediaQuery(query, isUnconditional) {
-    this.query = query;
-    this.isUnconditional = isUnconditional;
-    this.handlers = [];
-    this.mql = window.matchMedia(query);
-    var self = this;
-    this.listener = function(mql) {
-        // Chrome passes an MediaQueryListEvent object, while other browsers pass MediaQueryList directly
-        self.mql = mql.currentTarget || mql;
-        self.assess();
-    };
-    this.mql.addListener(this.listener);
-}
-MediaQuery.prototype = {
-    constuctor: MediaQuery,
-    /**
-     * add a handler for this query, triggering if already active
-     *
-     * @param {object} handler
-     * @param {function} handler.match callback for when query is activated
-     * @param {function} [handler.unmatch] callback for when query is deactivated
-     * @param {function} [handler.setup] callback for immediate execution when a query handler is registered
-     * @param {boolean} [handler.deferSetup=false] should the setup callback be deferred until the first time the handler is matched?
-     */ addHandler: function(handler) {
-        var qh = new QueryHandler(handler);
-        this.handlers.push(qh);
-        this.matches() && qh.on();
-    },
-    /**
-     * removes the given handler from the collection, and calls it's destroy methods
-     *
-     * @param {object || function} handler the handler to remove
-     */ removeHandler: function(handler) {
-        var handlers = this.handlers;
-        each(handlers, function(h, i) {
-            if (h.equals(handler)) {
-                h.destroy();
-                return !handlers.splice(i, 1); //remove from array and exit each early
+        // breaks the rules of React, and only works here because of specific
+        // implementation details, most importantly that updates are
+        // always synchronous.
+        var value = getSnapshot();
+        if (!didWarnUncachedGetSnapshot) {
+            var cachedValue = getSnapshot();
+            if (!objectIs(value, cachedValue)) {
+                error('The result of getSnapshot should be cached to avoid an infinite loop');
+                didWarnUncachedGetSnapshot = true;
             }
-        });
-    },
+        }
+        // re-render whenever the subscribed state changes by updating an some
+        // arbitrary useState hook. Then, during render, we call getSnapshot to read
+        // the current value.
+        //
+        // Because we don't actually use the state returned by the useState hook, we
+        // can save a bit of memory by storing other stuff in that slot.
+        //
+        // To implement the early bailout, we need to track some things on a mutable
+        // object. Usually, we would put that in a useRef hook, but we can stash it in
+        // our useState hook instead.
+        //
+        // To force a re-render, we call forceUpdate({inst}). That works because the
+        // new object always fails an equality check.
+        var _useState = useState({
+            inst: {
+                value: value,
+                getSnapshot: getSnapshot
+            }
+        }), inst = _useState[0].inst, forceUpdate = _useState[1]; // Track the latest getSnapshot function with a ref. This needs to be updated
+        // in the layout phase so we can access it during the tearing check that
+        // happens on subscribe.
+        useLayoutEffect(function() {
+            inst.value = value;
+            inst.getSnapshot = getSnapshot; // Whenever getSnapshot or subscribe changes, we need to check in the
+            // commit phase if there was an interleaved mutation. In concurrent mode
+            // this can happen all the time, but even in synchronous mode, an earlier
+            // effect may have mutated the store.
+            if (checkIfSnapshotChanged(inst)) // Force a re-render.
+            forceUpdate({
+                inst: inst
+            });
+        }, [
+            subscribe,
+            value,
+            getSnapshot
+        ]);
+        useEffect(function() {
+            // Check for changes right before subscribing. Subsequent changes will be
+            // detected in the subscription handler.
+            if (checkIfSnapshotChanged(inst)) // Force a re-render.
+            forceUpdate({
+                inst: inst
+            });
+            var handleStoreChange = function() {
+                // TODO: Because there is no cross-renderer API for batching updates, it's
+                // up to the consumer of this library to wrap their subscription event
+                // with unstable_batchedUpdates. Should we try to detect when this isn't
+                // the case and print a warning in development?
+                // The store changed. Check if the snapshot changed since the last time we
+                // read from the store.
+                if (checkIfSnapshotChanged(inst)) // Force a re-render.
+                forceUpdate({
+                    inst: inst
+                });
+            }; // Subscribe to the store and return a clean-up function.
+            return subscribe(handleStoreChange);
+        }, [
+            subscribe
+        ]);
+        useDebugValue(value);
+        return value;
+    }
+    function checkIfSnapshotChanged(inst) {
+        var latestGetSnapshot = inst.getSnapshot;
+        var prevValue = inst.value;
+        try {
+            var nextValue = latestGetSnapshot();
+            return !objectIs(prevValue, nextValue);
+        } catch (error1) {
+            return true;
+        }
+    }
+    function useSyncExternalStore$1(subscribe, getSnapshot, getServerSnapshot) {
+        // Note: The shim does not use getServerSnapshot, because pre-18 versions of
+        // React do not expose a way to check if we're hydrating. So users of the shim
+        // will need to track that themselves and return the correct value
+        // from `getSnapshot`.
+        return getSnapshot();
+    }
+    var canUseDOM = !!(typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined');
+    var isServerEnvironment = !canUseDOM;
+    var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
+    var useSyncExternalStore$2 = React.useSyncExternalStore !== undefined ? React.useSyncExternalStore : shim;
+    exports.useSyncExternalStore = useSyncExternalStore$2;
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+})();
+
+},{"react":"6TuXu"}],"6noz1":[function(require,module,exports) {
+'use strict';
+module.exports = require('../cjs/use-sync-external-store-shim/with-selector.development.js');
+
+},{"../cjs/use-sync-external-store-shim/with-selector.development.js":"7DU9q"}],"7DU9q":[function(require,module,exports) {
+/**
+ * @license React
+ * use-sync-external-store-shim/with-selector.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 'use strict';
+(function() {
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
+    var React = require('react');
+    var shim = require('use-sync-external-store/shim');
     /**
-     * Determine whether the media query should be considered a match
-     *
-     * @return {Boolean} true if media query can be considered a match, false otherwise
-     */ matches: function() {
-        return this.mql.matches || this.isUnconditional;
-    },
-    /**
-     * Clears all handlers and unbinds events
-     */ clear: function() {
-        each(this.handlers, function(handler) {
-            handler.destroy();
-        });
-        this.mql.removeListener(this.listener);
-        this.handlers.length = 0; //clear array
-    },
-    /*
-        * Assesses the query, turning on all handlers if it matches, turning them off if it doesn't match
-        */ assess: function() {
-        var action = this.matches() ? 'on' : 'off';
-        each(this.handlers, function(handler) {
-            handler[action]();
-        });
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */ function is(x, y) {
+        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
+        ;
+    }
+    var objectIs = typeof Object.is === 'function' ? Object.is : is;
+    var useSyncExternalStore = shim.useSyncExternalStore;
+    // for CommonJS interop.
+    var useRef = React.useRef, useEffect = React.useEffect, useMemo = React.useMemo, useDebugValue = React.useDebugValue; // Same as useSyncExternalStore, but supports selector and isEqual arguments.
+    function useSyncExternalStoreWithSelector(subscribe, getSnapshot, getServerSnapshot, selector, isEqual) {
+        // Use this to track the rendered snapshot.
+        var instRef = useRef(null);
+        var inst;
+        if (instRef.current === null) {
+            inst = {
+                hasValue: false,
+                value: null
+            };
+            instRef.current = inst;
+        } else inst = instRef.current;
+        var _useMemo = useMemo(function() {
+            // Track the memoized state using closure variables that are local to this
+            // memoized instance of a getSnapshot function. Intentionally not using a
+            // useRef hook, because that state would be shared across all concurrent
+            // copies of the hook/component.
+            var hasMemo = false;
+            var memoizedSnapshot;
+            var memoizedSelection;
+            var memoizedSelector = function(nextSnapshot) {
+                if (!hasMemo) {
+                    // The first time the hook is called, there is no memoized result.
+                    hasMemo = true;
+                    memoizedSnapshot = nextSnapshot;
+                    var _nextSelection = selector(nextSnapshot);
+                    if (isEqual !== undefined) // Even if the selector has changed, the currently rendered selection
+                    // may be equal to the new selection. We should attempt to reuse the
+                    // current value if possible, to preserve downstream memoizations.
+                    {
+                        if (inst.hasValue) {
+                            var currentSelection = inst.value;
+                            if (isEqual(currentSelection, _nextSelection)) {
+                                memoizedSelection = currentSelection;
+                                return currentSelection;
+                            }
+                        }
+                    }
+                    memoizedSelection = _nextSelection;
+                    return _nextSelection;
+                } // We may be able to reuse the previous invocation's result.
+                // We may be able to reuse the previous invocation's result.
+                var prevSnapshot = memoizedSnapshot;
+                var prevSelection = memoizedSelection;
+                if (objectIs(prevSnapshot, nextSnapshot)) // The snapshot is the same as last time. Reuse the previous selection.
+                return prevSelection;
+                 // The snapshot has changed, so we need to compute a new selection.
+                // The snapshot has changed, so we need to compute a new selection.
+                var nextSelection = selector(nextSnapshot); // If a custom isEqual function is provided, use that to check if the data
+                // has changed. If it hasn't, return the previous selection. That signals
+                // to React that the selections are conceptually equal, and we can bail
+                // out of rendering.
+                // If a custom isEqual function is provided, use that to check if the data
+                // has changed. If it hasn't, return the previous selection. That signals
+                // to React that the selections are conceptually equal, and we can bail
+                // out of rendering.
+                if (isEqual !== undefined && isEqual(prevSelection, nextSelection)) return prevSelection;
+                memoizedSnapshot = nextSnapshot;
+                memoizedSelection = nextSelection;
+                return nextSelection;
+            }; // Assigning this to a constant so that Flow knows it can't change.
+            // Assigning this to a constant so that Flow knows it can't change.
+            var maybeGetServerSnapshot = getServerSnapshot === undefined ? null : getServerSnapshot;
+            var getSnapshotWithSelector = function() {
+                return memoizedSelector(getSnapshot());
+            };
+            var getServerSnapshotWithSelector = maybeGetServerSnapshot === null ? undefined : function() {
+                return memoizedSelector(maybeGetServerSnapshot());
+            };
+            return [
+                getSnapshotWithSelector,
+                getServerSnapshotWithSelector
+            ];
+        }, [
+            getSnapshot,
+            getServerSnapshot,
+            selector,
+            isEqual
+        ]), getSelection = _useMemo[0], getServerSelection = _useMemo[1];
+        var value = useSyncExternalStore(subscribe, getSelection, getServerSelection);
+        useEffect(function() {
+            inst.hasValue = true;
+            inst.value = value;
+        }, [
+            value
+        ]);
+        useDebugValue(value);
+        return value;
+    }
+    exports.useSyncExternalStoreWithSelector = useSyncExternalStoreWithSelector;
+    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+})();
+
+},{"react":"6TuXu","use-sync-external-store/shim":"fjotV"}],"kaP8a":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "unstable_batchedUpdates", ()=>_reactDom.unstable_batchedUpdates
+);
+var _reactDom = require("react-dom");
+
+},{"react-dom":"gkWJK","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2g3ZY":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "setBatch", ()=>setBatch
+);
+parcelHelpers.export(exports, "getBatch", ()=>getBatch
+);
+// Default to a dummy "batch" implementation that just runs the callback
+function defaultNoopBatch(callback) {
+    callback();
+}
+let batch = defaultNoopBatch; // Allow injecting another batching function later
+const setBatch = (newBatch)=>batch = newBatch
+; // Supply a getter just to skip dealing with ESM bindings
+const getBatch = ()=>batch
+;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"27k1i":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initializeUseSelector", ()=>initializeUseSelector
+);
+/**
+ * Hook factory, which creates a `useSelector` hook bound to a given context.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useSelector` hook bound to the specified context.
+ */ parcelHelpers.export(exports, "createSelectorHook", ()=>createSelectorHook
+);
+parcelHelpers.export(exports, "useSelector", ()=>useSelector
+);
+var _react = require("react");
+var _useReduxContext = require("./useReduxContext");
+var _context = require("../components/Context");
+var _useSyncExternalStore = require("../utils/useSyncExternalStore");
+let useSyncExternalStoreWithSelector = _useSyncExternalStore.notInitialized;
+const initializeUseSelector = (fn)=>{
+    useSyncExternalStoreWithSelector = fn;
+};
+const refEquality = (a, b)=>a === b
+;
+function createSelectorHook(context = _context.ReactReduxContext) {
+    const useReduxContext = context === _context.ReactReduxContext ? _useReduxContext.useReduxContext : ()=>_react.useContext(context)
+    ;
+    return function useSelector(selector, equalityFn = refEquality) {
+        if (!selector) throw new Error(`You must pass a selector to useSelector`);
+        if (typeof selector !== 'function') throw new Error(`You must pass a function as a selector to useSelector`);
+        if (typeof equalityFn !== 'function') throw new Error(`You must pass a function as an equality function to useSelector`);
+        const { store , subscription , getServerState  } = useReduxContext();
+        const selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, selector, equalityFn);
+        _react.useDebugValue(selectedState);
+        return selectedState;
+    };
+}
+const useSelector = /*#__PURE__*/ createSelectorHook();
+
+},{"react":"6TuXu","./useReduxContext":"516XC","../components/Context":"gT1Jg","../utils/useSyncExternalStore":"dadZ1","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"516XC":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * A hook to access the value of the `ReactReduxContext`. This is a low-level
+ * hook that you should usually not need to call directly.
+ *
+ * @returns {any} the value of the `ReactReduxContext`
+ *
+ * @example
+ *
+ * import React from 'react'
+ * import { useReduxContext } from 'react-redux'
+ *
+ * export const CounterComponent = () => {
+ *   const { store } = useReduxContext()
+ *   return <div>{store.getState()}</div>
+ * }
+ */ parcelHelpers.export(exports, "useReduxContext", ()=>useReduxContext
+);
+var _react = require("react");
+var _context = require("../components/Context");
+function useReduxContext() {
+    const contextValue = _react.useContext(_context.ReactReduxContext);
+    if (!contextValue) throw new Error('could not find react-redux context value; please ensure the component is wrapped in a <Provider>');
+    return contextValue;
+}
+
+},{"react":"6TuXu","../components/Context":"gT1Jg","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"gT1Jg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ReactReduxContext", ()=>ReactReduxContext
+);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+const ReactReduxContext = /*#__PURE__*/ _reactDefault.default.createContext(null);
+ReactReduxContext.displayName = 'ReactRedux';
+exports.default = ReactReduxContext;
+
+},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"dadZ1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "notInitialized", ()=>notInitialized
+);
+const notInitialized = ()=>{
+    throw new Error('uSES not initialized!');
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"gr7nQ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "initializeConnect", ()=>initializeConnect
+);
+var _extends = require("@babel/runtime/helpers/esm/extends");
+var _extendsDefault = parcelHelpers.interopDefault(_extends);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+/* eslint-disable valid-jsdoc, @typescript-eslint/no-unused-vars */ var _hoistNonReactStatics = require("hoist-non-react-statics");
+var _hoistNonReactStaticsDefault = parcelHelpers.interopDefault(_hoistNonReactStatics);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactIs = require("react-is");
+var _selectorFactory = require("../connect/selectorFactory");
+var _selectorFactoryDefault = parcelHelpers.interopDefault(_selectorFactory);
+var _mapDispatchToProps = require("../connect/mapDispatchToProps");
+var _mapStateToProps = require("../connect/mapStateToProps");
+var _mergeProps = require("../connect/mergeProps");
+var _subscription = require("../utils/Subscription");
+var _useIsomorphicLayoutEffect = require("../utils/useIsomorphicLayoutEffect");
+var _shallowEqual = require("../utils/shallowEqual");
+var _shallowEqualDefault = parcelHelpers.interopDefault(_shallowEqual);
+var _context = require("./Context");
+var _useSyncExternalStore = require("../utils/useSyncExternalStore");
+const _excluded = [
+    "reactReduxForwardedRef"
+];
+let useSyncExternalStore = _useSyncExternalStore.notInitialized;
+const initializeConnect = (fn)=>{
+    useSyncExternalStore = fn;
+}; // Define some constant arrays just to avoid re-creating these
+const EMPTY_ARRAY = [
+    null,
+    0
+];
+const NO_SUBSCRIPTION_ARRAY = [
+    null,
+    null
+]; // Attempts to stringify whatever not-really-a-component value we were given
+// for logging in an error message
+const stringifyComponent = (Comp)=>{
+    try {
+        return JSON.stringify(Comp);
+    } catch (err) {
+        return String(Comp);
     }
 };
-module.exports = MediaQuery;
-
-},{"./QueryHandler":"cBsLM","./Util":"66r82"}],"cBsLM":[function(require,module,exports) {
-/**
- * Delegate to handle a media query being matched and unmatched.
- *
- * @param {object} options
- * @param {function} options.match callback for when the media query is matched
- * @param {function} [options.unmatch] callback for when the media query is unmatched
- * @param {function} [options.setup] one-time callback triggered the first time a query is matched
- * @param {boolean} [options.deferSetup=false] should the setup callback be run immediately, rather than first time query is matched?
- * @constructor
- */ function QueryHandler(options) {
-    this.options = options;
-    !options.deferSetup && this.setup();
-}
-QueryHandler.prototype = {
-    constructor: QueryHandler,
-    /**
-     * coordinates setup of the handler
-     *
-     * @function
-     */ setup: function() {
-        if (this.options.setup) this.options.setup();
-        this.initialised = true;
-    },
-    /**
-     * coordinates setup and triggering of the handler
-     *
-     * @function
-     */ on: function() {
-        !this.initialised && this.setup();
-        this.options.match && this.options.match();
-    },
-    /**
-     * coordinates the unmatch event for the handler
-     *
-     * @function
-     */ off: function() {
-        this.options.unmatch && this.options.unmatch();
-    },
-    /**
-     * called when a handler is to be destroyed.
-     * delegates to the destroy or unmatch callbacks, depending on availability.
-     *
-     * @function
-     */ destroy: function() {
-        this.options.destroy ? this.options.destroy() : this.off();
-    },
-    /**
-     * determines equality by reference.
-     * if object is supplied compare options, if function, compare match callback
-     *
-     * @function
-     * @param {object || function} [target] the target for comparison
-     */ equals: function(target) {
-        return this.options === target || this.options.match === target;
+// This is "just" a `useLayoutEffect`, but with two modifications:
+// - we need to fall back to `useEffect` in SSR to avoid annoying warnings
+// - we extract this to a separate function to avoid closing over values
+//   and causing memory leaks
+function useIsomorphicLayoutEffectWithArgs(effectFunc, effectArgs, dependencies) {
+    _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>effectFunc(...effectArgs)
+    , dependencies);
+} // Effect callback, extracted: assign the latest props values to refs for later usage
+function captureWrapperProps(lastWrapperProps, lastChildProps, renderIsScheduled, wrapperProps, childPropsFromStoreUpdate, notifyNestedSubs) {
+    // We want to capture the wrapper props and child props we used for later comparisons
+    lastWrapperProps.current = wrapperProps;
+    renderIsScheduled.current = false; // If the render was from a store update, clear out that reference and cascade the subscriber update
+    if (childPropsFromStoreUpdate.current) {
+        childPropsFromStoreUpdate.current = null;
+        notifyNestedSubs();
     }
-};
-module.exports = QueryHandler;
-
-},{}],"66r82":[function(require,module,exports) {
+} // Effect callback, extracted: subscribe to the Redux store or nearest connected ancestor,
+// check for updates after dispatched actions, and trigger re-renders.
+function subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, additionalSubscribeListener) {
+    // If we're not subscribed to the store, nothing to do here
+    if (!shouldHandleStateChanges) return ()=>{
+    }; // Capture values for checking if and when this component unmounts
+    let didUnsubscribe = false;
+    let lastThrownError = null; // We'll run this callback every time a store subscription update propagates to this component
+    const checkForUpdates = ()=>{
+        if (didUnsubscribe || !isMounted.current) // Don't run stale listeners.
+        // Redux doesn't guarantee unsubscriptions happen until next dispatch.
+        return;
+         // TODO We're currently calling getState ourselves here, rather than letting `uSES` do it
+        const latestStoreState = store.getState();
+        let newChildProps, error;
+        try {
+            // Actually run the selector with the most recent store state and wrapper props
+            // to determine what the child props should be
+            newChildProps = childPropsSelector(latestStoreState, lastWrapperProps.current);
+        } catch (e) {
+            error = e;
+            lastThrownError = e;
+        }
+        if (!error) lastThrownError = null;
+         // If the child props haven't changed, nothing to do here - cascade the subscription update
+        if (newChildProps === lastChildProps.current) {
+            if (!renderIsScheduled.current) notifyNestedSubs();
+        } else {
+            // Save references to the new child props.  Note that we track the "child props from store update"
+            // as a ref instead of a useState/useReducer because we need a way to determine if that value has
+            // been processed.  If this went into useState/useReducer, we couldn't clear out the value without
+            // forcing another re-render, which we don't want.
+            lastChildProps.current = newChildProps;
+            childPropsFromStoreUpdate.current = newChildProps;
+            renderIsScheduled.current = true; // TODO This is hacky and not how `uSES` is meant to be used
+            // Trigger the React `useSyncExternalStore` subscriber
+            additionalSubscribeListener();
+        }
+    }; // Actually subscribe to the nearest connected ancestor (or store)
+    subscription.onStateChange = checkForUpdates;
+    subscription.trySubscribe(); // Pull data from the store after first render in case the store has
+    // changed since we began.
+    checkForUpdates();
+    const unsubscribeWrapper = ()=>{
+        didUnsubscribe = true;
+        subscription.tryUnsubscribe();
+        subscription.onStateChange = null;
+        if (lastThrownError) // It's possible that we caught an error due to a bad mapState function, but the
+        // parent re-rendered without this component and we're about to unmount.
+        // This shouldn't happen as long as we do top-down subscriptions correctly, but
+        // if we ever do those wrong, this throw will surface the error in our tests.
+        // In that case, throw the error from here so it doesn't get lost.
+        throw lastThrownError;
+    };
+    return unsubscribeWrapper;
+} // Reducer initial state creation for our update reducer
+const initStateUpdates = ()=>EMPTY_ARRAY
+;
+function strictEqual(a, b) {
+    return a === b;
+}
 /**
- * Helper function for iterating over a collection
+ * Infers the type of props that a connector will inject into a component.
+ */ /**
+ * Connects a React component to a Redux store.
  *
- * @param collection
- * @param fn
- */ function each(collection, fn) {
-    var i = 0, length = collection.length, cont;
-    for(; i < length; i++){
-        cont = fn(collection[i], i);
-        if (cont === false) break; //allow early exit
+ * - Without arguments, just wraps the component, without changing the behavior / props
+ *
+ * - If 2 params are passed (3rd param, mergeProps, is skipped), default behavior
+ * is to override ownProps (as stated in the docs), so what remains is everything that's
+ * not a state or dispatch prop
+ *
+ * - When 3rd param is passed, we don't know if ownProps propagate and whether they
+ * should be valid component props, because it depends on mergeProps implementation.
+ * As such, it is the user's responsibility to extend ownProps interface from state or
+ * dispatch props or both when applicable
+ *
+ * @param mapStateToProps A function that extracts values from state
+ * @param mapDispatchToProps Setup for dispatching actions
+ * @param mergeProps Optional callback to merge state and dispatch props together
+ * @param options Options for configuring the connection
+ *
+ */ function connect(mapStateToProps, mapDispatchToProps, mergeProps, { // The `pure` option has been removed, so TS doesn't like us destructuring this to check its existence.
+// @ts-ignore
+pure , areStatesEqual =strictEqual , areOwnPropsEqual =_shallowEqualDefault.default , areStatePropsEqual =_shallowEqualDefault.default , areMergedPropsEqual =_shallowEqualDefault.default , // use React's forwardRef to expose a ref of the wrapped component
+forwardRef =false , // the context consumer to use
+context =_context.ReactReduxContext  } = {
+}) {
+    if (pure !== undefined) throw new Error('The `pure` option has been removed. `connect` is now always a "pure/memoized" component');
+    const Context = context;
+    const initMapStateToProps = _mapStateToProps.mapStateToPropsFactory(mapStateToProps);
+    const initMapDispatchToProps = _mapDispatchToProps.mapDispatchToPropsFactory(mapDispatchToProps);
+    const initMergeProps = _mergeProps.mergePropsFactory(mergeProps);
+    const shouldHandleStateChanges = Boolean(mapStateToProps);
+    const wrapWithConnect = (WrappedComponent)=>{
+        if (!_reactIs.isValidElementType(WrappedComponent)) throw new Error(`You must pass a component to the function returned by connect. Instead received ${stringifyComponent(WrappedComponent)}`);
+        const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
+        const displayName = `Connect(${wrappedComponentName})`;
+        const selectorFactoryOptions = {
+            shouldHandleStateChanges,
+            displayName,
+            wrappedComponentName,
+            WrappedComponent,
+            // @ts-ignore
+            initMapStateToProps,
+            // @ts-ignore
+            initMapDispatchToProps,
+            initMergeProps,
+            areStatesEqual,
+            areStatePropsEqual,
+            areOwnPropsEqual,
+            areMergedPropsEqual
+        };
+        function ConnectFunction(props) {
+            const [propsContext, reactReduxForwardedRef, wrapperProps] = _react.useMemo(()=>{
+                // Distinguish between actual "data" props that were passed to the wrapper component,
+                // and values needed to control behavior (forwarded refs, alternate context instances).
+                // To maintain the wrapperProps object reference, memoize this destructuring.
+                const { reactReduxForwardedRef: reactReduxForwardedRef1  } = props, wrapperProps1 = _objectWithoutPropertiesLooseDefault.default(props, _excluded);
+                return [
+                    props.context,
+                    reactReduxForwardedRef1,
+                    wrapperProps1
+                ];
+            }, [
+                props
+            ]);
+            const ContextToUse = _react.useMemo(()=>{
+                // Users may optionally pass in a custom context instance to use instead of our ReactReduxContext.
+                // Memoize the check that determines which context instance we should use.
+                return propsContext && propsContext.Consumer && _reactIs.isContextConsumer(/*#__PURE__*/ _reactDefault.default.createElement(propsContext.Consumer, null)) ? propsContext : Context;
+            }, [
+                propsContext,
+                Context
+            ]); // Retrieve the store and ancestor subscription via context, if available
+            const contextValue = _react.useContext(ContextToUse); // The store _must_ exist as either a prop or in context.
+            // We'll check to see if it _looks_ like a Redux store first.
+            // This allows us to pass through a `store` prop that is just a plain value.
+            const didStoreComeFromProps = Boolean(props.store) && Boolean(props.store.getState) && Boolean(props.store.dispatch);
+            const didStoreComeFromContext = Boolean(contextValue) && Boolean(contextValue.store);
+            if (!didStoreComeFromProps && !didStoreComeFromContext) throw new Error(`Could not find "store" in the context of ` + `"${displayName}". Either wrap the root component in a <Provider>, ` + `or pass a custom React context provider to <Provider> and the corresponding ` + `React context consumer to ${displayName} in connect options.`);
+             // Based on the previous check, one of these must be true
+            const store = didStoreComeFromProps ? props.store : contextValue.store;
+            const getServerState = didStoreComeFromContext ? contextValue.getServerState : store.getState;
+            const childPropsSelector = _react.useMemo(()=>{
+                // The child props selector needs the store reference as an input.
+                // Re-create this selector whenever the store changes.
+                return _selectorFactoryDefault.default(store.dispatch, selectorFactoryOptions);
+            }, [
+                store
+            ]);
+            const [subscription, notifyNestedSubs] = _react.useMemo(()=>{
+                if (!shouldHandleStateChanges) return NO_SUBSCRIPTION_ARRAY; // This Subscription's source should match where store came from: props vs. context. A component
+                // connected to the store via props shouldn't use subscription from context, or vice versa.
+                const subscription1 = _subscription.createSubscription(store, didStoreComeFromProps ? undefined : contextValue.subscription); // `notifyNestedSubs` is duplicated to handle the case where the component is unmounted in
+                // the middle of the notification loop, where `subscription` will then be null. This can
+                // probably be avoided if Subscription's listeners logic is changed to not call listeners
+                // that have been unsubscribed in the  middle of the notification loop.
+                const notifyNestedSubs1 = subscription1.notifyNestedSubs.bind(subscription1);
+                return [
+                    subscription1,
+                    notifyNestedSubs1
+                ];
+            }, [
+                store,
+                didStoreComeFromProps,
+                contextValue
+            ]); // Determine what {store, subscription} value should be put into nested context, if necessary,
+            // and memoize that value to avoid unnecessary context updates.
+            const overriddenContextValue = _react.useMemo(()=>{
+                if (didStoreComeFromProps) // This component is directly subscribed to a store from props.
+                // We don't want descendants reading from this store - pass down whatever
+                // the existing context value is from the nearest connected ancestor.
+                return contextValue;
+                 // Otherwise, put this component's subscription instance into context, so that
+                // connected descendants won't update until after this component is done
+                return _extendsDefault.default({
+                }, contextValue, {
+                    subscription
+                });
+            }, [
+                didStoreComeFromProps,
+                contextValue,
+                subscription
+            ]); // Set up refs to coordinate values between the subscription effect and the render logic
+            const lastChildProps = _react.useRef();
+            const lastWrapperProps = _react.useRef(wrapperProps);
+            const childPropsFromStoreUpdate = _react.useRef();
+            const renderIsScheduled = _react.useRef(false);
+            const isProcessingDispatch = _react.useRef(false);
+            const isMounted = _react.useRef(false);
+            const latestSubscriptionCallbackError = _react.useRef();
+            _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>{
+                isMounted.current = true;
+                return ()=>{
+                    isMounted.current = false;
+                };
+            }, []);
+            const actualChildPropsSelector = _react.useMemo(()=>{
+                const selector = ()=>{
+                    // Tricky logic here:
+                    // - This render may have been triggered by a Redux store update that produced new child props
+                    // - However, we may have gotten new wrapper props after that
+                    // If we have new child props, and the same wrapper props, we know we should use the new child props as-is.
+                    // But, if we have new wrapper props, those might change the child props, so we have to recalculate things.
+                    // So, we'll use the child props from store update only if the wrapper props are the same as last time.
+                    if (childPropsFromStoreUpdate.current && wrapperProps === lastWrapperProps.current) return childPropsFromStoreUpdate.current;
+                     // TODO We're reading the store directly in render() here. Bad idea?
+                    // This will likely cause Bad Things (TM) to happen in Concurrent Mode.
+                    // Note that we do this because on renders _not_ caused by store updates, we need the latest store state
+                    // to determine what the child props should be.
+                    return childPropsSelector(store.getState(), wrapperProps);
+                };
+                return selector;
+            }, [
+                store,
+                wrapperProps
+            ]); // We need this to execute synchronously every time we re-render. However, React warns
+            // about useLayoutEffect in SSR, so we try to detect environment and fall back to
+            // just useEffect instead to avoid the warning, since neither will run anyway.
+            const subscribeForReact = _react.useMemo(()=>{
+                const subscribe = (reactListener)=>{
+                    if (!subscription) return ()=>{
+                    };
+                    return subscribeUpdates(shouldHandleStateChanges, store, subscription, childPropsSelector, lastWrapperProps, lastChildProps, renderIsScheduled, isMounted, childPropsFromStoreUpdate, notifyNestedSubs, reactListener);
+                };
+                return subscribe;
+            }, [
+                subscription
+            ]);
+            useIsomorphicLayoutEffectWithArgs(captureWrapperProps, [
+                lastWrapperProps,
+                lastChildProps,
+                renderIsScheduled,
+                wrapperProps,
+                childPropsFromStoreUpdate,
+                notifyNestedSubs
+            ]);
+            let actualChildProps;
+            try {
+                actualChildProps = useSyncExternalStore(subscribeForReact, // TODO and we're just passing that through so it triggers a re-render for us rather than relying on `uSES`.
+                actualChildPropsSelector, getServerState ? ()=>childPropsSelector(getServerState(), wrapperProps)
+                 : actualChildPropsSelector);
+            } catch (err) {
+                if (latestSubscriptionCallbackError.current) err.message += `\nThe error may be correlated with this previous error:\n${latestSubscriptionCallbackError.current.stack}\n\n`;
+                throw err;
+            }
+            _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>{
+                latestSubscriptionCallbackError.current = undefined;
+                childPropsFromStoreUpdate.current = undefined;
+                lastChildProps.current = actualChildProps;
+            }); // Now that all that's done, we can finally try to actually render the child component.
+            // We memoize the elements for the rendered child component as an optimization.
+            const renderedWrappedComponent = _react.useMemo(()=>{
+                return(/*#__PURE__*/ // @ts-ignore
+                _reactDefault.default.createElement(WrappedComponent, _extendsDefault.default({
+                }, actualChildProps, {
+                    ref: reactReduxForwardedRef
+                })));
+            }, [
+                reactReduxForwardedRef,
+                WrappedComponent,
+                actualChildProps
+            ]); // If React sees the exact same element reference as last time, it bails out of re-rendering
+            // that child, same as if it was wrapped in React.memo() or returned false from shouldComponentUpdate.
+            const renderedChild = _react.useMemo(()=>{
+                if (shouldHandleStateChanges) // If this component is subscribed to store updates, we need to pass its own
+                // subscription instance down to our descendants. That means rendering the same
+                // Context instance, and putting a different value into the context.
+                return(/*#__PURE__*/ _reactDefault.default.createElement(ContextToUse.Provider, {
+                    value: overriddenContextValue
+                }, renderedWrappedComponent));
+                return renderedWrappedComponent;
+            }, [
+                ContextToUse,
+                renderedWrappedComponent,
+                overriddenContextValue
+            ]);
+            return renderedChild;
+        }
+        const _Connect = _reactDefault.default.memo(ConnectFunction);
+        // Add a hacky cast to get the right output type
+        const Connect = _Connect;
+        Connect.WrappedComponent = WrappedComponent;
+        Connect.displayName = ConnectFunction.displayName = displayName;
+        if (forwardRef) {
+            const _forwarded = _reactDefault.default.forwardRef(function forwardConnectRef(props, ref) {
+                // @ts-ignore
+                return(/*#__PURE__*/ _reactDefault.default.createElement(Connect, _extendsDefault.default({
+                }, props, {
+                    reactReduxForwardedRef: ref
+                })));
+            });
+            const forwarded = _forwarded;
+            forwarded.displayName = displayName;
+            forwarded.WrappedComponent = WrappedComponent;
+            return _hoistNonReactStaticsDefault.default(forwarded, WrappedComponent);
+        }
+        return _hoistNonReactStaticsDefault.default(Connect, WrappedComponent);
+    };
+    return wrapWithConnect;
+}
+exports.default = connect;
+
+},{"@babel/runtime/helpers/esm/extends":"bKAu6","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","hoist-non-react-statics":"jfzb6","react":"6TuXu","react-is":"bCfxJ","../connect/selectorFactory":"2XZ1a","../connect/mapDispatchToProps":"5WOJW","../connect/mapStateToProps":"fi6QF","../connect/mergeProps":"j48TE","../utils/Subscription":"6rtcC","../utils/useIsomorphicLayoutEffect":"2TWoQ","../utils/shallowEqual":"leLul","./Context":"gT1Jg","../utils/useSyncExternalStore":"dadZ1","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bCfxJ":[function(require,module,exports) {
+'use strict';
+module.exports = require('./cjs/react-is.development.js');
+
+},{"./cjs/react-is.development.js":"eyUIi"}],"eyUIi":[function(require,module,exports) {
+/**
+ * @license React
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */ 'use strict';
+(function() {
+    // -----------------------------------------------------------------------------
+    var enableScopeAPI = false; // Experimental Create Event Handle API.
+    var enableCacheElement = false;
+    var enableTransitionTracing = false; // No known bugs, but needs performance testing
+    var enableLegacyHidden = false; // Enables unstable_avoidThisFallback feature in Fiber
+    // stuff. Intended to enable React core members to more easily debug scheduling
+    // issues in DEV builds.
+    var enableDebugTracing = false; // Track which Fiber(s) schedule render work.
+    // ATTENTION
+    var REACT_ELEMENT_TYPE = Symbol.for('react.element');
+    var REACT_PORTAL_TYPE = Symbol.for('react.portal');
+    var REACT_FRAGMENT_TYPE = Symbol.for('react.fragment');
+    var REACT_STRICT_MODE_TYPE = Symbol.for('react.strict_mode');
+    var REACT_PROFILER_TYPE = Symbol.for('react.profiler');
+    var REACT_PROVIDER_TYPE = Symbol.for('react.provider');
+    var REACT_CONTEXT_TYPE = Symbol.for('react.context');
+    var REACT_SERVER_CONTEXT_TYPE = Symbol.for('react.server_context');
+    var REACT_FORWARD_REF_TYPE = Symbol.for('react.forward_ref');
+    var REACT_SUSPENSE_TYPE = Symbol.for('react.suspense');
+    var REACT_SUSPENSE_LIST_TYPE = Symbol.for('react.suspense_list');
+    var REACT_MEMO_TYPE = Symbol.for('react.memo');
+    var REACT_LAZY_TYPE = Symbol.for('react.lazy');
+    var REACT_OFFSCREEN_TYPE = Symbol.for('react.offscreen');
+    var REACT_MODULE_REFERENCE;
+    REACT_MODULE_REFERENCE = Symbol.for('react.module.reference');
+    function isValidElementType(type) {
+        if (typeof type === 'string' || typeof type === 'function') return true;
+         // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
+        if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || enableDebugTracing || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || enableLegacyHidden || type === REACT_OFFSCREEN_TYPE || enableScopeAPI || enableCacheElement || enableTransitionTracing) return true;
+        if (typeof type === 'object' && type !== null) {
+            if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || // types supported by any Flight configuration anywhere since
+            // we don't know which Flight build this will end up being used
+            // with.
+            type.$$typeof === REACT_MODULE_REFERENCE || type.getModuleId !== undefined) return true;
+        }
+        return false;
+    }
+    function typeOf(object) {
+        if (typeof object === 'object' && object !== null) {
+            var $$typeof = object.$$typeof;
+            switch($$typeof){
+                case REACT_ELEMENT_TYPE:
+                    var type = object.type;
+                    switch(type){
+                        case REACT_FRAGMENT_TYPE:
+                        case REACT_PROFILER_TYPE:
+                        case REACT_STRICT_MODE_TYPE:
+                        case REACT_SUSPENSE_TYPE:
+                        case REACT_SUSPENSE_LIST_TYPE:
+                            return type;
+                        default:
+                            var $$typeofType = type && type.$$typeof;
+                            switch($$typeofType){
+                                case REACT_SERVER_CONTEXT_TYPE:
+                                case REACT_CONTEXT_TYPE:
+                                case REACT_FORWARD_REF_TYPE:
+                                case REACT_LAZY_TYPE:
+                                case REACT_MEMO_TYPE:
+                                case REACT_PROVIDER_TYPE:
+                                    return $$typeofType;
+                                default:
+                                    return $$typeof;
+                            }
+                    }
+                case REACT_PORTAL_TYPE:
+                    return $$typeof;
+            }
+        }
+        return undefined;
+    }
+    var ContextConsumer = REACT_CONTEXT_TYPE;
+    var ContextProvider = REACT_PROVIDER_TYPE;
+    var Element1 = REACT_ELEMENT_TYPE;
+    var ForwardRef = REACT_FORWARD_REF_TYPE;
+    var Fragment = REACT_FRAGMENT_TYPE;
+    var Lazy = REACT_LAZY_TYPE;
+    var Memo = REACT_MEMO_TYPE;
+    var Portal = REACT_PORTAL_TYPE;
+    var Profiler = REACT_PROFILER_TYPE;
+    var StrictMode = REACT_STRICT_MODE_TYPE;
+    var Suspense = REACT_SUSPENSE_TYPE;
+    var SuspenseList = REACT_SUSPENSE_LIST_TYPE;
+    var hasWarnedAboutDeprecatedIsAsyncMode = false;
+    var hasWarnedAboutDeprecatedIsConcurrentMode = false; // AsyncMode should be deprecated
+    function isAsyncMode(object) {
+        if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+            hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+            console['warn']("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 18+.");
+        }
+        return false;
+    }
+    function isConcurrentMode(object) {
+        if (!hasWarnedAboutDeprecatedIsConcurrentMode) {
+            hasWarnedAboutDeprecatedIsConcurrentMode = true; // Using console['warn'] to evade Babel and ESLint
+            console['warn']("The ReactIs.isConcurrentMode() alias has been deprecated, and will be removed in React 18+.");
+        }
+        return false;
+    }
+    function isContextConsumer(object) {
+        return typeOf(object) === REACT_CONTEXT_TYPE;
+    }
+    function isContextProvider(object) {
+        return typeOf(object) === REACT_PROVIDER_TYPE;
+    }
+    function isElement(object) {
+        return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+    }
+    function isForwardRef(object) {
+        return typeOf(object) === REACT_FORWARD_REF_TYPE;
+    }
+    function isFragment(object) {
+        return typeOf(object) === REACT_FRAGMENT_TYPE;
+    }
+    function isLazy(object) {
+        return typeOf(object) === REACT_LAZY_TYPE;
+    }
+    function isMemo(object) {
+        return typeOf(object) === REACT_MEMO_TYPE;
+    }
+    function isPortal(object) {
+        return typeOf(object) === REACT_PORTAL_TYPE;
+    }
+    function isProfiler(object) {
+        return typeOf(object) === REACT_PROFILER_TYPE;
+    }
+    function isStrictMode(object) {
+        return typeOf(object) === REACT_STRICT_MODE_TYPE;
+    }
+    function isSuspense(object) {
+        return typeOf(object) === REACT_SUSPENSE_TYPE;
+    }
+    function isSuspenseList(object) {
+        return typeOf(object) === REACT_SUSPENSE_LIST_TYPE;
+    }
+    exports.ContextConsumer = ContextConsumer;
+    exports.ContextProvider = ContextProvider;
+    exports.Element = Element1;
+    exports.ForwardRef = ForwardRef;
+    exports.Fragment = Fragment;
+    exports.Lazy = Lazy;
+    exports.Memo = Memo;
+    exports.Portal = Portal;
+    exports.Profiler = Profiler;
+    exports.StrictMode = StrictMode;
+    exports.Suspense = Suspense;
+    exports.SuspenseList = SuspenseList;
+    exports.isAsyncMode = isAsyncMode;
+    exports.isConcurrentMode = isConcurrentMode;
+    exports.isContextConsumer = isContextConsumer;
+    exports.isContextProvider = isContextProvider;
+    exports.isElement = isElement;
+    exports.isForwardRef = isForwardRef;
+    exports.isFragment = isFragment;
+    exports.isLazy = isLazy;
+    exports.isMemo = isMemo;
+    exports.isPortal = isPortal;
+    exports.isProfiler = isProfiler;
+    exports.isStrictMode = isStrictMode;
+    exports.isSuspense = isSuspense;
+    exports.isSuspenseList = isSuspenseList;
+    exports.isValidElementType = isValidElementType;
+    exports.typeOf = typeOf;
+})();
+
+},{}],"2XZ1a":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "pureFinalPropsSelectorFactory", ()=>pureFinalPropsSelectorFactory
+);
+var _objectWithoutPropertiesLoose = require("@babel/runtime/helpers/esm/objectWithoutPropertiesLoose");
+var _objectWithoutPropertiesLooseDefault = parcelHelpers.interopDefault(_objectWithoutPropertiesLoose);
+var _verifySubselectors = require("./verifySubselectors");
+var _verifySubselectorsDefault = parcelHelpers.interopDefault(_verifySubselectors);
+const _excluded = [
+    "initMapStateToProps",
+    "initMapDispatchToProps",
+    "initMergeProps"
+];
+function pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, { areStatesEqual , areOwnPropsEqual , areStatePropsEqual  }) {
+    let hasRunAtLeastOnce = false;
+    let state;
+    let ownProps;
+    let stateProps;
+    let dispatchProps;
+    let mergedProps;
+    function handleFirstCall(firstState, firstOwnProps) {
+        state = firstState;
+        ownProps = firstOwnProps;
+        stateProps = mapStateToProps(state, ownProps);
+        dispatchProps = mapDispatchToProps(dispatch, ownProps);
+        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        hasRunAtLeastOnce = true;
+        return mergedProps;
+    }
+    function handleNewPropsAndNewState() {
+        stateProps = mapStateToProps(state, ownProps);
+        if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
+        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        return mergedProps;
+    }
+    function handleNewProps() {
+        if (mapStateToProps.dependsOnOwnProps) stateProps = mapStateToProps(state, ownProps);
+        if (mapDispatchToProps.dependsOnOwnProps) dispatchProps = mapDispatchToProps(dispatch, ownProps);
+        mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        return mergedProps;
+    }
+    function handleNewState() {
+        const nextStateProps = mapStateToProps(state, ownProps);
+        const statePropsChanged = !areStatePropsEqual(nextStateProps, stateProps);
+        stateProps = nextStateProps;
+        if (statePropsChanged) mergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+        return mergedProps;
+    }
+    function handleSubsequentCalls(nextState, nextOwnProps) {
+        const propsChanged = !areOwnPropsEqual(nextOwnProps, ownProps);
+        const stateChanged = !areStatesEqual(nextState, state);
+        state = nextState;
+        ownProps = nextOwnProps;
+        if (propsChanged && stateChanged) return handleNewPropsAndNewState();
+        if (propsChanged) return handleNewProps();
+        if (stateChanged) return handleNewState();
+        return mergedProps;
+    }
+    return function pureFinalPropsSelector(nextState, nextOwnProps) {
+        return hasRunAtLeastOnce ? handleSubsequentCalls(nextState, nextOwnProps) : handleFirstCall(nextState, nextOwnProps);
+    };
+}
+function finalPropsSelectorFactory(dispatch, _ref) {
+    let { initMapStateToProps , initMapDispatchToProps , initMergeProps  } = _ref, options = _objectWithoutPropertiesLooseDefault.default(_ref, _excluded);
+    const mapStateToProps = initMapStateToProps(dispatch, options);
+    const mapDispatchToProps = initMapDispatchToProps(dispatch, options);
+    const mergeProps = initMergeProps(dispatch, options);
+    _verifySubselectorsDefault.default(mapStateToProps, mapDispatchToProps, mergeProps);
+    return pureFinalPropsSelectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
+}
+exports.default = finalPropsSelectorFactory;
+
+},{"@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"3Rubg","./verifySubselectors":"lInRo","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"lInRo":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _warning = require("../utils/warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+function verify(selector, methodName) {
+    if (!selector) throw new Error(`Unexpected value for ${methodName} in connect.`);
+    else if (methodName === 'mapStateToProps' || methodName === 'mapDispatchToProps') {
+        if (!Object.prototype.hasOwnProperty.call(selector, 'dependsOnOwnProps')) _warningDefault.default(`The selector for ${methodName} of connect did not specify a value for dependsOnOwnProps.`);
     }
 }
-/**
- * Helper function for determining whether target object is an array
- *
- * @param target the object under test
- * @return {Boolean} true if array, false otherwise
- */ function isArray(target) {
-    return Object.prototype.toString.apply(target) === '[object Array]';
+function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps) {
+    verify(mapStateToProps, 'mapStateToProps');
+    verify(mapDispatchToProps, 'mapDispatchToProps');
+    verify(mergeProps, 'mergeProps');
 }
-/**
- * Helper function for determining whether target object is a function
- *
- * @param target the object under test
- * @return {Boolean} true if function, false otherwise
- */ function isFunction(target) {
-    return typeof target === 'function';
+exports.default = verifySubselectors;
+
+},{"../utils/warning":"fl0jd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fl0jd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function warning(message) {
+    /* eslint-disable no-console */ if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(message);
+    /* eslint-enable no-console */ try {
+        // This error was thrown as a convenience so that if you enable
+        // "break on all exceptions" in your console,
+        // it would pause the execution at this line.
+        throw new Error(message);
+    /* eslint-disable no-empty */ } catch (e) {
+    }
+/* eslint-enable no-empty */ }
+exports.default = warning;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"5WOJW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "mapDispatchToPropsFactory", ()=>mapDispatchToPropsFactory
+);
+var _bindActionCreators = require("../utils/bindActionCreators");
+var _bindActionCreatorsDefault = parcelHelpers.interopDefault(_bindActionCreators);
+var _wrapMapToProps = require("./wrapMapToProps");
+var _invalidArgFactory = require("./invalidArgFactory");
+function mapDispatchToPropsFactory(mapDispatchToProps) {
+    return mapDispatchToProps && typeof mapDispatchToProps === 'object' ? _wrapMapToProps.wrapMapToPropsConstant((dispatch)=>_bindActionCreatorsDefault.default(mapDispatchToProps, dispatch)
+    ) : !mapDispatchToProps ? _wrapMapToProps.wrapMapToPropsConstant((dispatch)=>({
+            dispatch
+        })
+    ) : typeof mapDispatchToProps === 'function' ? _wrapMapToProps.wrapMapToPropsFunc(mapDispatchToProps, 'mapDispatchToProps') : _invalidArgFactory.createInvalidArgFactory(mapDispatchToProps, 'mapDispatchToProps');
 }
-module.exports = {
-    isFunction: isFunction,
-    isArray: isArray,
-    each: each
+
+},{"../utils/bindActionCreators":"dTgYQ","./wrapMapToProps":"cK0KG","./invalidArgFactory":"9AF5b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"dTgYQ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function bindActionCreators(actionCreators, dispatch) {
+    const boundActionCreators = {
+    };
+    for(const key in actionCreators){
+        const actionCreator = actionCreators[key];
+        if (typeof actionCreator === 'function') boundActionCreators[key] = (...args)=>dispatch(actionCreator(...args))
+        ;
+    }
+    return boundActionCreators;
+}
+exports.default = bindActionCreators;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"cK0KG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "wrapMapToPropsConstant", ()=>wrapMapToPropsConstant
+) // dependsOnOwnProps is used by createMapToPropsProxy to determine whether to pass props as args
+;
+// to the mapToProps function being wrapped. It is also used by makePurePropsSelector to determine
+// whether mapToProps needs to be invoked when props have changed.
+//
+// A length of one signals that mapToProps does not depend on props from the parent component.
+// A length of zero is assumed to mean mapToProps is getting args via arguments or ...args and
+// therefore not reporting its length accurately..
+// TODO Can this get pulled out so that we can subscribe directly to the store if we don't need ownProps?
+parcelHelpers.export(exports, "getDependsOnOwnProps", ()=>getDependsOnOwnProps
+) // Used by whenMapStateToPropsIsFunction and whenMapDispatchToPropsIsFunction,
+;
+// this function wraps mapToProps in a proxy function which does several things:
+//
+//  * Detects whether the mapToProps function being called depends on props, which
+//    is used by selectorFactory to decide if it should reinvoke on props changes.
+//
+//  * On first call, handles mapToProps if returns another function, and treats that
+//    new function as the true mapToProps for subsequent calls.
+//
+//  * On first call, verifies the first result is a plain object, in order to warn
+//    the developer that their mapToProps function is not returning a valid result.
+//
+parcelHelpers.export(exports, "wrapMapToPropsFunc", ()=>wrapMapToPropsFunc
+);
+var _verifyPlainObject = require("../utils/verifyPlainObject");
+var _verifyPlainObjectDefault = parcelHelpers.interopDefault(_verifyPlainObject);
+function wrapMapToPropsConstant(//  It seems that the dispatch argument
+//  could be a dispatch function in some cases (ex: whenMapDispatchToPropsIsMissing)
+//  and a state object in some others (ex: whenMapStateToPropsIsMissing)
+// eslint-disable-next-line no-unused-vars
+getConstant) {
+    return function initConstantSelector(dispatch) {
+        const constant = getConstant(dispatch);
+        function constantSelector() {
+            return constant;
+        }
+        constantSelector.dependsOnOwnProps = false;
+        return constantSelector;
+    };
+}
+function getDependsOnOwnProps(mapToProps) {
+    return mapToProps.dependsOnOwnProps ? Boolean(mapToProps.dependsOnOwnProps) : mapToProps.length !== 1;
+}
+function wrapMapToPropsFunc(mapToProps, methodName) {
+    return function initProxySelector(dispatch, { displayName  }) {
+        const proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
+            return proxy.dependsOnOwnProps ? proxy.mapToProps(stateOrDispatch, ownProps) : proxy.mapToProps(stateOrDispatch, undefined);
+        }; // allow detectFactoryAndVerify to get ownProps
+        proxy.dependsOnOwnProps = true;
+        proxy.mapToProps = function detectFactoryAndVerify(stateOrDispatch, ownProps) {
+            proxy.mapToProps = mapToProps;
+            proxy.dependsOnOwnProps = getDependsOnOwnProps(mapToProps);
+            let props = proxy(stateOrDispatch, ownProps);
+            if (typeof props === 'function') {
+                proxy.mapToProps = props;
+                proxy.dependsOnOwnProps = getDependsOnOwnProps(props);
+                props = proxy(stateOrDispatch, ownProps);
+            }
+            _verifyPlainObjectDefault.default(props, displayName, methodName);
+            return props;
+        };
+        return proxy;
+    };
+}
+
+},{"../utils/verifyPlainObject":"8txK0","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"8txK0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _isPlainObject = require("./isPlainObject");
+var _isPlainObjectDefault = parcelHelpers.interopDefault(_isPlainObject);
+var _warning = require("./warning");
+var _warningDefault = parcelHelpers.interopDefault(_warning);
+function verifyPlainObject(value, displayName, methodName) {
+    if (!_isPlainObjectDefault.default(value)) _warningDefault.default(`${methodName}() in ${displayName} must return a plain object. Instead received ${value}.`);
+}
+exports.default = verifyPlainObject;
+
+},{"./isPlainObject":"awooc","./warning":"fl0jd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"awooc":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function isPlainObject(obj) {
+    if (typeof obj !== 'object' || obj === null) return false;
+    let proto = Object.getPrototypeOf(obj);
+    if (proto === null) return true;
+    let baseProto = proto;
+    while(Object.getPrototypeOf(baseProto) !== null)baseProto = Object.getPrototypeOf(baseProto);
+    return proto === baseProto;
+}
+exports.default = isPlainObject;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"9AF5b":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createInvalidArgFactory", ()=>createInvalidArgFactory
+);
+function createInvalidArgFactory(arg, name) {
+    return (dispatch, options)=>{
+        throw new Error(`Invalid value of type ${typeof arg} for ${name} argument when connecting component ${options.wrappedComponentName}.`);
+    };
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fi6QF":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "mapStateToPropsFactory", ()=>mapStateToPropsFactory
+);
+var _wrapMapToProps = require("./wrapMapToProps");
+var _invalidArgFactory = require("./invalidArgFactory");
+function mapStateToPropsFactory(mapStateToProps) {
+    return !mapStateToProps ? _wrapMapToProps.wrapMapToPropsConstant(()=>({
+        })
+    ) : typeof mapStateToProps === 'function' ? _wrapMapToProps.wrapMapToPropsFunc(mapStateToProps, 'mapStateToProps') : _invalidArgFactory.createInvalidArgFactory(mapStateToProps, 'mapStateToProps');
+}
+
+},{"./wrapMapToProps":"cK0KG","./invalidArgFactory":"9AF5b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"j48TE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "defaultMergeProps", ()=>defaultMergeProps
+);
+parcelHelpers.export(exports, "wrapMergePropsFunc", ()=>wrapMergePropsFunc
+);
+parcelHelpers.export(exports, "mergePropsFactory", ()=>mergePropsFactory
+);
+var _extends = require("@babel/runtime/helpers/esm/extends");
+var _extendsDefault = parcelHelpers.interopDefault(_extends);
+var _verifyPlainObject = require("../utils/verifyPlainObject");
+var _verifyPlainObjectDefault = parcelHelpers.interopDefault(_verifyPlainObject);
+var _invalidArgFactory = require("./invalidArgFactory");
+function defaultMergeProps(stateProps, dispatchProps, ownProps) {
+    // @ts-ignore
+    return _extendsDefault.default({
+    }, ownProps, stateProps, dispatchProps);
+}
+function wrapMergePropsFunc(mergeProps) {
+    return function initMergePropsProxy(dispatch, { displayName , areMergedPropsEqual  }) {
+        let hasRunOnce = false;
+        let mergedProps;
+        return function mergePropsProxy(stateProps, dispatchProps, ownProps) {
+            const nextMergedProps = mergeProps(stateProps, dispatchProps, ownProps);
+            if (hasRunOnce) {
+                if (!areMergedPropsEqual(nextMergedProps, mergedProps)) mergedProps = nextMergedProps;
+            } else {
+                hasRunOnce = true;
+                mergedProps = nextMergedProps;
+                _verifyPlainObjectDefault.default(mergedProps, displayName, 'mergeProps');
+            }
+            return mergedProps;
+        };
+    };
+}
+function mergePropsFactory(mergeProps) {
+    return !mergeProps ? ()=>defaultMergeProps
+     : typeof mergeProps === 'function' ? wrapMergePropsFunc(mergeProps) : _invalidArgFactory.createInvalidArgFactory(mergeProps, 'mergeProps');
+}
+
+},{"@babel/runtime/helpers/esm/extends":"bKAu6","../utils/verifyPlainObject":"8txK0","./invalidArgFactory":"9AF5b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"6rtcC":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "createSubscription", ()=>createSubscription
+);
+var _batch = require("./batch"); // encapsulates the subscription logic for connecting a component to the redux store, as
+// well as nesting subscriptions of descendant components, so that we can ensure the
+// ancestor components re-render before descendants
+function createListenerCollection() {
+    const batch = _batch.getBatch();
+    let first = null;
+    let last = null;
+    return {
+        clear () {
+            first = null;
+            last = null;
+        },
+        notify () {
+            batch(()=>{
+                let listener = first;
+                while(listener){
+                    listener.callback();
+                    listener = listener.next;
+                }
+            });
+        },
+        get () {
+            let listeners = [];
+            let listener = first;
+            while(listener){
+                listeners.push(listener);
+                listener = listener.next;
+            }
+            return listeners;
+        },
+        subscribe (callback) {
+            let isSubscribed = true;
+            let listener = last = {
+                callback,
+                next: null,
+                prev: last
+            };
+            if (listener.prev) listener.prev.next = listener;
+            else first = listener;
+            return function unsubscribe() {
+                if (!isSubscribed || first === null) return;
+                isSubscribed = false;
+                if (listener.next) listener.next.prev = listener.prev;
+                else last = listener.prev;
+                if (listener.prev) listener.prev.next = listener.next;
+                else first = listener.next;
+            };
+        }
+    };
+}
+const nullListeners = {
+    notify () {
+    },
+    get: ()=>[]
+};
+function createSubscription(store, parentSub) {
+    let unsubscribe;
+    let listeners = nullListeners;
+    function addNestedSub(listener) {
+        trySubscribe();
+        return listeners.subscribe(listener);
+    }
+    function notifyNestedSubs() {
+        listeners.notify();
+    }
+    function handleChangeWrapper() {
+        if (subscription.onStateChange) subscription.onStateChange();
+    }
+    function isSubscribed() {
+        return Boolean(unsubscribe);
+    }
+    function trySubscribe() {
+        if (!unsubscribe) {
+            unsubscribe = parentSub ? parentSub.addNestedSub(handleChangeWrapper) : store.subscribe(handleChangeWrapper);
+            listeners = createListenerCollection();
+        }
+    }
+    function tryUnsubscribe() {
+        if (unsubscribe) {
+            unsubscribe();
+            unsubscribe = undefined;
+            listeners.clear();
+            listeners = nullListeners;
+        }
+    }
+    const subscription = {
+        addNestedSub,
+        notifyNestedSubs,
+        handleChangeWrapper,
+        isSubscribed,
+        trySubscribe,
+        tryUnsubscribe,
+        getListeners: ()=>listeners
+    };
+    return subscription;
+}
+
+},{"./batch":"2g3ZY","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2TWoQ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "canUseDOM", ()=>canUseDOM
+);
+parcelHelpers.export(exports, "useIsomorphicLayoutEffect", ()=>useIsomorphicLayoutEffect
+);
+var _react = require("react"); // React currently throws a warning when using useLayoutEffect on the server.
+const canUseDOM = !!(typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined');
+const useIsomorphicLayoutEffect = canUseDOM ? _react.useLayoutEffect : _react.useEffect;
+
+},{"react":"6TuXu","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"leLul":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function is(x, y) {
+    if (x === y) return x !== 0 || y !== 0 || 1 / x === 1 / y;
+    else return x !== x && y !== y;
+}
+function shallowEqual(objA, objB) {
+    if (is(objA, objB)) return true;
+    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) return false;
+    const keysA = Object.keys(objA);
+    const keysB = Object.keys(objB);
+    if (keysA.length !== keysB.length) return false;
+    for(let i = 0; i < keysA.length; i++){
+        if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) return false;
+    }
+    return true;
+}
+exports.default = shallowEqual;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"amFLd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Provider", ()=>_providerDefault.default
+);
+parcelHelpers.export(exports, "ReactReduxContext", ()=>_context.ReactReduxContext
+);
+parcelHelpers.export(exports, "connect", ()=>_connectDefault.default
+);
+parcelHelpers.export(exports, "useDispatch", ()=>_useDispatch.useDispatch
+);
+parcelHelpers.export(exports, "createDispatchHook", ()=>_useDispatch.createDispatchHook
+);
+parcelHelpers.export(exports, "useSelector", ()=>_useSelector.useSelector
+);
+parcelHelpers.export(exports, "createSelectorHook", ()=>_useSelector.createSelectorHook
+);
+parcelHelpers.export(exports, "useStore", ()=>_useStore.useStore
+);
+parcelHelpers.export(exports, "createStoreHook", ()=>_useStore.createStoreHook
+);
+parcelHelpers.export(exports, "shallowEqual", ()=>_shallowEqualDefault.default
+);
+var _provider = require("./components/Provider");
+var _providerDefault = parcelHelpers.interopDefault(_provider);
+var _connect = require("./components/connect");
+var _connectDefault = parcelHelpers.interopDefault(_connect);
+var _context = require("./components/Context");
+var _useDispatch = require("./hooks/useDispatch");
+var _useSelector = require("./hooks/useSelector");
+var _useStore = require("./hooks/useStore");
+var _shallowEqual = require("./utils/shallowEqual");
+var _shallowEqualDefault = parcelHelpers.interopDefault(_shallowEqual);
+var _types = require("./types");
+parcelHelpers.exportAll(_types, exports);
+
+},{"./components/Provider":"efEZ1","./components/connect":"gr7nQ","./components/Context":"gT1Jg","./hooks/useDispatch":"2CDvn","./hooks/useSelector":"27k1i","./hooks/useStore":"fDPAT","./utils/shallowEqual":"leLul","./types":"jOi9b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"efEZ1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _context = require("./Context");
+var _subscription = require("../utils/Subscription");
+var _useIsomorphicLayoutEffect = require("../utils/useIsomorphicLayoutEffect");
+function Provider({ store , context , children , serverState  }) {
+    const contextValue = _react.useMemo(()=>{
+        const subscription = _subscription.createSubscription(store);
+        return {
+            store,
+            subscription,
+            getServerState: serverState ? ()=>serverState
+             : undefined
+        };
+    }, [
+        store,
+        serverState
+    ]);
+    const previousState = _react.useMemo(()=>store.getState()
+    , [
+        store
+    ]);
+    _useIsomorphicLayoutEffect.useIsomorphicLayoutEffect(()=>{
+        const { subscription  } = contextValue;
+        subscription.onStateChange = subscription.notifyNestedSubs;
+        subscription.trySubscribe();
+        if (previousState !== store.getState()) subscription.notifyNestedSubs();
+        return ()=>{
+            subscription.tryUnsubscribe();
+            subscription.onStateChange = undefined;
+        };
+    }, [
+        contextValue,
+        previousState
+    ]);
+    const Context = context || _context.ReactReduxContext; // @ts-ignore 'AnyAction' is assignable to the constraint of type 'A', but 'A' could be instantiated with a different subtype
+    return(/*#__PURE__*/ _reactDefault.default.createElement(Context.Provider, {
+        value: contextValue
+    }, children));
+}
+exports.default = Provider;
+
+},{"react":"6TuXu","./Context":"gT1Jg","../utils/Subscription":"6rtcC","../utils/useIsomorphicLayoutEffect":"2TWoQ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"2CDvn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Hook factory, which creates a `useDispatch` hook bound to a given context.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useDispatch` hook bound to the specified context.
+ */ parcelHelpers.export(exports, "createDispatchHook", ()=>createDispatchHook
+);
+parcelHelpers.export(exports, "useDispatch", ()=>useDispatch
+);
+var _context = require("../components/Context");
+var _useStore = require("./useStore");
+function createDispatchHook(context = _context.ReactReduxContext) {
+    const useStore = context === _context.ReactReduxContext ? _useStore.useStore : _useStore.createStoreHook(context);
+    return function useDispatch() {
+        const store = useStore(); // @ts-ignore
+        return store.dispatch;
+    };
+}
+const useDispatch = /*#__PURE__*/ createDispatchHook();
+
+},{"../components/Context":"gT1Jg","./useStore":"fDPAT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"fDPAT":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Hook factory, which creates a `useStore` hook bound to a given context.
+ *
+ * @param {React.Context} [context=ReactReduxContext] Context passed to your `<Provider>`.
+ * @returns {Function} A `useStore` hook bound to the specified context.
+ */ parcelHelpers.export(exports, "createStoreHook", ()=>createStoreHook
+);
+parcelHelpers.export(exports, "useStore", ()=>useStore
+);
+var _react = require("react");
+var _context = require("../components/Context");
+var _useReduxContext = require("./useReduxContext");
+function createStoreHook(context = _context.ReactReduxContext) {
+    const useReduxContext = context === _context.ReactReduxContext ? _useReduxContext.useReduxContext : ()=>_react.useContext(context)
+    ;
+    return function useStore() {
+        const { store  } = useReduxContext(); // @ts-ignore
+        return store;
+    };
+}
+const useStore = /*#__PURE__*/ createStoreHook();
+
+},{"react":"6TuXu","../components/Context":"gT1Jg","./useReduxContext":"516XC","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"jOi9b":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"1Ttfj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
+);
+parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
+);
+parcelHelpers.export(exports, "SET_FAVORITE", ()=>SET_FAVORITE
+);
+parcelHelpers.export(exports, "TOGGLE_FAVORITE", ()=>TOGGLE_FAVORITE
+);
+parcelHelpers.export(exports, "SET_USER", ()=>SET_USER
+);
+parcelHelpers.export(exports, "setMovies", ()=>setMovies
+);
+parcelHelpers.export(exports, "setFilter", ()=>setFilter
+);
+parcelHelpers.export(exports, "setFavorites", ()=>setFavorites
+);
+parcelHelpers.export(exports, "toggleFavorite", ()=>toggleFavorite
+);
+parcelHelpers.export(exports, "setUser", ()=>setUser
+);
+const SET_MOVIES = 'SET_MOVIES';
+const SET_FILTER = 'SET_FILTER';
+const SET_FAVORITE = 'SET_FAVORITE';
+const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
+const SET_USER = 'SET_USER';
+function setMovies(value) {
+    return {
+        type: SET_MOVIES,
+        value
+    };
+}
+function setFilter(value) {
+    return {
+        type: SET_FILTER,
+        value
+    };
+}
+function setFavorites(value) {
+    return {
+        type: SET_FAVORITE,
+        value
+    };
+}
+function toggleFavorite(movieId) {
+    return {
+        type: TOGGLE_FAVORITE,
+        movieId
+    };
+}
+function setUser(user) {
+    return {
+        type: SET_USER,
+        user
+    };
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"hWS1b":[function() {},{}],"8WCoL":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$5f0a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$5f0a.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "GenreView", ()=>GenreView
+);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _movieCard = require("../movie-card/movie-card");
+var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
+var _button = require("react-bootstrap/Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _col = require("react-bootstrap/Col");
+var _colDefault = parcelHelpers.interopDefault(_col);
+var _row = require("react-bootstrap/Row");
+var _rowDefault = parcelHelpers.interopDefault(_row);
+var _reactRouterDom = require("react-router-dom");
+var _genreViewScss = require("./genre-view.scss");
+class GenreView extends _reactDefault.default.Component {
+    //resetting window to top for component
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+    render() {
+        const { genre , onBackClick , genreMovies , favorites  } = this.props;
+        //generator for movies of the same genre - finds them in the full list of movies
+        let genreCards = genreMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
+                md: 3,
+                __source: {
+                    fileName: "src/components/genre-view/genre-view.jsx",
+                    lineNumber: 25
+                },
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+                    to: `/movies/${m._id}`,
+                    className: "movie-opt",
+                    __source: {
+                        fileName: "src/components/genre-view/genre-view.jsx",
+                        lineNumber: 26
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                        movie: m,
+                        __source: {
+                            fileName: "src/components/genre-view/genre-view.jsx",
+                            lineNumber: 27
+                        },
+                        __self: this
+                    })
+                })
+            }, m._id)
+        );
+        return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
+            className: "genre-wrapper",
+            __source: {
+                fileName: "src/components/genre-view/genre-view.jsx",
+                lineNumber: 33
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "movie-view tp-movie",
+                    __source: {
+                        fileName: "src/components/genre-view/genre-view.jsx",
+                        lineNumber: 34
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "movie-genre mov-section",
+                            __source: {
+                                fileName: "src/components/genre-view/genre-view.jsx",
+                                lineNumber: 35
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                    __source: {
+                                        fileName: "src/components/genre-view/genre-view.jsx",
+                                        lineNumber: 36
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
+                                        __source: {
+                                            fileName: "src/components/genre-view/genre-view.jsx",
+                                            lineNumber: 37
+                                        },
+                                        __self: this,
+                                        children: genre.Name
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx("br", {
+                                    __source: {
+                                        fileName: "src/components/genre-view/genre-view.jsx",
+                                        lineNumber: 39
+                                    },
+                                    __self: this
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                    __source: {
+                                        fileName: "src/components/genre-view/genre-view.jsx",
+                                        lineNumber: 40
+                                    },
+                                    __self: this,
+                                    children: genre.Description
+                                })
+                            ]
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
+                            variant: "secondary",
+                            onClick: ()=>{
+                                onBackClick();
+                            },
+                            __source: {
+                                fileName: "src/components/genre-view/genre-view.jsx",
+                                lineNumber: 42
+                            },
+                            __self: this,
+                            children: "Back"
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "movie-view bt-movie",
+                    __source: {
+                        fileName: "src/components/genre-view/genre-view.jsx",
+                        lineNumber: 51
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "cards-header",
+                            __source: {
+                                fileName: "src/components/genre-view/genre-view.jsx",
+                                lineNumber: 52
+                            },
+                            __self: this,
+                            children: [
+                                genre.Name,
+                                " (",
+                                genreMovies.length,
+                                "):"
+                            ]
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
+                            __source: {
+                                fileName: "src/components/genre-view/genre-view.jsx",
+                                lineNumber: 56
+                            },
+                            __self: this,
+                            children: genreCards
+                        })
+                    ]
+                })
+            ]
+        }));
+    }
+}
+GenreView.propTypes = {
+    genre: _propTypesDefault.default.shape({
+        name: _propTypesDefault.default.string.isRequired,
+        description: _propTypesDefault.default.string.isRequired
+    }).isRequired,
+    onBackClick: _propTypesDefault.default.func.isRequired
 };
 
-},{}],"3nTPC":[function() {},{}],"6cDoX":[function() {},{}],"h2YVd":[function(require,module,exports) {
+  $parcel$ReactRefreshHelpers$5f0a.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../movie-card/movie-card":"6EiBJ","react-bootstrap/Button":"9CzHT","react-bootstrap/Col":"fbam0","react-bootstrap/Row":"c0x1x","./genre-view.scss":"3BqnD","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","prop-types":"1tgq3","react-router-dom":"cpyQW"}],"3BqnD":[function() {},{}],"2E7Aw":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$58c6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$58c6.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ProfileView", ()=>ProfileView
+);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _reactRedux = require("react-redux");
+var _reactRouterDom = require("react-router-dom");
+var _movieCard = require("../movie-card/movie-card");
+var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _profileViewScss = require("./profile-view.scss");
+var _reactBootstrap = require("react-bootstrap");
+class ProfileView extends _reactDefault.default.Component {
+    constructor(){
+        super();
+        this.state = {
+            username: '',
+            password: '',
+            email: '',
+            birthday: '',
+            usernameErr: '',
+            passwordErr: '',
+            emailErr: '',
+            editAccount: false,
+            deleteConfirm: false
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    componentDidMount() {
+        const accessToken = localStorage.getItem('token');
+        this.getUser(accessToken);
+    }
+    //asking database for pofile information
+    getUser(token) {
+        let user = localStorage.getItem('user');
+        _axiosDefault.default.get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            this.setState({
+                username: response.data.Username,
+                email: response.data.Email,
+                birthday: response.data.Birthday,
+                favoriteMovies: response.data.FavoriteMovies
+            });
+        }).catch((e)=>console.log(e)
+        );
+    }
+    //logging user out
+    onLoggedOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.setState({
+            user: null
+        });
+        window.open('/', '_self');
+    }
+    //formatting date to MM/DD/YYY for display on form
+    getFormattedDate(date) {
+        return `${date.substr(5, 2)}/${date.substr(8, 2)}/${date.substr(0, 4)}`;
+    }
+    //identifting if email address is valid before updating
+    validateEmail(email) {
+        return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    }
+    //validating new user account info to clean up inputes
+    validate() {
+        let isReq = true;
+        if (!this.state.username) {
+            this.setErr('usernameErr', 'Username Required');
+            isReq = false;
+        } else if (this.state.username.length < 2) {
+            this.setErr('usernameErr', 'Username must be more than 2 characters');
+            isReq = false;
+        } else this.setErr('usernameErr', '');
+        if (this.state.password && this.state.password.length < 6) {
+            this.setErr('passwordErr', 'Password must be at least 6 characters');
+            isReq = false;
+        } else this.setErr('passwordErr', '');
+        if (this.state.email && !this.validateEmail(this.state.email)) {
+            this.setErr('emailErr', ' Must use a valid Email Address');
+            isReq = false;
+        } else this.setErr('emailErr', '');
+        return isReq;
+    }
+    //takes users favorite movie ids and find them in the full set of movies
+    //for display
+    listFavorites = (favorites)=>{
+        let favoriteCards = this.props.movies.filter((m)=>favorites.includes(m._id)
+        ).map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                md: 4,
+                __source: {
+                    fileName: "src/components/profile-view/profile-view.jsx",
+                    lineNumber: 112
+                },
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
+                    to: `/movies/${m._id}`,
+                    className: "movie-opt",
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 113
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                        movie: m,
+                        __source: {
+                            fileName: "src/components/profile-view/profile-view.jsx",
+                            lineNumber: 114
+                        },
+                        __self: this
+                    })
+                })
+            }, m._id)
+        );
+        return favoriteCards;
+    };
+    //toggling delete state to display the modal to confim
+    deleteConfirmSetState = ()=>{
+        this.setState({
+            deleteConfirm: !this.state.deleteConfirm
+        });
+    };
+    //shows a modal to confirm account deletion
+    deleteConfirm = ()=>{
+        return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Modal, {
+            show: "true",
+            size: "lg",
+            "aria-labelledby": "contained-modal-title-vcenter",
+            centered: true,
+            __source: {
+                fileName: "src/components/profile-view/profile-view.jsx",
+                lineNumber: 131
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Modal.Header, {
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 137
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Modal.Title, {
+                        id: "contained-modal-title-vcenter",
+                        __source: {
+                            fileName: "src/components/profile-view/profile-view.jsx",
+                            lineNumber: 138
+                        },
+                        __self: this,
+                        children: "Confirm Deletion"
+                    })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Modal.Body, {
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 142
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx("p", {
+                        __source: {
+                            fileName: "src/components/profile-view/profile-view.jsx",
+                            lineNumber: 143
+                        },
+                        __self: this,
+                        children: "Are you sure you want to delete? All data will be permanently lost..."
+                    })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Modal.Footer, {
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 148
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                            variant: "secondary",
+                            onClick: this.deleteConfirmSetState,
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 149
+                            },
+                            __self: this,
+                            children: "Cancel"
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                            variant: "danger",
+                            onClick: this.handleDeleteProfile,
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 152
+                            },
+                            __self: this,
+                            children: "DELETE"
+                        })
+                    ]
+                })
+            ]
+        }));
+    };
+    //methods for updating user info state during editing
+    setUsername(value) {
+        this.setState({
+            username: value
+        });
+    }
+    setPassword(value) {
+        this.setState({
+            password: value
+        });
+    }
+    setEmail(value) {
+        this.setState({
+            email: value
+        });
+    }
+    setBirthday(value) {
+        this.setState({
+            birthday: value
+        });
+    }
+    //end user state updates
+    //trying to set validation errors
+    setErr(typeErr, value) {
+        this.setState({
+            ...this.state,
+            [typeErr]: value
+        });
+    }
+    //allowing user to toggle editing their user account info
+    handleEdit = ()=>{
+        console.log(this.state.editAccount);
+        if (this.state.editAccount) this.setState({
+            editAccount: false
+        });
+        else this.setState({
+            editAccount: true
+        });
+    };
+    //posting user updates to database
+    handleSubmit = (e)=>{
+        e.preventDefault();
+        const userName = localStorage.getItem('user');
+        let token = localStorage.getItem('token');
+        const isReq = this.validate();
+        console.log(isReq);
+        if (isReq) _axiosDefault.default.put(`https://whatdoiwatch.herokuapp.com/users/${userName}`, {
+            Username: this.state.username,
+            Password: this.state.password,
+            Email: this.state.email,
+            Birthday: this.state.birthday
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            this.setState({
+                username: response.data.Username,
+                password: response.data.Password,
+                email: response.data.Email,
+                birthday: response.data.Birthday
+            });
+            localStorage.setItem('user', this.state.username);
+            alert('profile updated successfully!');
+            window.open(`/users/${this.state.username}`, '_self');
+        });
+    };
+    //sending a delete request for user
+    handleDeleteProfile() {
+        const userName = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        _axiosDefault.default.delete(`https://whatdoiwatch.herokuapp.com/users/${userName}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            console.log(response);
+            alert('profile deleted');
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            window.open('/', '_self');
+        }).catch((e)=>console.log(e)
+        );
+    }
+    render() {
+        const { movies , favorites  } = this.props;
+        const { username , email , birthday , usernameErr , passwordErr , emailErr  } = this.state;
+        return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
+            className: "profile-wrapper",
+            __source: {
+                fileName: "src/components/profile-view/profile-view.jsx",
+                lineNumber: 266
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "movie-view tp-movie",
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 267
+                    },
+                    __self: this,
+                    children: [
+                        this.state.deleteConfirm && this.deleteConfirm(),
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "user-info",
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 270
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx("h4", {
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 271
+                                    },
+                                    __self: this,
+                                    children: "User Information"
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs("p", {
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 272
+                                    },
+                                    __self: this,
+                                    children: [
+                                        "Username: ",
+                                        username
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs("p", {
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 273
+                                    },
+                                    __self: this,
+                                    children: [
+                                        "Email: ",
+                                        email
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs("p", {
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 274
+                                    },
+                                    __self: this,
+                                    children: [
+                                        "Birthday: ",
+                                        this.getFormattedDate(birthday)
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 275
+                                    },
+                                    __self: this,
+                                    children: [
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                                            md: 6,
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 276
+                                            },
+                                            __self: this,
+                                            children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                                                className: "update-info-button",
+                                                variant: "primary",
+                                                type: "submit",
+                                                onClick: this.handleEdit,
+                                                __source: {
+                                                    fileName: "src/components/profile-view/profile-view.jsx",
+                                                    lineNumber: 277
+                                                },
+                                                __self: this,
+                                                children: this.state.editAccount ? 'Close' : 'Edit Account'
+                                            })
+                                        }),
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                                            md: 6,
+                                            className: "text-right",
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 287
+                                            },
+                                            __self: this,
+                                            children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                                                className: "delete-account-button",
+                                                variant: "danger",
+                                                type: "submit",
+                                                onClick: this.deleteConfirmSetState,
+                                                __source: {
+                                                    fileName: "src/components/profile-view/profile-view.jsx",
+                                                    lineNumber: 288
+                                                },
+                                                __self: this,
+                                                children: "Delete Account"
+                                            })
+                                        })
+                                    ]
+                                })
+                            ]
+                        }),
+                        this.state.editAccount && /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form, {
+                            className: "d-flex justify-content-md-center flex-column align-items-center",
+                            onSubmit: (e)=>this.handleSubmit(e, this.Username, this.Password, this.Email, this.Birthday)
+                            ,
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 301
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                    className: "register-title",
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 313
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx("h1", {
+                                        __source: {
+                                            fileName: "src/components/profile-view/profile-view.jsx",
+                                            lineNumber: 314
+                                        },
+                                        __self: this,
+                                        children: "Update Your Account"
+                                    })
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
+                                    controlId: "regUsername",
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 316
+                                    },
+                                    __self: this,
+                                    children: [
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 317
+                                            },
+                                            __self: this,
+                                            children: "Username:"
+                                        }),
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                            type: "text",
+                                            name: "Username",
+                                            onChange: (e)=>this.setUsername(e.target.value)
+                                            ,
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 318
+                                            },
+                                            __self: this
+                                        }),
+                                        usernameErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 323
+                                            },
+                                            __self: this,
+                                            children: usernameErr
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
+                                    controlId: "regPassword",
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 325
+                                    },
+                                    __self: this,
+                                    children: [
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 326
+                                            },
+                                            __self: this,
+                                            children: "Password:"
+                                        }),
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                            type: "password",
+                                            name: "Password",
+                                            onChange: (e)=>this.setPassword(e.target.value)
+                                            ,
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 327
+                                            },
+                                            __self: this
+                                        }),
+                                        passwordErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 332
+                                            },
+                                            __self: this,
+                                            children: passwordErr
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
+                                    controlId: "regEmail",
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 334
+                                    },
+                                    __self: this,
+                                    children: [
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 335
+                                            },
+                                            __self: this,
+                                            children: "Email:"
+                                        }),
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                            type: "email",
+                                            name: "Email",
+                                            onChange: (e)=>this.setEmail(e.target.value)
+                                            ,
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 336
+                                            },
+                                            __self: this
+                                        }),
+                                        emailErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 341
+                                            },
+                                            __self: this,
+                                            children: emailErr
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
+                                    controlId: "regBirthday",
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 343
+                                    },
+                                    __self: this,
+                                    children: [
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 344
+                                            },
+                                            __self: this,
+                                            children: "Birthday:"
+                                        }),
+                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
+                                            type: "date",
+                                            name: "Birthday",
+                                            onChange: (e)=>this.setBirthday(e.target.value)
+                                            ,
+                                            __source: {
+                                                fileName: "src/components/profile-view/profile-view.jsx",
+                                                lineNumber: 345
+                                            },
+                                            __self: this
+                                        })
+                                    ]
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
+                                    className: "register-button",
+                                    variant: "primary",
+                                    type: "submit",
+                                    onClick: this.handleSubmit,
+                                    __source: {
+                                        fileName: "src/components/profile-view/profile-view.jsx",
+                                        lineNumber: 351
+                                    },
+                                    __self: this,
+                                    children: "Submit Changes"
+                                })
+                            ]
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "movie-view bt-movie",
+                    __source: {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 363
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "cards-header",
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 364
+                            },
+                            __self: this,
+                            children: [
+                                this.state.username,
+                                "'s Favorites:"
+                            ]
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
+                            __source: {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 365
+                            },
+                            __self: this,
+                            children: this.listFavorites(this.props.favorites)
+                        })
+                    ]
+                })
+            ]
+        }));
+    }
+}
+let mapStateToProps = (state)=>{
+    return {
+        movies: state.movies,
+        favorites: state.favorites
+    };
+};
+exports.default = _reactRedux.connect(mapStateToProps)(ProfileView);
+ProfileView.propTypes = {
+    movies: _propTypesDefault.default.arrayOf(_propTypesDefault.default.shape({
+        title: _propTypesDefault.default.string.isRequired,
+        description: _propTypesDefault.default.string.isRequired,
+        imagePath: _propTypesDefault.default.string.isRequired
+    })).isRequired
+};
+
+  $parcel$ReactRefreshHelpers$58c6.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../movie-card/movie-card":"6EiBJ","axios":"iYoWk","./profile-view.scss":"gb0ga","react-bootstrap":"h2YVd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","prop-types":"1tgq3","react-redux":"2L0if","react-router-dom":"cpyQW"}],"gb0ga":[function() {},{}],"h2YVd":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Accordion", ()=>_accordionDefault.default
@@ -51591,1321 +47623,7 @@ Tooltip.defaultProps = defaultProps;
 Tooltip.displayName = 'Tooltip';
 exports.default = Tooltip;
 
-},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./helpers":"S1Bw1","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"ikZdr":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$3741 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$3741.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-//showing details once MovieCard is clicked
-parcelHelpers.export(exports, "MovieView", ()=>MovieView
-);
-var _jsxRuntime = require("react/jsx-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactRouterDom = require("react-router-dom");
-var _propTypes = require("prop-types");
-var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
-var _movieViewScss = require("./movie-view.scss");
-class MovieView extends _reactDefault.default.Component {
-    //resetting window to top for component
-    componentDidMount() {
-        window.scrollTo(0, 0);
-    }
-    render() {
-        const { movie , onBackClick  } = this.props;
-        return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
-            className: "movie-view",
-            __source: {
-                fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 22
-            },
-            __self: this,
-            children: /*#__PURE__*/ _jsxRuntime.jsxs(_rowDefault.default, {
-                className: "details-wrapper",
-                __source: {
-                    fileName: "src/components/movie-view/movie-view.jsx",
-                    lineNumber: 23
-                },
-                __self: this,
-                children: [
-                    /*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
-                        lg: 6,
-                        __source: {
-                            fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 24
-                        },
-                        __self: this,
-                        children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                            className: "movie-poster d-flex",
-                            __source: {
-                                fileName: "src/components/movie-view/movie-view.jsx",
-                                lineNumber: 25
-                            },
-                            __self: this,
-                            children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
-                                src: movie.ImagePath,
-                                crossOrigin: "anonymous",
-                                __source: {
-                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 26
-                                },
-                                __self: this
-                            })
-                        })
-                    }),
-                    /*#__PURE__*/ _jsxRuntime.jsxs(_colDefault.default, {
-                        lg: 6,
-                        className: "d-flex flex-column",
-                        __source: {
-                            fileName: "src/components/movie-view/movie-view.jsx",
-                            lineNumber: 29
-                        },
-                        __self: this,
-                        children: [
-                            /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                                className: "movie-details align-self-center",
-                                __source: {
-                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 30
-                                },
-                                __self: this,
-                                children: [
-                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                                        className: "movie-title mov-section",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 31
-                                        },
-                                        __self: this,
-                                        children: [
-                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                                className: "value",
-                                                __source: {
-                                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                                    lineNumber: 32
-                                                },
-                                                __self: this,
-                                                children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
-                                                    __source: {
-                                                        fileName: "src/components/movie-view/movie-view.jsx",
-                                                        lineNumber: 33
-                                                    },
-                                                    __self: this,
-                                                    children: movie.Title
-                                                })
-                                            }),
-                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                                className: "value",
-                                                __source: {
-                                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                                    lineNumber: 35
-                                                },
-                                                __self: this,
-                                                children: movie.Genre.Name
-                                            })
-                                        ]
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                        className: "movie-actors mov-section",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 37
-                                        },
-                                        __self: this,
-                                        children: /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                            className: "value",
-                                            __source: {
-                                                fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 38
-                                            },
-                                            __self: this,
-                                            children: movie.Actors ? movie.Actors.join(' / ') : ''
-                                        })
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                        className: "movie-description mov-section",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 42
-                                        },
-                                        __self: this,
-                                        children: /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                            className: "value",
-                                            __source: {
-                                                fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 43
-                                            },
-                                            __self: this,
-                                            children: movie.Description
-                                        })
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                                        className: "movie-director mov-section",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 45
-                                        },
-                                        __self: this,
-                                        children: [
-                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                                className: "label",
-                                                __source: {
-                                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                                    lineNumber: 46
-                                                },
-                                                __self: this,
-                                                children: "Director: "
-                                            }),
-                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                                className: "value",
-                                                __source: {
-                                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                                    lineNumber: 47
-                                                },
-                                                __self: this,
-                                                children: movie.Director.Name ? movie.Director.Name : 'N/A'
-                                            })
-                                        ]
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                                        className: "movie-rating mov-section",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 51
-                                        },
-                                        __self: this,
-                                        children: [
-                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                                className: "label",
-                                                __source: {
-                                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                                    lineNumber: 52
-                                                },
-                                                __self: this,
-                                                children: "Rating: "
-                                            }),
-                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                                className: "value",
-                                                __source: {
-                                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                                    lineNumber: 53
-                                                },
-                                                __self: this,
-                                                children: movie.Rating ? movie.Rating : 'N/A'
-                                            })
-                                        ]
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                                className: "button-wrapper",
-                                __source: {
-                                    fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 58
-                                },
-                                __self: this,
-                                children: [
-                                    /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
-                                        to: `/directors/${movie.Director.Name}`,
-                                        className: "movie-opt",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 59
-                                        },
-                                        __self: this,
-                                        children: movie.Director.Name ? /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                                            variant: "secondary",
-                                            __source: {
-                                                fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 64
-                                            },
-                                            __self: this,
-                                            children: "More from this Director"
-                                        }) : /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                                            disabled: true,
-                                            variant: "secondary",
-                                            __source: {
-                                                fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 66
-                                            },
-                                            __self: this,
-                                            children: "More from this Director"
-                                        })
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
-                                        to: `/genres/${movie.Genre.Name}`,
-                                        className: "movie-opt",
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 71
-                                        },
-                                        __self: this,
-                                        children: /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                                            variant: "secondary",
-                                            __source: {
-                                                fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 72
-                                            },
-                                            __self: this,
-                                            children: "More from this Genre"
-                                        })
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                                        variant: "secondary",
-                                        className: "back-btn",
-                                        onClick: ()=>{
-                                            onBackClick();
-                                        },
-                                        __source: {
-                                            fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 74
-                                        },
-                                        __self: this,
-                                        children: "Back"
-                                    })
-                                ]
-                            })
-                        ]
-                    })
-                ]
-            })
-        }));
-    }
-}
-MovieView.propTypes = {
-    movie: _propTypesDefault.default.shape({
-        Title: _propTypesDefault.default.string.isRequired,
-        Description: _propTypesDefault.default.string.isRequired,
-        Genre: _propTypesDefault.default.shape({
-            Name: _propTypesDefault.default.string
-        }),
-        Director: _propTypesDefault.default.shape({
-            Name: _propTypesDefault.default.string
-        })
-    }).isRequired,
-    onBackClick: _propTypesDefault.default.func.isRequired
-};
-
-  $parcel$ReactRefreshHelpers$3741.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","react-bootstrap/Button":"9CzHT","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","./movie-view.scss":"kvL93","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kvL93":[function() {},{}],"ck15y":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$f8cc = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$f8cc.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "DirectorView", ()=>DirectorView
-);
-var _jsxRuntime = require("react/jsx-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _propTypes = require("prop-types");
-var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _movieCard = require("../movie-card/movie-card");
-var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
-var _reactRouterDom = require("react-router-dom");
-var _directorViewScss = require("./director-view.scss");
-class DirectorView extends _reactDefault.default.Component {
-    //resetting window to top for component
-    componentDidMount() {
-        window.scrollTo(0, 0);
-    }
-    render() {
-        const { director , onBackClick , directorMovies , accessFavorites  } = this.props;
-        //generator for movies by the same director.
-        let directorCards = directorMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
-                md: 3,
-                __source: {
-                    fileName: "src/components/director-view/director-view.jsx",
-                    lineNumber: 26
-                },
-                __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
-                    to: `/movies/${m._id}`,
-                    className: "movie-opt",
-                    __source: {
-                        fileName: "src/components/director-view/director-view.jsx",
-                        lineNumber: 27
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                        movie: m,
-                        __source: {
-                            fileName: "src/components/director-view/director-view.jsx",
-                            lineNumber: 28
-                        },
-                        __self: this
-                    })
-                })
-            }, m._id)
-        );
-        return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
-            className: "director-wrapper",
-            __source: {
-                fileName: "src/components/director-view/director-view.jsx",
-                lineNumber: 34
-            },
-            __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                    className: "movie-view tp-movie",
-                    __source: {
-                        fileName: "src/components/director-view/director-view.jsx",
-                        lineNumber: 35
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                        className: "movie-genre mov-section",
-                        __source: {
-                            fileName: "src/components/director-view/director-view.jsx",
-                            lineNumber: 36
-                        },
-                        __self: this,
-                        children: [
-                            /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                                __source: {
-                                    fileName: "src/components/director-view/director-view.jsx",
-                                    lineNumber: 37
-                                },
-                                __self: this,
-                                children: [
-                                    /*#__PURE__*/ _jsxRuntime.jsx("h3", {
-                                        __source: {
-                                            fileName: "src/components/director-view/director-view.jsx",
-                                            lineNumber: 38
-                                        },
-                                        __self: this,
-                                        children: director.Name
-                                    }),
-                                    /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                                        variant: "secondary",
-                                        onClick: ()=>{
-                                            onBackClick();
-                                        },
-                                        __source: {
-                                            fileName: "src/components/director-view/director-view.jsx",
-                                            lineNumber: 39
-                                        },
-                                        __self: this,
-                                        children: "Back"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ _jsxRuntime.jsx("br", {
-                                __source: {
-                                    fileName: "src/components/director-view/director-view.jsx",
-                                    lineNumber: 48
-                                },
-                                __self: this
-                            })
-                        ]
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                    className: "movie-view bt-movie",
-                    __source: {
-                        fileName: "src/components/director-view/director-view.jsx",
-                        lineNumber: 51
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                            className: "cards-header",
-                            __source: {
-                                fileName: "src/components/director-view/director-view.jsx",
-                                lineNumber: 53
-                            },
-                            __self: this,
-                            children: [
-                                "Also directed by ",
-                                director.Name,
-                                " (",
-                                directorMovies.length,
-                                "):"
-                            ]
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
-                            __source: {
-                                fileName: "src/components/director-view/director-view.jsx",
-                                lineNumber: 56
-                            },
-                            __self: this,
-                            children: directorCards
-                        })
-                    ]
-                })
-            ]
-        }));
-    }
-}
-DirectorView.propTypes = {
-    director: _propTypesDefault.default.shape({
-        name: _propTypesDefault.default.string.isRequired,
-        bio: _propTypesDefault.default.string.isRequired
-    }).isRequired,
-    onBackClick: _propTypesDefault.default.func.isRequired
-};
-
-  $parcel$ReactRefreshHelpers$f8cc.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../movie-card/movie-card":"6EiBJ","react-bootstrap/Button":"9CzHT","react-bootstrap/Col":"fbam0","react-bootstrap/Row":"c0x1x","./director-view.scss":"hWS1b","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","prop-types":"1tgq3","react-router-dom":"cpyQW"}],"hWS1b":[function() {},{}],"8WCoL":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$5f0a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$5f0a.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "GenreView", ()=>GenreView
-);
-var _jsxRuntime = require("react/jsx-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _propTypes = require("prop-types");
-var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _movieCard = require("../movie-card/movie-card");
-var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
-var _button = require("react-bootstrap/Button");
-var _buttonDefault = parcelHelpers.interopDefault(_button);
-var _col = require("react-bootstrap/Col");
-var _colDefault = parcelHelpers.interopDefault(_col);
-var _row = require("react-bootstrap/Row");
-var _rowDefault = parcelHelpers.interopDefault(_row);
-var _reactRouterDom = require("react-router-dom");
-var _genreViewScss = require("./genre-view.scss");
-class GenreView extends _reactDefault.default.Component {
-    //resetting window to top for component
-    componentDidMount() {
-        window.scrollTo(0, 0);
-    }
-    render() {
-        const { genre , onBackClick , genreMovies , favorites  } = this.props;
-        //generator for movies of the same genre - finds them in the full list of movies
-        let genreCards = genreMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
-                md: 3,
-                __source: {
-                    fileName: "src/components/genre-view/genre-view.jsx",
-                    lineNumber: 25
-                },
-                __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
-                    to: `/movies/${m._id}`,
-                    className: "movie-opt",
-                    __source: {
-                        fileName: "src/components/genre-view/genre-view.jsx",
-                        lineNumber: 26
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                        movie: m,
-                        __source: {
-                            fileName: "src/components/genre-view/genre-view.jsx",
-                            lineNumber: 27
-                        },
-                        __self: this
-                    })
-                })
-            }, m._id)
-        );
-        return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
-            className: "genre-wrapper",
-            __source: {
-                fileName: "src/components/genre-view/genre-view.jsx",
-                lineNumber: 33
-            },
-            __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                    className: "movie-view tp-movie",
-                    __source: {
-                        fileName: "src/components/genre-view/genre-view.jsx",
-                        lineNumber: 34
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                            className: "movie-genre mov-section",
-                            __source: {
-                                fileName: "src/components/genre-view/genre-view.jsx",
-                                lineNumber: 35
-                            },
-                            __self: this,
-                            children: [
-                                /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                    __source: {
-                                        fileName: "src/components/genre-view/genre-view.jsx",
-                                        lineNumber: 36
-                                    },
-                                    __self: this,
-                                    children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
-                                        __source: {
-                                            fileName: "src/components/genre-view/genre-view.jsx",
-                                            lineNumber: 37
-                                        },
-                                        __self: this,
-                                        children: genre.Name
-                                    })
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsx("br", {
-                                    __source: {
-                                        fileName: "src/components/genre-view/genre-view.jsx",
-                                        lineNumber: 39
-                                    },
-                                    __self: this
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsx("span", {
-                                    __source: {
-                                        fileName: "src/components/genre-view/genre-view.jsx",
-                                        lineNumber: 40
-                                    },
-                                    __self: this,
-                                    children: genre.Description
-                                })
-                            ]
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
-                            variant: "secondary",
-                            onClick: ()=>{
-                                onBackClick();
-                            },
-                            __source: {
-                                fileName: "src/components/genre-view/genre-view.jsx",
-                                lineNumber: 42
-                            },
-                            __self: this,
-                            children: "Back"
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                    className: "movie-view bt-movie",
-                    __source: {
-                        fileName: "src/components/genre-view/genre-view.jsx",
-                        lineNumber: 51
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                            className: "cards-header",
-                            __source: {
-                                fileName: "src/components/genre-view/genre-view.jsx",
-                                lineNumber: 52
-                            },
-                            __self: this,
-                            children: [
-                                genre.Name,
-                                " (",
-                                genreMovies.length,
-                                "):"
-                            ]
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
-                            __source: {
-                                fileName: "src/components/genre-view/genre-view.jsx",
-                                lineNumber: 56
-                            },
-                            __self: this,
-                            children: genreCards
-                        })
-                    ]
-                })
-            ]
-        }));
-    }
-}
-GenreView.propTypes = {
-    genre: _propTypesDefault.default.shape({
-        name: _propTypesDefault.default.string.isRequired,
-        description: _propTypesDefault.default.string.isRequired
-    }).isRequired,
-    onBackClick: _propTypesDefault.default.func.isRequired
-};
-
-  $parcel$ReactRefreshHelpers$5f0a.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","../movie-card/movie-card":"6EiBJ","react-bootstrap/Button":"9CzHT","react-bootstrap/Col":"fbam0","react-bootstrap/Row":"c0x1x","./genre-view.scss":"3BqnD","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","prop-types":"1tgq3","react-router-dom":"cpyQW"}],"3BqnD":[function() {},{}],"2E7Aw":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$58c6 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$58c6.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ProfileView", ()=>ProfileView
-);
-var _jsxRuntime = require("react/jsx-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _propTypes = require("prop-types");
-var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
-var _reactRedux = require("react-redux");
-var _reactRouterDom = require("react-router-dom");
-var _movieCard = require("../movie-card/movie-card");
-var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-var _profileViewScss = require("./profile-view.scss");
-var _reactBootstrap = require("react-bootstrap");
-class ProfileView extends _reactDefault.default.Component {
-    constructor(){
-        super();
-        this.state = {
-            username: '',
-            password: '',
-            email: '',
-            birthday: '',
-            usernameErr: '',
-            passwordErr: '',
-            emailErr: '',
-            editAccount: false,
-            deleteConfirm: false
-        };
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    componentDidMount() {
-        const accessToken = localStorage.getItem('token');
-        this.getUser(accessToken);
-    }
-    //asking database for pofile information
-    getUser(token) {
-        let user = localStorage.getItem('user');
-        _axiosDefault.default.get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            this.setState({
-                username: response.data.Username,
-                email: response.data.Email,
-                birthday: response.data.Birthday,
-                favoriteMovies: response.data.FavoriteMovies
-            });
-        }).catch((e)=>console.log(e)
-        );
-    }
-    //logging user out
-    onLoggedOut() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        this.setState({
-            user: null
-        });
-        window.open('/', '_self');
-    }
-    //formatting date to MM/DD/YYY for display on form
-    getFormattedDate(date) {
-        return `${date.substr(5, 2)}/${date.substr(8, 2)}/${date.substr(0, 4)}`;
-    }
-    //identifting if email address is valid before updating
-    validateEmail(email) {
-        return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-    }
-    //validating new user account info to clean up inputes
-    validate() {
-        let isReq = true;
-        if (!this.state.username) {
-            this.setErr('usernameErr', 'Username Required');
-            isReq = false;
-        } else if (this.state.username.length < 2) {
-            this.setErr('usernameErr', 'Username must be more than 2 characters');
-            isReq = false;
-        } else this.setErr('usernameErr', '');
-        if (this.state.password && this.state.password.length < 6) {
-            this.setErr('passwordErr', 'Password must be at least 6 characters');
-            isReq = false;
-        } else this.setErr('passwordErr', '');
-        if (this.state.email && !this.validateEmail(this.state.email)) {
-            this.setErr('emailErr', ' Must use a valid Email Address');
-            isReq = false;
-        } else this.setErr('emailErr', '');
-        return isReq;
-    }
-    //takes users favorite movie ids and find them in the full set of movies
-    //for display
-    listFavorites = (favorites)=>{
-        let favoriteCards = this.props.movies.filter((m)=>favorites.includes(m._id)
-        ).map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                md: 4,
-                __source: {
-                    fileName: "src/components/profile-view/profile-view.jsx",
-                    lineNumber: 112
-                },
-                __self: this,
-                children: /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Link, {
-                    to: `/movies/${m._id}`,
-                    className: "movie-opt",
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 113
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
-                        movie: m,
-                        __source: {
-                            fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 114
-                        },
-                        __self: this
-                    })
-                })
-            }, m._id)
-        );
-        return favoriteCards;
-    };
-    //toggling delete state to display the modal to confim
-    deleteConfirmSetState = ()=>{
-        this.setState({
-            deleteConfirm: !this.state.deleteConfirm
-        });
-    };
-    //shows a modal to confirm account deletion
-    deleteConfirm = ()=>{
-        return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Modal, {
-            show: "true",
-            size: "lg",
-            "aria-labelledby": "contained-modal-title-vcenter",
-            centered: true,
-            __source: {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 131
-            },
-            __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Modal.Header, {
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 137
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Modal.Title, {
-                        id: "contained-modal-title-vcenter",
-                        __source: {
-                            fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 138
-                        },
-                        __self: this,
-                        children: "Confirm Deletion"
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Modal.Body, {
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 142
-                    },
-                    __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx("p", {
-                        __source: {
-                            fileName: "src/components/profile-view/profile-view.jsx",
-                            lineNumber: 143
-                        },
-                        __self: this,
-                        children: "Are you sure you want to delete? All data will be permanently lost..."
-                    })
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Modal.Footer, {
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 148
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                            variant: "secondary",
-                            onClick: this.deleteConfirmSetState,
-                            __source: {
-                                fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 149
-                            },
-                            __self: this,
-                            children: "Cancel"
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                            variant: "danger",
-                            onClick: this.handleDeleteProfile,
-                            __source: {
-                                fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 152
-                            },
-                            __self: this,
-                            children: "DELETE"
-                        })
-                    ]
-                })
-            ]
-        }));
-    };
-    //methods for updating user info state during editing
-    setUsername(value) {
-        this.setState({
-            username: value
-        });
-    }
-    setPassword(value) {
-        this.setState({
-            password: value
-        });
-    }
-    setEmail(value) {
-        this.setState({
-            email: value
-        });
-    }
-    setBirthday(value) {
-        this.setState({
-            birthday: value
-        });
-    }
-    //end user state updates
-    //trying to set validation errors
-    setErr(typeErr, value) {
-        this.setState({
-            ...this.state,
-            [typeErr]: value
-        });
-    }
-    //allowing user to toggle editing their user account info
-    handleEdit = ()=>{
-        console.log(this.state.editAccount);
-        if (this.state.editAccount) this.setState({
-            editAccount: false
-        });
-        else this.setState({
-            editAccount: true
-        });
-    };
-    //posting user updates to database
-    handleSubmit = (e)=>{
-        e.preventDefault();
-        const userName = localStorage.getItem('user');
-        let token = localStorage.getItem('token');
-        const isReq = this.validate();
-        console.log(isReq);
-        if (isReq) _axiosDefault.default.put(`https://whatdoiwatch.herokuapp.com/users/${userName}`, {
-            Username: this.state.username,
-            Password: this.state.password,
-            Email: this.state.email,
-            Birthday: this.state.birthday
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            this.setState({
-                username: response.data.Username,
-                password: response.data.Password,
-                email: response.data.Email,
-                birthday: response.data.Birthday
-            });
-            localStorage.setItem('user', this.state.username);
-            alert('profile updated successfully!');
-            window.open(`/users/${this.state.username}`, '_self');
-        });
-    };
-    //sending a delete request for user
-    handleDeleteProfile() {
-        const userName = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-        _axiosDefault.default.delete(`https://whatdoiwatch.herokuapp.com/users/${userName}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            console.log(response);
-            alert('profile deleted');
-            localStorage.removeItem('user');
-            localStorage.removeItem('token');
-            window.open('/', '_self');
-        }).catch((e)=>console.log(e)
-        );
-    }
-    render() {
-        const { movies , favorites  } = this.props;
-        const { username , email , birthday , usernameErr , passwordErr , emailErr  } = this.state;
-        return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
-            className: "profile-wrapper",
-            __source: {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 266
-            },
-            __self: this,
-            children: [
-                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                    className: "movie-view tp-movie",
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 267
-                    },
-                    __self: this,
-                    children: [
-                        this.state.deleteConfirm && this.deleteConfirm(),
-                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                            className: "user-info",
-                            __source: {
-                                fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 270
-                            },
-                            __self: this,
-                            children: [
-                                /*#__PURE__*/ _jsxRuntime.jsx("h4", {
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 271
-                                    },
-                                    __self: this,
-                                    children: "User Information"
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs("p", {
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 272
-                                    },
-                                    __self: this,
-                                    children: [
-                                        "Username: ",
-                                        username
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs("p", {
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 273
-                                    },
-                                    __self: this,
-                                    children: [
-                                        "Email: ",
-                                        email
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs("p", {
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 274
-                                    },
-                                    __self: this,
-                                    children: [
-                                        "Birthday: ",
-                                        this.getFormattedDate(birthday)
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 275
-                                    },
-                                    __self: this,
-                                    children: [
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                                            md: 6,
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 276
-                                            },
-                                            __self: this,
-                                            children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                                                className: "update-info-button",
-                                                variant: "primary",
-                                                type: "submit",
-                                                onClick: this.handleEdit,
-                                                __source: {
-                                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                                    lineNumber: 277
-                                                },
-                                                __self: this,
-                                                children: this.state.editAccount ? 'Close' : 'Edit Account'
-                                            })
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                                            md: 6,
-                                            className: "text-right",
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 287
-                                            },
-                                            __self: this,
-                                            children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                                                className: "delete-account-button",
-                                                variant: "danger",
-                                                type: "submit",
-                                                onClick: this.deleteConfirmSetState,
-                                                __source: {
-                                                    fileName: "src/components/profile-view/profile-view.jsx",
-                                                    lineNumber: 288
-                                                },
-                                                __self: this,
-                                                children: "Delete Account"
-                                            })
-                                        })
-                                    ]
-                                })
-                            ]
-                        }),
-                        this.state.editAccount && /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form, {
-                            className: "d-flex justify-content-md-center flex-column align-items-center",
-                            onSubmit: (e)=>this.handleSubmit(e, this.Username, this.Password, this.Email, this.Birthday)
-                            ,
-                            __source: {
-                                fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 301
-                            },
-                            __self: this,
-                            children: [
-                                /*#__PURE__*/ _jsxRuntime.jsx("div", {
-                                    className: "register-title",
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 313
-                                    },
-                                    __self: this,
-                                    children: /*#__PURE__*/ _jsxRuntime.jsx("h1", {
-                                        __source: {
-                                            fileName: "src/components/profile-view/profile-view.jsx",
-                                            lineNumber: 314
-                                        },
-                                        __self: this,
-                                        children: "Update Your Account"
-                                    })
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
-                                    controlId: "regUsername",
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 316
-                                    },
-                                    __self: this,
-                                    children: [
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 317
-                                            },
-                                            __self: this,
-                                            children: "Username:"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                            type: "text",
-                                            name: "Username",
-                                            onChange: (e)=>this.setUsername(e.target.value)
-                                            ,
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 318
-                                            },
-                                            __self: this
-                                        }),
-                                        usernameErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 323
-                                            },
-                                            __self: this,
-                                            children: usernameErr
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
-                                    controlId: "regPassword",
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 325
-                                    },
-                                    __self: this,
-                                    children: [
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 326
-                                            },
-                                            __self: this,
-                                            children: "Password:"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                            type: "password",
-                                            name: "Password",
-                                            onChange: (e)=>this.setPassword(e.target.value)
-                                            ,
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 327
-                                            },
-                                            __self: this
-                                        }),
-                                        passwordErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 332
-                                            },
-                                            __self: this,
-                                            children: passwordErr
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
-                                    controlId: "regEmail",
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 334
-                                    },
-                                    __self: this,
-                                    children: [
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 335
-                                            },
-                                            __self: this,
-                                            children: "Email:"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                            type: "email",
-                                            name: "Email",
-                                            onChange: (e)=>this.setEmail(e.target.value)
-                                            ,
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 336
-                                            },
-                                            __self: this
-                                        }),
-                                        emailErr && /*#__PURE__*/ _jsxRuntime.jsx("p", {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 341
-                                            },
-                                            __self: this,
-                                            children: emailErr
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form.Group, {
-                                    controlId: "regBirthday",
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 343
-                                    },
-                                    __self: this,
-                                    children: [
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Label, {
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 344
-                                            },
-                                            __self: this,
-                                            children: "Birthday:"
-                                        }),
-                                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Form.Control, {
-                                            type: "date",
-                                            name: "Birthday",
-                                            onChange: (e)=>this.setBirthday(e.target.value)
-                                            ,
-                                            __source: {
-                                                fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 345
-                                            },
-                                            __self: this
-                                        })
-                                    ]
-                                }),
-                                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Button, {
-                                    className: "register-button",
-                                    variant: "primary",
-                                    type: "submit",
-                                    onClick: this.handleSubmit,
-                                    __source: {
-                                        fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 351
-                                    },
-                                    __self: this,
-                                    children: "Submit Changes"
-                                })
-                            ]
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                    className: "movie-view bt-movie",
-                    __source: {
-                        fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 363
-                    },
-                    __self: this,
-                    children: [
-                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
-                            className: "cards-header",
-                            __source: {
-                                fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 364
-                            },
-                            __self: this,
-                            children: [
-                                this.state.username,
-                                "'s Favorites:"
-                            ]
-                        }),
-                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
-                            __source: {
-                                fileName: "src/components/profile-view/profile-view.jsx",
-                                lineNumber: 365
-                            },
-                            __self: this,
-                            children: this.listFavorites(this.props.favorites)
-                        })
-                    ]
-                })
-            ]
-        }));
-    }
-}
-let mapStateToProps = (state)=>{
-    return {
-        movies: state.movies,
-        favorites: state.favorites
-    };
-};
-exports.default = _reactRedux.connect(mapStateToProps)(ProfileView);
-ProfileView.propTypes = {
-    movies: _propTypesDefault.default.arrayOf(_propTypesDefault.default.shape({
-        title: _propTypesDefault.default.string.isRequired,
-        description: _propTypesDefault.default.string.isRequired,
-        imagePath: _propTypesDefault.default.string.isRequired
-    })).isRequired
-};
-
-  $parcel$ReactRefreshHelpers$58c6.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-redux":"2L0if","../movie-card/movie-card":"6EiBJ","axios":"iYoWk","./profile-view.scss":"gb0ga","react-bootstrap":"h2YVd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","prop-types":"1tgq3","react-router-dom":"cpyQW"}],"gb0ga":[function() {},{}],"bicRv":[function(require,module,exports) {
+},{"classnames":"bOXOh","react":"6TuXu","./ThemeProvider":"eeqfi","./helpers":"S1Bw1","react/jsx-runtime":"8xIwr","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bicRv":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$bd0e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -53137,7 +47855,7 @@ $RefreshReg$(_c, "Menubar");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-bootstrap":"h2YVd","react-redux":"2L0if","../visibility-filter-input/visibility-filter-input":"7ZxGS","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"7ZxGS":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-bootstrap":"h2YVd","./nav-bar.scss":"kGl7g","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-router-dom":"cpyQW","react-redux":"2L0if","../visibility-filter-input/visibility-filter-input":"7ZxGS"}],"kGl7g":[function() {},{}],"7ZxGS":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$9bc3 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -53179,7 +47897,5316 @@ $RefreshReg$(_c, "VisibilityFilterInput");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-redux":"2L0if","react-bootstrap/Form":"5ykgY","../../actions/actions":"1Ttfj","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kGl7g":[function() {},{}],"jUTZ8":[function() {},{}],"8GWVf":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-redux":"2L0if","react-bootstrap/Form":"5ykgY","../../actions/actions":"1Ttfj","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"1kGQ5":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$2519 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$2519.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
+var _reactSlick = require("react-slick");
+var _reactSlickDefault = parcelHelpers.interopDefault(_reactSlick);
+var _reactRedux = require("react-redux");
+var _reactBootstrap = require("react-bootstrap");
+//components to import and render
+var _movieCard = require("../movie-card/movie-card");
+var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
+//styles for filters
+var _moviesListScss = require("./movies-list.scss");
+var _slickCss = require("../../../node_modules/slick-carousel/slick/slick.css");
+var _slickThemeCss = require("../../../node_modules/slick-carousel/slick/slick-theme.css");
+var _s = $RefreshSig$();
+//mapping filter and favorites to props ma
+const mapStateToProps = (state)=>{
+    const { visibilityFilter  } = state;
+    return {
+        visibilityFilter
+    };
+};
+//settings for the slider
+let sliderSettings = {
+    dots: false,
+    infinite: false,
+    rows: 1,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    responsive: [
+        {
+            breakpoint: 1220,
+            settings: {
+                slidesToShow: 4
+            }
+        },
+        {
+            breakpoint: 990,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 770,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 470,
+            settings: {
+                slidesToShow: 1
+            }
+        }, 
+    ]
+};
+function MoviesList(props) {
+    _s();
+    const { movies , visibilityFilter  } = props;
+    const [trendingList, setTrending] = _react.useState([]);
+    const [dragging, setDragging] = _react.useState(false);
+    const [sort, setSort] = _react.useState('');
+    const [activeFilter, setActiveFilter] = _react.useState('');
+    //setting up to navigate to specific movie
+    const history = _reactRouterDom.useHistory();
+    //allowing slider to reset to start when filter is applied
+    const totalSlide = _react.useRef();
+    const trendSlide = _react.useRef();
+    let slider = _react.useEffect(()=>{
+        if (totalSlide.current) {
+            totalSlide.current.slickGoTo(0);
+            setDragging(false);
+        }
+    }, [
+        visibilityFilter
+    ]);
+    //to prevent a click when user is dragging slider using before and after change functions
+    function handleBeforeChange(curr, next) {
+        if (curr === next) setDragging(false);
+        else setDragging(true);
+    }
+    const filterGenerator = (srcForFilter)=>{
+        return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Dropdown, {
+            __source: {
+                fileName: "src/components/movies-list/movies-list.jsx",
+                lineNumber: 97
+            },
+            __self: this,
+            children: [
+                /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Dropdown.Toggle, {
+                    variant: "success",
+                    id: "dropdown-basic",
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 98
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsxs("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "25",
+                        height: "25",
+                        fill: "#fff",
+                        className: "filter bi bi-filter-circle",
+                        viewBox: "0 0 16 16",
+                        __source: {
+                            fileName: "src/components/movies-list/movies-list.jsx",
+                            lineNumber: 99
+                        },
+                        __self: this,
+                        children: [
+                            /*#__PURE__*/ _jsxRuntime.jsx("path", {
+                                d: "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z",
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 107
+                                },
+                                __self: this
+                            }),
+                            /*#__PURE__*/ _jsxRuntime.jsx("path", {
+                                d: "M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z",
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 108
+                                },
+                                __self: this
+                            })
+                        ]
+                    })
+                }),
+                /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Dropdown.Menu, {
+                    style: {
+                        margin: 0
+                    },
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 111
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Dropdown.Item, {
+                            filterclick: srcForFilter,
+                            onClick: (e)=>sortHandler(e)
+                            ,
+                            __source: {
+                                fileName: "src/components/movies-list/movies-list.jsx",
+                                lineNumber: 112
+                            },
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                                className: "sortitem d-flex alpha",
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 116
+                                },
+                                __self: this,
+                                children: [
+                                    "Sort By Title",
+                                    activeFilter.target && activeFilter.target === 'Sort By Title' && setSortArrow()
+                                ]
+                            })
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Dropdown.Item, {
+                            filterclick: srcForFilter,
+                            onClick: (e)=>sortHandler(e)
+                            ,
+                            __source: {
+                                fileName: "src/components/movies-list/movies-list.jsx",
+                                lineNumber: 123
+                            },
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                                className: "sortitem d-flex alpha",
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 127
+                                },
+                                __self: this,
+                                children: [
+                                    "Sort By Rating",
+                                    activeFilter.target && activeFilter.target === 'Sort By Rating' && setSortArrow()
+                                ]
+                            })
+                        })
+                    ]
+                })
+            ]
+        }));
+    };
+    //handling the sorting click and updating the method and target of sorting
+    const sortHandler = (e)=>{
+        let targetSort = e.target.innerText;
+        let filterOrigin = e.target.parentNode.getAttribute('filterclick');
+        //to prevent racing against the state update
+        let sortVal = sort;
+        if (activeFilter.target && activeFilter.target !== targetSort) {
+            sortVal = '';
+            setSort('');
+        }
+        switch(sortVal){
+            case '':
+                setSort('asc');
+                setActiveFilter({
+                    target: targetSort,
+                    direction: 'asc',
+                    origin: filterOrigin
+                });
+                break;
+            case 'asc':
+                setSort('desc');
+                setActiveFilter({
+                    target: targetSort,
+                    direction: 'desc',
+                    origin: filterOrigin
+                });
+                break;
+            case 'desc':
+                setSort('');
+                setActiveFilter('');
+                break;
+        }
+    };
+    //storing and returning the sort direction arrows
+    const setSortArrow = ()=>{
+        switch(sort){
+            case 'asc':
+                return(/*#__PURE__*/ _jsxRuntime.jsx("svg", {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "16",
+                    height: "16",
+                    fill: "#00000",
+                    className: "bi bi-arrow-up",
+                    viewBox: "0 0 16 16",
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 178
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
+                        fillRule: "evenodd",
+                        d: "M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z",
+                        __source: {
+                            fileName: "src/components/movies-list/movies-list.jsx",
+                            lineNumber: 186
+                        },
+                        __self: this
+                    })
+                }));
+            case 'desc':
+                return(/*#__PURE__*/ _jsxRuntime.jsx("svg", {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "16",
+                    height: "16",
+                    fillRule: "#00000",
+                    className: "bi bi-arrow-down",
+                    viewBox: "0 0 16 16",
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 194
+                    },
+                    __self: this,
+                    children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
+                        fillRule: "evenodd",
+                        d: "M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z",
+                        __source: {
+                            fileName: "src/components/movies-list/movies-list.jsx",
+                            lineNumber: 202
+                        },
+                        __self: this
+                    })
+                }));
+            default:
+                return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 209
+                    },
+                    __self: this
+                }));
+        }
+    };
+    const handleAfterChange = _react.useCallback(()=>{
+        setDragging(false);
+    }, [
+        setDragging
+    ]);
+    //pushing movie details on click
+    const handleOnItemClick = (param)=>(e)=>{
+            if (dragging) e.stopPropagation();
+            else history.push(`/movies/${param}`);
+        }
+    ;
+    //setting filtered to default prop
+    let filteredMovies = [];
+    if (visibilityFilter !== '') {
+        filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+        );
+        filteredTrending = props.trending.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+        );
+    }
+    const runFilters = (toFilter)=>{
+        if (activeFilter.target === 'Sort By Title') {
+            if (activeFilter.direction === 'asc') toFilter.sort((a, b)=>a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
+            );
+            else if (activeFilter.direction === 'desc') toFilter.sort((a, b)=>b.Title > a.Title ? 1 : a.Title > b.Title ? -1 : 0
+            );
+        } else if (activeFilter.target === 'Sort By Rating') {
+            if (activeFilter.direction === 'asc') toFilter.sort((a, b)=>b.Rating > a.Rating ? 1 : a.Rating > b.Rating ? -1 : 0
+            );
+            else if (activeFilter.direction === 'desc') toFilter.sort((a, b)=>a.Rating > b.Rating ? 1 : b.Rating > a.Rating ? -1 : 0
+            );
+        }
+    };
+    //handling active filers and applying the sort order -- sending with correct array
+    if (activeFilter !== '') switch(activeFilter.origin){
+        case 'filteredMovies':
+            runFilters(filteredMovies);
+            break;
+        case 'trendingmovies':
+            runFilters(props.trending);
+            break;
+        case 'movies':
+            runFilters(movies);
+            break;
+    }
+    if (!movies) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
+        className: "main-view",
+        __source: {
+            fileName: "src/components/movies-list/movies-list.jsx",
+            lineNumber: 278
+        },
+        __self: this
+    }));
+    return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
+        className: "shows-wrapper",
+        __source: {
+            fileName: "src/components/movies-list/movies-list.jsx",
+            lineNumber: 282
+        },
+        __self: this,
+        children: [
+            filteredMovies.length > 0 && /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                className: "filtered",
+                __source: {
+                    fileName: "src/components/movies-list/movies-list.jsx",
+                    lineNumber: 284
+                },
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "show-section",
+                    __source: {
+                        fileName: "src/components/movies-list/movies-list.jsx",
+                        lineNumber: 285
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                            className: "d-flex align-items-center",
+                            __source: {
+                                fileName: "src/components/movies-list/movies-list.jsx",
+                                lineNumber: 286
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
+                                    __source: {
+                                        fileName: "src/components/movies-list/movies-list.jsx",
+                                        lineNumber: 287
+                                    },
+                                    __self: this,
+                                    children: [
+                                        "Search Results (",
+                                        filteredMovies.length,
+                                        ")"
+                                    ]
+                                }),
+                                filterGenerator('filteredMovies')
+                            ]
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
+                            beforeChange: (current, next)=>handleBeforeChange(current, next)
+                            ,
+                            afterChange: handleAfterChange,
+                            ...sliderSettings,
+                            ref: trendSlide,
+                            __source: {
+                                fileName: "src/components/movies-list/movies-list.jsx",
+                                lineNumber: 291
+                            },
+                            __self: this,
+                            children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                    className: "mcard",
+                                    onClickCapture: handleOnItemClick(m._id),
+                                    __source: {
+                                        fileName: "src/components/movies-list/movies-list.jsx",
+                                        lineNumber: 300
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                                        movie: m,
+                                        __source: {
+                                            fileName: "src/components/movies-list/movies-list.jsx",
+                                            lineNumber: 305
+                                        },
+                                        __self: this
+                                    })
+                                }, m._id)
+                            )
+                        })
+                    ]
+                })
+            }),
+            filteredMovies.length < 1 && /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                className: "unfilter",
+                __source: {
+                    fileName: "src/components/movies-list/movies-list.jsx",
+                    lineNumber: 313
+                },
+                __self: this,
+                children: [
+                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                        className: "show-section",
+                        __source: {
+                            fileName: "src/components/movies-list/movies-list.jsx",
+                            lineNumber: 314
+                        },
+                        __self: this,
+                        children: [
+                            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                                className: "d-flex align-items-center",
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 315
+                                },
+                                __self: this,
+                                children: [
+                                    /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
+                                        __source: {
+                                            fileName: "src/components/movies-list/movies-list.jsx",
+                                            lineNumber: 316
+                                        },
+                                        __self: this,
+                                        children: [
+                                            "Trending (",
+                                            props.trending.length,
+                                            ")"
+                                        ]
+                                    }),
+                                    filterGenerator('trendingmovies')
+                                ]
+                            }),
+                            /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
+                                beforeChange: (current, next)=>handleBeforeChange(current, next)
+                                ,
+                                afterChange: handleAfterChange,
+                                ...sliderSettings,
+                                ref: trendSlide,
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 319
+                                },
+                                __self: this,
+                                children: props.trending.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                        className: "mcard",
+                                        onClickCapture: handleOnItemClick(m._id),
+                                        __source: {
+                                            fileName: "src/components/movies-list/movies-list.jsx",
+                                            lineNumber: 328
+                                        },
+                                        __self: this,
+                                        children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                                            movie: m,
+                                            __source: {
+                                                fileName: "src/components/movies-list/movies-list.jsx",
+                                                lineNumber: 333
+                                            },
+                                            __self: this
+                                        })
+                                    }, m._id)
+                                )
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                        className: "show-section",
+                        __source: {
+                            fileName: "src/components/movies-list/movies-list.jsx",
+                            lineNumber: 338
+                        },
+                        __self: this,
+                        children: [
+                            /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                                className: "d-flex align-items-center",
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 339
+                                },
+                                __self: this,
+                                children: [
+                                    /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
+                                        __source: {
+                                            fileName: "src/components/movies-list/movies-list.jsx",
+                                            lineNumber: 340
+                                        },
+                                        __self: this,
+                                        children: [
+                                            "Movies and Shows Total (",
+                                            movies.length,
+                                            ")"
+                                        ]
+                                    }),
+                                    filterGenerator('movies')
+                                ]
+                            }),
+                            /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
+                                beforeChange: (current, next)=>handleBeforeChange(current, next)
+                                ,
+                                afterChange: handleAfterChange,
+                                ...sliderSettings,
+                                ref: totalSlide,
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 343
+                                },
+                                __self: this,
+                                children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                        className: "mcard",
+                                        onClickCapture: handleOnItemClick(m._id),
+                                        __source: {
+                                            fileName: "src/components/movies-list/movies-list.jsx",
+                                            lineNumber: 352
+                                        },
+                                        __self: this,
+                                        children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                                            movie: m,
+                                            __source: {
+                                                fileName: "src/components/movies-list/movies-list.jsx",
+                                                lineNumber: 357
+                                            },
+                                            __self: this
+                                        })
+                                    }, m._id)
+                                )
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
+    }));
+}
+_s(MoviesList, "+5+UoY4aKwKfPA8DoVUlnZ6zdjk=", false, function() {
+    return [_reactRouterDom.useHistory];
+});
+_c = MoviesList;
+exports.default = _reactRedux.connect(mapStateToProps)(MoviesList);
+var _c;
+$RefreshReg$(_c, "MoviesList");
+
+  $parcel$ReactRefreshHelpers$2519.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-slick":"kVkIB","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kVkIB":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _slider = _interopRequireDefault(require("./slider"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+var _default = _slider["default"];
+exports["default"] = _default;
+
+},{"./slider":"eYAMz"}],"eYAMz":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
+        return typeof obj1;
+    } : function(obj1) {
+        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _innerSlider = require("./inner-slider");
+var _json2mq = _interopRequireDefault(require("json2mq"));
+var _defaultProps = _interopRequireDefault(require("./default-props"));
+var _innerSliderUtils = require("./utils/innerSliderUtils");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign || function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties(target, props) {
+    for(var i = 0; i < props.length; i++){
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+    }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+        writable: false
+    });
+    return Constructor;
+}
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            writable: true,
+            configurable: true
+        }
+    });
+    Object.defineProperty(subClass, "prototype", {
+        writable: false
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
+        o1.__proto__ = p1;
+        return o1;
+    };
+    return _setPrototypeOf(o, p);
+}
+function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+    return function _createSuperInternal() {
+        var Super = _getPrototypeOf(Derived), result;
+        if (hasNativeReflectConstruct) {
+            var NewTarget = _getPrototypeOf(this).constructor;
+            result = Reflect.construct(Super, arguments, NewTarget);
+        } else result = Super.apply(this, arguments);
+        return _possibleConstructorReturn(this, result);
+    };
+}
+function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
+    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
+    return _assertThisInitialized(self);
+}
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+    try {
+        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+        }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
+        return o1.__proto__ || Object.getPrototypeOf(o1);
+    };
+    return _getPrototypeOf(o);
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+var enquire = _innerSliderUtils.canUseDOM() && require("enquire.js");
+var Slider1 = /*#__PURE__*/ function(_React$Component) {
+    _inherits(Slider2, _React$Component);
+    var _super = _createSuper(Slider2);
+    function Slider2(props) {
+        var _this;
+        _classCallCheck(this, Slider2);
+        _this = _super.call(this, props);
+        _defineProperty(_assertThisInitialized(_this), "innerSliderRefHandler", function(ref) {
+            return _this.innerSlider = ref;
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickPrev", function() {
+            return _this.innerSlider.slickPrev();
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickNext", function() {
+            return _this.innerSlider.slickNext();
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickGoTo", function(slide) {
+            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            return _this.innerSlider.slickGoTo(slide, dontAnimate);
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickPause", function() {
+            return _this.innerSlider.pause("paused");
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickPlay", function() {
+            return _this.innerSlider.autoPlay("play");
+        });
+        _this.state = {
+            breakpoint: null
+        };
+        _this._responsiveMediaHandlers = [];
+        return _this;
+    }
+    _createClass(Slider2, [
+        {
+            key: "media",
+            value: function media(query, handler) {
+                // javascript handler for  css media query
+                enquire.register(query, handler);
+                this._responsiveMediaHandlers.push({
+                    query: query,
+                    handler: handler
+                });
+            } // handles responsive breakpoints
+        },
+        {
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var _this2 = this;
+                // performance monitoring
+                //if (process.env.NODE_ENV !== 'production') {
+                //const { whyDidYouUpdate } = require('why-did-you-update')
+                //whyDidYouUpdate(React)
+                //}
+                if (this.props.responsive) {
+                    var breakpoints = this.props.responsive.map(function(breakpt) {
+                        return breakpt.breakpoint;
+                    }); // sort them in increasing order of their numerical value
+                    breakpoints.sort(function(x, y) {
+                        return x - y;
+                    });
+                    breakpoints.forEach(function(breakpoint, index) {
+                        // media query for each breakpoint
+                        var bQuery;
+                        if (index === 0) bQuery = _json2mq["default"]({
+                            minWidth: 0,
+                            maxWidth: breakpoint
+                        });
+                        else bQuery = _json2mq["default"]({
+                            minWidth: breakpoints[index - 1] + 1,
+                            maxWidth: breakpoint
+                        });
+                         // when not using server side rendering
+                        _innerSliderUtils.canUseDOM() && _this2.media(bQuery, function() {
+                            _this2.setState({
+                                breakpoint: breakpoint
+                            });
+                        });
+                    }); // Register media query for full screen. Need to support resize from small to large
+                    // convert javascript object to media query string
+                    var query = _json2mq["default"]({
+                        minWidth: breakpoints.slice(-1)[0]
+                    });
+                    _innerSliderUtils.canUseDOM() && this.media(query, function() {
+                        _this2.setState({
+                            breakpoint: null
+                        });
+                    });
+                }
+            }
+        },
+        {
+            key: "componentWillUnmount",
+            value: function componentWillUnmount() {
+                this._responsiveMediaHandlers.forEach(function(obj) {
+                    enquire.unregister(obj.query, obj.handler);
+                });
+            }
+        },
+        {
+            key: "render",
+            value: function render() {
+                var _this3 = this;
+                var settings;
+                var newProps;
+                if (this.state.breakpoint) {
+                    newProps = this.props.responsive.filter(function(resp) {
+                        return resp.breakpoint === _this3.state.breakpoint;
+                    });
+                    settings = newProps[0].settings === "unslick" ? "unslick" : _objectSpread(_objectSpread(_objectSpread({
+                    }, _defaultProps["default"]), this.props), newProps[0].settings);
+                } else settings = _objectSpread(_objectSpread({
+                }, _defaultProps["default"]), this.props);
+                 // force scrolling by one if centerMode is on
+                if (settings.centerMode) {
+                    if (settings.slidesToScroll > 1 && true) console.warn("slidesToScroll should be equal to 1 in centerMode, you are using ".concat(settings.slidesToScroll));
+                    settings.slidesToScroll = 1;
+                } // force showing one slide and scrolling by one if the fade mode is on
+                if (settings.fade) {
+                    if (settings.slidesToShow > 1 && true) console.warn("slidesToShow should be equal to 1 when fade is true, you're using ".concat(settings.slidesToShow));
+                    if (settings.slidesToScroll > 1 && true) console.warn("slidesToScroll should be equal to 1 when fade is true, you're using ".concat(settings.slidesToScroll));
+                    settings.slidesToShow = 1;
+                    settings.slidesToScroll = 1;
+                } // makes sure that children is an array, even when there is only 1 child
+                var children = _react["default"].Children.toArray(this.props.children); // Children may contain false or null, so we should filter them
+                // children may also contain string filled with spaces (in certain cases where we use jsx strings)
+                children = children.filter(function(child) {
+                    if (typeof child === "string") return !!child.trim();
+                    return !!child;
+                }); // rows and slidesPerRow logic is handled here
+                if (settings.variableWidth && (settings.rows > 1 || settings.slidesPerRow > 1)) {
+                    console.warn("variableWidth is not supported in case of rows > 1 or slidesPerRow > 1");
+                    settings.variableWidth = false;
+                }
+                var newChildren = [];
+                var currentWidth = null;
+                for(var i = 0; i < children.length; i += settings.rows * settings.slidesPerRow){
+                    var newSlide = [];
+                    for(var j = i; j < i + settings.rows * settings.slidesPerRow; j += settings.slidesPerRow){
+                        var row = [];
+                        for(var k = j; k < j + settings.slidesPerRow; k += 1){
+                            if (settings.variableWidth && children[k].props.style) currentWidth = children[k].props.style.width;
+                            if (k >= children.length) break;
+                            row.push(/*#__PURE__*/ _react["default"].cloneElement(children[k], {
+                                key: 100 * i + 10 * j + k,
+                                tabIndex: -1,
+                                style: {
+                                    width: "".concat(100 / settings.slidesPerRow, "%"),
+                                    display: "inline-block"
+                                }
+                            }));
+                        }
+                        newSlide.push(/*#__PURE__*/ _react["default"].createElement("div", {
+                            key: 10 * i + j
+                        }, row));
+                    }
+                    if (settings.variableWidth) newChildren.push(/*#__PURE__*/ _react["default"].createElement("div", {
+                        key: i,
+                        style: {
+                            width: currentWidth
+                        }
+                    }, newSlide));
+                    else newChildren.push(/*#__PURE__*/ _react["default"].createElement("div", {
+                        key: i
+                    }, newSlide));
+                }
+                if (settings === "unslick") {
+                    var className = "regular slider " + (this.props.className || "");
+                    return(/*#__PURE__*/ _react["default"].createElement("div", {
+                        className: className
+                    }, children));
+                } else if (newChildren.length <= settings.slidesToShow) settings.unslick = true;
+                return(/*#__PURE__*/ _react["default"].createElement(_innerSlider.InnerSlider, _extends({
+                    style: this.props.style,
+                    ref: this.innerSliderRefHandler
+                }, settings), newChildren));
+            }
+        }
+    ]);
+    return Slider2;
+}(_react["default"].Component);
+exports["default"] = Slider1;
+
+},{"react":"6TuXu","./inner-slider":"l2LYu","json2mq":"bZKop","./default-props":"8bzBk","./utils/innerSliderUtils":"7EteA","enquire.js":"jUNp6"}],"l2LYu":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.InnerSlider = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _initialState = _interopRequireDefault(require("./initial-state"));
+var _lodash = _interopRequireDefault(require("lodash.debounce"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _innerSliderUtils = require("./utils/innerSliderUtils");
+var _track = require("./track");
+var _dots = require("./dots");
+var _arrows = require("./arrows");
+var _resizeObserverPolyfill = _interopRequireDefault(require("resize-observer-polyfill"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _typeof(obj) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
+        return typeof obj1;
+    } : function(obj1) {
+        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    }, _typeof(obj);
+}
+function _extends() {
+    _extends = Object.assign || function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _objectWithoutProperties(source, excluded) {
+    if (source == null) return {
+    };
+    var target = _objectWithoutPropertiesLoose(source, excluded);
+    var key, i;
+    if (Object.getOwnPropertySymbols) {
+        var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+        for(i = 0; i < sourceSymbolKeys.length; i++){
+            key = sourceSymbolKeys[i];
+            if (excluded.indexOf(key) >= 0) continue;
+            if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+            target[key] = source[key];
+        }
+    }
+    return target;
+}
+function _objectWithoutPropertiesLoose(source, excluded) {
+    if (source == null) return {
+    };
+    var target = {
+    };
+    var sourceKeys = Object.keys(source);
+    var key, i;
+    for(i = 0; i < sourceKeys.length; i++){
+        key = sourceKeys[i];
+        if (excluded.indexOf(key) >= 0) continue;
+        target[key] = source[key];
+    }
+    return target;
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties(target, props) {
+    for(var i = 0; i < props.length; i++){
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+    }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+        writable: false
+    });
+    return Constructor;
+}
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            writable: true,
+            configurable: true
+        }
+    });
+    Object.defineProperty(subClass, "prototype", {
+        writable: false
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
+        o1.__proto__ = p1;
+        return o1;
+    };
+    return _setPrototypeOf(o, p);
+}
+function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+    return function _createSuperInternal() {
+        var Super = _getPrototypeOf(Derived), result;
+        if (hasNativeReflectConstruct) {
+            var NewTarget = _getPrototypeOf(this).constructor;
+            result = Reflect.construct(Super, arguments, NewTarget);
+        } else result = Super.apply(this, arguments);
+        return _possibleConstructorReturn(this, result);
+    };
+}
+function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
+    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
+    return _assertThisInitialized(self);
+}
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+    try {
+        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+        }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
+        return o1.__proto__ || Object.getPrototypeOf(o1);
+    };
+    return _getPrototypeOf(o);
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+var InnerSlider1 = /*#__PURE__*/ function(_React$Component) {
+    _inherits(InnerSlider2, _React$Component);
+    var _super = _createSuper(InnerSlider2);
+    function InnerSlider2(props) {
+        var _this;
+        _classCallCheck(this, InnerSlider2);
+        _this = _super.call(this, props);
+        _defineProperty(_assertThisInitialized(_this), "listRefHandler", function(ref) {
+            return _this.list = ref;
+        });
+        _defineProperty(_assertThisInitialized(_this), "trackRefHandler", function(ref) {
+            return _this.track = ref;
+        });
+        _defineProperty(_assertThisInitialized(_this), "adaptHeight", function() {
+            if (_this.props.adaptiveHeight && _this.list) {
+                var elem = _this.list.querySelector("[data-index=\"".concat(_this.state.currentSlide, "\"]"));
+                _this.list.style.height = _innerSliderUtils.getHeight(elem) + "px";
+            }
+        });
+        _defineProperty(_assertThisInitialized(_this), "componentDidMount", function() {
+            _this.props.onInit && _this.props.onInit();
+            if (_this.props.lazyLoad) {
+                var slidesToLoad = _innerSliderUtils.getOnDemandLazySlides(_objectSpread(_objectSpread({
+                }, _this.props), _this.state));
+                if (slidesToLoad.length > 0) {
+                    _this.setState(function(prevState) {
+                        return {
+                            lazyLoadedList: prevState.lazyLoadedList.concat(slidesToLoad)
+                        };
+                    });
+                    if (_this.props.onLazyLoad) _this.props.onLazyLoad(slidesToLoad);
+                }
+            }
+            var spec = _objectSpread({
+                listRef: _this.list,
+                trackRef: _this.track
+            }, _this.props);
+            _this.updateState(spec, true, function() {
+                _this.adaptHeight();
+                _this.props.autoplay && _this.autoPlay("update");
+            });
+            if (_this.props.lazyLoad === "progressive") _this.lazyLoadTimer = setInterval(_this.progressiveLazyLoad, 1000);
+            _this.ro = new _resizeObserverPolyfill["default"](function() {
+                if (_this.state.animating) {
+                    _this.onWindowResized(false); // don't set trackStyle hence don't break animation
+                    _this.callbackTimers.push(setTimeout(function() {
+                        return _this.onWindowResized();
+                    }, _this.props.speed));
+                } else _this.onWindowResized();
+            });
+            _this.ro.observe(_this.list);
+            document.querySelectorAll && Array.prototype.forEach.call(document.querySelectorAll(".slick-slide"), function(slide) {
+                slide.onfocus = _this.props.pauseOnFocus ? _this.onSlideFocus : null;
+                slide.onblur = _this.props.pauseOnFocus ? _this.onSlideBlur : null;
+            });
+            if (window.addEventListener) window.addEventListener("resize", _this.onWindowResized);
+            else window.attachEvent("onresize", _this.onWindowResized);
+        });
+        _defineProperty(_assertThisInitialized(_this), "componentWillUnmount", function() {
+            if (_this.animationEndCallback) clearTimeout(_this.animationEndCallback);
+            if (_this.lazyLoadTimer) clearInterval(_this.lazyLoadTimer);
+            if (_this.callbackTimers.length) {
+                _this.callbackTimers.forEach(function(timer) {
+                    return clearTimeout(timer);
+                });
+                _this.callbackTimers = [];
+            }
+            if (window.addEventListener) window.removeEventListener("resize", _this.onWindowResized);
+            else window.detachEvent("onresize", _this.onWindowResized);
+            if (_this.autoplayTimer) clearInterval(_this.autoplayTimer);
+            _this.ro.disconnect();
+        });
+        _defineProperty(_assertThisInitialized(_this), "componentDidUpdate", function(prevProps) {
+            _this.checkImagesLoad();
+            _this.props.onReInit && _this.props.onReInit();
+            if (_this.props.lazyLoad) {
+                var slidesToLoad = _innerSliderUtils.getOnDemandLazySlides(_objectSpread(_objectSpread({
+                }, _this.props), _this.state));
+                if (slidesToLoad.length > 0) {
+                    _this.setState(function(prevState) {
+                        return {
+                            lazyLoadedList: prevState.lazyLoadedList.concat(slidesToLoad)
+                        };
+                    });
+                    if (_this.props.onLazyLoad) _this.props.onLazyLoad(slidesToLoad);
+                }
+            } // if (this.props.onLazyLoad) {
+            //   this.props.onLazyLoad([leftMostSlide])
+            // }
+            _this.adaptHeight();
+            var spec = _objectSpread(_objectSpread({
+                listRef: _this.list,
+                trackRef: _this.track
+            }, _this.props), _this.state);
+            var setTrackStyle = _this.didPropsChange(prevProps);
+            setTrackStyle && _this.updateState(spec, setTrackStyle, function() {
+                if (_this.state.currentSlide >= _react["default"].Children.count(_this.props.children)) _this.changeSlide({
+                    message: "index",
+                    index: _react["default"].Children.count(_this.props.children) - _this.props.slidesToShow,
+                    currentSlide: _this.state.currentSlide
+                });
+                if (_this.props.autoplay) _this.autoPlay("update");
+                else _this.pause("paused");
+            });
+        });
+        _defineProperty(_assertThisInitialized(_this), "onWindowResized", function(setTrackStyle) {
+            if (_this.debouncedResize) _this.debouncedResize.cancel();
+            _this.debouncedResize = _lodash["default"](function() {
+                return _this.resizeWindow(setTrackStyle);
+            }, 50);
+            _this.debouncedResize();
+        });
+        _defineProperty(_assertThisInitialized(_this), "resizeWindow", function() {
+            var setTrackStyle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+            var isTrackMounted = Boolean(_this.track && _this.track.node); // prevent warning: setting state on unmounted component (server side rendering)
+            if (!isTrackMounted) return;
+            var spec = _objectSpread(_objectSpread({
+                listRef: _this.list,
+                trackRef: _this.track
+            }, _this.props), _this.state);
+            _this.updateState(spec, setTrackStyle, function() {
+                if (_this.props.autoplay) _this.autoPlay("update");
+                else _this.pause("paused");
+            }); // animating state should be cleared while resizing, otherwise autoplay stops working
+            _this.setState({
+                animating: false
+            });
+            clearTimeout(_this.animationEndCallback);
+            delete _this.animationEndCallback;
+        });
+        _defineProperty(_assertThisInitialized(_this), "updateState", function(spec, setTrackStyle, callback) {
+            var updatedState = _innerSliderUtils.initializedState(spec);
+            spec = _objectSpread(_objectSpread(_objectSpread({
+            }, spec), updatedState), {
+            }, {
+                slideIndex: updatedState.currentSlide
+            });
+            var targetLeft = _innerSliderUtils.getTrackLeft(spec);
+            spec = _objectSpread(_objectSpread({
+            }, spec), {
+            }, {
+                left: targetLeft
+            });
+            var trackStyle = _innerSliderUtils.getTrackCSS(spec);
+            if (setTrackStyle || _react["default"].Children.count(_this.props.children) !== _react["default"].Children.count(spec.children)) updatedState["trackStyle"] = trackStyle;
+            _this.setState(updatedState, callback);
+        });
+        _defineProperty(_assertThisInitialized(_this), "ssrInit", function() {
+            if (_this.props.variableWidth) {
+                var _trackWidth = 0, _trackLeft = 0;
+                var childrenWidths = [];
+                var preClones = _innerSliderUtils.getPreClones(_objectSpread(_objectSpread(_objectSpread({
+                }, _this.props), _this.state), {
+                }, {
+                    slideCount: _this.props.children.length
+                }));
+                var postClones = _innerSliderUtils.getPostClones(_objectSpread(_objectSpread(_objectSpread({
+                }, _this.props), _this.state), {
+                }, {
+                    slideCount: _this.props.children.length
+                }));
+                _this.props.children.forEach(function(child) {
+                    childrenWidths.push(child.props.style.width);
+                    _trackWidth += child.props.style.width;
+                });
+                for(var i = 0; i < preClones; i++){
+                    _trackLeft += childrenWidths[childrenWidths.length - 1 - i];
+                    _trackWidth += childrenWidths[childrenWidths.length - 1 - i];
+                }
+                for(var _i = 0; _i < postClones; _i++)_trackWidth += childrenWidths[_i];
+                for(var _i2 = 0; _i2 < _this.state.currentSlide; _i2++)_trackLeft += childrenWidths[_i2];
+                var _trackStyle = {
+                    width: _trackWidth + "px",
+                    left: -_trackLeft + "px"
+                };
+                if (_this.props.centerMode) {
+                    var currentWidth = "".concat(childrenWidths[_this.state.currentSlide], "px");
+                    _trackStyle.left = "calc(".concat(_trackStyle.left, " + (100% - ").concat(currentWidth, ") / 2 ) ");
+                }
+                return {
+                    trackStyle: _trackStyle
+                };
+            }
+            var childrenCount = _react["default"].Children.count(_this.props.children);
+            var spec = _objectSpread(_objectSpread(_objectSpread({
+            }, _this.props), _this.state), {
+            }, {
+                slideCount: childrenCount
+            });
+            var slideCount = _innerSliderUtils.getPreClones(spec) + _innerSliderUtils.getPostClones(spec) + childrenCount;
+            var trackWidth = 100 / _this.props.slidesToShow * slideCount;
+            var slideWidth = 100 / slideCount;
+            var trackLeft = -slideWidth * (_innerSliderUtils.getPreClones(spec) + _this.state.currentSlide) * trackWidth / 100;
+            if (_this.props.centerMode) trackLeft += (100 - slideWidth * trackWidth / 100) / 2;
+            var trackStyle = {
+                width: trackWidth + "%",
+                left: trackLeft + "%"
+            };
+            return {
+                slideWidth: slideWidth + "%",
+                trackStyle: trackStyle
+            };
+        });
+        _defineProperty(_assertThisInitialized(_this), "checkImagesLoad", function() {
+            var images = _this.list && _this.list.querySelectorAll && _this.list.querySelectorAll(".slick-slide img") || [];
+            var imagesCount = images.length, loadedCount = 0;
+            Array.prototype.forEach.call(images, function(image) {
+                var handler = function handler1() {
+                    return (++loadedCount) && loadedCount >= imagesCount && _this.onWindowResized();
+                };
+                if (!image.onclick) image.onclick = function() {
+                    return image.parentNode.focus();
+                };
+                else {
+                    var prevClickHandler = image.onclick;
+                    image.onclick = function() {
+                        prevClickHandler();
+                        image.parentNode.focus();
+                    };
+                }
+                if (!image.onload) {
+                    if (_this.props.lazyLoad) image.onload = function() {
+                        _this.adaptHeight();
+                        _this.callbackTimers.push(setTimeout(_this.onWindowResized, _this.props.speed));
+                    };
+                    else {
+                        image.onload = handler;
+                        image.onerror = function() {
+                            handler();
+                            _this.props.onLazyLoadError && _this.props.onLazyLoadError();
+                        };
+                    }
+                }
+            });
+        });
+        _defineProperty(_assertThisInitialized(_this), "progressiveLazyLoad", function() {
+            var slidesToLoad = [];
+            var spec = _objectSpread(_objectSpread({
+            }, _this.props), _this.state);
+            for(var index = _this.state.currentSlide; index < _this.state.slideCount + _innerSliderUtils.getPostClones(spec); index++)if (_this.state.lazyLoadedList.indexOf(index) < 0) {
+                slidesToLoad.push(index);
+                break;
+            }
+            for(var _index = _this.state.currentSlide - 1; _index >= -_innerSliderUtils.getPreClones(spec); _index--)if (_this.state.lazyLoadedList.indexOf(_index) < 0) {
+                slidesToLoad.push(_index);
+                break;
+            }
+            if (slidesToLoad.length > 0) {
+                _this.setState(function(state) {
+                    return {
+                        lazyLoadedList: state.lazyLoadedList.concat(slidesToLoad)
+                    };
+                });
+                if (_this.props.onLazyLoad) _this.props.onLazyLoad(slidesToLoad);
+            } else if (_this.lazyLoadTimer) {
+                clearInterval(_this.lazyLoadTimer);
+                delete _this.lazyLoadTimer;
+            }
+        });
+        _defineProperty(_assertThisInitialized(_this), "slideHandler", function(index) {
+            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            var _this$props = _this.props, asNavFor = _this$props.asNavFor, beforeChange = _this$props.beforeChange, onLazyLoad = _this$props.onLazyLoad, speed = _this$props.speed, afterChange = _this$props.afterChange; // capture currentslide before state is updated
+            var currentSlide = _this.state.currentSlide;
+            var _slideHandler = _innerSliderUtils.slideHandler(_objectSpread(_objectSpread(_objectSpread({
+                index: index
+            }, _this.props), _this.state), {
+            }, {
+                trackRef: _this.track,
+                useCSS: _this.props.useCSS && !dontAnimate
+            })), state = _slideHandler.state, nextState = _slideHandler.nextState;
+            if (!state) return;
+            beforeChange && beforeChange(currentSlide, state.currentSlide);
+            var slidesToLoad = state.lazyLoadedList.filter(function(value) {
+                return _this.state.lazyLoadedList.indexOf(value) < 0;
+            });
+            onLazyLoad && slidesToLoad.length > 0 && onLazyLoad(slidesToLoad);
+            if (!_this.props.waitForAnimate && _this.animationEndCallback) {
+                clearTimeout(_this.animationEndCallback);
+                afterChange && afterChange(currentSlide);
+                delete _this.animationEndCallback;
+            }
+            _this.setState(state, function() {
+                // asNavForIndex check is to avoid recursive calls of slideHandler in waitForAnimate=false mode
+                if (asNavFor && _this.asNavForIndex !== index) {
+                    _this.asNavForIndex = index;
+                    asNavFor.innerSlider.slideHandler(index);
+                }
+                if (!nextState) return;
+                _this.animationEndCallback = setTimeout(function() {
+                    var animating = nextState.animating, firstBatch = _objectWithoutProperties(nextState, [
+                        "animating"
+                    ]);
+                    _this.setState(firstBatch, function() {
+                        _this.callbackTimers.push(setTimeout(function() {
+                            return _this.setState({
+                                animating: animating
+                            });
+                        }, 10));
+                        afterChange && afterChange(state.currentSlide);
+                        delete _this.animationEndCallback;
+                    });
+                }, speed);
+            });
+        });
+        _defineProperty(_assertThisInitialized(_this), "changeSlide", function(options) {
+            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            var spec = _objectSpread(_objectSpread({
+            }, _this.props), _this.state);
+            var targetSlide = _innerSliderUtils.changeSlide(spec, options);
+            if (targetSlide !== 0 && !targetSlide) return;
+            if (dontAnimate === true) _this.slideHandler(targetSlide, dontAnimate);
+            else _this.slideHandler(targetSlide);
+            _this.props.autoplay && _this.autoPlay("update");
+            if (_this.props.focusOnSelect) {
+                var nodes = _this.list.querySelectorAll(".slick-current");
+                nodes[0] && nodes[0].focus();
+            }
+        });
+        _defineProperty(_assertThisInitialized(_this), "clickHandler", function(e) {
+            if (_this.clickable === false) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            _this.clickable = true;
+        });
+        _defineProperty(_assertThisInitialized(_this), "keyHandler", function(e) {
+            var dir = _innerSliderUtils.keyHandler(e, _this.props.accessibility, _this.props.rtl);
+            dir !== "" && _this.changeSlide({
+                message: dir
+            });
+        });
+        _defineProperty(_assertThisInitialized(_this), "selectHandler", function(options) {
+            _this.changeSlide(options);
+        });
+        _defineProperty(_assertThisInitialized(_this), "disableBodyScroll", function() {
+            var preventDefault = function preventDefault1(e) {
+                e = e || window.event;
+                if (e.preventDefault) e.preventDefault();
+                e.returnValue = false;
+            };
+            window.ontouchmove = preventDefault;
+        });
+        _defineProperty(_assertThisInitialized(_this), "enableBodyScroll", function() {
+            window.ontouchmove = null;
+        });
+        _defineProperty(_assertThisInitialized(_this), "swipeStart", function(e) {
+            if (_this.props.verticalSwiping) _this.disableBodyScroll();
+            var state = _innerSliderUtils.swipeStart(e, _this.props.swipe, _this.props.draggable);
+            state !== "" && _this.setState(state);
+        });
+        _defineProperty(_assertThisInitialized(_this), "swipeMove", function(e) {
+            var state = _innerSliderUtils.swipeMove(e, _objectSpread(_objectSpread(_objectSpread({
+            }, _this.props), _this.state), {
+            }, {
+                trackRef: _this.track,
+                listRef: _this.list,
+                slideIndex: _this.state.currentSlide
+            }));
+            if (!state) return;
+            if (state["swiping"]) _this.clickable = false;
+            _this.setState(state);
+        });
+        _defineProperty(_assertThisInitialized(_this), "swipeEnd", function(e) {
+            var state = _innerSliderUtils.swipeEnd(e, _objectSpread(_objectSpread(_objectSpread({
+            }, _this.props), _this.state), {
+            }, {
+                trackRef: _this.track,
+                listRef: _this.list,
+                slideIndex: _this.state.currentSlide
+            }));
+            if (!state) return;
+            var triggerSlideHandler = state["triggerSlideHandler"];
+            delete state["triggerSlideHandler"];
+            _this.setState(state);
+            if (triggerSlideHandler === undefined) return;
+            _this.slideHandler(triggerSlideHandler);
+            if (_this.props.verticalSwiping) _this.enableBodyScroll();
+        });
+        _defineProperty(_assertThisInitialized(_this), "touchEnd", function(e) {
+            _this.swipeEnd(e);
+            _this.clickable = true;
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickPrev", function() {
+            // this and fellow methods are wrapped in setTimeout
+            // to make sure initialize setState has happened before
+            // any of such methods are called
+            _this.callbackTimers.push(setTimeout(function() {
+                return _this.changeSlide({
+                    message: "previous"
+                });
+            }, 0));
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickNext", function() {
+            _this.callbackTimers.push(setTimeout(function() {
+                return _this.changeSlide({
+                    message: "next"
+                });
+            }, 0));
+        });
+        _defineProperty(_assertThisInitialized(_this), "slickGoTo", function(slide) {
+            var dontAnimate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            slide = Number(slide);
+            if (isNaN(slide)) return "";
+            _this.callbackTimers.push(setTimeout(function() {
+                return _this.changeSlide({
+                    message: "index",
+                    index: slide,
+                    currentSlide: _this.state.currentSlide
+                }, dontAnimate);
+            }, 0));
+        });
+        _defineProperty(_assertThisInitialized(_this), "play", function() {
+            var nextIndex;
+            if (_this.props.rtl) nextIndex = _this.state.currentSlide - _this.props.slidesToScroll;
+            else {
+                if (_innerSliderUtils.canGoNext(_objectSpread(_objectSpread({
+                }, _this.props), _this.state))) nextIndex = _this.state.currentSlide + _this.props.slidesToScroll;
+                else return false;
+            }
+            _this.slideHandler(nextIndex);
+        });
+        _defineProperty(_assertThisInitialized(_this), "autoPlay", function(playType) {
+            if (_this.autoplayTimer) clearInterval(_this.autoplayTimer);
+            var autoplaying = _this.state.autoplaying;
+            if (playType === "update") {
+                if (autoplaying === "hovered" || autoplaying === "focused" || autoplaying === "paused") return;
+            } else if (playType === "leave") {
+                if (autoplaying === "paused" || autoplaying === "focused") return;
+            } else if (playType === "blur") {
+                if (autoplaying === "paused" || autoplaying === "hovered") return;
+            }
+            _this.autoplayTimer = setInterval(_this.play, _this.props.autoplaySpeed + 50);
+            _this.setState({
+                autoplaying: "playing"
+            });
+        });
+        _defineProperty(_assertThisInitialized(_this), "pause", function(pauseType) {
+            if (_this.autoplayTimer) {
+                clearInterval(_this.autoplayTimer);
+                _this.autoplayTimer = null;
+            }
+            var autoplaying = _this.state.autoplaying;
+            if (pauseType === "paused") _this.setState({
+                autoplaying: "paused"
+            });
+            else if (pauseType === "focused") {
+                if (autoplaying === "hovered" || autoplaying === "playing") _this.setState({
+                    autoplaying: "focused"
+                });
+            } else // pauseType  is 'hovered'
+            if (autoplaying === "playing") _this.setState({
+                autoplaying: "hovered"
+            });
+        });
+        _defineProperty(_assertThisInitialized(_this), "onDotsOver", function() {
+            return _this.props.autoplay && _this.pause("hovered");
+        });
+        _defineProperty(_assertThisInitialized(_this), "onDotsLeave", function() {
+            return _this.props.autoplay && _this.state.autoplaying === "hovered" && _this.autoPlay("leave");
+        });
+        _defineProperty(_assertThisInitialized(_this), "onTrackOver", function() {
+            return _this.props.autoplay && _this.pause("hovered");
+        });
+        _defineProperty(_assertThisInitialized(_this), "onTrackLeave", function() {
+            return _this.props.autoplay && _this.state.autoplaying === "hovered" && _this.autoPlay("leave");
+        });
+        _defineProperty(_assertThisInitialized(_this), "onSlideFocus", function() {
+            return _this.props.autoplay && _this.pause("focused");
+        });
+        _defineProperty(_assertThisInitialized(_this), "onSlideBlur", function() {
+            return _this.props.autoplay && _this.state.autoplaying === "focused" && _this.autoPlay("blur");
+        });
+        _defineProperty(_assertThisInitialized(_this), "render", function() {
+            var className = _classnames["default"]("slick-slider", _this.props.className, {
+                "slick-vertical": _this.props.vertical,
+                "slick-initialized": true
+            });
+            var spec = _objectSpread(_objectSpread({
+            }, _this.props), _this.state);
+            var trackProps = _innerSliderUtils.extractObject(spec, [
+                "fade",
+                "cssEase",
+                "speed",
+                "infinite",
+                "centerMode",
+                "focusOnSelect",
+                "currentSlide",
+                "lazyLoad",
+                "lazyLoadedList",
+                "rtl",
+                "slideWidth",
+                "slideHeight",
+                "listHeight",
+                "vertical",
+                "slidesToShow",
+                "slidesToScroll",
+                "slideCount",
+                "trackStyle",
+                "variableWidth",
+                "unslick",
+                "centerPadding",
+                "targetSlide",
+                "useCSS"
+            ]);
+            var pauseOnHover = _this.props.pauseOnHover;
+            trackProps = _objectSpread(_objectSpread({
+            }, trackProps), {
+            }, {
+                onMouseEnter: pauseOnHover ? _this.onTrackOver : null,
+                onMouseLeave: pauseOnHover ? _this.onTrackLeave : null,
+                onMouseOver: pauseOnHover ? _this.onTrackOver : null,
+                focusOnSelect: _this.props.focusOnSelect && _this.clickable ? _this.selectHandler : null
+            });
+            var dots;
+            if (_this.props.dots === true && _this.state.slideCount >= _this.props.slidesToShow) {
+                var dotProps = _innerSliderUtils.extractObject(spec, [
+                    "dotsClass",
+                    "slideCount",
+                    "slidesToShow",
+                    "currentSlide",
+                    "slidesToScroll",
+                    "clickHandler",
+                    "children",
+                    "customPaging",
+                    "infinite",
+                    "appendDots"
+                ]);
+                var pauseOnDotsHover = _this.props.pauseOnDotsHover;
+                dotProps = _objectSpread(_objectSpread({
+                }, dotProps), {
+                }, {
+                    clickHandler: _this.changeSlide,
+                    onMouseEnter: pauseOnDotsHover ? _this.onDotsLeave : null,
+                    onMouseOver: pauseOnDotsHover ? _this.onDotsOver : null,
+                    onMouseLeave: pauseOnDotsHover ? _this.onDotsLeave : null
+                });
+                dots = /*#__PURE__*/ _react["default"].createElement(_dots.Dots, dotProps);
+            }
+            var prevArrow, nextArrow;
+            var arrowProps = _innerSliderUtils.extractObject(spec, [
+                "infinite",
+                "centerMode",
+                "currentSlide",
+                "slideCount",
+                "slidesToShow",
+                "prevArrow",
+                "nextArrow"
+            ]);
+            arrowProps.clickHandler = _this.changeSlide;
+            if (_this.props.arrows) {
+                prevArrow = /*#__PURE__*/ _react["default"].createElement(_arrows.PrevArrow, arrowProps);
+                nextArrow = /*#__PURE__*/ _react["default"].createElement(_arrows.NextArrow, arrowProps);
+            }
+            var verticalHeightStyle = null;
+            if (_this.props.vertical) verticalHeightStyle = {
+                height: _this.state.listHeight
+            };
+            var centerPaddingStyle = null;
+            if (_this.props.vertical === false) {
+                if (_this.props.centerMode === true) centerPaddingStyle = {
+                    padding: "0px " + _this.props.centerPadding
+                };
+            } else if (_this.props.centerMode === true) centerPaddingStyle = {
+                padding: _this.props.centerPadding + " 0px"
+            };
+            var listStyle = _objectSpread(_objectSpread({
+            }, verticalHeightStyle), centerPaddingStyle);
+            var touchMove = _this.props.touchMove;
+            var listProps = {
+                className: "slick-list",
+                style: listStyle,
+                onClick: _this.clickHandler,
+                onMouseDown: touchMove ? _this.swipeStart : null,
+                onMouseMove: _this.state.dragging && touchMove ? _this.swipeMove : null,
+                onMouseUp: touchMove ? _this.swipeEnd : null,
+                onMouseLeave: _this.state.dragging && touchMove ? _this.swipeEnd : null,
+                onTouchStart: touchMove ? _this.swipeStart : null,
+                onTouchMove: _this.state.dragging && touchMove ? _this.swipeMove : null,
+                onTouchEnd: touchMove ? _this.touchEnd : null,
+                onTouchCancel: _this.state.dragging && touchMove ? _this.swipeEnd : null,
+                onKeyDown: _this.props.accessibility ? _this.keyHandler : null
+            };
+            var innerSliderProps = {
+                className: className,
+                dir: "ltr",
+                style: _this.props.style
+            };
+            if (_this.props.unslick) {
+                listProps = {
+                    className: "slick-list"
+                };
+                innerSliderProps = {
+                    className: className
+                };
+            }
+            return(/*#__PURE__*/ _react["default"].createElement("div", innerSliderProps, !_this.props.unslick ? prevArrow : "", /*#__PURE__*/ _react["default"].createElement("div", _extends({
+                ref: _this.listRefHandler
+            }, listProps), /*#__PURE__*/ _react["default"].createElement(_track.Track, _extends({
+                ref: _this.trackRefHandler
+            }, trackProps), _this.props.children)), !_this.props.unslick ? nextArrow : "", !_this.props.unslick ? dots : ""));
+        });
+        _this.list = null;
+        _this.track = null;
+        _this.state = _objectSpread(_objectSpread({
+        }, _initialState["default"]), {
+        }, {
+            currentSlide: _this.props.initialSlide,
+            slideCount: _react["default"].Children.count(_this.props.children)
+        });
+        _this.callbackTimers = [];
+        _this.clickable = true;
+        _this.debouncedResize = null;
+        var ssrState = _this.ssrInit();
+        _this.state = _objectSpread(_objectSpread({
+        }, _this.state), ssrState);
+        return _this;
+    }
+    _createClass(InnerSlider2, [
+        {
+            key: "didPropsChange",
+            value: function didPropsChange(prevProps) {
+                var setTrackStyle = false;
+                for(var _i3 = 0, _Object$keys = Object.keys(this.props); _i3 < _Object$keys.length; _i3++){
+                    var key = _Object$keys[_i3];
+                    if (!prevProps.hasOwnProperty(key)) {
+                        setTrackStyle = true;
+                        break;
+                    }
+                    if (_typeof(prevProps[key]) === "object" || typeof prevProps[key] === "function") continue;
+                    if (prevProps[key] !== this.props[key]) {
+                        setTrackStyle = true;
+                        break;
+                    }
+                }
+                return setTrackStyle || _react["default"].Children.count(this.props.children) !== _react["default"].Children.count(prevProps.children);
+            }
+        }
+    ]);
+    return InnerSlider2;
+}(_react["default"].Component);
+exports.InnerSlider = InnerSlider1;
+
+},{"react":"6TuXu","./initial-state":"j9WrN","lodash.debounce":"fwP7H","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA","./track":"6DHmH","./dots":"h2xzK","./arrows":"jdJ4A","resize-observer-polyfill":"AHOwr"}],"j9WrN":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var initialState = {
+    animating: false,
+    autoplaying: null,
+    currentDirection: 0,
+    currentLeft: null,
+    currentSlide: 0,
+    direction: 1,
+    dragging: false,
+    edgeDragged: false,
+    initialized: false,
+    lazyLoadedList: [],
+    listHeight: null,
+    listWidth: null,
+    scrolling: false,
+    slideCount: null,
+    slideHeight: null,
+    slideWidth: null,
+    swipeLeft: null,
+    swiped: false,
+    // used by swipeEvent. differentites between touch and swipe.
+    swiping: false,
+    touchObject: {
+        startX: 0,
+        startY: 0,
+        curX: 0,
+        curY: 0
+    },
+    trackStyle: {
+    },
+    trackWidth: 0,
+    targetSlide: 0
+};
+var _default = initialState;
+exports["default"] = _default;
+
+},{}],"fwP7H":[function(require,module,exports) {
+var global = arguments[3];
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */ /** Used as the `TypeError` message for "Functions" methods. */ var FUNC_ERROR_TEXT = 'Expected a function';
+/** Used as references for various `Number` constants. */ var NAN = 0 / 0;
+/** `Object#toString` result references. */ var symbolTag = '[object Symbol]';
+/** Used to match leading and trailing whitespace. */ var reTrim = /^\s+|\s+$/g;
+/** Used to detect bad signed hexadecimal string values. */ var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+/** Used to detect binary string values. */ var reIsBinary = /^0b[01]+$/i;
+/** Used to detect octal string values. */ var reIsOctal = /^0o[0-7]+$/i;
+/** Built-in method references without a dependency on `root`. */ var freeParseInt = parseInt;
+/** Detect free variable `global` from Node.js. */ var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+/** Detect free variable `self`. */ var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+/** Used as a reference to the global object. */ var root = freeGlobal || freeSelf || Function('return this')();
+/** Used for built-in method references. */ var objectProto = Object.prototype;
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */ var objectToString = objectProto.toString;
+/* Built-in method references for those with the same name as other `lodash` methods. */ var nativeMax = Math.max, nativeMin = Math.min;
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */ var now = function() {
+    return root.Date.now();
+};
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */ function debounce(func, wait, options) {
+    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
+    if (typeof func != 'function') throw new TypeError(FUNC_ERROR_TEXT);
+    wait = toNumber(wait) || 0;
+    if (isObject(options)) {
+        leading = !!options.leading;
+        maxing = 'maxWait' in options;
+        maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+    function invokeFunc(time) {
+        var args = lastArgs, thisArg = lastThis;
+        lastArgs = lastThis = undefined;
+        lastInvokeTime = time;
+        result = func.apply(thisArg, args);
+        return result;
+    }
+    function leadingEdge(time) {
+        // Reset any `maxWait` timer.
+        lastInvokeTime = time;
+        // Start the timer for the trailing edge.
+        timerId = setTimeout(timerExpired, wait);
+        // Invoke the leading edge.
+        return leading ? invokeFunc(time) : result;
+    }
+    function remainingWait(time) {
+        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime, result1 = wait - timeSinceLastCall;
+        return maxing ? nativeMin(result1, maxWait - timeSinceLastInvoke) : result1;
+    }
+    function shouldInvoke(time) {
+        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime;
+        // Either this is the first call, activity has stopped and we're at the
+        // trailing edge, the system time has gone backwards and we're treating
+        // it as the trailing edge, or we've hit the `maxWait` limit.
+        return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
+    }
+    function timerExpired() {
+        var time = now();
+        if (shouldInvoke(time)) return trailingEdge(time);
+        // Restart the timer.
+        timerId = setTimeout(timerExpired, remainingWait(time));
+    }
+    function trailingEdge(time) {
+        timerId = undefined;
+        // Only invoke if we have `lastArgs` which means `func` has been
+        // debounced at least once.
+        if (trailing && lastArgs) return invokeFunc(time);
+        lastArgs = lastThis = undefined;
+        return result;
+    }
+    function cancel() {
+        if (timerId !== undefined) clearTimeout(timerId);
+        lastInvokeTime = 0;
+        lastArgs = lastCallTime = lastThis = timerId = undefined;
+    }
+    function flush() {
+        return timerId === undefined ? result : trailingEdge(now());
+    }
+    function debounced() {
+        var time = now(), isInvoking = shouldInvoke(time);
+        lastArgs = arguments;
+        lastThis = this;
+        lastCallTime = time;
+        if (isInvoking) {
+            if (timerId === undefined) return leadingEdge(lastCallTime);
+            if (maxing) {
+                // Handle invocations in a tight loop.
+                timerId = setTimeout(timerExpired, wait);
+                return invokeFunc(lastCallTime);
+            }
+        }
+        if (timerId === undefined) timerId = setTimeout(timerExpired, wait);
+        return result;
+    }
+    debounced.cancel = cancel;
+    debounced.flush = flush;
+    return debounced;
+}
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */ function isObject(value) {
+    var type = typeof value;
+    return !!value && (type == 'object' || type == 'function');
+}
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */ function isObjectLike(value) {
+    return !!value && typeof value == 'object';
+}
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */ function isSymbol(value) {
+    return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+}
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */ function toNumber(value) {
+    if (typeof value == 'number') return value;
+    if (isSymbol(value)) return NAN;
+    if (isObject(value)) {
+        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+        value = isObject(other) ? other + '' : other;
+    }
+    if (typeof value != 'string') return value === 0 ? value : +value;
+    value = value.replace(reTrim, '');
+    var isBinary = reIsBinary.test(value);
+    return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+}
+module.exports = debounce;
+
+},{}],"7EteA":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.checkSpecKeys = exports.checkNavigable = exports.changeSlide = exports.canUseDOM = exports.canGoNext = void 0;
+exports.clamp = clamp;
+exports.swipeStart = exports.swipeMove = exports.swipeEnd = exports.slidesOnRight = exports.slidesOnLeft = exports.slideHandler = exports.siblingDirection = exports.safePreventDefault = exports.lazyStartIndex = exports.lazySlidesOnRight = exports.lazySlidesOnLeft = exports.lazyEndIndex = exports.keyHandler = exports.initializedState = exports.getWidth = exports.getTrackLeft = exports.getTrackCSS = exports.getTrackAnimateCSS = exports.getTotalSlides = exports.getSwipeDirection = exports.getSlideCount = exports.getRequiredLazySlides = exports.getPreClones = exports.getPostClones = exports.getOnDemandLazySlides = exports.getNavigableIndexes = exports.getHeight = exports.extractObject = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function clamp(number, lowerBound, upperBound) {
+    return Math.max(lowerBound, Math.min(number, upperBound));
+}
+var safePreventDefault = function safePreventDefault1(event) {
+    var passiveEvents = [
+        "onTouchStart",
+        "onTouchMove",
+        "onWheel"
+    ];
+    if (!passiveEvents.includes(event._reactName)) event.preventDefault();
+};
+exports.safePreventDefault = safePreventDefault;
+var getOnDemandLazySlides = function getOnDemandLazySlides1(spec) {
+    var onDemandSlides = [];
+    var startIndex = lazyStartIndex(spec);
+    var endIndex = lazyEndIndex(spec);
+    for(var slideIndex = startIndex; slideIndex < endIndex; slideIndex++)if (spec.lazyLoadedList.indexOf(slideIndex) < 0) onDemandSlides.push(slideIndex);
+    return onDemandSlides;
+}; // return list of slides that need to be present
+exports.getOnDemandLazySlides = getOnDemandLazySlides;
+var getRequiredLazySlides = function getRequiredLazySlides1(spec) {
+    var requiredSlides = [];
+    var startIndex = lazyStartIndex(spec);
+    var endIndex = lazyEndIndex(spec);
+    for(var slideIndex = startIndex; slideIndex < endIndex; slideIndex++)requiredSlides.push(slideIndex);
+    return requiredSlides;
+}; // startIndex that needs to be present
+exports.getRequiredLazySlides = getRequiredLazySlides;
+var lazyStartIndex = function lazyStartIndex1(spec) {
+    return spec.currentSlide - lazySlidesOnLeft(spec);
+};
+exports.lazyStartIndex = lazyStartIndex;
+var lazyEndIndex = function lazyEndIndex1(spec) {
+    return spec.currentSlide + lazySlidesOnRight(spec);
+};
+exports.lazyEndIndex = lazyEndIndex;
+var lazySlidesOnLeft = function lazySlidesOnLeft1(spec) {
+    return spec.centerMode ? Math.floor(spec.slidesToShow / 2) + (parseInt(spec.centerPadding) > 0 ? 1 : 0) : 0;
+};
+exports.lazySlidesOnLeft = lazySlidesOnLeft;
+var lazySlidesOnRight = function lazySlidesOnRight1(spec) {
+    return spec.centerMode ? Math.floor((spec.slidesToShow - 1) / 2) + 1 + (parseInt(spec.centerPadding) > 0 ? 1 : 0) : spec.slidesToShow;
+}; // get width of an element
+exports.lazySlidesOnRight = lazySlidesOnRight;
+var getWidth = function getWidth1(elem) {
+    return elem && elem.offsetWidth || 0;
+};
+exports.getWidth = getWidth;
+var getHeight = function getHeight1(elem) {
+    return elem && elem.offsetHeight || 0;
+};
+exports.getHeight = getHeight;
+var getSwipeDirection = function getSwipeDirection1(touchObject) {
+    var verticalSwiping = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var xDist, yDist, r, swipeAngle;
+    xDist = touchObject.startX - touchObject.curX;
+    yDist = touchObject.startY - touchObject.curY;
+    r = Math.atan2(yDist, xDist);
+    swipeAngle = Math.round(r * 180 / Math.PI);
+    if (swipeAngle < 0) swipeAngle = 360 - Math.abs(swipeAngle);
+    if (swipeAngle <= 45 && swipeAngle >= 0 || swipeAngle <= 360 && swipeAngle >= 315) return "left";
+    if (swipeAngle >= 135 && swipeAngle <= 225) return "right";
+    if (verticalSwiping === true) {
+        if (swipeAngle >= 35 && swipeAngle <= 135) return "up";
+        else return "down";
+    }
+    return "vertical";
+}; // whether or not we can go next
+exports.getSwipeDirection = getSwipeDirection;
+var canGoNext = function canGoNext1(spec) {
+    var canGo = true;
+    if (!spec.infinite) {
+        if (spec.centerMode && spec.currentSlide >= spec.slideCount - 1) canGo = false;
+        else if (spec.slideCount <= spec.slidesToShow || spec.currentSlide >= spec.slideCount - spec.slidesToShow) canGo = false;
+    }
+    return canGo;
+}; // given an object and a list of keys, return new object with given keys
+exports.canGoNext = canGoNext;
+var extractObject = function extractObject1(spec, keys) {
+    var newObject = {
+    };
+    keys.forEach(function(key) {
+        return newObject[key] = spec[key];
+    });
+    return newObject;
+}; // get initialized state
+exports.extractObject = extractObject;
+var initializedState = function initializedState1(spec) {
+    // spec also contains listRef, trackRef
+    var slideCount = _react["default"].Children.count(spec.children);
+    var listNode = spec.listRef;
+    var listWidth = Math.ceil(getWidth(listNode));
+    var trackNode = spec.trackRef && spec.trackRef.node;
+    var trackWidth = Math.ceil(getWidth(trackNode));
+    var slideWidth;
+    if (!spec.vertical) {
+        var centerPaddingAdj = spec.centerMode && parseInt(spec.centerPadding) * 2;
+        if (typeof spec.centerPadding === "string" && spec.centerPadding.slice(-1) === "%") centerPaddingAdj *= listWidth / 100;
+        slideWidth = Math.ceil((listWidth - centerPaddingAdj) / spec.slidesToShow);
+    } else slideWidth = listWidth;
+    var slideHeight = listNode && getHeight(listNode.querySelector('[data-index="0"]'));
+    var listHeight = slideHeight * spec.slidesToShow;
+    var currentSlide = spec.currentSlide === undefined ? spec.initialSlide : spec.currentSlide;
+    if (spec.rtl && spec.currentSlide === undefined) currentSlide = slideCount - 1 - spec.initialSlide;
+    var lazyLoadedList = spec.lazyLoadedList || [];
+    var slidesToLoad = getOnDemandLazySlides(_objectSpread(_objectSpread({
+    }, spec), {
+    }, {
+        currentSlide: currentSlide,
+        lazyLoadedList: lazyLoadedList
+    }));
+    lazyLoadedList = lazyLoadedList.concat(slidesToLoad);
+    var state = {
+        slideCount: slideCount,
+        slideWidth: slideWidth,
+        listWidth: listWidth,
+        trackWidth: trackWidth,
+        currentSlide: currentSlide,
+        slideHeight: slideHeight,
+        listHeight: listHeight,
+        lazyLoadedList: lazyLoadedList
+    };
+    if (spec.autoplaying === null && spec.autoplay) state["autoplaying"] = "playing";
+    return state;
+};
+exports.initializedState = initializedState;
+var slideHandler = function slideHandler1(spec) {
+    var waitForAnimate = spec.waitForAnimate, animating = spec.animating, fade = spec.fade, infinite = spec.infinite, index = spec.index, slideCount = spec.slideCount, lazyLoad = spec.lazyLoad, currentSlide = spec.currentSlide, centerMode = spec.centerMode, slidesToScroll = spec.slidesToScroll, slidesToShow = spec.slidesToShow, useCSS = spec.useCSS;
+    var lazyLoadedList = spec.lazyLoadedList;
+    if (waitForAnimate && animating) return {
+    };
+    var animationSlide = index, finalSlide, animationLeft, finalLeft;
+    var state = {
+    }, nextState = {
+    };
+    var targetSlide = infinite ? index : clamp(index, 0, slideCount - 1);
+    if (fade) {
+        if (!infinite && (index < 0 || index >= slideCount)) return {
+        };
+        if (index < 0) animationSlide = index + slideCount;
+        else if (index >= slideCount) animationSlide = index - slideCount;
+        if (lazyLoad && lazyLoadedList.indexOf(animationSlide) < 0) lazyLoadedList = lazyLoadedList.concat(animationSlide);
+        state = {
+            animating: true,
+            currentSlide: animationSlide,
+            lazyLoadedList: lazyLoadedList,
+            targetSlide: animationSlide
+        };
+        nextState = {
+            animating: false,
+            targetSlide: animationSlide
+        };
+    } else {
+        finalSlide = animationSlide;
+        if (animationSlide < 0) {
+            finalSlide = animationSlide + slideCount;
+            if (!infinite) finalSlide = 0;
+            else if (slideCount % slidesToScroll !== 0) finalSlide = slideCount - slideCount % slidesToScroll;
+        } else if (!canGoNext(spec) && animationSlide > currentSlide) animationSlide = finalSlide = currentSlide;
+        else if (centerMode && animationSlide >= slideCount) {
+            animationSlide = infinite ? slideCount : slideCount - 1;
+            finalSlide = infinite ? 0 : slideCount - 1;
+        } else if (animationSlide >= slideCount) {
+            finalSlide = animationSlide - slideCount;
+            if (!infinite) finalSlide = slideCount - slidesToShow;
+            else if (slideCount % slidesToScroll !== 0) finalSlide = 0;
+        }
+        if (!infinite && animationSlide + slidesToShow >= slideCount) finalSlide = slideCount - slidesToShow;
+        animationLeft = getTrackLeft(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            slideIndex: animationSlide
+        }));
+        finalLeft = getTrackLeft(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            slideIndex: finalSlide
+        }));
+        if (!infinite) {
+            if (animationLeft === finalLeft) animationSlide = finalSlide;
+            animationLeft = finalLeft;
+        }
+        if (lazyLoad) lazyLoadedList = lazyLoadedList.concat(getOnDemandLazySlides(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            currentSlide: animationSlide
+        })));
+        if (!useCSS) state = {
+            currentSlide: finalSlide,
+            trackStyle: getTrackCSS(_objectSpread(_objectSpread({
+            }, spec), {
+            }, {
+                left: finalLeft
+            })),
+            lazyLoadedList: lazyLoadedList,
+            targetSlide: targetSlide
+        };
+        else {
+            state = {
+                animating: true,
+                currentSlide: finalSlide,
+                trackStyle: getTrackAnimateCSS(_objectSpread(_objectSpread({
+                }, spec), {
+                }, {
+                    left: animationLeft
+                })),
+                lazyLoadedList: lazyLoadedList,
+                targetSlide: targetSlide
+            };
+            nextState = {
+                animating: false,
+                currentSlide: finalSlide,
+                trackStyle: getTrackCSS(_objectSpread(_objectSpread({
+                }, spec), {
+                }, {
+                    left: finalLeft
+                })),
+                swipeLeft: null,
+                targetSlide: targetSlide
+            };
+        }
+    }
+    return {
+        state: state,
+        nextState: nextState
+    };
+};
+exports.slideHandler = slideHandler;
+var changeSlide = function changeSlide1(spec, options) {
+    var indexOffset, previousInt, slideOffset, unevenOffset, targetSlide;
+    var slidesToScroll = spec.slidesToScroll, slidesToShow = spec.slidesToShow, slideCount = spec.slideCount, currentSlide = spec.currentSlide, previousTargetSlide = spec.targetSlide, lazyLoad = spec.lazyLoad, infinite = spec.infinite;
+    unevenOffset = slideCount % slidesToScroll !== 0;
+    indexOffset = unevenOffset ? 0 : (slideCount - currentSlide) % slidesToScroll;
+    if (options.message === "previous") {
+        slideOffset = indexOffset === 0 ? slidesToScroll : slidesToShow - indexOffset;
+        targetSlide = currentSlide - slideOffset;
+        if (lazyLoad && !infinite) {
+            previousInt = currentSlide - slideOffset;
+            targetSlide = previousInt === -1 ? slideCount - 1 : previousInt;
+        }
+        if (!infinite) targetSlide = previousTargetSlide - slidesToScroll;
+    } else if (options.message === "next") {
+        slideOffset = indexOffset === 0 ? slidesToScroll : indexOffset;
+        targetSlide = currentSlide + slideOffset;
+        if (lazyLoad && !infinite) targetSlide = (currentSlide + slidesToScroll) % slideCount + indexOffset;
+        if (!infinite) targetSlide = previousTargetSlide + slidesToScroll;
+    } else if (options.message === "dots") // Click on dots
+    targetSlide = options.index * options.slidesToScroll;
+    else if (options.message === "children") {
+        // Click on the slides
+        targetSlide = options.index;
+        if (infinite) {
+            var direction = siblingDirection(_objectSpread(_objectSpread({
+            }, spec), {
+            }, {
+                targetSlide: targetSlide
+            }));
+            if (targetSlide > options.currentSlide && direction === "left") targetSlide = targetSlide - slideCount;
+            else if (targetSlide < options.currentSlide && direction === "right") targetSlide = targetSlide + slideCount;
+        }
+    } else if (options.message === "index") targetSlide = Number(options.index);
+    return targetSlide;
+};
+exports.changeSlide = changeSlide;
+var keyHandler = function keyHandler1(e, accessibility, rtl) {
+    if (e.target.tagName.match("TEXTAREA|INPUT|SELECT") || !accessibility) return "";
+    if (e.keyCode === 37) return rtl ? "next" : "previous";
+    if (e.keyCode === 39) return rtl ? "previous" : "next";
+    return "";
+};
+exports.keyHandler = keyHandler;
+var swipeStart = function swipeStart1(e, swipe, draggable) {
+    e.target.tagName === "IMG" && safePreventDefault(e);
+    if (!swipe || !draggable && e.type.indexOf("mouse") !== -1) return "";
+    return {
+        dragging: true,
+        touchObject: {
+            startX: e.touches ? e.touches[0].pageX : e.clientX,
+            startY: e.touches ? e.touches[0].pageY : e.clientY,
+            curX: e.touches ? e.touches[0].pageX : e.clientX,
+            curY: e.touches ? e.touches[0].pageY : e.clientY
+        }
+    };
+};
+exports.swipeStart = swipeStart;
+var swipeMove = function swipeMove1(e, spec) {
+    // spec also contains, trackRef and slideIndex
+    var scrolling = spec.scrolling, animating = spec.animating, vertical = spec.vertical, swipeToSlide = spec.swipeToSlide, verticalSwiping = spec.verticalSwiping, rtl = spec.rtl, currentSlide = spec.currentSlide, edgeFriction = spec.edgeFriction, edgeDragged = spec.edgeDragged, onEdge = spec.onEdge, swiped = spec.swiped, swiping = spec.swiping, slideCount = spec.slideCount, slidesToScroll = spec.slidesToScroll, infinite = spec.infinite, touchObject = spec.touchObject, swipeEvent = spec.swipeEvent, listHeight = spec.listHeight, listWidth = spec.listWidth;
+    if (scrolling) return;
+    if (animating) return safePreventDefault(e);
+    if (vertical && swipeToSlide && verticalSwiping) safePreventDefault(e);
+    var swipeLeft, state = {
+    };
+    var curLeft = getTrackLeft(spec);
+    touchObject.curX = e.touches ? e.touches[0].pageX : e.clientX;
+    touchObject.curY = e.touches ? e.touches[0].pageY : e.clientY;
+    touchObject.swipeLength = Math.round(Math.sqrt(Math.pow(touchObject.curX - touchObject.startX, 2)));
+    var verticalSwipeLength = Math.round(Math.sqrt(Math.pow(touchObject.curY - touchObject.startY, 2)));
+    if (!verticalSwiping && !swiping && verticalSwipeLength > 10) return {
+        scrolling: true
+    };
+    if (verticalSwiping) touchObject.swipeLength = verticalSwipeLength;
+    var positionOffset = (!rtl ? 1 : -1) * (touchObject.curX > touchObject.startX ? 1 : -1);
+    if (verticalSwiping) positionOffset = touchObject.curY > touchObject.startY ? 1 : -1;
+    var dotCount = Math.ceil(slideCount / slidesToScroll);
+    var swipeDirection = getSwipeDirection(spec.touchObject, verticalSwiping);
+    var touchSwipeLength = touchObject.swipeLength;
+    if (!infinite) {
+        if (currentSlide === 0 && (swipeDirection === "right" || swipeDirection === "down") || currentSlide + 1 >= dotCount && (swipeDirection === "left" || swipeDirection === "up") || !canGoNext(spec) && (swipeDirection === "left" || swipeDirection === "up")) {
+            touchSwipeLength = touchObject.swipeLength * edgeFriction;
+            if (edgeDragged === false && onEdge) {
+                onEdge(swipeDirection);
+                state["edgeDragged"] = true;
+            }
+        }
+    }
+    if (!swiped && swipeEvent) {
+        swipeEvent(swipeDirection);
+        state["swiped"] = true;
+    }
+    if (!vertical) {
+        if (!rtl) swipeLeft = curLeft + touchSwipeLength * positionOffset;
+        else swipeLeft = curLeft - touchSwipeLength * positionOffset;
+    } else swipeLeft = curLeft + touchSwipeLength * (listHeight / listWidth) * positionOffset;
+    if (verticalSwiping) swipeLeft = curLeft + touchSwipeLength * positionOffset;
+    state = _objectSpread(_objectSpread({
+    }, state), {
+    }, {
+        touchObject: touchObject,
+        swipeLeft: swipeLeft,
+        trackStyle: getTrackCSS(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            left: swipeLeft
+        }))
+    });
+    if (Math.abs(touchObject.curX - touchObject.startX) < Math.abs(touchObject.curY - touchObject.startY) * 0.8) return state;
+    if (touchObject.swipeLength > 10) {
+        state["swiping"] = true;
+        safePreventDefault(e);
+    }
+    return state;
+};
+exports.swipeMove = swipeMove;
+var swipeEnd = function swipeEnd1(e, spec) {
+    var dragging = spec.dragging, swipe = spec.swipe, touchObject = spec.touchObject, listWidth = spec.listWidth, touchThreshold = spec.touchThreshold, verticalSwiping = spec.verticalSwiping, listHeight = spec.listHeight, swipeToSlide = spec.swipeToSlide, scrolling = spec.scrolling, onSwipe = spec.onSwipe, targetSlide = spec.targetSlide, currentSlide = spec.currentSlide, infinite = spec.infinite;
+    if (!dragging) {
+        if (swipe) safePreventDefault(e);
+        return {
+        };
+    }
+    var minSwipe = verticalSwiping ? listHeight / touchThreshold : listWidth / touchThreshold;
+    var swipeDirection = getSwipeDirection(touchObject, verticalSwiping); // reset the state of touch related state variables.
+    var state = {
+        dragging: false,
+        edgeDragged: false,
+        scrolling: false,
+        swiping: false,
+        swiped: false,
+        swipeLeft: null,
+        touchObject: {
+        }
+    };
+    if (scrolling) return state;
+    if (!touchObject.swipeLength) return state;
+    if (touchObject.swipeLength > minSwipe) {
+        safePreventDefault(e);
+        if (onSwipe) onSwipe(swipeDirection);
+        var slideCount, newSlide;
+        var activeSlide = infinite ? currentSlide : targetSlide;
+        switch(swipeDirection){
+            case "left":
+            case "up":
+                newSlide = activeSlide + getSlideCount(spec);
+                slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide;
+                state["currentDirection"] = 0;
+                break;
+            case "right":
+            case "down":
+                newSlide = activeSlide - getSlideCount(spec);
+                slideCount = swipeToSlide ? checkNavigable(spec, newSlide) : newSlide;
+                state["currentDirection"] = 1;
+                break;
+            default:
+                slideCount = activeSlide;
+        }
+        state["triggerSlideHandler"] = slideCount;
+    } else {
+        // Adjust the track back to it's original position.
+        var currentLeft = getTrackLeft(spec);
+        state["trackStyle"] = getTrackAnimateCSS(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            left: currentLeft
+        }));
+    }
+    return state;
+};
+exports.swipeEnd = swipeEnd;
+var getNavigableIndexes = function getNavigableIndexes1(spec) {
+    var max = spec.infinite ? spec.slideCount * 2 : spec.slideCount;
+    var breakpoint = spec.infinite ? spec.slidesToShow * -1 : 0;
+    var counter = spec.infinite ? spec.slidesToShow * -1 : 0;
+    var indexes = [];
+    while(breakpoint < max){
+        indexes.push(breakpoint);
+        breakpoint = counter + spec.slidesToScroll;
+        counter += Math.min(spec.slidesToScroll, spec.slidesToShow);
+    }
+    return indexes;
+};
+exports.getNavigableIndexes = getNavigableIndexes;
+var checkNavigable = function checkNavigable1(spec, index) {
+    var navigables = getNavigableIndexes(spec);
+    var prevNavigable = 0;
+    if (index > navigables[navigables.length - 1]) index = navigables[navigables.length - 1];
+    else for(var n in navigables){
+        if (index < navigables[n]) {
+            index = prevNavigable;
+            break;
+        }
+        prevNavigable = navigables[n];
+    }
+    return index;
+};
+exports.checkNavigable = checkNavigable;
+var getSlideCount = function getSlideCount1(spec) {
+    var centerOffset = spec.centerMode ? spec.slideWidth * Math.floor(spec.slidesToShow / 2) : 0;
+    if (spec.swipeToSlide) {
+        var swipedSlide;
+        var slickList = spec.listRef;
+        var slides = slickList.querySelectorAll && slickList.querySelectorAll(".slick-slide") || [];
+        Array.from(slides).every(function(slide) {
+            if (!spec.vertical) {
+                if (slide.offsetLeft - centerOffset + getWidth(slide) / 2 > spec.swipeLeft * -1) {
+                    swipedSlide = slide;
+                    return false;
+                }
+            } else if (slide.offsetTop + getHeight(slide) / 2 > spec.swipeLeft * -1) {
+                swipedSlide = slide;
+                return false;
+            }
+            return true;
+        });
+        if (!swipedSlide) return 0;
+        var currentIndex = spec.rtl === true ? spec.slideCount - spec.currentSlide : spec.currentSlide;
+        var slidesTraversed = Math.abs(swipedSlide.dataset.index - currentIndex) || 1;
+        return slidesTraversed;
+    } else return spec.slidesToScroll;
+};
+exports.getSlideCount = getSlideCount;
+var checkSpecKeys = function checkSpecKeys1(spec, keysArray) {
+    return keysArray.reduce(function(value, key) {
+        return value && spec.hasOwnProperty(key);
+    }, true) ? null : console.error("Keys Missing:", spec);
+};
+exports.checkSpecKeys = checkSpecKeys;
+var getTrackCSS = function getTrackCSS1(spec) {
+    checkSpecKeys(spec, [
+        "left",
+        "variableWidth",
+        "slideCount",
+        "slidesToShow",
+        "slideWidth"
+    ]);
+    var trackWidth, trackHeight;
+    var trackChildren = spec.slideCount + 2 * spec.slidesToShow;
+    if (!spec.vertical) trackWidth = getTotalSlides(spec) * spec.slideWidth;
+    else trackHeight = trackChildren * spec.slideHeight;
+    var style = {
+        opacity: 1,
+        transition: "",
+        WebkitTransition: ""
+    };
+    if (spec.useTransform) {
+        var WebkitTransform = !spec.vertical ? "translate3d(" + spec.left + "px, 0px, 0px)" : "translate3d(0px, " + spec.left + "px, 0px)";
+        var transform = !spec.vertical ? "translate3d(" + spec.left + "px, 0px, 0px)" : "translate3d(0px, " + spec.left + "px, 0px)";
+        var msTransform = !spec.vertical ? "translateX(" + spec.left + "px)" : "translateY(" + spec.left + "px)";
+        style = _objectSpread(_objectSpread({
+        }, style), {
+        }, {
+            WebkitTransform: WebkitTransform,
+            transform: transform,
+            msTransform: msTransform
+        });
+    } else if (spec.vertical) style["top"] = spec.left;
+    else style["left"] = spec.left;
+    if (spec.fade) style = {
+        opacity: 1
+    };
+    if (trackWidth) style.width = trackWidth;
+    if (trackHeight) style.height = trackHeight; // Fallback for IE8
+    if (window && !window.addEventListener && window.attachEvent) {
+        if (!spec.vertical) style.marginLeft = spec.left + "px";
+        else style.marginTop = spec.left + "px";
+    }
+    return style;
+};
+exports.getTrackCSS = getTrackCSS;
+var getTrackAnimateCSS = function getTrackAnimateCSS1(spec) {
+    checkSpecKeys(spec, [
+        "left",
+        "variableWidth",
+        "slideCount",
+        "slidesToShow",
+        "slideWidth",
+        "speed",
+        "cssEase"
+    ]);
+    var style = getTrackCSS(spec); // useCSS is true by default so it can be undefined
+    if (spec.useTransform) {
+        style.WebkitTransition = "-webkit-transform " + spec.speed + "ms " + spec.cssEase;
+        style.transition = "transform " + spec.speed + "ms " + spec.cssEase;
+    } else if (spec.vertical) style.transition = "top " + spec.speed + "ms " + spec.cssEase;
+    else style.transition = "left " + spec.speed + "ms " + spec.cssEase;
+    return style;
+};
+exports.getTrackAnimateCSS = getTrackAnimateCSS;
+var getTrackLeft = function getTrackLeft1(spec) {
+    if (spec.unslick) return 0;
+    checkSpecKeys(spec, [
+        "slideIndex",
+        "trackRef",
+        "infinite",
+        "centerMode",
+        "slideCount",
+        "slidesToShow",
+        "slidesToScroll",
+        "slideWidth",
+        "listWidth",
+        "variableWidth",
+        "slideHeight"
+    ]);
+    var slideIndex = spec.slideIndex, trackRef = spec.trackRef, infinite = spec.infinite, centerMode = spec.centerMode, slideCount = spec.slideCount, slidesToShow = spec.slidesToShow, slidesToScroll = spec.slidesToScroll, slideWidth = spec.slideWidth, listWidth = spec.listWidth, variableWidth = spec.variableWidth, slideHeight = spec.slideHeight, fade = spec.fade, vertical = spec.vertical;
+    var slideOffset = 0;
+    var targetLeft;
+    var targetSlide;
+    var verticalOffset = 0;
+    if (fade || spec.slideCount === 1) return 0;
+    var slidesToOffset = 0;
+    if (infinite) {
+        slidesToOffset = -getPreClones(spec); // bring active slide to the beginning of visual area
+        // if next scroll doesn't have enough children, just reach till the end of original slides instead of shifting slidesToScroll children
+        if (slideCount % slidesToScroll !== 0 && slideIndex + slidesToScroll > slideCount) slidesToOffset = -(slideIndex > slideCount ? slidesToShow - (slideIndex - slideCount) : slideCount % slidesToScroll);
+         // shift current slide to center of the frame
+        if (centerMode) slidesToOffset += parseInt(slidesToShow / 2);
+    } else {
+        if (slideCount % slidesToScroll !== 0 && slideIndex + slidesToScroll > slideCount) slidesToOffset = slidesToShow - slideCount % slidesToScroll;
+        if (centerMode) slidesToOffset = parseInt(slidesToShow / 2);
+    }
+    slideOffset = slidesToOffset * slideWidth;
+    verticalOffset = slidesToOffset * slideHeight;
+    if (!vertical) targetLeft = slideIndex * slideWidth * -1 + slideOffset;
+    else targetLeft = slideIndex * slideHeight * -1 + verticalOffset;
+    if (variableWidth === true) {
+        var targetSlideIndex;
+        var trackElem = trackRef && trackRef.node;
+        targetSlideIndex = slideIndex + getPreClones(spec);
+        targetSlide = trackElem && trackElem.childNodes[targetSlideIndex];
+        targetLeft = targetSlide ? targetSlide.offsetLeft * -1 : 0;
+        if (centerMode === true) {
+            targetSlideIndex = infinite ? slideIndex + getPreClones(spec) : slideIndex;
+            targetSlide = trackElem && trackElem.children[targetSlideIndex];
+            targetLeft = 0;
+            for(var slide = 0; slide < targetSlideIndex; slide++)targetLeft -= trackElem && trackElem.children[slide] && trackElem.children[slide].offsetWidth;
+            targetLeft -= parseInt(spec.centerPadding);
+            targetLeft += targetSlide && (listWidth - targetSlide.offsetWidth) / 2;
+        }
+    }
+    return targetLeft;
+};
+exports.getTrackLeft = getTrackLeft;
+var getPreClones = function getPreClones1(spec) {
+    if (spec.unslick || !spec.infinite) return 0;
+    if (spec.variableWidth) return spec.slideCount;
+    return spec.slidesToShow + (spec.centerMode ? 1 : 0);
+};
+exports.getPreClones = getPreClones;
+var getPostClones = function getPostClones1(spec) {
+    if (spec.unslick || !spec.infinite) return 0;
+    return spec.slideCount;
+};
+exports.getPostClones = getPostClones;
+var getTotalSlides = function getTotalSlides1(spec) {
+    return spec.slideCount === 1 ? 1 : getPreClones(spec) + spec.slideCount + getPostClones(spec);
+};
+exports.getTotalSlides = getTotalSlides;
+var siblingDirection = function siblingDirection1(spec) {
+    if (spec.targetSlide > spec.currentSlide) {
+        if (spec.targetSlide > spec.currentSlide + slidesOnRight(spec)) return "left";
+        return "right";
+    } else {
+        if (spec.targetSlide < spec.currentSlide - slidesOnLeft(spec)) return "right";
+        return "left";
+    }
+};
+exports.siblingDirection = siblingDirection;
+var slidesOnRight = function slidesOnRight1(_ref) {
+    var slidesToShow = _ref.slidesToShow, centerMode = _ref.centerMode, rtl = _ref.rtl, centerPadding = _ref.centerPadding;
+    // returns no of slides on the right of active slide
+    if (centerMode) {
+        var right = (slidesToShow - 1) / 2 + 1;
+        if (parseInt(centerPadding) > 0) right += 1;
+        if (rtl && slidesToShow % 2 === 0) right += 1;
+        return right;
+    }
+    if (rtl) return 0;
+    return slidesToShow - 1;
+};
+exports.slidesOnRight = slidesOnRight;
+var slidesOnLeft = function slidesOnLeft1(_ref2) {
+    var slidesToShow = _ref2.slidesToShow, centerMode = _ref2.centerMode, rtl = _ref2.rtl, centerPadding = _ref2.centerPadding;
+    // returns no of slides on the left of active slide
+    if (centerMode) {
+        var left = (slidesToShow - 1) / 2 + 1;
+        if (parseInt(centerPadding) > 0) left += 1;
+        if (!rtl && slidesToShow % 2 === 0) left += 1;
+        return left;
+    }
+    if (rtl) return slidesToShow - 1;
+    return 0;
+};
+exports.slidesOnLeft = slidesOnLeft;
+var canUseDOM = function canUseDOM1() {
+    return !!(typeof window !== "undefined" && window.document && window.document.createElement);
+};
+exports.canUseDOM = canUseDOM;
+
+},{"react":"6TuXu"}],"6DHmH":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
+        return typeof obj1;
+    } : function(obj1) {
+        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Track = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _innerSliderUtils = require("./utils/innerSliderUtils");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign || function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties(target, props) {
+    for(var i = 0; i < props.length; i++){
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+    }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+        writable: false
+    });
+    return Constructor;
+}
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            writable: true,
+            configurable: true
+        }
+    });
+    Object.defineProperty(subClass, "prototype", {
+        writable: false
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
+        o1.__proto__ = p1;
+        return o1;
+    };
+    return _setPrototypeOf(o, p);
+}
+function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+    return function _createSuperInternal() {
+        var Super = _getPrototypeOf(Derived), result;
+        if (hasNativeReflectConstruct) {
+            var NewTarget = _getPrototypeOf(this).constructor;
+            result = Reflect.construct(Super, arguments, NewTarget);
+        } else result = Super.apply(this, arguments);
+        return _possibleConstructorReturn(this, result);
+    };
+}
+function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
+    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
+    return _assertThisInitialized(self);
+}
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+    try {
+        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+        }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
+        return o1.__proto__ || Object.getPrototypeOf(o1);
+    };
+    return _getPrototypeOf(o);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+// given specifications/props for a slide, fetch all the classes that need to be applied to the slide
+var getSlideClasses = function getSlideClasses1(spec) {
+    var slickActive, slickCenter, slickCloned;
+    var centerOffset, index;
+    if (spec.rtl) index = spec.slideCount - 1 - spec.index;
+    else index = spec.index;
+    slickCloned = index < 0 || index >= spec.slideCount;
+    if (spec.centerMode) {
+        centerOffset = Math.floor(spec.slidesToShow / 2);
+        slickCenter = (index - spec.currentSlide) % spec.slideCount === 0;
+        if (index > spec.currentSlide - centerOffset - 1 && index <= spec.currentSlide + centerOffset) slickActive = true;
+    } else slickActive = spec.currentSlide <= index && index < spec.currentSlide + spec.slidesToShow;
+    var focusedSlide;
+    if (spec.targetSlide < 0) focusedSlide = spec.targetSlide + spec.slideCount;
+    else if (spec.targetSlide >= spec.slideCount) focusedSlide = spec.targetSlide - spec.slideCount;
+    else focusedSlide = spec.targetSlide;
+    var slickCurrent = index === focusedSlide;
+    return {
+        "slick-slide": true,
+        "slick-active": slickActive,
+        "slick-center": slickCenter,
+        "slick-cloned": slickCloned,
+        "slick-current": slickCurrent // dubious in case of RTL
+    };
+};
+var getSlideStyle = function getSlideStyle1(spec) {
+    var style = {
+    };
+    if (spec.variableWidth === undefined || spec.variableWidth === false) style.width = spec.slideWidth;
+    if (spec.fade) {
+        style.position = "relative";
+        if (spec.vertical) style.top = -spec.index * parseInt(spec.slideHeight);
+        else style.left = -spec.index * parseInt(spec.slideWidth);
+        style.opacity = spec.currentSlide === spec.index ? 1 : 0;
+        if (spec.useCSS) style.transition = "opacity " + spec.speed + "ms " + spec.cssEase + ", " + "visibility " + spec.speed + "ms " + spec.cssEase;
+    }
+    return style;
+};
+var getKey = function getKey1(child, fallbackKey) {
+    return child.key || fallbackKey;
+};
+var renderSlides = function renderSlides1(spec) {
+    var key;
+    var slides = [];
+    var preCloneSlides = [];
+    var postCloneSlides = [];
+    var childrenCount = _react["default"].Children.count(spec.children);
+    var startIndex = _innerSliderUtils.lazyStartIndex(spec);
+    var endIndex = _innerSliderUtils.lazyEndIndex(spec);
+    _react["default"].Children.forEach(spec.children, function(elem, index) {
+        var child;
+        var childOnClickOptions = {
+            message: "children",
+            index: index,
+            slidesToScroll: spec.slidesToScroll,
+            currentSlide: spec.currentSlide
+        }; // in case of lazyLoad, whether or not we want to fetch the slide
+        if (!spec.lazyLoad || spec.lazyLoad && spec.lazyLoadedList.indexOf(index) >= 0) child = elem;
+        else child = /*#__PURE__*/ _react["default"].createElement("div", null);
+        var childStyle = getSlideStyle(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            index: index
+        }));
+        var slideClass = child.props.className || "";
+        var slideClasses = getSlideClasses(_objectSpread(_objectSpread({
+        }, spec), {
+        }, {
+            index: index
+        })); // push a cloned element of the desired slide
+        slides.push(/*#__PURE__*/ _react["default"].cloneElement(child, {
+            key: "original" + getKey(child, index),
+            "data-index": index,
+            className: _classnames["default"](slideClasses, slideClass),
+            tabIndex: "-1",
+            "aria-hidden": !slideClasses["slick-active"],
+            style: _objectSpread(_objectSpread({
+                outline: "none"
+            }, child.props.style || {
+            }), childStyle),
+            onClick: function onClick(e) {
+                child.props && child.props.onClick && child.props.onClick(e);
+                if (spec.focusOnSelect) spec.focusOnSelect(childOnClickOptions);
+            }
+        })); // if slide needs to be precloned or postcloned
+        if (spec.infinite && spec.fade === false) {
+            var preCloneNo = childrenCount - index;
+            if (preCloneNo <= _innerSliderUtils.getPreClones(spec) && childrenCount !== spec.slidesToShow) {
+                key = -preCloneNo;
+                if (key >= startIndex) child = elem;
+                slideClasses = getSlideClasses(_objectSpread(_objectSpread({
+                }, spec), {
+                }, {
+                    index: key
+                }));
+                preCloneSlides.push(/*#__PURE__*/ _react["default"].cloneElement(child, {
+                    key: "precloned" + getKey(child, key),
+                    "data-index": key,
+                    tabIndex: "-1",
+                    className: _classnames["default"](slideClasses, slideClass),
+                    "aria-hidden": !slideClasses["slick-active"],
+                    style: _objectSpread(_objectSpread({
+                    }, child.props.style || {
+                    }), childStyle),
+                    onClick: function onClick(e) {
+                        child.props && child.props.onClick && child.props.onClick(e);
+                        if (spec.focusOnSelect) spec.focusOnSelect(childOnClickOptions);
+                    }
+                }));
+            }
+            if (childrenCount !== spec.slidesToShow) {
+                key = childrenCount + index;
+                if (key < endIndex) child = elem;
+                slideClasses = getSlideClasses(_objectSpread(_objectSpread({
+                }, spec), {
+                }, {
+                    index: key
+                }));
+                postCloneSlides.push(/*#__PURE__*/ _react["default"].cloneElement(child, {
+                    key: "postcloned" + getKey(child, key),
+                    "data-index": key,
+                    tabIndex: "-1",
+                    className: _classnames["default"](slideClasses, slideClass),
+                    "aria-hidden": !slideClasses["slick-active"],
+                    style: _objectSpread(_objectSpread({
+                    }, child.props.style || {
+                    }), childStyle),
+                    onClick: function onClick(e) {
+                        child.props && child.props.onClick && child.props.onClick(e);
+                        if (spec.focusOnSelect) spec.focusOnSelect(childOnClickOptions);
+                    }
+                }));
+            }
+        }
+    });
+    if (spec.rtl) return preCloneSlides.concat(slides, postCloneSlides).reverse();
+    else return preCloneSlides.concat(slides, postCloneSlides);
+};
+var Track1 = /*#__PURE__*/ function(_React$PureComponent) {
+    _inherits(Track2, _React$PureComponent);
+    var _super = _createSuper(Track2);
+    function Track2() {
+        var _this;
+        _classCallCheck(this, Track2);
+        for(var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++)args[_key] = arguments[_key];
+        _this = _super.call.apply(_super, [
+            this
+        ].concat(args));
+        _defineProperty(_assertThisInitialized(_this), "node", null);
+        _defineProperty(_assertThisInitialized(_this), "handleRef", function(ref) {
+            _this.node = ref;
+        });
+        return _this;
+    }
+    _createClass(Track2, [
+        {
+            key: "render",
+            value: function render() {
+                var slides = renderSlides(this.props);
+                var _this$props = this.props, onMouseEnter = _this$props.onMouseEnter, onMouseOver = _this$props.onMouseOver, onMouseLeave = _this$props.onMouseLeave;
+                var mouseEvents = {
+                    onMouseEnter: onMouseEnter,
+                    onMouseOver: onMouseOver,
+                    onMouseLeave: onMouseLeave
+                };
+                return(/*#__PURE__*/ _react["default"].createElement("div", _extends({
+                    ref: this.handleRef,
+                    className: "slick-track",
+                    style: this.props.trackStyle
+                }, mouseEvents), slides));
+            }
+        }
+    ]);
+    return Track2;
+}(_react["default"].PureComponent);
+exports.Track = Track1;
+
+},{"react":"6TuXu","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA"}],"h2xzK":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
+        return typeof obj1;
+    } : function(obj1) {
+        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Dots = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _innerSliderUtils = require("./utils/innerSliderUtils");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties(target, props) {
+    for(var i = 0; i < props.length; i++){
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+    }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+        writable: false
+    });
+    return Constructor;
+}
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            writable: true,
+            configurable: true
+        }
+    });
+    Object.defineProperty(subClass, "prototype", {
+        writable: false
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
+        o1.__proto__ = p1;
+        return o1;
+    };
+    return _setPrototypeOf(o, p);
+}
+function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+    return function _createSuperInternal() {
+        var Super = _getPrototypeOf(Derived), result;
+        if (hasNativeReflectConstruct) {
+            var NewTarget = _getPrototypeOf(this).constructor;
+            result = Reflect.construct(Super, arguments, NewTarget);
+        } else result = Super.apply(this, arguments);
+        return _possibleConstructorReturn(this, result);
+    };
+}
+function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
+    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
+    return _assertThisInitialized(self);
+}
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+    try {
+        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+        }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
+        return o1.__proto__ || Object.getPrototypeOf(o1);
+    };
+    return _getPrototypeOf(o);
+}
+var getDotCount = function getDotCount1(spec) {
+    var dots;
+    if (spec.infinite) dots = Math.ceil(spec.slideCount / spec.slidesToScroll);
+    else dots = Math.ceil((spec.slideCount - spec.slidesToShow) / spec.slidesToScroll) + 1;
+    return dots;
+};
+var Dots1 = /*#__PURE__*/ function(_React$PureComponent) {
+    _inherits(Dots2, _React$PureComponent);
+    var _super = _createSuper(Dots2);
+    function Dots2() {
+        _classCallCheck(this, Dots2);
+        return _super.apply(this, arguments);
+    }
+    _createClass(Dots2, [
+        {
+            key: "clickHandler",
+            value: function clickHandler(options, e) {
+                // In Autoplay the focus stays on clicked button even after transition
+                // to next slide. That only goes away by click somewhere outside
+                e.preventDefault();
+                this.props.clickHandler(options);
+            }
+        },
+        {
+            key: "render",
+            value: function render() {
+                var _this$props = this.props, onMouseEnter = _this$props.onMouseEnter, onMouseOver = _this$props.onMouseOver, onMouseLeave = _this$props.onMouseLeave, infinite = _this$props.infinite, slidesToScroll = _this$props.slidesToScroll, slidesToShow = _this$props.slidesToShow, slideCount = _this$props.slideCount, currentSlide = _this$props.currentSlide;
+                var dotCount = getDotCount({
+                    slideCount: slideCount,
+                    slidesToScroll: slidesToScroll,
+                    slidesToShow: slidesToShow,
+                    infinite: infinite
+                });
+                var mouseEvents = {
+                    onMouseEnter: onMouseEnter,
+                    onMouseOver: onMouseOver,
+                    onMouseLeave: onMouseLeave
+                };
+                var dots = [];
+                for(var i = 0; i < dotCount; i++){
+                    var _rightBound = (i + 1) * slidesToScroll - 1;
+                    var rightBound = infinite ? _rightBound : _innerSliderUtils.clamp(_rightBound, 0, slideCount - 1);
+                    var _leftBound = rightBound - (slidesToScroll - 1);
+                    var leftBound = infinite ? _leftBound : _innerSliderUtils.clamp(_leftBound, 0, slideCount - 1);
+                    var className = _classnames["default"]({
+                        "slick-active": infinite ? currentSlide >= leftBound && currentSlide <= rightBound : currentSlide === leftBound
+                    });
+                    var dotOptions = {
+                        message: "dots",
+                        index: i,
+                        slidesToScroll: slidesToScroll,
+                        currentSlide: currentSlide
+                    };
+                    var onClick = this.clickHandler.bind(this, dotOptions);
+                    dots = dots.concat(/*#__PURE__*/ _react["default"].createElement("li", {
+                        key: i,
+                        className: className
+                    }, /*#__PURE__*/ _react["default"].cloneElement(this.props.customPaging(i), {
+                        onClick: onClick
+                    })));
+                }
+                return(/*#__PURE__*/ _react["default"].cloneElement(this.props.appendDots(dots), _objectSpread({
+                    className: this.props.dotsClass
+                }, mouseEvents)));
+            }
+        }
+    ]);
+    return Dots2;
+}(_react["default"].PureComponent);
+exports.Dots = Dots1;
+
+},{"react":"6TuXu","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA"}],"jdJ4A":[function(require,module,exports) {
+"use strict";
+function _typeof(obj) {
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj1) {
+        return typeof obj1;
+    } : function(obj1) {
+        return obj1 && "function" == typeof Symbol && obj1.constructor === Symbol && obj1 !== Symbol.prototype ? "symbol" : typeof obj1;
+    }, _typeof(obj);
+}
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.PrevArrow = exports.NextArrow = void 0;
+var _react = _interopRequireDefault(require("react"));
+var _classnames = _interopRequireDefault(require("classnames"));
+var _innerSliderUtils = require("./utils/innerSliderUtils");
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+function _extends() {
+    _extends = Object.assign || function(target) {
+        for(var i = 1; i < arguments.length; i++){
+            var source = arguments[i];
+            for(var key in source)if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = source[key];
+        }
+        return target;
+    };
+    return _extends.apply(this, arguments);
+}
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+}
+function _defineProperties(target, props) {
+    for(var i = 0; i < props.length; i++){
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+    }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    Object.defineProperty(Constructor, "prototype", {
+        writable: false
+    });
+    return Constructor;
+}
+function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) throw new TypeError("Super expression must either be null or a function");
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+        constructor: {
+            value: subClass,
+            writable: true,
+            configurable: true
+        }
+    });
+    Object.defineProperty(subClass, "prototype", {
+        writable: false
+    });
+    if (superClass) _setPrototypeOf(subClass, superClass);
+}
+function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf1(o1, p1) {
+        o1.__proto__ = p1;
+        return o1;
+    };
+    return _setPrototypeOf(o, p);
+}
+function _createSuper(Derived) {
+    var hasNativeReflectConstruct = _isNativeReflectConstruct();
+    return function _createSuperInternal() {
+        var Super = _getPrototypeOf(Derived), result;
+        if (hasNativeReflectConstruct) {
+            var NewTarget = _getPrototypeOf(this).constructor;
+            result = Reflect.construct(Super, arguments, NewTarget);
+        } else result = Super.apply(this, arguments);
+        return _possibleConstructorReturn(this, result);
+    };
+}
+function _possibleConstructorReturn(self, call) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) return call;
+    else if (call !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
+    return _assertThisInitialized(self);
+}
+function _assertThisInitialized(self) {
+    if (self === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return self;
+}
+function _isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+    try {
+        Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+        }));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf1(o1) {
+        return o1.__proto__ || Object.getPrototypeOf(o1);
+    };
+    return _getPrototypeOf(o);
+}
+var PrevArrow1 = /*#__PURE__*/ function(_React$PureComponent) {
+    _inherits(PrevArrow2, _React$PureComponent);
+    var _super = _createSuper(PrevArrow2);
+    function PrevArrow2() {
+        _classCallCheck(this, PrevArrow2);
+        return _super.apply(this, arguments);
+    }
+    _createClass(PrevArrow2, [
+        {
+            key: "clickHandler",
+            value: function clickHandler(options, e) {
+                if (e) e.preventDefault();
+                this.props.clickHandler(options, e);
+            }
+        },
+        {
+            key: "render",
+            value: function render() {
+                var prevClasses = {
+                    "slick-arrow": true,
+                    "slick-prev": true
+                };
+                var prevHandler = this.clickHandler.bind(this, {
+                    message: "previous"
+                });
+                if (!this.props.infinite && (this.props.currentSlide === 0 || this.props.slideCount <= this.props.slidesToShow)) {
+                    prevClasses["slick-disabled"] = true;
+                    prevHandler = null;
+                }
+                var prevArrowProps = {
+                    key: "0",
+                    "data-role": "none",
+                    className: _classnames["default"](prevClasses),
+                    style: {
+                        display: "block"
+                    },
+                    onClick: prevHandler
+                };
+                var customProps = {
+                    currentSlide: this.props.currentSlide,
+                    slideCount: this.props.slideCount
+                };
+                var prevArrow;
+                if (this.props.prevArrow) prevArrow = /*#__PURE__*/ _react["default"].cloneElement(this.props.prevArrow, _objectSpread(_objectSpread({
+                }, prevArrowProps), customProps));
+                else prevArrow = /*#__PURE__*/ _react["default"].createElement("button", _extends({
+                    key: "0",
+                    type: "button"
+                }, prevArrowProps), " ", "Previous");
+                return prevArrow;
+            }
+        }
+    ]);
+    return PrevArrow2;
+}(_react["default"].PureComponent);
+exports.PrevArrow = PrevArrow1;
+var NextArrow1 = /*#__PURE__*/ function(_React$PureComponent2) {
+    _inherits(NextArrow2, _React$PureComponent2);
+    var _super2 = _createSuper(NextArrow2);
+    function NextArrow2() {
+        _classCallCheck(this, NextArrow2);
+        return _super2.apply(this, arguments);
+    }
+    _createClass(NextArrow2, [
+        {
+            key: "clickHandler",
+            value: function clickHandler(options, e) {
+                if (e) e.preventDefault();
+                this.props.clickHandler(options, e);
+            }
+        },
+        {
+            key: "render",
+            value: function render() {
+                var nextClasses = {
+                    "slick-arrow": true,
+                    "slick-next": true
+                };
+                var nextHandler = this.clickHandler.bind(this, {
+                    message: "next"
+                });
+                if (!_innerSliderUtils.canGoNext(this.props)) {
+                    nextClasses["slick-disabled"] = true;
+                    nextHandler = null;
+                }
+                var nextArrowProps = {
+                    key: "1",
+                    "data-role": "none",
+                    className: _classnames["default"](nextClasses),
+                    style: {
+                        display: "block"
+                    },
+                    onClick: nextHandler
+                };
+                var customProps = {
+                    currentSlide: this.props.currentSlide,
+                    slideCount: this.props.slideCount
+                };
+                var nextArrow;
+                if (this.props.nextArrow) nextArrow = /*#__PURE__*/ _react["default"].cloneElement(this.props.nextArrow, _objectSpread(_objectSpread({
+                }, nextArrowProps), customProps));
+                else nextArrow = /*#__PURE__*/ _react["default"].createElement("button", _extends({
+                    key: "1",
+                    type: "button"
+                }, nextArrowProps), " ", "Next");
+                return nextArrow;
+            }
+        }
+    ]);
+    return NextArrow2;
+}(_react["default"].PureComponent);
+exports.NextArrow = NextArrow1;
+
+},{"react":"6TuXu","classnames":"bOXOh","./utils/innerSliderUtils":"7EteA"}],"AHOwr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var global = arguments[3];
+/**
+ * A collection of shims that provide minimal functionality of the ES6 collections.
+ *
+ * These implementations are not meant to be used outside of the ResizeObserver
+ * modules as they cover only a limited range of use cases.
+ */ /* eslint-disable require-jsdoc, valid-jsdoc */ var MapShim = function() {
+    if (typeof Map !== 'undefined') return Map;
+    /**
+     * Returns index in provided array that matches the specified key.
+     *
+     * @param {Array<Array>} arr
+     * @param {*} key
+     * @returns {number}
+     */ function getIndex(arr, key) {
+        var result = -1;
+        arr.some(function(entry, index) {
+            if (entry[0] === key) {
+                result = index;
+                return true;
+            }
+            return false;
+        });
+        return result;
+    }
+    return (function() {
+        function class_1() {
+            this.__entries__ = [];
+        }
+        Object.defineProperty(class_1.prototype, "size", {
+            /**
+             * @returns {boolean}
+             */ get: function() {
+                return this.__entries__.length;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {*} key
+         * @returns {*}
+         */ class_1.prototype.get = function(key) {
+            var index = getIndex(this.__entries__, key);
+            var entry = this.__entries__[index];
+            return entry && entry[1];
+        };
+        /**
+         * @param {*} key
+         * @param {*} value
+         * @returns {void}
+         */ class_1.prototype.set = function(key, value) {
+            var index = getIndex(this.__entries__, key);
+            if (~index) this.__entries__[index][1] = value;
+            else this.__entries__.push([
+                key,
+                value
+            ]);
+        };
+        /**
+         * @param {*} key
+         * @returns {void}
+         */ class_1.prototype.delete = function(key) {
+            var entries = this.__entries__;
+            var index = getIndex(entries, key);
+            if (~index) entries.splice(index, 1);
+        };
+        /**
+         * @param {*} key
+         * @returns {void}
+         */ class_1.prototype.has = function(key) {
+            return !!~getIndex(this.__entries__, key);
+        };
+        /**
+         * @returns {void}
+         */ class_1.prototype.clear = function() {
+            this.__entries__.splice(0);
+        };
+        /**
+         * @param {Function} callback
+         * @param {*} [ctx=null]
+         * @returns {void}
+         */ class_1.prototype.forEach = function(callback, ctx) {
+            if (ctx === void 0) ctx = null;
+            for(var _i = 0, _a = this.__entries__; _i < _a.length; _i++){
+                var entry = _a[_i];
+                callback.call(ctx, entry[1], entry[0]);
+            }
+        };
+        return class_1;
+    })();
+}();
+/**
+ * Detects whether window and document objects are available in current environment.
+ */ var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined' && window.document === document;
+// Returns global object of a current environment.
+var global$1 = function() {
+    if (typeof global !== 'undefined' && global.Math === Math) return global;
+    if (typeof self !== 'undefined' && self.Math === Math) return self;
+    if (typeof window !== 'undefined' && window.Math === Math) return window;
+    // eslint-disable-next-line no-new-func
+    return Function('return this')();
+}();
+/**
+ * A shim for the requestAnimationFrame which falls back to the setTimeout if
+ * first one is not supported.
+ *
+ * @returns {number} Requests' identifier.
+ */ var requestAnimationFrame$1 = function() {
+    if (typeof requestAnimationFrame === 'function') // It's required to use a bounded function because IE sometimes throws
+    // an "Invalid calling object" error if rAF is invoked without the global
+    // object on the left hand side.
+    return requestAnimationFrame.bind(global$1);
+    return function(callback) {
+        return setTimeout(function() {
+            return callback(Date.now());
+        }, 1000 / 60);
+    };
+}();
+// Defines minimum timeout before adding a trailing call.
+var trailingTimeout = 2;
+/**
+ * Creates a wrapper function which ensures that provided callback will be
+ * invoked only once during the specified delay period.
+ *
+ * @param {Function} callback - Function to be invoked after the delay period.
+ * @param {number} delay - Delay after which to invoke callback.
+ * @returns {Function}
+ */ function throttle(callback, delay) {
+    var leadingCall = false, trailingCall = false, lastCallTime = 0;
+    /**
+     * Invokes the original callback function and schedules new invocation if
+     * the "proxy" was called during current request.
+     *
+     * @returns {void}
+     */ function resolvePending() {
+        if (leadingCall) {
+            leadingCall = false;
+            callback();
+        }
+        if (trailingCall) proxy();
+    }
+    /**
+     * Callback invoked after the specified delay. It will further postpone
+     * invocation of the original function delegating it to the
+     * requestAnimationFrame.
+     *
+     * @returns {void}
+     */ function timeoutCallback() {
+        requestAnimationFrame$1(resolvePending);
+    }
+    /**
+     * Schedules invocation of the original function.
+     *
+     * @returns {void}
+     */ function proxy() {
+        var timeStamp = Date.now();
+        if (leadingCall) {
+            // Reject immediately following calls.
+            if (timeStamp - lastCallTime < trailingTimeout) return;
+            // Schedule new call to be in invoked when the pending one is resolved.
+            // This is important for "transitions" which never actually start
+            // immediately so there is a chance that we might miss one if change
+            // happens amids the pending invocation.
+            trailingCall = true;
+        } else {
+            leadingCall = true;
+            trailingCall = false;
+            setTimeout(timeoutCallback, delay);
+        }
+        lastCallTime = timeStamp;
+    }
+    return proxy;
+}
+// Minimum delay before invoking the update of observers.
+var REFRESH_DELAY = 20;
+// A list of substrings of CSS properties used to find transition events that
+// might affect dimensions of observed elements.
+var transitionKeys = [
+    'top',
+    'right',
+    'bottom',
+    'left',
+    'width',
+    'height',
+    'size',
+    'weight'
+];
+// Check if MutationObserver is available.
+var mutationObserverSupported = typeof MutationObserver !== 'undefined';
+/**
+ * Singleton controller class which handles updates of ResizeObserver instances.
+ */ var ResizeObserverController = function() {
+    /**
+     * Creates a new instance of ResizeObserverController.
+     *
+     * @private
+     */ function ResizeObserverController1() {
+        /**
+         * Indicates whether DOM listeners have been added.
+         *
+         * @private {boolean}
+         */ this.connected_ = false;
+        /**
+         * Tells that controller has subscribed for Mutation Events.
+         *
+         * @private {boolean}
+         */ this.mutationEventsAdded_ = false;
+        /**
+         * Keeps reference to the instance of MutationObserver.
+         *
+         * @private {MutationObserver}
+         */ this.mutationsObserver_ = null;
+        /**
+         * A list of connected observers.
+         *
+         * @private {Array<ResizeObserverSPI>}
+         */ this.observers_ = [];
+        this.onTransitionEnd_ = this.onTransitionEnd_.bind(this);
+        this.refresh = throttle(this.refresh.bind(this), REFRESH_DELAY);
+    }
+    /**
+     * Adds observer to observers list.
+     *
+     * @param {ResizeObserverSPI} observer - Observer to be added.
+     * @returns {void}
+     */ ResizeObserverController1.prototype.addObserver = function(observer) {
+        if (!~this.observers_.indexOf(observer)) this.observers_.push(observer);
+        // Add listeners if they haven't been added yet.
+        if (!this.connected_) this.connect_();
+    };
+    /**
+     * Removes observer from observers list.
+     *
+     * @param {ResizeObserverSPI} observer - Observer to be removed.
+     * @returns {void}
+     */ ResizeObserverController1.prototype.removeObserver = function(observer) {
+        var observers = this.observers_;
+        var index = observers.indexOf(observer);
+        // Remove observer if it's present in registry.
+        if (~index) observers.splice(index, 1);
+        // Remove listeners if controller has no connected observers.
+        if (!observers.length && this.connected_) this.disconnect_();
+    };
+    /**
+     * Invokes the update of observers. It will continue running updates insofar
+     * it detects changes.
+     *
+     * @returns {void}
+     */ ResizeObserverController1.prototype.refresh = function() {
+        var changesDetected = this.updateObservers_();
+        // Continue running updates if changes have been detected as there might
+        // be future ones caused by CSS transitions.
+        if (changesDetected) this.refresh();
+    };
+    /**
+     * Updates every observer from observers list and notifies them of queued
+     * entries.
+     *
+     * @private
+     * @returns {boolean} Returns "true" if any observer has detected changes in
+     *      dimensions of it's elements.
+     */ ResizeObserverController1.prototype.updateObservers_ = function() {
+        // Collect observers that have active observations.
+        var activeObservers = this.observers_.filter(function(observer) {
+            return observer.gatherActive(), observer.hasActive();
+        });
+        // Deliver notifications in a separate cycle in order to avoid any
+        // collisions between observers, e.g. when multiple instances of
+        // ResizeObserver are tracking the same element and the callback of one
+        // of them changes content dimensions of the observed target. Sometimes
+        // this may result in notifications being blocked for the rest of observers.
+        activeObservers.forEach(function(observer) {
+            return observer.broadcastActive();
+        });
+        return activeObservers.length > 0;
+    };
+    /**
+     * Initializes DOM listeners.
+     *
+     * @private
+     * @returns {void}
+     */ ResizeObserverController1.prototype.connect_ = function() {
+        // Do nothing if running in a non-browser environment or if listeners
+        // have been already added.
+        if (!isBrowser || this.connected_) return;
+        // Subscription to the "Transitionend" event is used as a workaround for
+        // delayed transitions. This way it's possible to capture at least the
+        // final state of an element.
+        document.addEventListener('transitionend', this.onTransitionEnd_);
+        window.addEventListener('resize', this.refresh);
+        if (mutationObserverSupported) {
+            this.mutationsObserver_ = new MutationObserver(this.refresh);
+            this.mutationsObserver_.observe(document, {
+                attributes: true,
+                childList: true,
+                characterData: true,
+                subtree: true
+            });
+        } else {
+            document.addEventListener('DOMSubtreeModified', this.refresh);
+            this.mutationEventsAdded_ = true;
+        }
+        this.connected_ = true;
+    };
+    /**
+     * Removes DOM listeners.
+     *
+     * @private
+     * @returns {void}
+     */ ResizeObserverController1.prototype.disconnect_ = function() {
+        // Do nothing if running in a non-browser environment or if listeners
+        // have been already removed.
+        if (!isBrowser || !this.connected_) return;
+        document.removeEventListener('transitionend', this.onTransitionEnd_);
+        window.removeEventListener('resize', this.refresh);
+        if (this.mutationsObserver_) this.mutationsObserver_.disconnect();
+        if (this.mutationEventsAdded_) document.removeEventListener('DOMSubtreeModified', this.refresh);
+        this.mutationsObserver_ = null;
+        this.mutationEventsAdded_ = false;
+        this.connected_ = false;
+    };
+    /**
+     * "Transitionend" event handler.
+     *
+     * @private
+     * @param {TransitionEvent} event
+     * @returns {void}
+     */ ResizeObserverController1.prototype.onTransitionEnd_ = function(_a) {
+        var _b = _a.propertyName, propertyName = _b === void 0 ? '' : _b;
+        // Detect whether transition may affect dimensions of an element.
+        var isReflowProperty = transitionKeys.some(function(key) {
+            return !!~propertyName.indexOf(key);
+        });
+        if (isReflowProperty) this.refresh();
+    };
+    /**
+     * Returns instance of the ResizeObserverController.
+     *
+     * @returns {ResizeObserverController}
+     */ ResizeObserverController1.getInstance = function() {
+        if (!this.instance_) this.instance_ = new ResizeObserverController1();
+        return this.instance_;
+    };
+    /**
+     * Holds reference to the controller's instance.
+     *
+     * @private {ResizeObserverController}
+     */ ResizeObserverController1.instance_ = null;
+    return ResizeObserverController1;
+}();
+/**
+ * Defines non-writable/enumerable properties of the provided target object.
+ *
+ * @param {Object} target - Object for which to define properties.
+ * @param {Object} props - Properties to be defined.
+ * @returns {Object} Target object.
+ */ var defineConfigurable = function(target, props) {
+    for(var _i = 0, _a = Object.keys(props); _i < _a.length; _i++){
+        var key = _a[_i];
+        Object.defineProperty(target, key, {
+            value: props[key],
+            enumerable: false,
+            writable: false,
+            configurable: true
+        });
+    }
+    return target;
+};
+/**
+ * Returns the global object associated with provided element.
+ *
+ * @param {Object} target
+ * @returns {Object}
+ */ var getWindowOf = function(target) {
+    // Assume that the element is an instance of Node, which means that it
+    // has the "ownerDocument" property from which we can retrieve a
+    // corresponding global object.
+    var ownerGlobal = target && target.ownerDocument && target.ownerDocument.defaultView;
+    // Return the local global object if it's not possible extract one from
+    // provided element.
+    return ownerGlobal || global$1;
+};
+// Placeholder of an empty content rectangle.
+var emptyRect = createRectInit(0, 0, 0, 0);
+/**
+ * Converts provided string to a number.
+ *
+ * @param {number|string} value
+ * @returns {number}
+ */ function toFloat(value) {
+    return parseFloat(value) || 0;
+}
+/**
+ * Extracts borders size from provided styles.
+ *
+ * @param {CSSStyleDeclaration} styles
+ * @param {...string} positions - Borders positions (top, right, ...)
+ * @returns {number}
+ */ function getBordersSize(styles) {
+    var positions = [];
+    for(var _i = 1; _i < arguments.length; _i++)positions[_i - 1] = arguments[_i];
+    return positions.reduce(function(size, position) {
+        var value = styles['border-' + position + '-width'];
+        return size + toFloat(value);
+    }, 0);
+}
+/**
+ * Extracts paddings sizes from provided styles.
+ *
+ * @param {CSSStyleDeclaration} styles
+ * @returns {Object} Paddings box.
+ */ function getPaddings(styles) {
+    var positions = [
+        'top',
+        'right',
+        'bottom',
+        'left'
+    ];
+    var paddings = {
+    };
+    for(var _i = 0, positions_1 = positions; _i < positions_1.length; _i++){
+        var position = positions_1[_i];
+        var value = styles['padding-' + position];
+        paddings[position] = toFloat(value);
+    }
+    return paddings;
+}
+/**
+ * Calculates content rectangle of provided SVG element.
+ *
+ * @param {SVGGraphicsElement} target - Element content rectangle of which needs
+ *      to be calculated.
+ * @returns {DOMRectInit}
+ */ function getSVGContentRect(target) {
+    var bbox = target.getBBox();
+    return createRectInit(0, 0, bbox.width, bbox.height);
+}
+/**
+ * Calculates content rectangle of provided HTMLElement.
+ *
+ * @param {HTMLElement} target - Element for which to calculate the content rectangle.
+ * @returns {DOMRectInit}
+ */ function getHTMLElementContentRect(target) {
+    // Client width & height properties can't be
+    // used exclusively as they provide rounded values.
+    var clientWidth = target.clientWidth, clientHeight = target.clientHeight;
+    // By this condition we can catch all non-replaced inline, hidden and
+    // detached elements. Though elements with width & height properties less
+    // than 0.5 will be discarded as well.
+    //
+    // Without it we would need to implement separate methods for each of
+    // those cases and it's not possible to perform a precise and performance
+    // effective test for hidden elements. E.g. even jQuery's ':visible' filter
+    // gives wrong results for elements with width & height less than 0.5.
+    if (!clientWidth && !clientHeight) return emptyRect;
+    var styles = getWindowOf(target).getComputedStyle(target);
+    var paddings = getPaddings(styles);
+    var horizPad = paddings.left + paddings.right;
+    var vertPad = paddings.top + paddings.bottom;
+    // Computed styles of width & height are being used because they are the
+    // only dimensions available to JS that contain non-rounded values. It could
+    // be possible to utilize the getBoundingClientRect if only it's data wasn't
+    // affected by CSS transformations let alone paddings, borders and scroll bars.
+    var width = toFloat(styles.width), height = toFloat(styles.height);
+    // Width & height include paddings and borders when the 'border-box' box
+    // model is applied (except for IE).
+    if (styles.boxSizing === 'border-box') {
+        // Following conditions are required to handle Internet Explorer which
+        // doesn't include paddings and borders to computed CSS dimensions.
+        //
+        // We can say that if CSS dimensions + paddings are equal to the "client"
+        // properties then it's either IE, and thus we don't need to subtract
+        // anything, or an element merely doesn't have paddings/borders styles.
+        if (Math.round(width + horizPad) !== clientWidth) width -= getBordersSize(styles, 'left', 'right') + horizPad;
+        if (Math.round(height + vertPad) !== clientHeight) height -= getBordersSize(styles, 'top', 'bottom') + vertPad;
+    }
+    // Following steps can't be applied to the document's root element as its
+    // client[Width/Height] properties represent viewport area of the window.
+    // Besides, it's as well not necessary as the <html> itself neither has
+    // rendered scroll bars nor it can be clipped.
+    if (!isDocumentElement(target)) {
+        // In some browsers (only in Firefox, actually) CSS width & height
+        // include scroll bars size which can be removed at this step as scroll
+        // bars are the only difference between rounded dimensions + paddings
+        // and "client" properties, though that is not always true in Chrome.
+        var vertScrollbar = Math.round(width + horizPad) - clientWidth;
+        var horizScrollbar = Math.round(height + vertPad) - clientHeight;
+        // Chrome has a rather weird rounding of "client" properties.
+        // E.g. for an element with content width of 314.2px it sometimes gives
+        // the client width of 315px and for the width of 314.7px it may give
+        // 314px. And it doesn't happen all the time. So just ignore this delta
+        // as a non-relevant.
+        if (Math.abs(vertScrollbar) !== 1) width -= vertScrollbar;
+        if (Math.abs(horizScrollbar) !== 1) height -= horizScrollbar;
+    }
+    return createRectInit(paddings.left, paddings.top, width, height);
+}
+/**
+ * Checks whether provided element is an instance of the SVGGraphicsElement.
+ *
+ * @param {Element} target - Element to be checked.
+ * @returns {boolean}
+ */ var isSVGGraphicsElement = function() {
+    // Some browsers, namely IE and Edge, don't have the SVGGraphicsElement
+    // interface.
+    if (typeof SVGGraphicsElement !== 'undefined') return function(target) {
+        return target instanceof getWindowOf(target).SVGGraphicsElement;
+    };
+    // If it's so, then check that element is at least an instance of the
+    // SVGElement and that it has the "getBBox" method.
+    // eslint-disable-next-line no-extra-parens
+    return function(target) {
+        return target instanceof getWindowOf(target).SVGElement && typeof target.getBBox === 'function';
+    };
+}();
+/**
+ * Checks whether provided element is a document element (<html>).
+ *
+ * @param {Element} target - Element to be checked.
+ * @returns {boolean}
+ */ function isDocumentElement(target) {
+    return target === getWindowOf(target).document.documentElement;
+}
+/**
+ * Calculates an appropriate content rectangle for provided html or svg element.
+ *
+ * @param {Element} target - Element content rectangle of which needs to be calculated.
+ * @returns {DOMRectInit}
+ */ function getContentRect(target) {
+    if (!isBrowser) return emptyRect;
+    if (isSVGGraphicsElement(target)) return getSVGContentRect(target);
+    return getHTMLElementContentRect(target);
+}
+/**
+ * Creates rectangle with an interface of the DOMRectReadOnly.
+ * Spec: https://drafts.fxtf.org/geometry/#domrectreadonly
+ *
+ * @param {DOMRectInit} rectInit - Object with rectangle's x/y coordinates and dimensions.
+ * @returns {DOMRectReadOnly}
+ */ function createReadOnlyRect(_a) {
+    var x = _a.x, y = _a.y, width = _a.width, height = _a.height;
+    // If DOMRectReadOnly is available use it as a prototype for the rectangle.
+    var Constr = typeof DOMRectReadOnly !== 'undefined' ? DOMRectReadOnly : Object;
+    var rect = Object.create(Constr.prototype);
+    // Rectangle's properties are not writable and non-enumerable.
+    defineConfigurable(rect, {
+        x: x,
+        y: y,
+        width: width,
+        height: height,
+        top: y,
+        right: x + width,
+        bottom: height + y,
+        left: x
+    });
+    return rect;
+}
+/**
+ * Creates DOMRectInit object based on the provided dimensions and the x/y coordinates.
+ * Spec: https://drafts.fxtf.org/geometry/#dictdef-domrectinit
+ *
+ * @param {number} x - X coordinate.
+ * @param {number} y - Y coordinate.
+ * @param {number} width - Rectangle's width.
+ * @param {number} height - Rectangle's height.
+ * @returns {DOMRectInit}
+ */ function createRectInit(x, y, width, height) {
+    return {
+        x: x,
+        y: y,
+        width: width,
+        height: height
+    };
+}
+/**
+ * Class that is responsible for computations of the content rectangle of
+ * provided DOM element and for keeping track of it's changes.
+ */ var ResizeObservation = function() {
+    /**
+     * Creates an instance of ResizeObservation.
+     *
+     * @param {Element} target - Element to be observed.
+     */ function ResizeObservation1(target) {
+        /**
+         * Broadcasted width of content rectangle.
+         *
+         * @type {number}
+         */ this.broadcastWidth = 0;
+        /**
+         * Broadcasted height of content rectangle.
+         *
+         * @type {number}
+         */ this.broadcastHeight = 0;
+        /**
+         * Reference to the last observed content rectangle.
+         *
+         * @private {DOMRectInit}
+         */ this.contentRect_ = createRectInit(0, 0, 0, 0);
+        this.target = target;
+    }
+    /**
+     * Updates content rectangle and tells whether it's width or height properties
+     * have changed since the last broadcast.
+     *
+     * @returns {boolean}
+     */ ResizeObservation1.prototype.isActive = function() {
+        var rect = getContentRect(this.target);
+        this.contentRect_ = rect;
+        return rect.width !== this.broadcastWidth || rect.height !== this.broadcastHeight;
+    };
+    /**
+     * Updates 'broadcastWidth' and 'broadcastHeight' properties with a data
+     * from the corresponding properties of the last observed content rectangle.
+     *
+     * @returns {DOMRectInit} Last observed content rectangle.
+     */ ResizeObservation1.prototype.broadcastRect = function() {
+        var rect = this.contentRect_;
+        this.broadcastWidth = rect.width;
+        this.broadcastHeight = rect.height;
+        return rect;
+    };
+    return ResizeObservation1;
+}();
+var ResizeObserverEntry1 = function() {
+    /**
+     * Creates an instance of ResizeObserverEntry.
+     *
+     * @param {Element} target - Element that is being observed.
+     * @param {DOMRectInit} rectInit - Data of the element's content rectangle.
+     */ function ResizeObserverEntry2(target, rectInit) {
+        var contentRect = createReadOnlyRect(rectInit);
+        // According to the specification following properties are not writable
+        // and are also not enumerable in the native implementation.
+        //
+        // Property accessors are not being used as they'd require to define a
+        // private WeakMap storage which may cause memory leaks in browsers that
+        // don't support this type of collections.
+        defineConfigurable(this, {
+            target: target,
+            contentRect: contentRect
+        });
+    }
+    return ResizeObserverEntry2;
+}();
+var ResizeObserverSPI = function() {
+    /**
+     * Creates a new instance of ResizeObserver.
+     *
+     * @param {ResizeObserverCallback} callback - Callback function that is invoked
+     *      when one of the observed elements changes it's content dimensions.
+     * @param {ResizeObserverController} controller - Controller instance which
+     *      is responsible for the updates of observer.
+     * @param {ResizeObserver} callbackCtx - Reference to the public
+     *      ResizeObserver instance which will be passed to callback function.
+     */ function ResizeObserverSPI1(callback, controller, callbackCtx) {
+        /**
+         * Collection of resize observations that have detected changes in dimensions
+         * of elements.
+         *
+         * @private {Array<ResizeObservation>}
+         */ this.activeObservations_ = [];
+        /**
+         * Registry of the ResizeObservation instances.
+         *
+         * @private {Map<Element, ResizeObservation>}
+         */ this.observations_ = new MapShim();
+        if (typeof callback !== 'function') throw new TypeError('The callback provided as parameter 1 is not a function.');
+        this.callback_ = callback;
+        this.controller_ = controller;
+        this.callbackCtx_ = callbackCtx;
+    }
+    /**
+     * Starts observing provided element.
+     *
+     * @param {Element} target - Element to be observed.
+     * @returns {void}
+     */ ResizeObserverSPI1.prototype.observe = function(target) {
+        if (!arguments.length) throw new TypeError('1 argument required, but only 0 present.');
+        // Do nothing if current environment doesn't have the Element interface.
+        if (typeof Element === 'undefined' || !(Element instanceof Object)) return;
+        if (!(target instanceof getWindowOf(target).Element)) throw new TypeError('parameter 1 is not of type "Element".');
+        var observations = this.observations_;
+        // Do nothing if element is already being observed.
+        if (observations.has(target)) return;
+        observations.set(target, new ResizeObservation(target));
+        this.controller_.addObserver(this);
+        // Force the update of observations.
+        this.controller_.refresh();
+    };
+    /**
+     * Stops observing provided element.
+     *
+     * @param {Element} target - Element to stop observing.
+     * @returns {void}
+     */ ResizeObserverSPI1.prototype.unobserve = function(target) {
+        if (!arguments.length) throw new TypeError('1 argument required, but only 0 present.');
+        // Do nothing if current environment doesn't have the Element interface.
+        if (typeof Element === 'undefined' || !(Element instanceof Object)) return;
+        if (!(target instanceof getWindowOf(target).Element)) throw new TypeError('parameter 1 is not of type "Element".');
+        var observations = this.observations_;
+        // Do nothing if element is not being observed.
+        if (!observations.has(target)) return;
+        observations.delete(target);
+        if (!observations.size) this.controller_.removeObserver(this);
+    };
+    /**
+     * Stops observing all elements.
+     *
+     * @returns {void}
+     */ ResizeObserverSPI1.prototype.disconnect = function() {
+        this.clearActive();
+        this.observations_.clear();
+        this.controller_.removeObserver(this);
+    };
+    /**
+     * Collects observation instances the associated element of which has changed
+     * it's content rectangle.
+     *
+     * @returns {void}
+     */ ResizeObserverSPI1.prototype.gatherActive = function() {
+        var _this = this;
+        this.clearActive();
+        this.observations_.forEach(function(observation) {
+            if (observation.isActive()) _this.activeObservations_.push(observation);
+        });
+    };
+    /**
+     * Invokes initial callback function with a list of ResizeObserverEntry
+     * instances collected from active resize observations.
+     *
+     * @returns {void}
+     */ ResizeObserverSPI1.prototype.broadcastActive = function() {
+        // Do nothing if observer doesn't have active observations.
+        if (!this.hasActive()) return;
+        var ctx = this.callbackCtx_;
+        // Create ResizeObserverEntry instance for every active observation.
+        var entries = this.activeObservations_.map(function(observation) {
+            return new ResizeObserverEntry1(observation.target, observation.broadcastRect());
+        });
+        this.callback_.call(ctx, entries, ctx);
+        this.clearActive();
+    };
+    /**
+     * Clears the collection of active observations.
+     *
+     * @returns {void}
+     */ ResizeObserverSPI1.prototype.clearActive = function() {
+        this.activeObservations_.splice(0);
+    };
+    /**
+     * Tells whether observer has active observations.
+     *
+     * @returns {boolean}
+     */ ResizeObserverSPI1.prototype.hasActive = function() {
+        return this.activeObservations_.length > 0;
+    };
+    return ResizeObserverSPI1;
+}();
+// Registry of internal observers. If WeakMap is not available use current shim
+// for the Map collection as it has all required methods and because WeakMap
+// can't be fully polyfilled anyway.
+var observers = typeof WeakMap !== 'undefined' ? new WeakMap() : new MapShim();
+/**
+ * ResizeObserver API. Encapsulates the ResizeObserver SPI implementation
+ * exposing only those methods and properties that are defined in the spec.
+ */ var ResizeObserver1 = function() {
+    /**
+     * Creates a new instance of ResizeObserver.
+     *
+     * @param {ResizeObserverCallback} callback - Callback that is invoked when
+     *      dimensions of the observed elements change.
+     */ function ResizeObserver2(callback) {
+        if (!(this instanceof ResizeObserver2)) throw new TypeError('Cannot call a class as a function.');
+        if (!arguments.length) throw new TypeError('1 argument required, but only 0 present.');
+        var controller = ResizeObserverController.getInstance();
+        var observer = new ResizeObserverSPI(callback, controller, this);
+        observers.set(this, observer);
+    }
+    return ResizeObserver2;
+}();
+// Expose public methods of ResizeObserver.
+[
+    'observe',
+    'unobserve',
+    'disconnect'
+].forEach(function(method) {
+    ResizeObserver1.prototype[method] = function() {
+        var _a;
+        return (_a = observers.get(this))[method].apply(_a, arguments);
+    };
+});
+var index = function() {
+    // Export existing implementation if available.
+    if (typeof global$1.ResizeObserver !== 'undefined') return global$1.ResizeObserver;
+    return ResizeObserver1;
+}();
+exports.default = index;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bZKop":[function(require,module,exports) {
+var camel2hyphen = require('string-convert/camel2hyphen');
+var isDimension = function(feature) {
+    var re = /[height|width]$/;
+    return re.test(feature);
+};
+var obj2mq = function(obj) {
+    var mq = '';
+    var features = Object.keys(obj);
+    features.forEach(function(feature, index) {
+        var value = obj[feature];
+        feature = camel2hyphen(feature);
+        // Add px to dimension features
+        if (isDimension(feature) && typeof value === 'number') value = value + 'px';
+        if (value === true) mq += feature;
+        else if (value === false) mq += 'not ' + feature;
+        else mq += '(' + feature + ': ' + value + ')';
+        if (index < features.length - 1) mq += ' and ';
+    });
+    return mq;
+};
+var json2mq = function(query) {
+    var mq = '';
+    if (typeof query === 'string') return query;
+    // Handling array of media queries
+    if (query instanceof Array) {
+        query.forEach(function(q, index) {
+            mq += obj2mq(q);
+            if (index < query.length - 1) mq += ', ';
+        });
+        return mq;
+    }
+    // Handling single media query
+    return obj2mq(query);
+};
+module.exports = json2mq;
+
+},{"string-convert/camel2hyphen":"f86Jg"}],"f86Jg":[function(require,module,exports) {
+var camel2hyphen = function(str) {
+    return str.replace(/[A-Z]/g, function(match) {
+        return '-' + match.toLowerCase();
+    }).toLowerCase();
+};
+module.exports = camel2hyphen;
+
+},{}],"8bzBk":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports["default"] = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+        "default": obj
+    };
+}
+var defaultProps = {
+    accessibility: true,
+    adaptiveHeight: false,
+    afterChange: null,
+    appendDots: function appendDots(dots) {
+        return(/*#__PURE__*/ _react["default"].createElement("ul", {
+            style: {
+                display: "block"
+            }
+        }, dots));
+    },
+    arrows: true,
+    autoplay: false,
+    autoplaySpeed: 3000,
+    beforeChange: null,
+    centerMode: false,
+    centerPadding: "50px",
+    className: "",
+    cssEase: "ease",
+    customPaging: function customPaging(i) {
+        return(/*#__PURE__*/ _react["default"].createElement("button", null, i + 1));
+    },
+    dots: false,
+    dotsClass: "slick-dots",
+    draggable: true,
+    easing: "linear",
+    edgeFriction: 0.35,
+    fade: false,
+    focusOnSelect: false,
+    infinite: true,
+    initialSlide: 0,
+    lazyLoad: null,
+    nextArrow: null,
+    onEdge: null,
+    onInit: null,
+    onLazyLoadError: null,
+    onReInit: null,
+    pauseOnDotsHover: false,
+    pauseOnFocus: false,
+    pauseOnHover: true,
+    prevArrow: null,
+    responsive: null,
+    rows: 1,
+    rtl: false,
+    slide: "div",
+    slidesPerRow: 1,
+    slidesToScroll: 1,
+    slidesToShow: 1,
+    speed: 500,
+    swipe: true,
+    swipeEvent: null,
+    swipeToSlide: false,
+    touchMove: true,
+    touchThreshold: 5,
+    useCSS: true,
+    useTransform: true,
+    variableWidth: false,
+    vertical: false,
+    waitForAnimate: true
+};
+var _default = defaultProps;
+exports["default"] = _default;
+
+},{"react":"6TuXu"}],"jUNp6":[function(require,module,exports) {
+var MediaQueryDispatch = require('./MediaQueryDispatch');
+module.exports = new MediaQueryDispatch();
+
+},{"./MediaQueryDispatch":"b1Ykj"}],"b1Ykj":[function(require,module,exports) {
+var MediaQuery = require('./MediaQuery');
+var Util = require('./Util');
+var each = Util.each;
+var isFunction = Util.isFunction;
+var isArray = Util.isArray;
+/**
+ * Allows for registration of query handlers.
+ * Manages the query handler's state and is responsible for wiring up browser events
+ *
+ * @constructor
+ */ function MediaQueryDispatch() {
+    if (!window.matchMedia) throw new Error('matchMedia not present, legacy browsers require a polyfill');
+    this.queries = {
+    };
+    this.browserIsIncapable = !window.matchMedia('only all').matches;
+}
+MediaQueryDispatch.prototype = {
+    constructor: MediaQueryDispatch,
+    /**
+     * Registers a handler for the given media query
+     *
+     * @param {string} q the media query
+     * @param {object || Array || Function} options either a single query handler object, a function, or an array of query handlers
+     * @param {function} options.match fired when query matched
+     * @param {function} [options.unmatch] fired when a query is no longer matched
+     * @param {function} [options.setup] fired when handler first triggered
+     * @param {boolean} [options.deferSetup=false] whether setup should be run immediately or deferred until query is first matched
+     * @param {boolean} [shouldDegrade=false] whether this particular media query should always run on incapable browsers
+     */ register: function(q, options, shouldDegrade) {
+        var queries = this.queries, isUnconditional = shouldDegrade && this.browserIsIncapable;
+        if (!queries[q]) queries[q] = new MediaQuery(q, isUnconditional);
+        //normalise to object in an array
+        if (isFunction(options)) options = {
+            match: options
+        };
+        if (!isArray(options)) options = [
+            options
+        ];
+        each(options, function(handler) {
+            if (isFunction(handler)) handler = {
+                match: handler
+            };
+            queries[q].addHandler(handler);
+        });
+        return this;
+    },
+    /**
+     * unregisters a query and all it's handlers, or a specific handler for a query
+     *
+     * @param {string} q the media query to target
+     * @param {object || function} [handler] specific handler to unregister
+     */ unregister: function(q, handler) {
+        var query = this.queries[q];
+        if (query) {
+            if (handler) query.removeHandler(handler);
+            else {
+                query.clear();
+                delete this.queries[q];
+            }
+        }
+        return this;
+    }
+};
+module.exports = MediaQueryDispatch;
+
+},{"./MediaQuery":"riKd8","./Util":"66r82"}],"riKd8":[function(require,module,exports) {
+var QueryHandler = require('./QueryHandler');
+var each = require('./Util').each;
+/**
+ * Represents a single media query, manages it's state and registered handlers for this query
+ *
+ * @constructor
+ * @param {string} query the media query string
+ * @param {boolean} [isUnconditional=false] whether the media query should run regardless of whether the conditions are met. Primarily for helping older browsers deal with mobile-first design
+ */ function MediaQuery(query, isUnconditional) {
+    this.query = query;
+    this.isUnconditional = isUnconditional;
+    this.handlers = [];
+    this.mql = window.matchMedia(query);
+    var self = this;
+    this.listener = function(mql) {
+        // Chrome passes an MediaQueryListEvent object, while other browsers pass MediaQueryList directly
+        self.mql = mql.currentTarget || mql;
+        self.assess();
+    };
+    this.mql.addListener(this.listener);
+}
+MediaQuery.prototype = {
+    constuctor: MediaQuery,
+    /**
+     * add a handler for this query, triggering if already active
+     *
+     * @param {object} handler
+     * @param {function} handler.match callback for when query is activated
+     * @param {function} [handler.unmatch] callback for when query is deactivated
+     * @param {function} [handler.setup] callback for immediate execution when a query handler is registered
+     * @param {boolean} [handler.deferSetup=false] should the setup callback be deferred until the first time the handler is matched?
+     */ addHandler: function(handler) {
+        var qh = new QueryHandler(handler);
+        this.handlers.push(qh);
+        this.matches() && qh.on();
+    },
+    /**
+     * removes the given handler from the collection, and calls it's destroy methods
+     *
+     * @param {object || function} handler the handler to remove
+     */ removeHandler: function(handler) {
+        var handlers = this.handlers;
+        each(handlers, function(h, i) {
+            if (h.equals(handler)) {
+                h.destroy();
+                return !handlers.splice(i, 1); //remove from array and exit each early
+            }
+        });
+    },
+    /**
+     * Determine whether the media query should be considered a match
+     *
+     * @return {Boolean} true if media query can be considered a match, false otherwise
+     */ matches: function() {
+        return this.mql.matches || this.isUnconditional;
+    },
+    /**
+     * Clears all handlers and unbinds events
+     */ clear: function() {
+        each(this.handlers, function(handler) {
+            handler.destroy();
+        });
+        this.mql.removeListener(this.listener);
+        this.handlers.length = 0; //clear array
+    },
+    /*
+        * Assesses the query, turning on all handlers if it matches, turning them off if it doesn't match
+        */ assess: function() {
+        var action = this.matches() ? 'on' : 'off';
+        each(this.handlers, function(handler) {
+            handler[action]();
+        });
+    }
+};
+module.exports = MediaQuery;
+
+},{"./QueryHandler":"cBsLM","./Util":"66r82"}],"cBsLM":[function(require,module,exports) {
+/**
+ * Delegate to handle a media query being matched and unmatched.
+ *
+ * @param {object} options
+ * @param {function} options.match callback for when the media query is matched
+ * @param {function} [options.unmatch] callback for when the media query is unmatched
+ * @param {function} [options.setup] one-time callback triggered the first time a query is matched
+ * @param {boolean} [options.deferSetup=false] should the setup callback be run immediately, rather than first time query is matched?
+ * @constructor
+ */ function QueryHandler(options) {
+    this.options = options;
+    !options.deferSetup && this.setup();
+}
+QueryHandler.prototype = {
+    constructor: QueryHandler,
+    /**
+     * coordinates setup of the handler
+     *
+     * @function
+     */ setup: function() {
+        if (this.options.setup) this.options.setup();
+        this.initialised = true;
+    },
+    /**
+     * coordinates setup and triggering of the handler
+     *
+     * @function
+     */ on: function() {
+        !this.initialised && this.setup();
+        this.options.match && this.options.match();
+    },
+    /**
+     * coordinates the unmatch event for the handler
+     *
+     * @function
+     */ off: function() {
+        this.options.unmatch && this.options.unmatch();
+    },
+    /**
+     * called when a handler is to be destroyed.
+     * delegates to the destroy or unmatch callbacks, depending on availability.
+     *
+     * @function
+     */ destroy: function() {
+        this.options.destroy ? this.options.destroy() : this.off();
+    },
+    /**
+     * determines equality by reference.
+     * if object is supplied compare options, if function, compare match callback
+     *
+     * @function
+     * @param {object || function} [target] the target for comparison
+     */ equals: function(target) {
+        return this.options === target || this.options.match === target;
+    }
+};
+module.exports = QueryHandler;
+
+},{}],"66r82":[function(require,module,exports) {
+/**
+ * Helper function for iterating over a collection
+ *
+ * @param collection
+ * @param fn
+ */ function each(collection, fn) {
+    var i = 0, length = collection.length, cont;
+    for(; i < length; i++){
+        cont = fn(collection[i], i);
+        if (cont === false) break; //allow early exit
+    }
+}
+/**
+ * Helper function for determining whether target object is an array
+ *
+ * @param target the object under test
+ * @return {Boolean} true if array, false otherwise
+ */ function isArray(target) {
+    return Object.prototype.toString.apply(target) === '[object Array]';
+}
+/**
+ * Helper function for determining whether target object is a function
+ *
+ * @param target the object under test
+ * @return {Boolean} true if function, false otherwise
+ */ function isFunction(target) {
+    return typeof target === 'function';
+}
+module.exports = {
+    isFunction: isFunction,
+    isArray: isArray,
+    each: each
+};
+
+},{}],"9gz3w":[function() {},{}],"3nTPC":[function() {},{}],"6cDoX":[function() {},{}],"jUTZ8":[function() {},{}],"4d0QS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes
+);
+parcelHelpers.export(exports, "applyMiddleware", ()=>applyMiddleware
+);
+parcelHelpers.export(exports, "bindActionCreators", ()=>bindActionCreators
+);
+parcelHelpers.export(exports, "combineReducers", ()=>combineReducers
+);
+parcelHelpers.export(exports, "compose", ()=>compose
+);
+parcelHelpers.export(exports, "createStore", ()=>createStore
+);
+parcelHelpers.export(exports, "legacy_createStore", ()=>legacy_createStore
+);
+var _objectSpread2 = require("@babel/runtime/helpers/esm/objectSpread2");
+var _objectSpread2Default = parcelHelpers.interopDefault(_objectSpread2);
+/**
+ * Adapted from React: https://github.com/facebook/react/blob/master/packages/shared/formatProdErrorMessage.js
+ *
+ * Do not require this module directly! Use normal throw error calls. These messages will be replaced with error codes
+ * during build.
+ * @param {number} code
+ */ function formatProdErrorMessage(code) {
+    return "Minified Redux error #" + code + "; visit https://redux.js.org/Errors?code=" + code + " for the full message or " + 'use the non-minified dev environment for full errors. ';
+}
+// Inlined version of the `symbol-observable` polyfill
+var $$observable = function() {
+    return typeof Symbol === 'function' && Symbol.observable || '@@observable';
+}();
+/**
+ * These are private action types reserved by Redux.
+ * For any unknown actions, you must return the current state.
+ * If the current state is undefined, you must return the initial state.
+ * Do not reference these action types directly in your code.
+ */ var randomString = function randomString1() {
+    return Math.random().toString(36).substring(7).split('').join('.');
+};
+var ActionTypes = {
+    INIT: "@@redux/INIT" + randomString(),
+    REPLACE: "@@redux/REPLACE" + randomString(),
+    PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
+        return "@@redux/PROBE_UNKNOWN_ACTION" + randomString();
+    }
+};
+/**
+ * @param {any} obj The object to inspect.
+ * @returns {boolean} True if the argument appears to be a plain object.
+ */ function isPlainObject(obj) {
+    if (typeof obj !== 'object' || obj === null) return false;
+    var proto = obj;
+    while(Object.getPrototypeOf(proto) !== null)proto = Object.getPrototypeOf(proto);
+    return Object.getPrototypeOf(obj) === proto;
+}
+// Inlined / shortened version of `kindOf` from https://github.com/jonschlinkert/kind-of
+function miniKindOf(val) {
+    if (val === void 0) return 'undefined';
+    if (val === null) return 'null';
+    var type = typeof val;
+    switch(type){
+        case 'boolean':
+        case 'string':
+        case 'number':
+        case 'symbol':
+        case 'function':
+            return type;
+    }
+    if (Array.isArray(val)) return 'array';
+    if (isDate(val)) return 'date';
+    if (isError(val)) return 'error';
+    var constructorName = ctorName(val);
+    switch(constructorName){
+        case 'Symbol':
+        case 'Promise':
+        case 'WeakMap':
+        case 'WeakSet':
+        case 'Map':
+        case 'Set':
+            return constructorName;
+    } // other
+    return type.slice(8, -1).toLowerCase().replace(/\s/g, '');
+}
+function ctorName(val) {
+    return typeof val.constructor === 'function' ? val.constructor.name : null;
+}
+function isError(val) {
+    return val instanceof Error || typeof val.message === 'string' && val.constructor && typeof val.constructor.stackTraceLimit === 'number';
+}
+function isDate(val) {
+    if (val instanceof Date) return true;
+    return typeof val.toDateString === 'function' && typeof val.getDate === 'function' && typeof val.setDate === 'function';
+}
+function kindOf(val) {
+    var typeOfVal = typeof val;
+    typeOfVal = miniKindOf(val);
+    return typeOfVal;
+}
+/**
+ * @deprecated
+ *
+ * **We recommend using the `configureStore` method
+ * of the `@reduxjs/toolkit` package**, which replaces `createStore`.
+ *
+ * Redux Toolkit is our recommended approach for writing Redux logic today,
+ * including store setup, reducers, data fetching, and more.
+ *
+ * **For more details, please read this Redux docs page:**
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * `configureStore` from Redux Toolkit is an improved version of `createStore` that
+ * simplifies setup and helps avoid common bugs.
+ *
+ * You should not be using the `redux` core package by itself today, except for learning purposes.
+ * The `createStore` method from the core `redux` package will not be removed, but we encourage
+ * all users to migrate to using Redux Toolkit for all Redux code.
+ *
+ * If you want to use `createStore` without this visual deprecation warning, use
+ * the `legacy_createStore` import instead:
+ *
+ * `import { legacy_createStore as createStore} from 'redux'`
+ *
+ */ function createStore(reducer, preloadedState, enhancer) {
+    var _ref2;
+    if (typeof preloadedState === 'function' && typeof enhancer === 'function' || typeof enhancer === 'function' && typeof arguments[3] === 'function') throw new Error("It looks like you are passing several store enhancers to createStore(). This is not supported. Instead, compose them together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.");
+    if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
+        enhancer = preloadedState;
+        preloadedState = undefined;
+    }
+    if (typeof enhancer !== 'undefined') {
+        if (typeof enhancer !== 'function') throw new Error("Expected the enhancer to be a function. Instead, received: '" + kindOf(enhancer) + "'");
+        return enhancer(createStore)(reducer, preloadedState);
+    }
+    if (typeof reducer !== 'function') throw new Error("Expected the root reducer to be a function. Instead, received: '" + kindOf(reducer) + "'");
+    var currentReducer = reducer;
+    var currentState = preloadedState;
+    var currentListeners = [];
+    var nextListeners = currentListeners;
+    var isDispatching = false;
+    /**
+   * This makes a shallow copy of currentListeners so we can use
+   * nextListeners as a temporary list while dispatching.
+   *
+   * This prevents any bugs around consumers calling
+   * subscribe/unsubscribe in the middle of a dispatch.
+   */ function ensureCanMutateNextListeners() {
+        if (nextListeners === currentListeners) nextListeners = currentListeners.slice();
+    }
+    /**
+   * Reads the state tree managed by the store.
+   *
+   * @returns {any} The current state tree of your application.
+   */ function getState() {
+        if (isDispatching) throw new Error("You may not call store.getState() while the reducer is executing. The reducer has already received the state as an argument. Pass it down from the top reducer instead of reading it from the store.");
+        return currentState;
+    }
+    /**
+   * Adds a change listener. It will be called any time an action is dispatched,
+   * and some part of the state tree may potentially have changed. You may then
+   * call `getState()` to read the current state tree inside the callback.
+   *
+   * You may call `dispatch()` from a change listener, with the following
+   * caveats:
+   *
+   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
+   * If you subscribe or unsubscribe while the listeners are being invoked, this
+   * will not have any effect on the `dispatch()` that is currently in progress.
+   * However, the next `dispatch()` call, whether nested or not, will use a more
+   * recent snapshot of the subscription list.
+   *
+   * 2. The listener should not expect to see all state changes, as the state
+   * might have been updated multiple times during a nested `dispatch()` before
+   * the listener is called. It is, however, guaranteed that all subscribers
+   * registered before the `dispatch()` started will be called with the latest
+   * state by the time it exits.
+   *
+   * @param {Function} listener A callback to be invoked on every dispatch.
+   * @returns {Function} A function to remove this change listener.
+   */ function subscribe(listener) {
+        if (typeof listener !== 'function') throw new Error("Expected the listener to be a function. Instead, received: '" + kindOf(listener) + "'");
+        if (isDispatching) throw new Error("You may not call store.subscribe() while the reducer is executing. If you would like to be notified after the store has been updated, subscribe from a component and invoke store.getState() in the callback to access the latest state. See https://redux.js.org/api/store#subscribelistener for more details.");
+        var isSubscribed = true;
+        ensureCanMutateNextListeners();
+        nextListeners.push(listener);
+        return function unsubscribe() {
+            if (!isSubscribed) return;
+            if (isDispatching) throw new Error("You may not unsubscribe from a store listener while the reducer is executing. See https://redux.js.org/api/store#subscribelistener for more details.");
+            isSubscribed = false;
+            ensureCanMutateNextListeners();
+            var index = nextListeners.indexOf(listener);
+            nextListeners.splice(index, 1);
+            currentListeners = null;
+        };
+    }
+    /**
+   * Dispatches an action. It is the only way to trigger a state change.
+   *
+   * The `reducer` function, used to create the store, will be called with the
+   * current state tree and the given `action`. Its return value will
+   * be considered the **next** state of the tree, and the change listeners
+   * will be notified.
+   *
+   * The base implementation only supports plain object actions. If you want to
+   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+   * wrap your store creating function into the corresponding middleware. For
+   * example, see the documentation for the `redux-thunk` package. Even the
+   * middleware will eventually dispatch plain object actions using this method.
+   *
+   * @param {Object} action A plain object representing “what changed”. It is
+   * a good idea to keep actions serializable so you can record and replay user
+   * sessions, or use the time travelling `redux-devtools`. An action must have
+   * a `type` property which may not be `undefined`. It is a good idea to use
+   * string constants for action types.
+   *
+   * @returns {Object} For convenience, the same action object you dispatched.
+   *
+   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+   * return something else (for example, a Promise you can await).
+   */ function dispatch(action) {
+        if (!isPlainObject(action)) throw new Error("Actions must be plain objects. Instead, the actual type was: '" + kindOf(action) + "'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.");
+        if (typeof action.type === 'undefined') throw new Error('Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
+        if (isDispatching) throw new Error('Reducers may not dispatch actions.');
+        try {
+            isDispatching = true;
+            currentState = currentReducer(currentState, action);
+        } finally{
+            isDispatching = false;
+        }
+        var listeners = currentListeners = nextListeners;
+        for(var i = 0; i < listeners.length; i++){
+            var listener = listeners[i];
+            listener();
+        }
+        return action;
+    }
+    /**
+   * Replaces the reducer currently used by the store to calculate the state.
+   *
+   * You might need this if your app implements code splitting and you want to
+   * load some of the reducers dynamically. You might also need this if you
+   * implement a hot reloading mechanism for Redux.
+   *
+   * @param {Function} nextReducer The reducer for the store to use instead.
+   * @returns {void}
+   */ function replaceReducer(nextReducer) {
+        if (typeof nextReducer !== 'function') throw new Error("Expected the nextReducer to be a function. Instead, received: '" + kindOf(nextReducer));
+        currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
+        // Any reducers that existed in both the new and old rootReducer
+        // will receive the previous state. This effectively populates
+        // the new state tree with any relevant data from the old one.
+        dispatch({
+            type: ActionTypes.REPLACE
+        });
+    }
+    /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/tc39/proposal-observable
+   */ function observable() {
+        var _ref;
+        var outerSubscribe = subscribe;
+        return _ref = {
+            /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */ subscribe: function subscribe1(observer) {
+                if (typeof observer !== 'object' || observer === null) throw new Error("Expected the observer to be an object. Instead, received: '" + kindOf(observer) + "'");
+                function observeState() {
+                    if (observer.next) observer.next(getState());
+                }
+                observeState();
+                var unsubscribe = outerSubscribe(observeState);
+                return {
+                    unsubscribe: unsubscribe
+                };
+            }
+        }, _ref[$$observable] = function() {
+            return this;
+        }, _ref;
+    } // When a store is created, an "INIT" action is dispatched so that every
+    // reducer returns their initial state. This effectively populates
+    // the initial state tree.
+    dispatch({
+        type: ActionTypes.INIT
+    });
+    return _ref2 = {
+        dispatch: dispatch,
+        subscribe: subscribe,
+        getState: getState,
+        replaceReducer: replaceReducer
+    }, _ref2[$$observable] = observable, _ref2;
+}
+/**
+ * Creates a Redux store that holds the state tree.
+ *
+ * **We recommend using `configureStore` from the
+ * `@reduxjs/toolkit` package**, which replaces `createStore`:
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * The only way to change the data in the store is to call `dispatch()` on it.
+ *
+ * There should only be a single store in your app. To specify how different
+ * parts of the state tree respond to actions, you may combine several reducers
+ * into a single reducer function by using `combineReducers`.
+ *
+ * @param {Function} reducer A function that returns the next state tree, given
+ * the current state tree and the action to handle.
+ *
+ * @param {any} [preloadedState] The initial state. You may optionally specify it
+ * to hydrate the state from the server in universal apps, or to restore a
+ * previously serialized user session.
+ * If you use `combineReducers` to produce the root reducer function, this must be
+ * an object with the same shape as `combineReducers` keys.
+ *
+ * @param {Function} [enhancer] The store enhancer. You may optionally specify it
+ * to enhance the store with third-party capabilities such as middleware,
+ * time travel, persistence, etc. The only store enhancer that ships with Redux
+ * is `applyMiddleware()`.
+ *
+ * @returns {Store} A Redux store that lets you read the state, dispatch actions
+ * and subscribe to changes.
+ */ var legacy_createStore = createStore;
+/**
+ * Prints a warning in the console if it exists.
+ *
+ * @param {String} message The warning message.
+ * @returns {void}
+ */ function warning(message) {
+    /* eslint-disable no-console */ if (typeof console !== 'undefined' && typeof console.error === 'function') console.error(message);
+    /* eslint-enable no-console */ try {
+        // This error was thrown as a convenience so that if you enable
+        // "break on all exceptions" in your console,
+        // it would pause the execution at this line.
+        throw new Error(message);
+    } catch (e) {
+    } // eslint-disable-line no-empty
+}
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+    var reducerKeys = Object.keys(reducers);
+    var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
+    if (reducerKeys.length === 0) return "Store does not have a valid reducer. Make sure the argument passed to combineReducers is an object whose values are reducers.";
+    if (!isPlainObject(inputState)) return "The " + argumentName + " has unexpected type of \"" + kindOf(inputState) + "\". Expected argument to be an object with the following " + ("keys: \"" + reducerKeys.join('", "') + "\"");
+    var unexpectedKeys = Object.keys(inputState).filter(function(key) {
+        return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
+    });
+    unexpectedKeys.forEach(function(key) {
+        unexpectedKeyCache[key] = true;
+    });
+    if (action && action.type === ActionTypes.REPLACE) return;
+    if (unexpectedKeys.length > 0) return "Unexpected " + (unexpectedKeys.length > 1 ? 'keys' : 'key') + " " + ("\"" + unexpectedKeys.join('", "') + "\" found in " + argumentName + ". ") + "Expected to find one of the known reducer keys instead: " + ("\"" + reducerKeys.join('", "') + "\". Unexpected keys will be ignored.");
+}
+function assertReducerShape(reducers) {
+    Object.keys(reducers).forEach(function(key) {
+        var reducer = reducers[key];
+        var initialState = reducer(undefined, {
+            type: ActionTypes.INIT
+        });
+        if (typeof initialState === 'undefined') throw new Error("The slice reducer for key \"" + key + "\" returned undefined during initialization. " + "If the state passed to the reducer is undefined, you must " + "explicitly return the initial state. The initial state may " + "not be undefined. If you don't want to set a value for this reducer, " + "you can use null instead of undefined.");
+        if (typeof reducer(undefined, {
+            type: ActionTypes.PROBE_UNKNOWN_ACTION()
+        }) === 'undefined') throw new Error("The slice reducer for key \"" + key + "\" returned undefined when probed with a random type. " + ("Don't try to handle '" + ActionTypes.INIT + "' or other actions in \"redux/*\" ") + "namespace. They are considered private. Instead, you must return the " + "current state for any unknown actions, unless it is undefined, " + "in which case you must return the initial state, regardless of the " + "action type. The initial state may not be undefined, but can be null.");
+    });
+}
+/**
+ * Turns an object whose values are different reducer functions, into a single
+ * reducer function. It will call every child reducer, and gather their results
+ * into a single state object, whose keys correspond to the keys of the passed
+ * reducer functions.
+ *
+ * @param {Object} reducers An object whose values correspond to different
+ * reducer functions that need to be combined into one. One handy way to obtain
+ * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+ * undefined for any action. Instead, they should return their initial state
+ * if the state passed to them was undefined, and the current state for any
+ * unrecognized action.
+ *
+ * @returns {Function} A reducer function that invokes every reducer inside the
+ * passed object, and builds a state object with the same shape.
+ */ function combineReducers(reducers) {
+    var reducerKeys = Object.keys(reducers);
+    var finalReducers = {
+    };
+    for(var i = 0; i < reducerKeys.length; i++){
+        var key = reducerKeys[i];
+        if (typeof reducers[key] === 'undefined') warning("No reducer provided for key \"" + key + "\"");
+        if (typeof reducers[key] === 'function') finalReducers[key] = reducers[key];
+    }
+    var finalReducerKeys = Object.keys(finalReducers); // This is used to make sure we don't warn about the same
+    // keys multiple times.
+    var unexpectedKeyCache;
+    unexpectedKeyCache = {
+    };
+    var shapeAssertionError;
+    try {
+        assertReducerShape(finalReducers);
+    } catch (e) {
+        shapeAssertionError = e;
+    }
+    return function combination(state, action) {
+        if (state === void 0) state = {
+        };
+        if (shapeAssertionError) throw shapeAssertionError;
+        var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+        if (warningMessage) warning(warningMessage);
+        var hasChanged = false;
+        var nextState = {
+        };
+        for(var _i = 0; _i < finalReducerKeys.length; _i++){
+            var _key = finalReducerKeys[_i];
+            var reducer = finalReducers[_key];
+            var previousStateForKey = state[_key];
+            var nextStateForKey = reducer(previousStateForKey, action);
+            if (typeof nextStateForKey === 'undefined') {
+                var actionType = action && action.type;
+                throw new Error("When called with an action of type " + (actionType ? "\"" + String(actionType) + "\"" : '(unknown type)') + ", the slice reducer for key \"" + _key + "\" returned undefined. " + "To ignore an action, you must explicitly return the previous state. " + "If you want this reducer to hold no value, you can return null instead of undefined.");
+            }
+            nextState[_key] = nextStateForKey;
+            hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+        }
+        hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+        return hasChanged ? nextState : state;
+    };
+}
+function bindActionCreator(actionCreator, dispatch) {
+    return function() {
+        return dispatch(actionCreator.apply(this, arguments));
+    };
+}
+/**
+ * Turns an object whose values are action creators, into an object with the
+ * same keys, but with every function wrapped into a `dispatch` call so they
+ * may be invoked directly. This is just a convenience method, as you can call
+ * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+ *
+ * For convenience, you can also pass an action creator as the first argument,
+ * and get a dispatch wrapped function in return.
+ *
+ * @param {Function|Object} actionCreators An object whose values are action
+ * creator functions. One handy way to obtain it is to use ES6 `import * as`
+ * syntax. You may also pass a single function.
+ *
+ * @param {Function} dispatch The `dispatch` function available on your Redux
+ * store.
+ *
+ * @returns {Function|Object} The object mimicking the original object, but with
+ * every action creator wrapped into the `dispatch` call. If you passed a
+ * function as `actionCreators`, the return value will also be a single
+ * function.
+ */ function bindActionCreators(actionCreators, dispatch) {
+    if (typeof actionCreators === 'function') return bindActionCreator(actionCreators, dispatch);
+    if (typeof actionCreators !== 'object' || actionCreators === null) throw new Error("bindActionCreators expected an object or a function, but instead received: '" + kindOf(actionCreators) + "'. " + "Did you write \"import ActionCreators from\" instead of \"import * as ActionCreators from\"?");
+    var boundActionCreators = {
+    };
+    for(var key in actionCreators){
+        var actionCreator = actionCreators[key];
+        if (typeof actionCreator === 'function') boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+    return boundActionCreators;
+}
+/**
+ * Composes single-argument functions from right to left. The rightmost
+ * function can take multiple arguments as it provides the signature for
+ * the resulting composite function.
+ *
+ * @param {...Function} funcs The functions to compose.
+ * @returns {Function} A function obtained by composing the argument functions
+ * from right to left. For example, compose(f, g, h) is identical to doing
+ * (...args) => f(g(h(...args))).
+ */ function compose() {
+    for(var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++)funcs[_key] = arguments[_key];
+    if (funcs.length === 0) return function(arg) {
+        return arg;
+    };
+    if (funcs.length === 1) return funcs[0];
+    return funcs.reduce(function(a, b) {
+        return function() {
+            return a(b.apply(void 0, arguments));
+        };
+    });
+}
+/**
+ * Creates a store enhancer that applies middleware to the dispatch method
+ * of the Redux store. This is handy for a variety of tasks, such as expressing
+ * asynchronous actions in a concise manner, or logging every action payload.
+ *
+ * See `redux-thunk` package as an example of the Redux middleware.
+ *
+ * Because middleware is potentially asynchronous, this should be the first
+ * store enhancer in the composition chain.
+ *
+ * Note that each middleware will be given the `dispatch` and `getState` functions
+ * as named arguments.
+ *
+ * @param {...Function} middlewares The middleware chain to be applied.
+ * @returns {Function} A store enhancer applying the middleware.
+ */ function applyMiddleware() {
+    for(var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++)middlewares[_key] = arguments[_key];
+    return function(createStore1) {
+        return function() {
+            var store = createStore1.apply(void 0, arguments);
+            var _dispatch = function dispatch() {
+                throw new Error("Dispatching while constructing your middleware is not allowed. Other middleware would not be applied to this dispatch.");
+            };
+            var middlewareAPI = {
+                getState: store.getState,
+                dispatch: function dispatch1() {
+                    return _dispatch.apply(void 0, arguments);
+                }
+            };
+            var chain = middlewares.map(function(middleware) {
+                return middleware(middlewareAPI);
+            });
+            _dispatch = compose.apply(void 0, chain)(store.dispatch);
+            return _objectSpread2Default.default(_objectSpread2Default.default({
+            }, store), {
+            }, {
+                dispatch: _dispatch
+            });
+        };
+    };
+}
+/*
+ * This is a dummy function to check if the function name has been altered by minification.
+ * If the function has been minified and NODE_ENV !== 'production', warn the user.
+ */ function isCrushed() {
+}
+if (typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') warning("You are currently using minified code outside of NODE_ENV === \"production\". This means that you are running a slower development build of Redux. You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) to ensure you have the correct code for your production build.");
+
+},{"@babel/runtime/helpers/esm/objectSpread2":"bSD1u","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"bSD1u":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _definePropertyJs = require("./defineProperty.js");
+var _definePropertyJsDefault = parcelHelpers.interopDefault(_definePropertyJs);
+function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+    if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter(function(sym) {
+            return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        })), keys.push.apply(keys, symbols);
+    }
+    return keys;
+}
+function _objectSpread2(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = null != arguments[i] ? arguments[i] : {
+        };
+        i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+            _definePropertyJsDefault.default(target, key, source[key]);
+        }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+            Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+    }
+    return target;
+}
+exports.default = _objectSpread2;
+
+},{"./defineProperty.js":"7s3FO","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"7s3FO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function _defineProperty(obj, key, value) {
+    if (key in obj) Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+    });
+    else obj[key] = value;
+    return obj;
+}
+exports.default = _defineProperty;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"btgQW":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _redux = require("redux");
+var _actions = require("../actions/actions");
+//used for filtering movies
+function visibilityFilter(state = '', action) {
+    switch(action.type){
+        case _actions.SET_FILTER:
+            return action.value;
+        default:
+            return state;
+    }
+}
+function movies(state = [], action) {
+    switch(action.type){
+        case _actions.SET_MOVIES:
+            return action.value;
+        default:
+            return state;
+    }
+}
+//handles setting array of favorites and updating favorites
+function favorites(state = [], action) {
+    switch(action.type){
+        case _actions.SET_FAVORITE:
+            return action.value;
+        case _actions.TOGGLE_FAVORITE:
+            if (state.includes(action.movieId)) return state.filter((val)=>val !== action.movieId
+            );
+            else return [
+                ...state,
+                action.movieId
+            ];
+        default:
+            return state;
+    }
+}
+//stores logged in user
+function user(state = '', action) {
+    switch(action.type){
+        case _actions.SET_USER:
+            return action.user;
+        default:
+            return state;
+    }
+}
+const moviesApp = _redux.combineReducers({
+    visibilityFilter,
+    movies,
+    favorites,
+    user
+});
+exports.default = moviesApp;
+
+},{"redux":"4d0QS","../actions/actions":"1Ttfj","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"8GWVf":[function(require,module,exports) {
 'use strict';
 var compose = require('redux').compose;
 exports.__esModule = true;
