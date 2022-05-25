@@ -30,23 +30,25 @@ export class DirectorView extends React.Component {
       <div className="director-wrapper">
         <div className="movie-view tp-movie">
           <div className="movie-genre mov-section">
-            <div>{director.Name}</div>
-            <br></br>
-            <div>{director.Bio}</div>
+            <div>
+              <h3>{director.Name}</h3>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  onBackClick();
+                }}
+              >
+                Back
+              </Button>
+            </div>
             <br></br>
           </div>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              onBackClick();
-            }}
-          >
-            Back
-          </Button>
         </div>
         <div className="movie-view bt-movie">
           {/* returning list of movies directed by current director */}
-          <div className="cards-header">Also directed by {director.Name}:</div>
+          <div className="cards-header">
+            Also directed by {director.Name} ({directorMovies.length}):
+          </div>
           <Row>{directorCards}</Row>
         </div>
       </div>

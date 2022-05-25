@@ -129,8 +129,6 @@ class MainView extends React.Component {
             <Route
               path="/movies/:movieId"
               render={({ match, history }) => {
-                console.log(movies, match.params.movieId);
-
                 if (!user)
                   return (
                     <Col>
