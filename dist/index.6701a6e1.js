@@ -51776,6 +51776,34 @@ class MovieView extends _reactDefault.default.Component {
                                                 children: movie.Director.Name ? movie.Director.Name : 'N/A'
                                             })
                                         ]
+                                    }),
+                                    /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                                        className: "movie-rating mov-section",
+                                        __source: {
+                                            fileName: "src/components/movie-view/movie-view.jsx",
+                                            lineNumber: 51
+                                        },
+                                        __self: this,
+                                        children: [
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "label",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 52
+                                                },
+                                                __self: this,
+                                                children: "Rating: "
+                                            }),
+                                            /*#__PURE__*/ _jsxRuntime.jsx("span", {
+                                                className: "value",
+                                                __source: {
+                                                    fileName: "src/components/movie-view/movie-view.jsx",
+                                                    lineNumber: 53
+                                                },
+                                                __self: this,
+                                                children: movie.Rating ? movie.Rating : 'N/A'
+                                            })
+                                        ]
                                     })
                                 ]
                             }),
@@ -51783,7 +51811,7 @@ class MovieView extends _reactDefault.default.Component {
                                 className: "button-wrapper",
                                 __source: {
                                     fileName: "src/components/movie-view/movie-view.jsx",
-                                    lineNumber: 52
+                                    lineNumber: 58
                                 },
                                 __self: this,
                                 children: [
@@ -51792,14 +51820,14 @@ class MovieView extends _reactDefault.default.Component {
                                         className: "movie-opt",
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 53
+                                            lineNumber: 59
                                         },
                                         __self: this,
                                         children: movie.Director.Name ? /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
                                             variant: "secondary",
                                             __source: {
                                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 58
+                                                lineNumber: 64
                                             },
                                             __self: this,
                                             children: "More from this Director"
@@ -51808,7 +51836,7 @@ class MovieView extends _reactDefault.default.Component {
                                             variant: "secondary",
                                             __source: {
                                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 60
+                                                lineNumber: 66
                                             },
                                             __self: this,
                                             children: "More from this Director"
@@ -51819,14 +51847,14 @@ class MovieView extends _reactDefault.default.Component {
                                         className: "movie-opt",
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 65
+                                            lineNumber: 71
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_buttonDefault.default, {
                                             variant: "secondary",
                                             __source: {
                                                 fileName: "src/components/movie-view/movie-view.jsx",
-                                                lineNumber: 66
+                                                lineNumber: 72
                                             },
                                             __self: this,
                                             children: "More from this Genre"
@@ -51840,7 +51868,7 @@ class MovieView extends _reactDefault.default.Component {
                                         },
                                         __source: {
                                             fileName: "src/components/movie-view/movie-view.jsx",
-                                            lineNumber: 68
+                                            lineNumber: 74
                                         },
                                         __self: this,
                                         children: "Back"

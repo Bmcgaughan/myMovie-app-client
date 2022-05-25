@@ -48,6 +48,12 @@ export class MovieView extends React.Component {
                   {movie.Director.Name ? movie.Director.Name : 'N/A'}
                 </span>
               </div>
+              <div className="movie-rating mov-section">
+                <span className="label">Rating: </span>
+                <span className="value">
+                  {movie.Rating ? movie.Rating : 'N/A'}
+                </span>
+              </div>
             </div>
             <div className="button-wrapper">
               <Link
