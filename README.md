@@ -8,18 +8,20 @@ Project to display TV shows and select favorites. Ultimately will allow for sear
 
 
 ### Dependencies
-react ^ 18.1.0
-react-bootstrap ^ 2.3.1
-react react-dom ^ 18.1.0
-react-router-dom ^ 5.3.0
-parcel/transformer-image ^ 2.0.0-rc.0
-parcel/transformer-sass ^ 2.0.0-rc.0
-axios ^ 0.27.2
-prop-types ^ 15.8.1
-react ^ 18.1.0
-react-bootstrap ^ 2.3.1
-react react-dom ^ 18.1.0
-react-router-dom ^ 5.3.0
+- @parcel/transformer-image ^ 2.0.0-rc.0
+- @parcel-bundler
+- @parcel/transformer-sass ^ 2.0.0-rc.0
+- axios ^ 0.27.2
+- prop-types ^ 15.8.1
+- react ^ 18.1.0
+- react-bootstrap ^ 2.3.1
+- react react-dom ^ 18.1.0
+- react-redux ^ 8.0.1
+- react-router-dom ^ 5.3.0
+- react-slick ^ 0.29.0
+- redux ^ 4.2.0
+- redux-devtools-extension ^ 2.13.9
+- slick slick-carousel ^ 1.8.1
 
 ## Tech
 - React
