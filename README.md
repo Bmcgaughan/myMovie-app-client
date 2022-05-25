@@ -2,5 +2,37 @@
  
 ### Movie App Client side using React
 
+## Description
+
+Project to display TV shows and select favorites. Ultimately will allow for searching and adding shows dynamically using external APIs. Meant to be a fun project to find new TV shows to watch while using React.
+
+
+### Dependencies
+react ^ 18.1.0
+react-bootstrap ^ 2.3.1
+react react-dom ^ 18.1.0
+react-router-dom ^ 5.3.0
+parcel/transformer-image ^ 2.0.0-rc.0
+parcel/transformer-sass ^ 2.0.0-rc.0
+axios ^ 0.27.2
+prop-types ^ 15.8.1
+react ^ 18.1.0
+react-bootstrap ^ 2.3.1
+react react-dom ^ 18.1.0
+react-router-dom ^ 5.3.0
+
 ## Tech
 - React
+- React Bootstrap
+- MongoDB
+- Express
+
+## Authors
+
+Brian McGaughan
+
+## Acknowledgments
+
+Slick-Slider https://kenwheeler.github.io/slick/
+The MovieDB https://www.themoviedb.org/
+
