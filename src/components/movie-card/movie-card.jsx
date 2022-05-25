@@ -118,12 +118,7 @@ export class MovieCard extends React.Component {
 
         <Card.Body className="d-flex flex-column">
           <Card.Title>{movie.Title}</Card.Title>
-          {/* <Card.Text>{movie.Genre.Name}</Card.Text> */}
-          {/* <Link className="mt-auto mov-link" to={`/movies/${movie._id}`}>
-              <Button className="mov-button" variant="secondary">
-                Details
-              </Button>
-            </Link> */}
+          {movie.Network && <Card.Text>{movie.Network}</Card.Text>}
         </Card.Body>
       </Card>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useCallback, useEffect, useRef } from 'react';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 import Slider from 'react-slick';
 
@@ -33,10 +33,6 @@ let sliderSettings = {
   // variableWidth: true,
 };
 
-const sliderInit = () => {
-  console.log('ok');
-};
-
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
   const [dragging, setDragging] = useState(false);
@@ -49,28 +45,46 @@ function MoviesList(props) {
 
   let slider = useEffect(() => {
     refSlide.current.slickGoTo(0);
+    setDragging(false);
   }, [visibilityFilter]);
 
-  //callbacks to prevent a click when user is dragging slider
-  const handleBeforeChange = useCallback(() => {
-    setDragging(true);
-  }, [setDragging]);
+  //callbacks to prevent a click when user is dragging slider\
+
+  function handleBeforeChange(curr, next) {
+    if (curr === next) {
+      setDragging(false);
+    } else {
+      setDragging(true);
+    }
+  }
+
+  // const handleBeforeChange = useCallback(() => {
+  //   console.log(this);
+  //   setDragging(true);
+  // }, [setDragging]);
 
   const handleAfterChange = useCallback(() => {
     setDragging(false);
   }, [setDragging]);
 
-  const handleOnItemClick = useCallback(
-    (param) => (e) => {
-      console.log(dragging);
-      if (dragging) {
-        e.stopPropagation();
-      } else {
-        history.push(`/movies/${param}`);
-      }
-    },
-    [dragging]
-  );
+  const handleOnItemClick = (param) => (e) => {
+    if (dragging) {
+      e.stopPropagation();
+    } else {
+      history.push(`/movies/${param}`);
+    }
+  };
+
+  // const handleOnItemClick = useCallback(
+  //   (param) => (e) => {
+  //     if (dragging) {
+  //       e.stopPropagation();
+  //     } else {
+  //       <Redirect to="/users/brianmcgaughan" />;
+  //     }
+  //   },
+  //   [dragging]
+  // );
 
   //setting filtered to default prop
   let filteredMovies = movies;
@@ -86,10 +100,10 @@ function MoviesList(props) {
   }
 
   return (
-    <div className='show-section'>
+    <div className="show-section">
       <h3>Movies and Shows ({filteredMovies.length})</h3>
       <Slider
-        beforeChange={handleBeforeChange}
+        beforeChange={(current, next) => handleBeforeChange(current, next)}
         afterChange={handleAfterChange}
         {...sliderSettings}
         ref={refSlide}

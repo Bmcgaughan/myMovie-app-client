@@ -27946,11 +27946,12 @@ class MainView extends _reactDefault.default.Component {
     }
     render() {
         let { user , movies , favorites  } = this.props;
+        console.log();
         //if a movie is selected show the Movie View details
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 96
+                lineNumber: 97
             },
             __self: this,
             children: [
@@ -27958,14 +27959,14 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 97
+                        lineNumber: 98
                     },
                     __self: this
                 }),
                 /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Container, {
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 98
+                        lineNumber: 99
                     },
                     __self: this,
                     children: [
@@ -27993,7 +27994,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 99
+                                lineNumber: 100
                             },
                             __self: this
                         }),
@@ -28001,7 +28002,7 @@ class MainView extends _reactDefault.default.Component {
                             className: "main-view justify-content-md-center",
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 119
+                                lineNumber: 120
                             },
                             __self: this,
                             children: [
@@ -28016,16 +28017,22 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 122
+                                        lineNumber: 121
                                     },
                                     __self: this
                                 }),
                                 /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Route, {
                                     path: "/movies/:movieId",
                                     render: ({ match , history  })=>{
+                                        console.log(movies, match.params.movieId);
                                         if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
                                                 onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                                            })
+                                        }));
+                                        if (movies.length === 0) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                            className: "main-view",
+                                            children: /*#__PURE__*/ _jsxRuntime.jsx(_spinnerDefault.default, {
                                             })
                                         }));
                                         return(/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
@@ -28039,7 +28046,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 130
+                                        lineNumber: 129
                                     },
                                     __self: this
                                 }),
@@ -28068,7 +28075,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 150
+                                        lineNumber: 157
                                     },
                                     __self: this
                                 }),
@@ -28097,7 +28104,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 179
+                                        lineNumber: 186
                                     },
                                     __self: this
                                 }),
@@ -28124,7 +28131,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 205
+                                        lineNumber: 212
                                     },
                                     __self: this
                                 })
@@ -35672,9 +35679,6 @@ let sliderSettings = {
     slidesToScroll: 1,
     swipeToSlide: true
 };
-const sliderInit = ()=>{
-    console.log('ok');
-};
 function MoviesList(props) {
     _s();
     const { movies , visibilityFilter  } = props;
@@ -35685,28 +35689,39 @@ function MoviesList(props) {
     const refSlide = _react.useRef();
     let slider = _react.useEffect(()=>{
         refSlide.current.slickGoTo(0);
+        setDragging(false);
     }, [
         visibilityFilter
     ]);
-    //callbacks to prevent a click when user is dragging slider
-    const handleBeforeChange = _react.useCallback(()=>{
-        setDragging(true);
-    }, [
-        setDragging
-    ]);
+    //callbacks to prevent a click when user is dragging slider\
+    function handleBeforeChange(curr, next) {
+        if (curr === next) setDragging(false);
+        else setDragging(true);
+    }
+    // const handleBeforeChange = useCallback(() => {
+    //   console.log(this);
+    //   setDragging(true);
+    // }, [setDragging]);
     const handleAfterChange = _react.useCallback(()=>{
         setDragging(false);
     }, [
         setDragging
     ]);
-    const handleOnItemClick = _react.useCallback((param)=>(e)=>{
-            console.log(dragging);
+    const handleOnItemClick = (param)=>(e)=>{
             if (dragging) e.stopPropagation();
             else history.push(`/movies/${param}`);
         }
-    , [
-        dragging
-    ]);
+    ;
+    // const handleOnItemClick = useCallback(
+    //   (param) => (e) => {
+    //     if (dragging) {
+    //       e.stopPropagation();
+    //     } else {
+    //       <Redirect to="/users/brianmcgaughan" />;
+    //     }
+    //   },
+    //   [dragging]
+    // );
     //setting filtered to default prop
     let filteredMovies = movies;
     if (visibilityFilter !== '') filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
@@ -35715,7 +35730,7 @@ function MoviesList(props) {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 85
+            lineNumber: 99
         },
         __self: this
     }));
@@ -35723,14 +35738,14 @@ function MoviesList(props) {
         className: "show-section",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 89
+            lineNumber: 103
         },
         __self: this,
         children: [
             /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 90
+                    lineNumber: 104
                 },
                 __self: this,
                 children: [
@@ -35740,13 +35755,14 @@ function MoviesList(props) {
                 ]
             }),
             /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
-                beforeChange: handleBeforeChange,
+                beforeChange: (current, next)=>handleBeforeChange(current, next)
+                ,
                 afterChange: handleAfterChange,
                 ...sliderSettings,
                 ref: refSlide,
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 91
+                    lineNumber: 105
                 },
                 __self: this,
                 children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
@@ -35754,14 +35770,14 @@ function MoviesList(props) {
                         onClickCapture: handleOnItemClick(m._id),
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 98
+                            lineNumber: 112
                         },
                         __self: this,
                         children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                             movie: m,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 103
+                                lineNumber: 117
                             },
                             __self: this
                         })
@@ -35771,7 +35787,7 @@ function MoviesList(props) {
         ]
     }));
 }
-_s(MoviesList, "CT4pMG6PiMoMtdI70rdtffhotDg=", false, function() {
+_s(MoviesList, "oas8ghyhZMt5w6VRnoCn1Jy809I=", false, function() {
     return [_reactRouterDom.useHistory];
 });
 _c = MoviesList;
@@ -35921,21 +35937,31 @@ class MovieCard extends _reactDefault.default.Component {
                         __self: this
                     })
                 }),
-                /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Body, {
+                /*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default.Body, {
                     className: "d-flex flex-column",
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
                         lineNumber: 119
                     },
                     __self: this,
-                    children: /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
-                        __source: {
-                            fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 120
-                        },
-                        __self: this,
-                        children: movie.Title
-                    })
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
+                            __source: {
+                                fileName: "src/components/movie-card/movie-card.jsx",
+                                lineNumber: 120
+                            },
+                            __self: this,
+                            children: movie.Title
+                        }),
+                        movie.Network && /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
+                            __source: {
+                                fileName: "src/components/movie-card/movie-card.jsx",
+                                lineNumber: 121
+                            },
+                            __self: this,
+                            children: movie.Network
+                        })
+                    ]
                 })
             ]
         }));
