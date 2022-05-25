@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import { Link } from 'react-router-dom';
+
 import './genre-view.scss';
 
 export class GenreView extends React.Component {
@@ -21,7 +23,9 @@ export class GenreView extends React.Component {
     //generator for movies of the same genre - finds them in the full list of movies
     let genreCards = genreMovies.map((m) => (
       <Col md={3} key={m._id}>
-        <MovieCard movie={m} />
+        <Link to={`/movies/${m._id}`} className="movie-opt">
+          <MovieCard movie={m} />
+        </Link>
       </Col>
     ));
 
@@ -48,6 +52,7 @@ export class GenreView extends React.Component {
           <div className="cards-header">
             {genre.Name} ({genreMovies.length}):
           </div>
+
           <Row>{genreCards}</Row>
         </div>
       </div>

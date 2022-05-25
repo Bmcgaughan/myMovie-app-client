@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import { Link } from 'react-router-dom';
+
 import './director-view.scss';
 
 export class DirectorView extends React.Component {
@@ -22,7 +24,9 @@ export class DirectorView extends React.Component {
     //generator for movies by the same director.
     let directorCards = directorMovies.map((m) => (
       <Col md={3} key={m._id}>
-        <MovieCard movie={m} />
+        <Link to={`/movies/${m._id}`} className="movie-opt">
+          <MovieCard movie={m} />
+        </Link>
       </Col>
     ));
 

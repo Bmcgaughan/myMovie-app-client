@@ -37,6 +37,7 @@ let sliderSettings = {
 
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
+  const [trendingList, setTrending] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [sort, setSort] = useState('');
   const [activeFilter, setActiveFilter] = useState('');
@@ -63,6 +64,50 @@ function MoviesList(props) {
       setDragging(true);
     }
   }
+
+  const filterGenerator = (srcForFilter) => {
+    return (
+      <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="#fff"
+            className="filter bi bi-filter-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
+          </svg>
+        </Dropdown.Toggle>
+        <Dropdown.Menu style={{ margin: 0 }}>
+          <Dropdown.Item
+            filterclick={srcForFilter}
+            onClick={(e) => sortHandler(e)}
+          >
+            <Row className="sortitem d-flex alpha">
+              Sort By Title
+              {activeFilter.target &&
+                activeFilter.target === 'Sort By Title' &&
+                setSortArrow()}
+            </Row>
+          </Dropdown.Item>
+          <Dropdown.Item
+            filterclick={srcForFilter}
+            onClick={(e) => sortHandler(e)}
+          >
+            <Row className="sortitem d-flex alpha">
+              Sort By Rating
+              {activeFilter.target &&
+                activeFilter.target === 'Sort By Rating' &&
+                setSortArrow()}
+            </Row>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  };
 
   //handling the sorting click and updating the method and target of sorting
   const sortHandler = (e) => {
@@ -153,17 +198,13 @@ function MoviesList(props) {
 
   //setting filtered to default prop
   let filteredMovies = [];
-  let trendingMovies = movies.filter((m) => {
-    return m.Trending;
-  });
 
-  let filteredTrending = trendingMovies;
 
   if (visibilityFilter !== '') {
     filteredMovies = movies.filter((m) =>
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
-    filteredTrending = trendingMovies.filter((m) =>
+    filteredTrending = props.trending.filter((m) =>
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
   }
@@ -199,17 +240,13 @@ function MoviesList(props) {
         runFilters(filteredMovies);
         break;
       case 'trendingmovies':
-        runFilters(trendingMovies);
+        runFilters(props.trending);
         break;
       case 'movies':
         runFilters(movies);
         break;
     }
   }
-
-  // if (activeFilter !== '' && activeFilter.origin === 'filteredMovies') {
-  //   runFilters(filteredMovies);
-  // }
 
   if (!movies) {
     return <div className="main-view" />;
@@ -222,46 +259,7 @@ function MoviesList(props) {
           <div className="show-section">
             <Row className="d-flex align-items-center">
               <h3>Search Results ({filteredMovies.length})</h3>
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="25"
-                    height="25"
-                    fill="#fff"
-                    className="filter bi bi-filter-circle"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
-                  </svg>
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{ margin: 0 }}>
-                  <Dropdown.Item
-                    filterclick="filteredMovies"
-                    onClick={(e) => sortHandler(e)}
-                  >
-                    <Row className="sortitem d-flex alpha">
-                      Sort By Title
-                      {activeFilter.target &&
-                        activeFilter.target === 'Sort By Title' &&
-                        setSortArrow()}
-                    </Row>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    filterclick="filteredMovies"
-                    onClick={(e) => sortHandler(e)}
-                  >
-                    <Row className="sortitem d-flex alpha">
-                      Sort By Rating
-                      {activeFilter.target &&
-                        activeFilter.target === 'Sort By Rating' &&
-                        setSortArrow()}
-                    </Row>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              {activeFilter && setSortArrow()}
+              {filterGenerator('filteredMovies')}
             </Row>
 
             <Slider
@@ -289,46 +287,8 @@ function MoviesList(props) {
         <div className="unfilter">
           <div className="show-section">
             <Row className="d-flex align-items-center">
-              <h3>Trending ({trendingMovies.length})</h3>
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="25"
-                    height="25"
-                    fill="#fff"
-                    className="filter bi bi-filter-circle"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    <path d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z" />
-                  </svg>
-                </Dropdown.Toggle>
-                <Dropdown.Menu style={{ margin: 0 }}>
-                  <Dropdown.Item
-                    filterclick="trendingmovies"
-                    onClick={(e) => sortHandler(e)}
-                  >
-                    <Row className="sortitem d-flex alpha">
-                      Sort By Title
-                      {activeFilter.target &&
-                        activeFilter.target === 'Sort By Title' &&
-                        setSortArrow()}
-                    </Row>
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    filterclick="trendingmovies"
-                    onClick={(e) => sortHandler(e)}
-                  >
-                    <Row className="sortitem d-flex alpha">
-                      Sort By Rating
-                      {activeFilter.target &&
-                        activeFilter.target === 'Sort By Rating' &&
-                        setSortArrow()}
-                    </Row>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <h3>Trending ({props.trending.length})</h3>
+              {filterGenerator('trendingmovies')}
             </Row>
             <Slider
               beforeChange={(current, next) =>
@@ -338,7 +298,7 @@ function MoviesList(props) {
               {...sliderSettings}
               ref={trendSlide}
             >
-              {trendingMovies.map((m) => (
+              {props.trending.map((m) => (
                 <div
                   key={m._id}
                   className="mcard"
@@ -350,7 +310,10 @@ function MoviesList(props) {
             </Slider>
           </div>
           <div className="show-section">
-            <h3>Movies and Shows Total ({movies.length})</h3>
+            <Row className="d-flex align-items-center">
+              <h3>Movies and Shows Total ({movies.length})</h3>
+              {filterGenerator('movies')}
+            </Row>
             <Slider
               beforeChange={(current, next) =>
                 handleBeforeChange(current, next)

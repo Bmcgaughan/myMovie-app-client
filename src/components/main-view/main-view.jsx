@@ -114,7 +114,15 @@ class MainView extends React.Component {
                   </div>
                 );
               if (!favorites) return <div className="main-view" />;
-              return <MoviesList movies={movies} favorites={favorites} />;
+              return (
+                <MoviesList
+                  movies={movies}
+                  favorites={favorites}
+                  trending={movies.filter((m) => {
+                    return m.Trending;
+                  })}
+                />
+              );
             }}
           />
           <Row className="main-view justify-content-md-center">

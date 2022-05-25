@@ -77,42 +77,6 @@ export class MovieView extends React.Component {
             </div>
           </Col>
         </Row>
-
-        {/* <Row className="d-flex text-center">
-          <Col lg={6} className="more-context">
-            <Link
-              to={`/directors/${movie.Director.Name}`}
-              className="movie-opt"
-            >
-              {movie.Director.Name ? (
-                <Button variant="secondary">More from this Director</Button>
-              ) : (
-                <Button disabled variant="secondary">
-                  More from this Director
-                </Button>
-              )}
-            </Link>
-          </Col>
-          <Col lg={6} className="more-context">
-            <Link to={`/genres/${movie.Genre.Name}`} className="movie-opt">
-              <Button variant="secondary">More from this Genre</Button>
-            </Link>
-          </Col>
-        </Row> */}
-
-        {/* <Row md={12} className="d-flex text-center">
-          <Col>
-            <Button
-              variant="secondary"
-              className="back-btn"
-              onClick={() => {
-                onBackClick();
-              }}
-            >
-              Back
-            </Button>
-          </Col>
-        </Row> */}
       </div>
     );
   }

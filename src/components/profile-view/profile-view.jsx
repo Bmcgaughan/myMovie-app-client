@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import MovieCard from '../movie-card/movie-card';
 
@@ -109,7 +110,9 @@ export class ProfileView extends React.Component {
       .filter((m) => favorites.includes(m._id))
       .map((m) => (
         <Col md={4} key={m._id}>
-          <MovieCard movie={m} />
+          <Link to={`/movies/${m._id}`} className="movie-opt">
+            <MovieCard movie={m} />
+          </Link>
         </Col>
       ));
     return favoriteCards;
