@@ -37,7 +37,6 @@ let sliderSettings = {
 
 function MoviesList(props) {
   const { movies, visibilityFilter } = props;
-  const [trendingList, setTrending] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [sort, setSort] = useState('');
   const [activeFilter, setActiveFilter] = useState('');
@@ -275,7 +274,10 @@ function MoviesList(props) {
                   className="mcard"
                   // onClickCapture={handleOnItemClick(m._id)}
                 >
-                  <MovieCard movie={m} onMovieClick={() => handleOnItemClick()} />
+                  <MovieCard
+                    movie={m}
+                    onMovieClick={() => handleOnItemClick(m._id)}
+                  />
                 </div>
               ))}
             </Slider>
@@ -301,9 +303,12 @@ function MoviesList(props) {
                 <div
                   key={m._id}
                   className="mcard"
-                  onClickCapture={handleOnItemClick(m._id)}
+                  // onClickCapture={handleOnItemClick(m._id)}
                 >
-                  <MovieCard movie={m} />
+                  <MovieCard
+                    movie={m}
+                    onMovieClick={() => handleOnItemClick(m._id)}
+                  />
                 </div>
               ))}
             </Slider>
@@ -325,9 +330,12 @@ function MoviesList(props) {
                 <div
                   key={m._id}
                   className="mcard"
-                  onClickCapture={handleOnItemClick(m._id)}
+                  // onClickCapture={handleOnItemClick(m._id)}
                 >
-                  <MovieCard movie={m} />
+                  <MovieCard
+                    movie={m}
+                    onMovieClick={() => handleOnItemClick(m._id)}
+                  />
                 </div>
               ))}
             </Slider>

@@ -103,6 +103,10 @@ export class ProfileView extends React.Component {
     return isReq;
   }
 
+  handleOnItemClick = (param) => (e) => {
+    this.props.history.push(`/movies/${param}`);
+  };
+
   //takes users favorite movie ids and find them in the full set of movies
   //for display
   listFavorites = (favorites) => {
@@ -110,9 +114,12 @@ export class ProfileView extends React.Component {
       .filter((m) => favorites.includes(m._id))
       .map((m) => (
         <Col md={4} key={m._id}>
-          <Link to={`/movies/${m._id}`} className="movie-opt">
-            <MovieCard movie={m} />
-          </Link>
+          {/* <Link to={`/movies/${m._id}`} className="movie-opt"> */}
+          <MovieCard
+            movie={m}
+            onMovieClick={() => this.handleOnItemClick(m._id)}
+          />
+          {/* </Link> */}
         </Col>
       ));
     return favoriteCards;
@@ -258,7 +265,7 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { movies, favorites } = this.props;
+    const { history } = this.props;
     const { username, email, birthday, usernameErr, passwordErr, emailErr } =
       this.state;
 

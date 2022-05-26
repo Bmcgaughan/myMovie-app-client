@@ -8,7 +8,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 //boostrap components
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 //redux actions
@@ -91,11 +90,12 @@ export class MovieCard extends React.Component {
   }
 
   render() {
-    const { movie, isFavorite, favorites, onMovieClick } = this.props;
+    const { movie, onMovieClick } = this.props;
     return (
       <Card className="h-100 mcard">
         <div className="poster-wrapper">
           <Card.Img
+            onClick={onMovieClick(movie._id)}
             crossOrigin="anonymous"
             variant="top"
             src={movie.ImagePath}
@@ -116,7 +116,10 @@ export class MovieCard extends React.Component {
           />
         </a>
 
-        <Card.Body className="d-flex flex-column">
+        <Card.Body
+          className="d-flex flex-column"
+          onClick={onMovieClick(movie._id)}
+        >
           <Card.Title>{movie.Title}</Card.Title>
           {movie.Network && <Card.Text>{movie.Network}</Card.Text>}
         </Card.Body>
