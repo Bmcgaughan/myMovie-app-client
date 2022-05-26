@@ -137,7 +137,11 @@ function MoviesList(props) {
         break;
       case 'desc':
         setSort('');
-        setActiveFilter('');
+        setActiveFilter({
+          target: targetSort,
+          direction: '',
+          origin: filterOrigin,
+        });
         break;
     }
   };
@@ -208,6 +212,10 @@ function MoviesList(props) {
   }
 
   const runFilters = (toFilter) => {
+    //default sort
+    if (activeFilter.direction === '') {
+      toFilter.sort((a, b) => (a._id > b._id ? 1 : b._id > a._id ? -1 : 0));
+    }
     if (activeFilter.target === 'Sort By Title') {
       if (activeFilter.direction === 'asc') {
         toFilter.sort((a, b) =>

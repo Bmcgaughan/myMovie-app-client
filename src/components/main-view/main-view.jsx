@@ -116,7 +116,9 @@ class MainView extends React.Component {
               if (!favorites) return <div className="main-view" />;
               return (
                 <MoviesList
-                  movies={movies}
+                  movies={movies.filter((m) => {
+                    return !m.Trending;
+                  })}
                   favorites={favorites}
                   trending={movies.filter((m) => {
                     return m.Trending;
