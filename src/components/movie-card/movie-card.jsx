@@ -91,7 +91,7 @@ export class MovieCard extends React.Component {
   }
 
   render() {
-    const { movie, isFavorite, favorites } = this.props;
+    const { movie, isFavorite, favorites, onMovieClick } = this.props;
     return (
       <Card className="h-100 mcard">
         <div className="poster-wrapper">

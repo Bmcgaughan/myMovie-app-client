@@ -273,9 +273,9 @@ function MoviesList(props) {
                 <div
                   key={m._id}
                   className="mcard"
-                  onClickCapture={handleOnItemClick(m._id)}
+                  // onClickCapture={handleOnItemClick(m._id)}
                 >
-                  <MovieCard movie={m} />
+                  <MovieCard movie={m} onMovieClick={() => handleOnItemClick()} />
                 </div>
               ))}
             </Slider>

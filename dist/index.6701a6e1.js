@@ -33985,7 +33985,7 @@ class MovieCard extends _reactDefault.default.Component {
         else return _heartEmptyPngDefault.default;
     }
     render() {
-        const { movie , isFavorite , favorites  } = this.props;
+        const { movie , isFavorite , favorites , onMovieClick  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_cardDefault.default, {
             className: "h-100 mcard",
             __source: {
@@ -48274,7 +48274,6 @@ function MoviesList(props) {
                             __self: this,
                             children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
                                     className: "mcard",
-                                    onClickCapture: handleOnItemClick(m._id),
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
                                         lineNumber: 273
@@ -48282,6 +48281,8 @@ function MoviesList(props) {
                                     __self: this,
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                                         movie: m,
+                                        onMovieClick: ()=>handleOnItemClick()
+                                        ,
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
                                             lineNumber: 278
