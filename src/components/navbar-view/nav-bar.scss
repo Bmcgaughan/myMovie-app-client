@@ -54,3 +54,22 @@ a {
 .fade-out {
   opacity: 0;
 }
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    position: unset;
+    margin-left: 0 !important;
+  }
+
+  .navbar-nav {
+    align-items: end !important;
+  }
+  .navbar-nav button {
+    padding-right: 0;
+  }
+
+  .navbar-logo {
+    padding-left: 56px;
+    margin-right: 0;
+  }
+}

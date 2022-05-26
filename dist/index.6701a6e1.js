@@ -25499,7 +25499,7 @@ class MainView extends _reactDefault.default.Component {
                             __self: this
                         }),
                         /*#__PURE__*/ _jsxRuntime.jsxs(_rowDefault.default, {
-                            className: "main-view justify-content-md-center",
+                            className: "main-view justify-content-sm-center",
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
                                 lineNumber: 128
@@ -47676,7 +47676,7 @@ function Menubar(props) {
         className: "main-nav nav-fill w-100",
         sticky: "top",
         bg: "light",
-        expand: "lg",
+        expand: "md",
         variant: "light",
         __source: {
             fileName: "src/components/navbar-view/navbar.jsx",

@@ -125,7 +125,7 @@ class MainView extends React.Component {
               );
             }}
           />
-          <Row className="main-view justify-content-md-center">
+          <Row className="main-view justify-content-sm-center">
             <Route
               path="/register"
               render={() => {

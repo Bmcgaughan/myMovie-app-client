@@ -640,6 +640,14 @@ body {
     width: 25px;
   }
 
+  .show-section .card-title.h5 {
+    font-size: 0.75rem;
+  }
+
+  .show-section .card-text {
+    font-size: 0.5rem;
+  }
+
   .genre-wrapper .card-img-top,
 .director-wrapper .card-img-top {
     width: 100%;
@@ -650,6 +658,17 @@ body {
 .director-wrapper .cards-header {
     font-size: 1.25rem;
   }
+
+  .show-section h3 {
+    font-size: 1rem;
+  }
+
+  .filter {
+    width: 20px;
+    height: 20px;
+    margin-left: 0px !important;
+    margin-bottom: 10px !important;
+  }
 }
 @media (max-width: 430px) {
   .show-section .card-img-top {
@@ -659,6 +678,7 @@ body {
 
   .show-section h3 {
     font-size: 1rem;
+    padding-left: 5px;
   }
 
   .filter {
@@ -876,6 +896,26 @@ a {
 
 .fade-out {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    position: unset;
+    margin-left: 0 !important;
+  }
+
+  .navbar-nav {
+    align-items: end !important;
+  }
+
+  .navbar-nav button {
+    padding-right: 0;
+  }
+
+  .navbar-logo {
+    padding-left: 56px;
+    margin-right: 0;
+  }
 }
 .slick-prev {
   left: -55px !important;
