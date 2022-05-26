@@ -33,33 +33,6 @@ let sliderSettings = {
   slidesToShow: 5,
   slidesToScroll: 1,
   swipeToSlide: true,
-  // responsive: [
-  //   {
-  //     breakpoint: 1220,
-  //     settings: {
-  //       slidesToShow: 4,
-  //     },
-  //   },
-  //   {
-  //     breakpoint: 990,
-  //     settings: {
-  //       slidesToShow: 3,
-  //     },
-  //   },
-  //   {
-  //     breakpoint: 770,
-  //     settings: {
-  //       slidesToShow: 2,
-  //     },
-  //   },
-  //   {
-  //     breakpoint: 470,
-  //     settings: {
-  //       slidesToShow: 1,
-  //     },
-  //   },
-  // ]
-  // variableWidth: true,
 };
 
 function MoviesList(props) {

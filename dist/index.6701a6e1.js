@@ -47968,7 +47968,7 @@ function MoviesList(props) {
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Dropdown, {
             __source: {
                 fileName: "src/components/movies-list/movies-list.jsx",
-                lineNumber: 97
+                lineNumber: 70
             },
             __self: this,
             children: [
@@ -47977,7 +47977,7 @@ function MoviesList(props) {
                     id: "dropdown-basic",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 98
+                        lineNumber: 71
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsxs("svg", {
@@ -47989,7 +47989,7 @@ function MoviesList(props) {
                         viewBox: "0 0 16 16",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 99
+                            lineNumber: 72
                         },
                         __self: this,
                         children: [
@@ -47997,7 +47997,7 @@ function MoviesList(props) {
                                 d: "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 107
+                                    lineNumber: 80
                                 },
                                 __self: this
                             }),
@@ -48005,7 +48005,7 @@ function MoviesList(props) {
                                 d: "M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 108
+                                    lineNumber: 81
                                 },
                                 __self: this
                             })
@@ -48018,7 +48018,7 @@ function MoviesList(props) {
                     },
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 111
+                        lineNumber: 84
                     },
                     __self: this,
                     children: [
@@ -48028,14 +48028,14 @@ function MoviesList(props) {
                             ,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 112
+                                lineNumber: 85
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                                 className: "sortitem d-flex alpha",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 116
+                                    lineNumber: 89
                                 },
                                 __self: this,
                                 children: [
@@ -48050,14 +48050,14 @@ function MoviesList(props) {
                             ,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 123
+                                lineNumber: 96
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                                 className: "sortitem d-flex alpha",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 127
+                                    lineNumber: 100
                                 },
                                 __self: this,
                                 children: [
@@ -48117,7 +48117,7 @@ function MoviesList(props) {
                     viewBox: "0 0 16 16",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 178
+                        lineNumber: 151
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
@@ -48125,7 +48125,7 @@ function MoviesList(props) {
                         d: "M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 186
+                            lineNumber: 159
                         },
                         __self: this
                     })
@@ -48140,7 +48140,7 @@ function MoviesList(props) {
                     viewBox: "0 0 16 16",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 194
+                        lineNumber: 167
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
@@ -48148,7 +48148,7 @@ function MoviesList(props) {
                         d: "M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 202
+                            lineNumber: 175
                         },
                         __self: this
                     })
@@ -48157,7 +48157,7 @@ function MoviesList(props) {
                 return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 209
+                        lineNumber: 182
                     },
                     __self: this
                 }));
@@ -48211,7 +48211,7 @@ function MoviesList(props) {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 278
+            lineNumber: 251
         },
         __self: this
     }));
@@ -48219,7 +48219,7 @@ function MoviesList(props) {
         className: "shows-wrapper",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 282
+            lineNumber: 255
         },
         __self: this,
         children: [
@@ -48227,14 +48227,14 @@ function MoviesList(props) {
                 className: "filtered",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 284
+                    lineNumber: 257
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                     className: "show-section",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 285
+                        lineNumber: 258
                     },
                     __self: this,
                     children: [
@@ -48242,14 +48242,14 @@ function MoviesList(props) {
                             className: "d-flex align-items-center",
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 286
+                                lineNumber: 259
                             },
                             __self: this,
                             children: [
                                 /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 287
+                                        lineNumber: 260
                                     },
                                     __self: this,
                                     children: [
@@ -48269,7 +48269,7 @@ function MoviesList(props) {
                             ref: trendSlide,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 291
+                                lineNumber: 264
                             },
                             __self: this,
                             children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
@@ -48277,14 +48277,14 @@ function MoviesList(props) {
                                     onClickCapture: handleOnItemClick(m._id),
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 300
+                                        lineNumber: 273
                                     },
                                     __self: this,
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                                         movie: m,
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 305
+                                            lineNumber: 278
                                         },
                                         __self: this
                                     })
@@ -48298,7 +48298,7 @@ function MoviesList(props) {
                 className: "unfilter",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 313
+                    lineNumber: 286
                 },
                 __self: this,
                 children: [
@@ -48306,7 +48306,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 314
+                            lineNumber: 287
                         },
                         __self: this,
                         children: [
@@ -48314,14 +48314,14 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 315
+                                    lineNumber: 288
                                 },
                                 __self: this,
                                 children: [
                                     /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 316
+                                            lineNumber: 289
                                         },
                                         __self: this,
                                         children: [
@@ -48341,7 +48341,7 @@ function MoviesList(props) {
                                 ref: trendSlide,
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 319
+                                    lineNumber: 292
                                 },
                                 __self: this,
                                 children: props.trending.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
@@ -48349,14 +48349,14 @@ function MoviesList(props) {
                                         onClickCapture: handleOnItemClick(m._id),
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 328
+                                            lineNumber: 301
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                                             movie: m,
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 333
+                                                lineNumber: 306
                                             },
                                             __self: this
                                         })
@@ -48369,7 +48369,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 338
+                            lineNumber: 311
                         },
                         __self: this,
                         children: [
@@ -48377,14 +48377,14 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 339
+                                    lineNumber: 312
                                 },
                                 __self: this,
                                 children: [
                                     /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 340
+                                            lineNumber: 313
                                         },
                                         __self: this,
                                         children: [
@@ -48404,7 +48404,7 @@ function MoviesList(props) {
                                 ref: totalSlide,
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 343
+                                    lineNumber: 316
                                 },
                                 __self: this,
                                 children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
@@ -48412,14 +48412,14 @@ function MoviesList(props) {
                                         onClickCapture: handleOnItemClick(m._id),
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 352
+                                            lineNumber: 325
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
                                             movie: m,
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 357
+                                                lineNumber: 330
                                             },
                                             __self: this
                                         })
