@@ -35819,6 +35819,10 @@ parcelHelpers.export(exports, "TOGGLE_FAVORITE", ()=>TOGGLE_FAVORITE
 );
 parcelHelpers.export(exports, "SET_USER", ()=>SET_USER
 );
+parcelHelpers.export(exports, "SET_SORT", ()=>SET_SORT
+);
+parcelHelpers.export(exports, "TOGGLE_SORT", ()=>TOGGLE_SORT
+);
 parcelHelpers.export(exports, "setMovies", ()=>setMovies
 );
 parcelHelpers.export(exports, "setFilter", ()=>setFilter
@@ -35829,11 +35833,17 @@ parcelHelpers.export(exports, "toggleFavorite", ()=>toggleFavorite
 );
 parcelHelpers.export(exports, "setUser", ()=>setUser
 );
+parcelHelpers.export(exports, "setSort", ()=>setSort
+);
+parcelHelpers.export(exports, "toggleSort", ()=>toggleSort
+);
 const SET_MOVIES = 'SET_MOVIES';
 const SET_FILTER = 'SET_FILTER';
 const SET_FAVORITE = 'SET_FAVORITE';
 const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
 const SET_USER = 'SET_USER';
+const SET_SORT = 'SET_SORT';
+const TOGGLE_SORT = 'TOGGLE_SORT';
 function setMovies(value) {
     return {
         type: SET_MOVIES,
@@ -35862,6 +35872,19 @@ function setUser(user) {
     return {
         type: SET_USER,
         user
+    };
+}
+function setSort(sortArr) {
+    return {
+        type: SET_SORT,
+        sortArr
+    };
+}
+function toggleSort(origin, update) {
+    return {
+        type: TOGGLE_SORT,
+        origin,
+        update
     };
 }
 
@@ -47908,6 +47931,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _actions = require("../../actions/actions");
 var _reactRouterDom = require("react-router-dom");
 var _reactSlick = require("react-slick");
 var _reactSlickDefault = parcelHelpers.interopDefault(_reactSlick);
@@ -47923,9 +47947,10 @@ var _slickThemeCss = require("../../../node_modules/slick-carousel/slick/slick-t
 var _s = $RefreshSig$();
 //mapping filter and favorites to props ma
 const mapStateToProps = (state)=>{
-    const { visibilityFilter  } = state;
+    const { visibilityFilter , sort  } = state;
     return {
-        visibilityFilter
+        visibilityFilter,
+        sort
     };
 };
 //settings for the slider
@@ -47940,9 +47965,8 @@ let sliderSettings = {
 };
 function MoviesList(props) {
     _s();
-    const { movies , visibilityFilter  } = props;
+    const { movies , visibilityFilter , sort  } = props;
     const [dragging, setDragging] = _react.useState(false);
-    const [sort, setSort] = _react.useState('');
     const [activeFilter, setActiveFilter] = _react.useState('');
     //setting up to navigate to specific movie
     const history = _reactRouterDom.useHistory();
@@ -47962,11 +47986,22 @@ function MoviesList(props) {
         if (curr === next) setDragging(false);
         else setDragging(true);
     }
+    const handleAfterChange = _react.useCallback(()=>{
+        setDragging(false);
+    }, [
+        setDragging
+    ]);
+    //pushing movie details on click
+    const handleOnItemClick = (param)=>(e)=>{
+            if (dragging) e.stopPropagation();
+            else history.push(`/movies/${param}`);
+        }
+    ;
     const filterGenerator = (srcForFilter)=>{
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Dropdown, {
             __source: {
                 fileName: "src/components/movies-list/movies-list.jsx",
-                lineNumber: 69
+                lineNumber: 83
             },
             __self: this,
             children: [
@@ -47975,7 +48010,7 @@ function MoviesList(props) {
                     id: "dropdown-basic",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 70
+                        lineNumber: 84
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsxs("svg", {
@@ -47987,7 +48022,7 @@ function MoviesList(props) {
                         viewBox: "0 0 16 16",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 71
+                            lineNumber: 85
                         },
                         __self: this,
                         children: [
@@ -47995,7 +48030,7 @@ function MoviesList(props) {
                                 d: "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 79
+                                    lineNumber: 93
                                 },
                                 __self: this
                             }),
@@ -48003,7 +48038,7 @@ function MoviesList(props) {
                                 d: "M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 80
+                                    lineNumber: 94
                                 },
                                 __self: this
                             })
@@ -48016,7 +48051,7 @@ function MoviesList(props) {
                     },
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 83
+                        lineNumber: 97
                     },
                     __self: this,
                     children: [
@@ -48026,19 +48061,19 @@ function MoviesList(props) {
                             ,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 84
+                                lineNumber: 98
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                                 className: "sortitem d-flex alpha",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 88
+                                    lineNumber: 102
                                 },
                                 __self: this,
                                 children: [
                                     "Sort By Title",
-                                    activeFilter.target && activeFilter.target === 'Sort By Title' && setSortArrow()
+                                    setSortArrow(srcForFilter, 'titleSort')
                                 ]
                             })
                         }),
@@ -48048,19 +48083,19 @@ function MoviesList(props) {
                             ,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 95
+                                lineNumber: 107
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
                                 className: "sortitem d-flex alpha",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 99
+                                    lineNumber: 111
                                 },
                                 __self: this,
                                 children: [
                                     "Sort By Rating",
-                                    activeFilter.target && activeFilter.target === 'Sort By Rating' && setSortArrow()
+                                    activeFilter.target && activeFilter.target === 'Sort By Rating' && activeFilter.origin === srcForFilter && setSortArrow()
                                 ]
                             })
                         })
@@ -48073,41 +48108,44 @@ function MoviesList(props) {
     const sortHandler = (e)=>{
         let targetSort = e.target.innerText;
         let filterOrigin = e.target.parentNode.getAttribute('filterclick');
-        //to prevent racing against the state update
-        let sortVal = sort;
-        if (activeFilter.target && activeFilter.target !== targetSort) {
-            sortVal = '';
-            setSort('');
-        }
-        switch(sortVal){
-            case '':
-                setSort('asc');
-                setActiveFilter({
-                    target: targetSort,
-                    direction: 'asc',
-                    origin: filterOrigin
-                });
-                break;
-            case 'asc':
-                setSort('desc');
-                setActiveFilter({
-                    target: targetSort,
-                    direction: 'desc',
-                    origin: filterOrigin
-                });
-                break;
-            case 'desc':
-                setSort('');
-                setActiveFilter({
-                    target: targetSort,
-                    direction: '',
-                    origin: filterOrigin
-                });
-                break;
-        }
+        let sortToUpdate = props.sort.find((itm)=>itm.origin === filterOrigin
+        );
+        if (!sortToUpdate) props.setSort({
+            origin: filterOrigin,
+            titleSort: targetSort.includes('Title') ? 1 : 0,
+            ratingSort: targetSort.includes('Rating') ? 1 : 0
+        });
+        else props.toggleSort(filterOrigin, targetSort.includes('Title') ? 'title' : 'rating');
+    };
+    const setSortArrow = (filterSource, field)=>{
+        let filterVal = props.sort.find((itm)=>itm.origin === filterSource
+        );
+        if (filterVal[field] === 1) return(/*#__PURE__*/ _jsxRuntime.jsx("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            width: "16",
+            height: "16",
+            fill: "#00000",
+            className: "bi bi-arrow-up",
+            viewBox: "0 0 16 16",
+            __source: {
+                fileName: "src/components/movies-list/movies-list.jsx",
+                lineNumber: 147
+            },
+            __self: this,
+            children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
+                fillRule: "evenodd",
+                d: "M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z",
+                __source: {
+                    fileName: "src/components/movies-list/movies-list.jsx",
+                    lineNumber: 155
+                },
+                __self: this
+            })
+        }));
+        console.log(filterVal);
     };
     //storing and returning the sort direction arrows
-    const setSortArrow = ()=>{
+    const setSortArrow2 = ()=>{
         switch(sort){
             case 'asc':
                 return(/*#__PURE__*/ _jsxRuntime.jsx("svg", {
@@ -48119,7 +48157,7 @@ function MoviesList(props) {
                     viewBox: "0 0 16 16",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 154
+                        lineNumber: 170
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
@@ -48127,7 +48165,7 @@ function MoviesList(props) {
                         d: "M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 162
+                            lineNumber: 178
                         },
                         __self: this
                     })
@@ -48142,7 +48180,7 @@ function MoviesList(props) {
                     viewBox: "0 0 16 16",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 170
+                        lineNumber: 186
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("path", {
@@ -48150,7 +48188,7 @@ function MoviesList(props) {
                         d: "M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 178
+                            lineNumber: 194
                         },
                         __self: this
                     })
@@ -48159,23 +48197,12 @@ function MoviesList(props) {
                 return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 185
+                        lineNumber: 201
                     },
                     __self: this
                 }));
         }
     };
-    const handleAfterChange = _react.useCallback(()=>{
-        setDragging(false);
-    }, [
-        setDragging
-    ]);
-    //pushing movie details on click
-    const handleOnItemClick = (param)=>(e)=>{
-            if (dragging) e.stopPropagation();
-            else history.push(`/movies/${param}`);
-        }
-    ;
     //setting filtered to default prop
     let filteredMovies = [];
     if (visibilityFilter !== '') {
@@ -48216,7 +48243,7 @@ function MoviesList(props) {
         className: "main-view",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 258
+            lineNumber: 261
         },
         __self: this
     }));
@@ -48224,7 +48251,7 @@ function MoviesList(props) {
         className: "shows-wrapper",
         __source: {
             fileName: "src/components/movies-list/movies-list.jsx",
-            lineNumber: 262
+            lineNumber: 265
         },
         __self: this,
         children: [
@@ -48232,39 +48259,36 @@ function MoviesList(props) {
                 className: "filtered",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 264
+                    lineNumber: 267
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                     className: "show-section",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 265
+                        lineNumber: 268
                     },
                     __self: this,
                     children: [
-                        /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Row, {
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                             className: "d-flex align-items-center",
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 266
+                                lineNumber: 269
                             },
                             __self: this,
-                            children: [
-                                /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
-                                    __source: {
-                                        fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 267
-                                    },
-                                    __self: this,
-                                    children: [
-                                        "Search Results (",
-                                        filteredMovies.length,
-                                        ")"
-                                    ]
-                                }),
-                                filterGenerator('filteredMovies')
-                            ]
+                            children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
+                                __source: {
+                                    fileName: "src/components/movies-list/movies-list.jsx",
+                                    lineNumber: 270
+                                },
+                                __self: this,
+                                children: [
+                                    "Search Results (",
+                                    filteredMovies.length,
+                                    ")"
+                                ]
+                            })
                         }),
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
                             beforeChange: (current, next)=>handleBeforeChange(current, next)
@@ -48274,14 +48298,14 @@ function MoviesList(props) {
                             ref: trendSlide,
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 271
+                                lineNumber: 273
                             },
                             __self: this,
                             children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
                                     className: "mcard",
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 280
+                                        lineNumber: 282
                                     },
                                     __self: this,
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48290,7 +48314,7 @@ function MoviesList(props) {
                                         ,
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 285
+                                            lineNumber: 287
                                         },
                                         __self: this
                                     })
@@ -48300,11 +48324,11 @@ function MoviesList(props) {
                     ]
                 })
             }),
-            filteredMovies.length < 1 && /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+            filteredMovies < 1 && /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                 className: "unfilter",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 296
+                    lineNumber: 299
                 },
                 __self: this,
                 children: [
@@ -48312,7 +48336,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 297
+                            lineNumber: 300
                         },
                         __self: this,
                         children: [
@@ -48320,14 +48344,14 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 298
+                                    lineNumber: 301
                                 },
                                 __self: this,
                                 children: [
                                     /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 299
+                                            lineNumber: 302
                                         },
                                         __self: this,
                                         children: [
@@ -48336,7 +48360,7 @@ function MoviesList(props) {
                                             ")"
                                         ]
                                     }),
-                                    filterGenerator('trendingmovies')
+                                    filterGenerator('trending')
                                 ]
                             }),
                             /*#__PURE__*/ _jsxRuntime.jsx(_reactSlickDefault.default, {
@@ -48347,14 +48371,14 @@ function MoviesList(props) {
                                 ref: trendSlide,
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 302
+                                    lineNumber: 305
                                 },
                                 __self: this,
                                 children: props.trending.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
                                         className: "mcard",
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 311
+                                            lineNumber: 314
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48363,7 +48387,7 @@ function MoviesList(props) {
                                             ,
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 316
+                                                lineNumber: 319
                                             },
                                             __self: this
                                         })
@@ -48376,7 +48400,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 324
+                            lineNumber: 327
                         },
                         __self: this,
                         children: [
@@ -48384,14 +48408,14 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 325
+                                    lineNumber: 328
                                 },
                                 __self: this,
                                 children: [
                                     /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 326
+                                            lineNumber: 329
                                         },
                                         __self: this,
                                         children: [
@@ -48411,14 +48435,14 @@ function MoviesList(props) {
                                 ref: totalSlide,
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 329
+                                    lineNumber: 332
                                 },
                                 __self: this,
                                 children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx("div", {
                                         className: "mcard",
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 338
+                                            lineNumber: 341
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48427,7 +48451,7 @@ function MoviesList(props) {
                                             ,
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 343
+                                                lineNumber: 346
                                             },
                                             __self: this
                                         })
@@ -48441,11 +48465,14 @@ function MoviesList(props) {
         ]
     }));
 }
-_s(MoviesList, "dbch9HFy758GllwMUuKIpQTIARA=", false, function() {
+_s(MoviesList, "ZEyURfDQKAMZt8htm4lNEW09LUc=", false, function() {
     return [_reactRouterDom.useHistory];
 });
 _c = MoviesList;
-exports.default = _reactRedux.connect(mapStateToProps)(MoviesList);
+exports.default = _reactRedux.connect(mapStateToProps, {
+    setSort: _actions.setSort,
+    toggleSort: _actions.toggleSort
+})(MoviesList);
 var _c;
 $RefreshReg$(_c, "MoviesList");
 
@@ -48454,7 +48481,7 @@ $RefreshReg$(_c, "MoviesList");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-slick":"kVkIB","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"kVkIB":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-slick":"kVkIB","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","./movies-list.scss":"9gz3w","../../../node_modules/slick-carousel/slick/slick.css":"3nTPC","../../../node_modules/slick-carousel/slick/slick-theme.css":"6cDoX","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../../actions/actions":"1Ttfj"}],"kVkIB":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -53180,11 +53207,45 @@ function user(state = '', action) {
             return state;
     }
 }
+//handles sorting of movie lists
+function sort(state = [], action) {
+    switch(action.type){
+        case _actions.SET_SORT:
+            return [
+                ...state,
+                {
+                    origin: action.sortArr.origin,
+                    titleSort: action.sortArr.titleSort,
+                    ratingSort: action.sortArr.ratingSort
+                }, 
+            ];
+        //updating sort direction using 0 for null, 1 ascending, 2 descending
+        case _actions.TOGGLE_SORT:
+            let index = state.findIndex((itm)=>itm.origin === action.origin
+            );
+            let updateArr = [
+                ...state
+            ];
+            if (action.update === 'title') updateArr[index] = {
+                ...state[index],
+                titleSort: updateArr[index].titleSort + 1 > 2 ? 0 : updateArr[index].titleSort += 1
+            };
+            else if (action.update === 'rating') updateArr[index] = {
+                ...state[index],
+                ratingSort: updateArr[index].ratingSort + 1 > 2 ? 0 : updateArr[index].ratingSort += 1
+            };
+            else return state;
+            return updateArr;
+        default:
+            return state;
+    }
+}
 const moviesApp = _redux.combineReducers({
     visibilityFilter,
     movies,
     favorites,
-    user
+    user,
+    sort
 });
 exports.default = moviesApp;
 

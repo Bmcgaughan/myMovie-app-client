@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useCallback, useEffect, useRef } from 'react';
 
+import { setFilter, setSort, toggleSort } from '../../actions/actions';
+
 import { useHistory } from 'react-router-dom';
 
 import Slider from 'react-slick';
@@ -20,8 +22,8 @@ import '../../../node_modules/slick-carousel/slick/slick-theme.css';
 
 //mapping filter and favorites to props ma
 const mapStateToProps = (state) => {
-  const { visibilityFilter } = state;
-  return { visibilityFilter };
+  const { visibilityFilter, sort } = state;
+  return { visibilityFilter, sort };
 };
 
 //settings for the slider
@@ -36,9 +38,8 @@ let sliderSettings = {
 };
 
 function MoviesList(props) {
-  const { movies, visibilityFilter } = props;
+  const { movies, visibilityFilter, sort } = props;
   const [dragging, setDragging] = useState(false);
-  const [sort, setSort] = useState('');
   const [activeFilter, setActiveFilter] = useState('');
 
   //setting up to navigate to specific movie
@@ -64,6 +65,19 @@ function MoviesList(props) {
     }
   }
 
+  const handleAfterChange = useCallback(() => {
+    setDragging(false);
+  }, [setDragging]);
+
+  //pushing movie details on click
+  const handleOnItemClick = (param) => (e) => {
+    if (dragging) {
+      e.stopPropagation();
+    } else {
+      history.push(`/movies/${param}`);
+    }
+  };
+
   const filterGenerator = (srcForFilter) => {
     return (
       <Dropdown>
@@ -87,9 +101,7 @@ function MoviesList(props) {
           >
             <Row className="sortitem d-flex alpha">
               Sort By Title
-              {activeFilter.target &&
-                activeFilter.target === 'Sort By Title' &&
-                setSortArrow()}
+              {setSortArrow(srcForFilter, 'titleSort')}
             </Row>
           </Dropdown.Item>
           <Dropdown.Item
@@ -100,6 +112,7 @@ function MoviesList(props) {
               Sort By Rating
               {activeFilter.target &&
                 activeFilter.target === 'Sort By Rating' &&
+                activeFilter.origin === srcForFilter &&
                 setSortArrow()}
             </Row>
           </Dropdown.Item>
@@ -112,42 +125,45 @@ function MoviesList(props) {
   const sortHandler = (e) => {
     let targetSort = e.target.innerText;
     let filterOrigin = e.target.parentNode.getAttribute('filterclick');
-    //to prevent racing against the state update
-    let sortVal = sort;
-    if (activeFilter.target && activeFilter.target !== targetSort) {
-      sortVal = '';
-      setSort('');
-    }
-    switch (sortVal) {
-      case '':
-        setSort('asc');
-        setActiveFilter({
-          target: targetSort,
-          direction: 'asc',
-          origin: filterOrigin,
-        });
-        break;
-      case 'asc':
-        setSort('desc');
-        setActiveFilter({
-          target: targetSort,
-          direction: 'desc',
-          origin: filterOrigin,
-        });
-        break;
-      case 'desc':
-        setSort('');
-        setActiveFilter({
-          target: targetSort,
-          direction: '',
-          origin: filterOrigin,
-        });
-        break;
+    let sortToUpdate = props.sort.find((itm) => itm.origin === filterOrigin);
+    if (!sortToUpdate) {
+      props.setSort({
+        origin: filterOrigin,
+        titleSort: targetSort.includes('Title') ? 1 : 0,
+        ratingSort: targetSort.includes('Rating') ? 1 : 0,
+      });
+    } else {
+      props.toggleSort(
+        filterOrigin,
+        targetSort.includes('Title') ? 'title' : 'rating'
+      );
     }
   };
 
+  const setSortArrow = (filterSource, field) => {
+    let filterVal = props.sort.find((itm) => itm.origin === filterSource);
+    if (filterVal[field] === 1) {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="#00000"
+          className="bi bi-arrow-up"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fillRule="evenodd"
+            d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
+          />
+        </svg>
+      );
+    }
+    console.log(filterVal);
+  };
+
   //storing and returning the sort direction arrows
-  const setSortArrow = () => {
+  const setSortArrow2 = () => {
     switch (sort) {
       case 'asc':
         return (
@@ -183,19 +199,6 @@ function MoviesList(props) {
         );
       default:
         return <div></div>;
-    }
-  };
-
-  const handleAfterChange = useCallback(() => {
-    setDragging(false);
-  }, [setDragging]);
-
-  //pushing movie details on click
-  const handleOnItemClick = (param) => (e) => {
-    if (dragging) {
-      e.stopPropagation();
-    } else {
-      history.push(`/movies/${param}`);
     }
   };
 
@@ -265,7 +268,6 @@ function MoviesList(props) {
           <div className="show-section">
             <Row className="d-flex align-items-center">
               <h3>Search Results ({filteredMovies.length})</h3>
-              {filterGenerator('filteredMovies')}
             </Row>
 
             <Slider
@@ -292,12 +294,13 @@ function MoviesList(props) {
           </div>
         </div>
       )}
-      {filteredMovies.length < 1 && (
+
+      {filteredMovies < 1 && (
         <div className="unfilter">
           <div className="show-section">
             <Row className="d-flex align-items-center">
               <h3>Trending ({props.trending.length})</h3>
-              {filterGenerator('trendingmovies')}
+              {filterGenerator('trending')}
             </Row>
             <Slider
               beforeChange={(current, next) =>
@@ -354,4 +357,4 @@ function MoviesList(props) {
   );
 }
 
-export default connect(mapStateToProps)(MoviesList);
+export default connect(mapStateToProps, { setSort, toggleSort })(MoviesList);

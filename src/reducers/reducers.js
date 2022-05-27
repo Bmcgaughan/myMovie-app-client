@@ -5,6 +5,8 @@ import {
   SET_MOVIES,
   TOGGLE_FAVORITE,
   SET_USER,
+  SET_SORT,
+  TOGGLE_SORT,
 } from '../actions/actions';
 
 //used for filtering movies
@@ -52,11 +54,53 @@ function user(state = '', action) {
   }
 }
 
+//handles sorting of movie lists
+function sort(state = [], action) {
+  switch (action.type) {
+    case SET_SORT:
+      return [
+        ...state,
+        {
+          origin: action.sortArr.origin,
+          titleSort: action.sortArr.titleSort,
+          ratingSort: action.sortArr.ratingSort,
+        },
+      ];
+    //updating sort direction using 0 for null, 1 ascending, 2 descending
+    case TOGGLE_SORT:
+      let index = state.findIndex((itm) => itm.origin === action.origin);
+      let updateArr = [...state];
+      if (action.update === 'title') {
+        updateArr[index] = {
+          ...state[index],
+          titleSort:
+            updateArr[index].titleSort + 1 > 2
+              ? 0
+              : (updateArr[index].titleSort += 1),
+        };
+      } else if (action.update === 'rating') {
+        updateArr[index] = {
+          ...state[index],
+          ratingSort:
+            updateArr[index].ratingSort + 1 > 2
+              ? 0
+              : (updateArr[index].ratingSort += 1),
+        };
+      } else {
+        return state;
+      }
+      return updateArr;
+    default:
+      return state;
+  }
+}
+
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
   favorites,
   user,
+  sort,
 });
 
 export default moviesApp;
