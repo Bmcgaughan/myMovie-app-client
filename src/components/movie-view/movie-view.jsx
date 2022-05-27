@@ -69,7 +69,13 @@ export class MovieView extends React.Component {
                 )}
               </Link>
               <Link to={`/genres/${movie.Genre.Name}`} className="movie-opt">
-                <Button variant="secondary">More from this Genre</Button>
+                {movie.Genre.Name ? (
+                  <Button variant="secondary">More from this Genre</Button>
+                ) : (
+                  <Button disabled variant="secondary">
+                    More from this Genre
+                  </Button>
+                )}
               </Link>
               <Button
                 variant="secondary"
