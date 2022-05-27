@@ -1,7 +1,13 @@
 import React from 'react';
 import { useState, useCallback, useEffect, useRef } from 'react';
 
-import { setFilter, setSort, toggleSort } from '../../actions/actions';
+//actions and reducers to manage sorting
+import {
+  setTrendingSort,
+  toggleTrendingSort,
+  setMovieSort,
+  toggleMovieSort,
+} from '../../actions/actions';
 
 import { useHistory } from 'react-router-dom';
 
@@ -10,6 +16,7 @@ import Slider from 'react-slick';
 import { connect } from 'react-redux';
 
 import { Row, Dropdown } from 'react-bootstrap';
+import { ArrowUp, ArrowDown } from 'react-bootstrap-icons';
 
 //components to import and render
 import MovieCard from '../movie-card/movie-card';
@@ -22,8 +29,8 @@ import '../../../node_modules/slick-carousel/slick/slick-theme.css';
 
 //mapping filter and favorites to props ma
 const mapStateToProps = (state) => {
-  const { visibilityFilter, sort } = state;
-  return { visibilityFilter, sort };
+  const { visibilityFilter, trendSort, movieSort } = state;
+  return { visibilityFilter, trendSort, movieSort };
 };
 
 //settings for the slider
@@ -49,12 +56,12 @@ function MoviesList(props) {
   const totalSlide = useRef();
   const trendSlide = useRef();
 
-  let slider = useEffect(() => {
-    if (totalSlide.current) {
-      totalSlide.current.slickGoTo(0);
-      setDragging(false);
-    }
-  }, [visibilityFilter]);
+  // let slider = useEffect(() => {
+  //   if (totalSlide.current) {
+  //     totalSlide.current.slickGoTo(0);
+  //     setDragging(false);
+  //   }
+  // }, [visibilityFilter]);
 
   //to prevent a click when user is dragging slider using before and after change functions
   function handleBeforeChange(curr, next) {
@@ -78,6 +85,7 @@ function MoviesList(props) {
     }
   };
 
+  //dynamically creating dropdowns tied to each slider
   const filterGenerator = (srcForFilter) => {
     return (
       <Dropdown>
@@ -99,7 +107,7 @@ function MoviesList(props) {
             filterclick={srcForFilter}
             onClick={(e) => sortHandler(e)}
           >
-            <Row className="sortitem d-flex alpha">
+            <Row sorttype="titleSort" className="sortitem d-flex alpha">
               Sort By Title
               {setSortArrow(srcForFilter, 'titleSort')}
             </Row>
@@ -108,12 +116,9 @@ function MoviesList(props) {
             filterclick={srcForFilter}
             onClick={(e) => sortHandler(e)}
           >
-            <Row className="sortitem d-flex alpha">
+            <Row sorttype="ratingSort" className="sortitem d-flex alpha">
               Sort By Rating
-              {activeFilter.target &&
-                activeFilter.target === 'Sort By Rating' &&
-                activeFilter.origin === srcForFilter &&
-                setSortArrow()}
+              {setSortArrow(srcForFilter, 'ratingSort')}
             </Row>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -125,78 +130,38 @@ function MoviesList(props) {
   const sortHandler = (e) => {
     let targetSort = e.target.innerText;
     let filterOrigin = e.target.parentNode.getAttribute('filterclick');
-    let sortToUpdate = props.sort.find((itm) => itm.origin === filterOrigin);
-    if (!sortToUpdate) {
-      props.setSort({
-        origin: filterOrigin,
-        titleSort: targetSort.includes('Title') ? 1 : 0,
-        ratingSort: targetSort.includes('Rating') ? 1 : 0,
-      });
+    let filterType = e.target.getAttribute('sorttype');
+
+    if (filterOrigin.includes('trending')) {
+      if (props.trendSort[filterType] === undefined) {
+        props.setTrendingSort({
+          titleSort: filterType === 'titleSort' ? 1 : 0,
+          ratingSort: filterType === 'titleSort' ? 0 : 1,
+        });
+      } else {
+        props.toggleTrendingSort(filterType);
+      }
     } else {
-      props.toggleSort(
-        filterOrigin,
-        targetSort.includes('Title') ? 'title' : 'rating'
-      );
+      if (props.movieSort[filterType] === undefined) {
+        props.setMovieSort({
+          titleSort: filterType === 'titleSort' ? 1 : 0,
+          ratingSort: filterType === 'titleSort' ? 0 : 1,
+        });
+      } else {
+        props.toggleMovieSort(filterType);
+      }
     }
   };
 
   const setSortArrow = (filterSource, field) => {
-    let filterVal = props.sort.find((itm) => itm.origin === filterSource);
-    if (filterVal[field] === 1) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="#00000"
-          className="bi bi-arrow-up"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
-          />
-        </svg>
-      );
-    }
-    console.log(filterVal);
-  };
-
-  //storing and returning the sort direction arrows
-  const setSortArrow2 = () => {
-    switch (sort) {
-      case 'asc':
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="#00000"
-            className="bi bi-arrow-up"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"
-            />
-          </svg>
-        );
-      case 'desc':
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fillRule="#00000"
-            className="bi bi-arrow-down"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"
-            />
-          </svg>
-        );
+    let propMap = filterSource.includes('movies') ? 'movieSort' : 'trendSort';
+    // let filterVal = props.sort.find((itm) => itm.origin === filterSource);
+    if (!props[propMap][field]) return <div></div>;
+    switch (props[propMap][field]) {
+      case 1:
+        return <ArrowUp color="black" size={15} />;
+      case 2:
+        return <ArrowDown color="black" size={15} />;
       default:
         return <div></div>;
     }
@@ -212,58 +177,75 @@ function MoviesList(props) {
     filteredTrending = props.trending.filter((m) =>
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
-  }
-
-  const runFilters = (toFilter) => {
-    //default sort
-    if (activeFilter.direction === '') {
-      toFilter.sort((a, b) => (a._id > b._id ? 1 : b._id > a._id ? -1 : 0));
-    }
-    if (activeFilter.target === 'Sort By Title') {
-      if (activeFilter.direction === 'asc') {
-        toFilter.sort((a, b) =>
-          a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
-        );
-      } else if (activeFilter.direction === 'desc') {
-        toFilter.sort((a, b) =>
-          b.Title > a.Title ? 1 : a.Title > b.Title ? -1 : 0
-        );
-      }
-    } else if (activeFilter.target === 'Sort By Rating') {
-      if (activeFilter.direction === 'asc') {
-        toFilter.sort((a, b) =>
-          b.Rating > a.Rating ? 1 : a.Rating > b.Rating ? -1 : 0
-        );
-      } else if (activeFilter.direction === 'desc') {
-        toFilter.sort((a, b) =>
-          a.Rating > b.Rating ? 1 : b.Rating > a.Rating ? -1 : 0
-        );
-      }
-    }
-  };
-
-  //handling active filers and applying the sort order -- sending with correct array
-  if (activeFilter !== '') {
-    switch (activeFilter.origin) {
-      case 'filteredMovies':
-        runFilters(filteredMovies);
-        break;
-      case 'trendingmovies':
-        runFilters(props.trending);
-        break;
-      case 'movies':
-        runFilters(movies);
-        break;
-    }
+    filteredMovies = filteredMovies.concat(filteredTrending);
   }
 
   if (!movies) {
     return <div className="main-view" />;
   }
 
+  //applying the sorts as they update
+  //trending Sorts
+  if (props.trendSort.titleSort === 0 && props.trendSort.ratingSort === 0) {
+    props.trending.sort((a, b) => (a._id > b._id ? 1 : b._id > a._id ? -1 : 0));
+  }
+
+  if (props.trendSort.ratingSort > 0) {
+    if (props.trendSort.ratingSort === 1) {
+      props.trending.sort((a, b) =>
+        b.Rating > a.Rating ? 1 : a.Rating > b.Rating ? -1 : 0
+      );
+    } else {
+      props.trending.sort((a, b) =>
+        a.Rating > b.Rating ? 1 : b.Rating > a.Rating ? -1 : 0
+      );
+    }
+  }
+
+  if (props.trendSort.titleSort > 0) {
+    if (props.trendSort.titleSort === 1) {
+      props.trending.sort((a, b) =>
+        a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
+      );
+    } else {
+      props.trending.sort((a, b) =>
+        b.Title > a.Title ? 1 : a.Title > b.Title ? -1 : 0
+      );
+    }
+  }
+
+  //movie list sorts
+  if (props.movieSort.titleSort === 0 && props.movieSort.ratingSort === 0) {
+    movies.sort((a, b) => (a._id > b._id ? 1 : b._id > a._id ? -1 : 0));
+  }
+
+  if (props.movieSort.ratingSort > 0) {
+    if (props.movieSort.ratingSort === 1) {
+      movies.sort((a, b) =>
+        b.Rating > a.Rating ? 1 : a.Rating > b.Rating ? -1 : 0
+      );
+    } else {
+      movies.sort((a, b) =>
+        a.Rating > b.Rating ? 1 : b.Rating > a.Rating ? -1 : 0
+      );
+    }
+  }
+
+  if (props.movieSort.titleSort > 0) {
+    if (props.movieSort.titleSort === 1) {
+      movies.sort((a, b) =>
+        a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
+      );
+    } else {
+      movies.sort((a, b) =>
+        b.Title > a.Title ? 1 : a.Title > b.Title ? -1 : 0
+      );
+    }
+  }
+
   return (
     <div className="shows-wrapper">
-      {filteredMovies.length > 0 && (
+      {visibilityFilter != '' && (
         <div className="filtered">
           <div className="show-section">
             <Row className="d-flex align-items-center">
@@ -295,7 +277,7 @@ function MoviesList(props) {
         </div>
       )}
 
-      {filteredMovies < 1 && (
+      {visibilityFilter === '' && (
         <div className="unfilter">
           <div className="show-section">
             <Row className="d-flex align-items-center">
@@ -357,4 +339,9 @@ function MoviesList(props) {
   );
 }
 
-export default connect(mapStateToProps, { setSort, toggleSort })(MoviesList);
+export default connect(mapStateToProps, {
+  setTrendingSort,
+  toggleTrendingSort,
+  setMovieSort,
+  toggleMovieSort,
+})(MoviesList);

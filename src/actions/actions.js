@@ -3,8 +3,10 @@ export const SET_FILTER = 'SET_FILTER';
 export const SET_FAVORITE = 'SET_FAVORITE';
 export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
 export const SET_USER = 'SET_USER';
-export const SET_SORT = 'SET_SORT';
-export const TOGGLE_SORT = 'TOGGLE_SORT';
+export const SET_TREND_SORT = 'SET_TREND_SORT';
+export const TOGGLE_TREND_SORT = 'TOGGLE_TREND_SORT';
+export const SET_MOV_SORT = 'SET_MOV_SORT';
+export const TOGGLE_MOV_SORT = 'TOGGLE_MOV_SORT';
 
 export function setMovies(value) {
   return { type: SET_MOVIES, value };
@@ -26,10 +28,18 @@ export function setUser(user) {
   return { type: SET_USER, user };
 }
 
-export function setSort(sortArr) {
-  return { type: SET_SORT, sortArr };
+export function setTrendingSort(sortArr) {
+  return { type: SET_TREND_SORT, sortArr };
 }
 
-export function toggleSort(origin, update) {
-  return { type: TOGGLE_SORT, origin, update};
+export function toggleTrendingSort(toggle) {
+  return { type: TOGGLE_TREND_SORT, toggle };
+}
+
+export function setMovieSort(sortArr) {
+  return { type: SET_MOV_SORT, sortArr };
+}
+
+export function toggleMovieSort(toggle) {
+  return { type: TOGGLE_MOV_SORT, toggle };
 }

@@ -5,8 +5,10 @@ import {
   SET_MOVIES,
   TOGGLE_FAVORITE,
   SET_USER,
-  SET_SORT,
-  TOGGLE_SORT,
+  SET_MOV_SORT,
+  TOGGLE_MOV_SORT,
+  SET_TREND_SORT,
+  TOGGLE_TREND_SORT,
 } from '../actions/actions';
 
 //used for filtering movies
@@ -55,41 +57,47 @@ function user(state = '', action) {
 }
 
 //handles sorting of movie lists
-function sort(state = [], action) {
+function trendSort(state = {}, action) {
   switch (action.type) {
-    case SET_SORT:
-      return [
-        ...state,
-        {
-          origin: action.sortArr.origin,
-          titleSort: action.sortArr.titleSort,
-          ratingSort: action.sortArr.ratingSort,
-        },
-      ];
+    case SET_TREND_SORT:
+      return action.sortArr;
     //updating sort direction using 0 for null, 1 ascending, 2 descending
-    case TOGGLE_SORT:
-      let index = state.findIndex((itm) => itm.origin === action.origin);
-      let updateArr = [...state];
-      if (action.update === 'title') {
-        updateArr[index] = {
-          ...state[index],
-          titleSort:
-            updateArr[index].titleSort + 1 > 2
-              ? 0
-              : (updateArr[index].titleSort += 1),
-        };
-      } else if (action.update === 'rating') {
-        updateArr[index] = {
-          ...state[index],
-          ratingSort:
-            updateArr[index].ratingSort + 1 > 2
-              ? 0
-              : (updateArr[index].ratingSort += 1),
-        };
-      } else {
-        return state;
+    case TOGGLE_TREND_SORT:
+      let altKey = '';
+      for (let k in state) {
+        if (k != action.toggle) {
+          altKey = k;
+        }
       }
-      return updateArr;
+      return {
+        ...state,
+        [action.toggle]:
+          state[action.toggle] + 1 > 2 ? 0 : (state[action.toggle] += 1),
+        [altKey]: 0,
+      };
+    default:
+      return state;
+  }
+}
+
+function movieSort(state = {}, action) {
+  switch (action.type) {
+    case SET_MOV_SORT:
+      return action.sortArr;
+    //updating sort direction using 0 for null, 1 ascending, 2 descending
+    case TOGGLE_MOV_SORT:
+      let altKey = '';
+      for (let k in state) {
+        if (k != action.toggle) {
+          altKey = k;
+        }
+      }
+      return {
+        ...state,
+        [action.toggle]:
+          state[action.toggle] + 1 > 2 ? 0 : (state[action.toggle] += 1),
+        [altKey]: 0,
+      };
     default:
       return state;
   }
@@ -100,7 +108,8 @@ const moviesApp = combineReducers({
   movies,
   favorites,
   user,
-  sort,
+  trendSort,
+  movieSort,
 });
 
 export default moviesApp;
