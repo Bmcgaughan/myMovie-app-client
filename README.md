@@ -6,6 +6,8 @@
 
 Project to display TV shows and select favorites. Ultimately will allow for searching and adding shows dynamically using external APIs. Meant to be a fun project to find new TV shows to watch while using React.
 
+Check it out live at https://whatdoiwatch.netlify.app/
+
 
 
 ### Get Started
