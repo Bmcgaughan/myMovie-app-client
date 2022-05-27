@@ -8,14 +8,20 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import './director-view.scss';
 
-export class DirectorView extends React.Component {
+class DirectorView extends React.Component {
   //resetting window to top for component
   componentDidMount() {
     window.scrollTo(0, 0);
   }
+
+  handleOnItemClick = (param) => (e) => {
+    const { history } = withRouter;
+    this.props.history.push(`/movies/${param}`);
+  };
 
   render() {
     const { director, onBackClick, directorMovies, accessFavorites } =
@@ -24,9 +30,10 @@ export class DirectorView extends React.Component {
     //generator for movies by the same director.
     let directorCards = directorMovies.map((m) => (
       <Col md={3} key={m._id}>
-        <Link to={`/movies/${m._id}`} className="movie-opt">
-          <MovieCard movie={m} />
-        </Link>
+        <MovieCard
+          movie={m}
+          onMovieClick={() => this.handleOnItemClick(m._id)}
+        />
       </Col>
     ));
 
@@ -59,6 +66,8 @@ export class DirectorView extends React.Component {
     );
   }
 }
+
+export default withRouter(DirectorView);
 
 DirectorView.propTypes = {
   director: PropTypes.shape({

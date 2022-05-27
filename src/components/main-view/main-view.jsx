@@ -15,8 +15,8 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import MoviesList from '../movies-list/movies-list';
 import { MovieView } from '../movie-view/movie-view';
-import { DirectorView } from '../director-view/director-view';
-import { GenreView } from '../genre-view/genre-view';
+import  DirectorView from '../director-view/director-view';
+import GenreView from '../genre-view/genre-view';
 import ProfileView from '../profile-view/profile-view';
 import Menubar from '../navbar-view/navbar';
 import LoadingSpinner from '../spinner/spinner';
@@ -116,7 +116,9 @@ class MainView extends React.Component {
               if (!favorites) return <div className="main-view" />;
               return (
                 <MoviesList
-                  movies={movies}
+                  movies={movies.filter((m) => {
+                    return !m.Trending;
+                  })}
                   favorites={favorites}
                   trending={movies.filter((m) => {
                     return m.Trending;
@@ -125,7 +127,7 @@ class MainView extends React.Component {
               );
             }}
           />
-          <Row className="main-view justify-content-md-center">
+          <Row className="main-view justify-content-sm-center">
             <Route
               path="/register"
               render={() => {

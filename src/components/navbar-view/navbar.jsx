@@ -58,7 +58,7 @@ function Menubar(props) {
       className="main-nav nav-fill w-100"
       sticky="top"
       bg="light"
-      expand="lg"
+      expand="md"
       variant="light"
     >
       <Nav>
