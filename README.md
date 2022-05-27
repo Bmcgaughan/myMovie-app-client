@@ -17,7 +17,7 @@ Check it out live at https://whatdoiwatch.netlify.app/
 
 ### Application Use
 
-Right now the site displays shows and movies in two sliders. The top slider is for shows that are Trending as identified by The MovieDB. There is also a full list of shows.
+Right now the site displays shows and movies in two sliders. The top slider is for shows that are Trending as identified by The MovieDB. There is also a full list of shows that I have stored. It is not exhaustive and will grow over time.
 
 You can click on each show to see some additional details and find shows with the same director or genre. For the next step I will try to have it recommend shows based on what you click.
 
