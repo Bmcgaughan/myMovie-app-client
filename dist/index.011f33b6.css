@@ -899,6 +899,11 @@ a {
   opacity: 0;
 }
 
+.main-header-link,
+.main-header-link:hover {
+  color: black;
+}
+
 @media (max-width: 768px) {
   .navbar-brand {
     position: unset;
@@ -1005,6 +1010,15 @@ a {
 
   .slick-next:before {
     font-size: 30px !important;
+  }
+}
+@media (max-width: 768px) {
+  .slick-prev {
+    display: none !important;
+  }
+
+  .slick-next {
+    display: none !important;
   }
 }
 @media (max-width: 430px) {

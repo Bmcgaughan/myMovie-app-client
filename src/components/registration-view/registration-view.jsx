@@ -30,8 +30,8 @@ export function RegistrationView(props) {
     if (!username) {
       setUsernameErr('Username Required');
       isReq = false;
-    } else if (username.length < 2) {
-      setUsernameErr('Username must be more than 2 characters');
+    } else if (username.length < 5) {
+      setUsernameErr('Username must be more than 5 characters');
       isReq = false;
     }
     if (!password) {
@@ -52,6 +52,7 @@ export function RegistrationView(props) {
     e.preventDefault();
 
     const isReq = validate();
+
     if (isReq) {
       axios
         .post('https://whatdoiwatch.herokuapp.com/users', {

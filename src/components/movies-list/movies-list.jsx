@@ -42,10 +42,21 @@ let sliderSettings = {
   slidesToShow: 5,
   slidesToScroll: 1,
   swipeToSlide: true,
+  responsive: [
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: true,
+      },
+    },
+  ],
 };
 
 function MoviesList(props) {
-  const { movies, visibilityFilter, sort } = props;
+  const { movies, visibilityFilter, sort, trendSort, movieSort } = props;
   const [dragging, setDragging] = useState(false);
   const [activeFilter, setActiveFilter] = useState('');
 
@@ -56,12 +67,19 @@ function MoviesList(props) {
   const totalSlide = useRef();
   const trendSlide = useRef();
 
-  // let slider = useEffect(() => {
-  //   if (totalSlide.current) {
-  //     totalSlide.current.slickGoTo(0);
-  //     setDragging(false);
-  //   }
-  // }, [visibilityFilter]);
+  let trendSliderMove = useEffect(() => {
+    if (trendSlide.current) {
+      trendSlide.current.slickGoTo(0);
+      setDragging(false);
+    }
+  }, [trendSort]);
+
+  let fullSliderMove = useEffect(() => {
+    if (totalSlide.current) {
+      totalSlide.current.slickGoTo(0);
+      setDragging(false);
+    }
+  }, [movieSort]);
 
   //to prevent a click when user is dragging slider using before and after change functions
   function handleBeforeChange(curr, next) {
@@ -258,14 +276,9 @@ function MoviesList(props) {
               }
               afterChange={handleAfterChange}
               {...sliderSettings}
-              ref={trendSlide}
             >
               {filteredMovies.map((m) => (
-                <div
-                  key={m._id}
-                  className="mcard"
-                  // onClickCapture={handleOnItemClick(m._id)}
-                >
+                <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id)}
@@ -293,11 +306,7 @@ function MoviesList(props) {
               ref={trendSlide}
             >
               {props.trending.map((m) => (
-                <div
-                  key={m._id}
-                  className="mcard"
-                  // onClickCapture={handleOnItemClick(m._id)}
-                >
+                <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id)}
@@ -308,7 +317,7 @@ function MoviesList(props) {
           </div>
           <div className="show-section">
             <Row className="d-flex align-items-center">
-              <h3>Movies and Shows Total ({movies.length})</h3>
+              <h3>Movies and Shows ({movies.length})</h3>
               {filterGenerator('movies')}
             </Row>
             <Slider
@@ -320,11 +329,7 @@ function MoviesList(props) {
               ref={totalSlide}
             >
               {movies.map((m) => (
-                <div
-                  key={m._id}
-                  className="mcard"
-                  // onClickCapture={handleOnItemClick(m._id)}
-                >
+                <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id)}
