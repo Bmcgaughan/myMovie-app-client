@@ -15,7 +15,7 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { LoginView } from '../login-view/login-view';
 import MoviesList from '../movies-list/movies-list';
 import { MovieView } from '../movie-view/movie-view';
-import  DirectorView from '../director-view/director-view';
+import DirectorView from '../director-view/director-view';
 import GenreView from '../genre-view/genre-view';
 import ProfileView from '../profile-view/profile-view';
 import Menubar from '../navbar-view/navbar';
@@ -90,7 +90,6 @@ class MainView extends React.Component {
 
   render() {
     let { user, movies, favorites } = this.props;
-    console.log();
 
     //if a movie is selected show the Movie View details
     return (

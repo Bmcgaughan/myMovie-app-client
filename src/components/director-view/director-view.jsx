@@ -71,8 +71,7 @@ export default withRouter(DirectorView);
 
 DirectorView.propTypes = {
   director: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    bio: PropTypes.string.isRequired,
+    Name: PropTypes.string.isRequired,
   }).isRequired,
   onBackClick: PropTypes.func.isRequired,
 };

@@ -55,6 +55,11 @@ a {
   opacity: 0;
 }
 
+.main-header-link,
+.main-header-link:hover {
+  color: black;
+}
+
 @media (max-width: 768px) {
   .navbar-brand {
     position: unset;
