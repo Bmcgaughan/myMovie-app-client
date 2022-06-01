@@ -15,7 +15,7 @@ import Slider from 'react-slick';
 
 import { connect } from 'react-redux';
 
-import { Row, Dropdown } from 'react-bootstrap';
+import { Row, Dropdown, Col } from 'react-bootstrap';
 import { ArrowUp, ArrowDown } from 'react-bootstrap-icons';
 
 //components to import and render
@@ -26,6 +26,7 @@ import './movies-list.scss';
 
 import '../../../node_modules/slick-carousel/slick/slick.css';
 import '../../../node_modules/slick-carousel/slick/slick-theme.css';
+import { Next } from 'react-bootstrap/esm/PageItem';
 
 //mapping filter and favorites to props ma
 const mapStateToProps = (state) => {
@@ -71,11 +72,16 @@ function MoviesList(props) {
   useEffect(() => {
     trendLocation = localStorage.getItem('trendSlide');
     movieLocation = localStorage.getItem('movieSlide');
-    if (trendLocation) {
-      trendSlide.current.slickGoTo(trendLocation);
-    }
-    if (movieLocation) {
-      totalSlide.current.slickGoTo(movieLocation);
+    if (visibilityFilter === '') {
+      if (trendLocation) {
+        trendSlide.current.slickGoTo(trendLocation);
+        setDragging(false);
+      }
+      if (movieLocation) {
+        console.log('still tried');
+        totalSlide.current.slickGoTo(movieLocation);
+        setDragging(false);
+      }
     }
   }, []);
 
@@ -117,11 +123,15 @@ function MoviesList(props) {
   }, [setDragging]);
 
   //pushing movie details on click
-  const handleOnItemClick = (param) => (e) => {
-    if (dragging) {
-      e.stopPropagation();
-    } else {
+  const handleOnItemClick = (param, dragToggle) => (e) => {
+    if (!dragToggle) {
       history.push(`/movies/${param}`);
+    } else {
+      if (dragging) {
+        e.stopPropagation();
+      } else {
+        history.push(`/movies/${param}`);
+      }
     }
   };
 
@@ -291,23 +301,16 @@ function MoviesList(props) {
             <Row className="d-flex align-items-center">
               <h3>Search Results ({filteredMovies.length})</h3>
             </Row>
-
-            <Slider
-              beforeChange={(current, next) =>
-                handleBeforeChange(current, next)
-              }
-              afterChange={handleAfterChange}
-              {...sliderSettings}
-            >
+            <Row>
               {filteredMovies.map((m) => (
-                <div key={m._id} className="mcard">
+                <Col md={3} key={m._id}>
                   <MovieCard
                     movie={m}
-                    onMovieClick={() => handleOnItemClick(m._id)}
+                    onMovieClick={() => handleOnItemClick(m._id, false)}
                   />
-                </div>
+                </Col>
               ))}
-            </Slider>
+            </Row>
           </div>
         </div>
       )}
@@ -331,7 +334,7 @@ function MoviesList(props) {
                 <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}
-                    onMovieClick={() => handleOnItemClick(m._id)}
+                    onMovieClick={() => handleOnItemClick(m._id, true)}
                   />
                 </div>
               ))}
@@ -354,7 +357,7 @@ function MoviesList(props) {
                 <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}
-                    onMovieClick={() => handleOnItemClick(m._id)}
+                    onMovieClick={() => handleOnItemClick(m._id, true)}
                   />
                 </div>
               ))}

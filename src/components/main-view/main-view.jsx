@@ -39,6 +39,7 @@ class MainView extends React.Component {
     if (accessToken !== null) {
       this.props.setUser(localStorage.getItem('user'));
       this.getMovies(accessToken);
+      // this.getTrending(accessToken);
       this.getFavorites(accessToken);
     }
   }
@@ -57,6 +58,20 @@ class MainView extends React.Component {
       });
   }
 
+  getTrending(token) {
+    axios
+      .get(`https://whatdoiwatch.herokuapp.com/trending`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.setState({
+          trending: true,
+        });
+        console.log(response.data);
+      })
+      .catch((e) => console.log(e));
+  }
+
   //getting users favorite movies to populate icons
   getFavorites(token) {
     //hold rendering movie-list until favorites are returned
@@ -67,6 +82,7 @@ class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
+        this.props.movies;
         this.props.setFavorites(response.data.FavoriteMovies);
       })
       .catch((e) => console.log(e));
@@ -78,6 +94,7 @@ class MainView extends React.Component {
     localStorage.setItem('token', userAuth.token),
       localStorage.setItem('user', userAuth.user.Username);
     this.getMovies(userAuth.token);
+    // this.getTrending(accessToken);
     this.getFavorites(userAuth.token);
   }
 
@@ -90,6 +107,7 @@ class MainView extends React.Component {
 
   render() {
     let { user, movies, favorites } = this.props;
+    let { trending } = this.state;
 
     //if a movie is selected show the Movie View details
     return (
