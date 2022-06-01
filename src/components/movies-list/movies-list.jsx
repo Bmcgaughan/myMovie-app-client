@@ -48,7 +48,7 @@ let sliderSettings = {
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
-        infinite: true,
+        infinite: false,
         dots: false,
       },
     },
