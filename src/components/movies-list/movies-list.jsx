@@ -58,6 +58,7 @@ let sliderSettings = {
 function MoviesList(props) {
   const { movies, visibilityFilter, sort, trendSort, movieSort } = props;
   const [dragging, setDragging] = useState(false);
+  const [animate, setAnimate] = useState(false);
   const [activeFilter, setActiveFilter] = useState('');
 
   //setting up to navigate to specific movie
@@ -66,6 +67,17 @@ function MoviesList(props) {
   //allowing slider to reset to start when filter is applied
   const totalSlide = useRef();
   const trendSlide = useRef();
+
+  useEffect(() => {
+    trendLocation = localStorage.getItem('trendSlide');
+    movieLocation = localStorage.getItem('movieSlide');
+    if (trendLocation) {
+      trendSlide.current.slickGoTo(trendLocation);
+    }
+    if (movieLocation) {
+      totalSlide.current.slickGoTo(movieLocation);
+    }
+  }, []);
 
   let trendSliderMove = useEffect(() => {
     if (trendSlide.current) {
@@ -82,7 +94,17 @@ function MoviesList(props) {
   }, [movieSort]);
 
   //to prevent a click when user is dragging slider using before and after change functions
-  function handleBeforeChange(curr, next) {
+  function handleBeforeChangeTrend(curr, next) {
+    localStorage.setItem('trendSlide', next);
+    if (curr === next) {
+      setDragging(false);
+    } else {
+      setDragging(true);
+    }
+  }
+
+  function handleBeforeChangeMovie(curr, next) {
+    localStorage.setItem('movieSlide', next);
     if (curr === next) {
       setDragging(false);
     } else {
@@ -299,7 +321,7 @@ function MoviesList(props) {
             </Row>
             <Slider
               beforeChange={(current, next) =>
-                handleBeforeChange(current, next)
+                handleBeforeChangeTrend(current, next)
               }
               afterChange={handleAfterChange}
               {...sliderSettings}
@@ -322,7 +344,7 @@ function MoviesList(props) {
             </Row>
             <Slider
               beforeChange={(current, next) =>
-                handleBeforeChange(current, next)
+                handleBeforeChangeMovie(current, next)
               }
               afterChange={handleAfterChange}
               {...sliderSettings}
