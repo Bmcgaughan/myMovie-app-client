@@ -87,6 +87,7 @@ function MoviesList(props) {
   let trendSliderMove = useEffect(() => {
     if (trendSlide.current) {
       trendSlide.current.slickGoTo(0);
+      localStorage.setItem('trendSlide', 0);
       setDragging(false);
     }
   }, [trendSort]);
@@ -94,13 +95,15 @@ function MoviesList(props) {
   let fullSliderMove = useEffect(() => {
     if (totalSlide.current) {
       totalSlide.current.slickGoTo(0);
+      localStorage.setItem('movieSlide', 0);
+
       setDragging(false);
     }
   }, [movieSort]);
 
   //to prevent a click when user is dragging slider using before and after change functions
   function handleBeforeChangeTrend(curr, next) {
-    let trendLocation = localStorage.getItem('movieSlide');
+    let trendLocation = localStorage.getItem('trendSlide');
     if (trendLocation) {
       curr = Number(trendLocation);
     }
