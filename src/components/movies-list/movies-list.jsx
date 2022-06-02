@@ -74,13 +74,12 @@ function MoviesList(props) {
     movieLocation = localStorage.getItem('movieSlide');
     if (visibilityFilter === '') {
       if (trendLocation) {
-        trendSlide.current.slickGoTo(trendLocation);
         setDragging(false);
+        trendSlide.current.slickGoTo(trendLocation);
       }
       if (movieLocation) {
-        console.log('still tried');
-        totalSlide.current.slickGoTo(movieLocation);
         setDragging(false);
+        totalSlide.current.slickGoTo(movieLocation);
       }
     }
   }, []);
@@ -116,6 +115,7 @@ function MoviesList(props) {
     } else {
       setDragging(true);
     }
+    setDragging(false);
   }
 
   const handleAfterChange = useCallback(() => {
