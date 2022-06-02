@@ -429,6 +429,10 @@ body {
   width: 100%;
 }
 
+.reco-button {
+  width: 100%;
+}
+
 .movie-poster {
   height: 450px;
   margin-bottom: 5px;
@@ -436,6 +440,10 @@ body {
 
 .button-wrapper {
   margin-top: auto;
+}
+
+.reco-view {
+  margin-top: 50px;
 }
 
 @media (max-width: 768px) {

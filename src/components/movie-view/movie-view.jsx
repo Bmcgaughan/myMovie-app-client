@@ -1,4 +1,7 @@
 import React from 'react';
+import axios from 'axios';
+
+import LoadingSpinner from '../spinner/spinner';
 
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -6,17 +9,58 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { connect } from 'react-redux';
+import { setMovies } from '../../actions/actions';
+
 import './movie-view.scss';
 
 //showing details once MovieCard is clicked
-export class MovieView extends React.Component {
+class MovieView extends React.Component {
+  constructor() {
+    super();
+    //initial state for main-view
+    this.state = {
+      gettingReco: null,
+      recommended: null,
+    };
+    this.showRecos = this.showRecos.bind(this);
+  }
+
+  getRecos(token) {
+    axios
+      .get(
+        `https://whatdoiwatch.herokuapp.com/movies/recommended/${this.props.movie.odbID}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((response) => {
+        this.setState({
+          recommended: response,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  showRecos() {
+    console.log('called');
+    this.setState({
+      gettingReco: true,
+    });
+    let accessToken = localStorage.getItem('token');
+  }
+
   //resetting window to top for component
   componentDidMount() {
     window.scrollTo(0, 0);
+    // this.getRecos(accessToken);
   }
 
   render() {
-    const { movie, onBackClick } = this.props;
+    const { movie, onBackClick, movies } = this.props;
+    const { recommended, gettingReco } = this.state;
 
     return (
       <div className="movie-view">
@@ -78,6 +122,13 @@ export class MovieView extends React.Component {
                 )}
               </Link>
               <Button
+                className="reco-button"
+                variant="secondary"
+                onClick={this.showRecos}
+              >
+                More Shows Like This
+              </Button>
+              <Button
                 variant="secondary"
                 className="back-btn"
                 onClick={() => {
@@ -89,6 +140,12 @@ export class MovieView extends React.Component {
             </div>
           </Col>
         </Row>
+        {gettingReco && (
+          <div className="reco-view">
+            <h3>Recommended based on this Show:</h3>
+            {!recommended && <LoadingSpinner />}
+          </div>
+        )}
       </div>
     );
   }
@@ -108,3 +165,13 @@ MovieView.propTypes = {
 
   onBackClick: PropTypes.func.isRequired,
 };
+
+let mapStateToProps = (state) => {
+  return {
+    movies: state.movies,
+  };
+};
+
+export default connect(mapStateToProps, {
+  setMovies,
+})(MovieView);
