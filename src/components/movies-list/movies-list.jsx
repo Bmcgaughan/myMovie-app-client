@@ -70,8 +70,8 @@ function MoviesList(props) {
   const trendSlide = useRef();
 
   useEffect(() => {
-    trendLocation = localStorage.getItem('trendSlide');
-    movieLocation = localStorage.getItem('movieSlide');
+    let trendLocation = localStorage.getItem('trendSlide');
+    let movieLocation = localStorage.getItem('movieSlide');
     if (visibilityFilter === '') {
       if (trendLocation) {
         setDragging(false);
@@ -100,6 +100,10 @@ function MoviesList(props) {
 
   //to prevent a click when user is dragging slider using before and after change functions
   function handleBeforeChangeTrend(curr, next) {
+    let trendLocation = localStorage.getItem('movieSlide');
+    if (trendLocation) {
+      curr = Number(trendLocation);
+    }
     localStorage.setItem('trendSlide', next);
     if (curr === next) {
       setDragging(false);
@@ -109,13 +113,16 @@ function MoviesList(props) {
   }
 
   function handleBeforeChangeMovie(curr, next) {
+    let movieLocation = localStorage.getItem('movieSlide');
+    if (movieLocation) {
+      curr = Number(movieLocation);
+    }
     localStorage.setItem('movieSlide', next);
     if (curr === next) {
       setDragging(false);
     } else {
       setDragging(true);
     }
-    setDragging(false);
   }
 
   const handleAfterChange = useCallback(() => {
