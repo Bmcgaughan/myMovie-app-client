@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { setMovies } from '../../actions/actions';
 
 import './movie-view.scss';
+import RecommendedView from '../recommended-view/recommended-view';
 
 //showing details once MovieCard is clicked
 class MovieView extends React.Component {
@@ -26,18 +27,20 @@ class MovieView extends React.Component {
     this.showRecos = this.showRecos.bind(this);
   }
 
-  getRecos(token) {
+  getRecos() {
+    let accessToken = localStorage.getItem('token');
     axios
       .get(
         `https://whatdoiwatch.herokuapp.com/movies/recommended/${this.props.movie.odbID}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${accessToken}` },
         }
       )
       .then((response) => {
         this.setState({
-          recommended: response,
+          recommended: response.data,
         });
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -45,11 +48,16 @@ class MovieView extends React.Component {
   }
 
   showRecos() {
-    console.log('called');
-    this.setState({
-      gettingReco: true,
-    });
-    let accessToken = localStorage.getItem('token');
+    console.log('called', this.state.recommended.exist)
+    if (!this.state.recommended) return;
+    let resultsArr = [];
+
+    if (this.state.recommended.exist) {
+      this.state.recommended.exist.forEach((id) => {
+        resultsArr.push(this.props.movies.find(id));
+      });
+    }
+    console.log(resultsArr);
   }
 
   //resetting window to top for component
@@ -100,7 +108,7 @@ class MovieView extends React.Component {
               </div>
             </div>
             <div className="button-wrapper">
-              <Link
+              {/* <Link
                 to={`/directors/${movie.Director.Name}`}
                 className="movie-opt"
               >
@@ -111,10 +119,10 @@ class MovieView extends React.Component {
                     More from this Director
                   </Button>
                 )}
-              </Link>
+              </Link> */}
               <Link to={`/genres/${movie.Genre.Name}`} className="movie-opt">
                 {movie.Genre.Name ? (
-                  <Button variant="secondary">More from this Genre</Button>
+                  <Button variant="secondary">More {movie.Genre.Name}</Button>
                 ) : (
                   <Button disabled variant="secondary">
                     More from this Genre
@@ -124,7 +132,7 @@ class MovieView extends React.Component {
               <Button
                 className="reco-button"
                 variant="secondary"
-                onClick={this.showRecos}
+                onClick={() => this.getRecos()}
               >
                 More Shows Like This
               </Button>
@@ -140,12 +148,19 @@ class MovieView extends React.Component {
             </div>
           </Col>
         </Row>
-        {gettingReco && (
+        <Row>
+          {recommended && this.showRecos()}
+          {/* {recommended && movies.map((m) => <RecommendedView movie={m} />)} */}
+          {/* {movies.map((m) => (
+            <RecommendedView movie={m} />
+          ))} */}
+        </Row>
+        {/* {gettingReco && (
           <div className="reco-view">
             <h3>Recommended based on this Show:</h3>
             {!recommended && <LoadingSpinner />}
           </div>
-        )}
+        )} */}
       </div>
     );
   }

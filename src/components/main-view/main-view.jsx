@@ -17,6 +17,7 @@ import MoviesList from '../movies-list/movies-list';
 import MovieView from '../movie-view/movie-view';
 import DirectorView from '../director-view/director-view';
 import GenreView from '../genre-view/genre-view';
+import Recommended from '../recommended-view/recommended-view';
 import ProfileView from '../profile-view/profile-view';
 import Menubar from '../navbar-view/navbar';
 import LoadingSpinner from '../spinner/spinner';
