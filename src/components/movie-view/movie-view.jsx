@@ -48,16 +48,22 @@ class MovieView extends React.Component {
   }
 
   showRecos() {
-    console.log('called', this.state.recommended.exist)
+    console.log('called', this.state.recommended.exist);
     if (!this.state.recommended) return;
     let resultsArr = [];
+    let existDetails = [];
 
     if (this.state.recommended.exist) {
-      this.state.recommended.exist.forEach((id) => {
-        resultsArr.push(this.props.movies.find(id));
+      existDetails = this.props.movies.filter((m) => {
+        if (this.state.recommended.exist.includes(m.odbID)) {
+          return m;
+        }
       });
+
+      if (this.state.recommended.processedTV) {
+      }
     }
-    console.log(resultsArr);
+    return existDetails;
   }
 
   //resetting window to top for component
@@ -148,8 +154,17 @@ class MovieView extends React.Component {
             </div>
           </Col>
         </Row>
+        {recommended && (
+          <div className="recommended-wrap">Shows Similar to {movie.Title}</div>
+        )}
         <Row>
-          {recommended && this.showRecos()}
+          {
+            recommended &&
+              this.showRecos().map((m) => <RecommendedView movie={m} />)
+
+            // {this.showRecos().map((m) => <RecommendedView movie={m} />)}
+          }
+
           {/* {recommended && movies.map((m) => <RecommendedView movie={m} />)} */}
           {/* {movies.map((m) => (
             <RecommendedView movie={m} />
