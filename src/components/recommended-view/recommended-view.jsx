@@ -1,38 +1,25 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import MovieCard from '../movie-card/movie-card';
 
-import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-
-import { setMovies } from '../../actions/actions';
+import { useHistory } from 'react-router-dom';
 
 import './recommended-view.scss';
 
-function clickHolder() {
-  console.log('placeholder');
-}
-
-const mapStateToProps = (state) => {
-  const { movies } = state;
-  return { movies };
-};
-
-function RecommendedView(props) {
+export function RecommendedView(props) {
   const { movies, movie, onMovieClick } = props;
 
+  let history = useHistory();
+
+  const recoClick = (id) => {
+    history.push(`/movies/${id}`);
+  };
+
   return (
-      <Col md={4} key={movie._id}>
-        <MovieCard movie={movie} onMovieClick={() => clickHolder} />
-      </Col>
+    <Col md={4} key={movie._id}>
+      <MovieCard movie={movie} onMovieClick={() => recoClick(movie._id)} />
+    </Col>
   );
 }
-
-export default connect(mapStateToProps, {
-  setMovies,
-})(RecommendedView);

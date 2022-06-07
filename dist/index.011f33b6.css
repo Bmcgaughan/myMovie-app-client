@@ -446,6 +446,10 @@ body {
   margin-top: 50px;
 }
 
+.recommended-wrap {
+  margin-top: 15px;
+}
+
 @media (max-width: 768px) {
   .movie-poster {
     justify-content: center;
@@ -721,7 +725,6 @@ body {
     font-size: 1rem;
   }
 }
-
 .bt-movie {
   background: black;
   color: white;
@@ -1357,5 +1360,6 @@ a {
     opacity: .75;
     color: black;
 }
+
 
 /*# sourceMappingURL=index.011f33b6.css.map */

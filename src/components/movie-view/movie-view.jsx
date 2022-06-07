@@ -4,6 +4,8 @@ import axios from 'axios';
 import LoadingSpinner from '../spinner/spinner';
 
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
@@ -13,7 +15,7 @@ import { connect } from 'react-redux';
 import { setMovies } from '../../actions/actions';
 
 import './movie-view.scss';
-import RecommendedView from '../recommended-view/recommended-view';
+import MovieCard from '../movie-card/movie-card';
 
 //showing details once MovieCard is clicked
 class MovieView extends React.Component {
@@ -27,7 +29,13 @@ class MovieView extends React.Component {
     this.showRecos = this.showRecos.bind(this);
   }
 
-  getRecos() {
+  getRecos(movie) {
+    if (movie.Recommended.length > 0) {
+      this.showRecos({
+        exist: movie.Recommended,
+      });
+      return;
+    }
     let accessToken = localStorage.getItem('token');
     axios
       .get(
@@ -37,40 +45,47 @@ class MovieView extends React.Component {
         }
       )
       .then((response) => {
-        this.setState({
-          recommended: response.data,
-        });
-        console.log(response.data);
+        this.showRecos(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  showRecos() {
-    console.log('called', this.state.recommended.exist);
-    if (!this.state.recommended) return;
-    let resultsArr = [];
+  showRecos(recommended) {
+    if (!recommended) return;
+
+    let processedTV = [];
     let existDetails = [];
 
-    if (this.state.recommended.exist) {
+    if (recommended.exist && recommended.exist.length > 0) {
       existDetails = this.props.movies.filter((m) => {
-        if (this.state.recommended.exist.includes(m.odbID)) {
+        if (recommended.exist.includes(m.odbID)) {
           return m;
         }
       });
-
-      if (this.state.recommended.processedTV) {
-      }
     }
-    return existDetails;
+    if (recommended.processedTV && recommended.processedTV.length > 0) {
+      processedTV = [...recommended.processedTV];
+    }
+
+    this.setState({
+      recommended: [...existDetails, ...processedTV],
+    });
   }
 
   //resetting window to top for component
   componentDidMount() {
     window.scrollTo(0, 0);
-    // this.getRecos(accessToken);
   }
+
+  handleOnItemClick = (param) => (e) => {
+    const { history } = withRouter;
+    this.setState({
+      recommended: null,
+    });
+    this.props.history.push(`/movies/${param}`);
+  };
 
   render() {
     const { movie, onBackClick, movies } = this.props;
@@ -114,18 +129,6 @@ class MovieView extends React.Component {
               </div>
             </div>
             <div className="button-wrapper">
-              {/* <Link
-                to={`/directors/${movie.Director.Name}`}
-                className="movie-opt"
-              >
-                {movie.Director.Name ? (
-                  <Button variant="secondary">More from this Director</Button>
-                ) : (
-                  <Button disabled variant="secondary">
-                    More from this Director
-                  </Button>
-                )}
-              </Link> */}
               <Link to={`/genres/${movie.Genre.Name}`} className="movie-opt">
                 {movie.Genre.Name ? (
                   <Button variant="secondary">More {movie.Genre.Name}</Button>
@@ -138,7 +141,7 @@ class MovieView extends React.Component {
               <Button
                 className="reco-button"
                 variant="secondary"
-                onClick={() => this.getRecos()}
+                onClick={() => this.getRecos(movie)}
               >
                 More Shows Like This
               </Button>
@@ -154,28 +157,32 @@ class MovieView extends React.Component {
             </div>
           </Col>
         </Row>
-        {recommended && (
-          <div className="recommended-wrap">Shows Similar to {movie.Title}</div>
+
+        {recommended && recommended.length > 0 && (
+          <div className="recommended-wrap">
+            <h3>Shows Similar to {movie.Title}</h3>
+          </div>
+        )}
+        {recommended && recommended.length === 0 && (
+          <div className="recommended-wrap">
+            <h3>Sorry! Nothing to Recommened...</h3>
+          </div>
         )}
         <Row>
-          {
-            recommended &&
-              this.showRecos().map((m) => <RecommendedView movie={m} />)
-
-            // {this.showRecos().map((m) => <RecommendedView movie={m} />)}
-          }
-
-          {/* {recommended && movies.map((m) => <RecommendedView movie={m} />)} */}
-          {/* {movies.map((m) => (
-            <RecommendedView movie={m} />
-          ))} */}
+          {recommended &&
+            recommended.length > 0 &&
+            recommended.map((m) => (
+              <Col md={4} key={m._id}>
+                <MovieCard
+                  movie={m}
+                  onMovieClick={() => this.handleOnItemClick(m._id)}
+                />
+              </Col>
+            ))}
+          {/* {recommended &&
+            recommended.length > 0 &&
+            recommended.map((m) => <RecommendedView key={m._id} movie={m} />)} */}
         </Row>
-        {/* {gettingReco && (
-          <div className="reco-view">
-            <h3>Recommended based on this Show:</h3>
-            {!recommended && <LoadingSpinner />}
-          </div>
-        )} */}
       </div>
     );
   }
@@ -202,6 +209,12 @@ let mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  setMovies,
-})(MovieView);
+export default withRouter(
+  connect(mapStateToProps, {
+    setMovies,
+  })(MovieView)
+);
+
+// export default connect(mapStateToProps, {
+//   setMovies,
+// })(MovieView);
