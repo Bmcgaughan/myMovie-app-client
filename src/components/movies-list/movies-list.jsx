@@ -5,6 +5,13 @@ import { useHistory } from 'react-router-dom';
 
 import Slider from 'react-slick';
 
+import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
+
+import '../../../node_modules/swiper/swiper.scss';
+import '../../../node_modules/swiper/modules/free-mode/free-mode.scss';
+import '../../../node_modules/swiper/modules/pagination/pagination.scss';
+import { FreeMode, Pagination } from 'swiper';
+
 import { connect } from 'react-redux';
 
 import { Row, Col } from 'react-bootstrap';
@@ -69,11 +76,6 @@ function MoviesList(props) {
   //setting up to navigate to specific movie
   const history = useHistory();
 
-  //allowing slider to reset to start when filter is applied
-  const likeSlide = useRef();
-  const trendSlide = useRef();
-  const recoSlide = useRef();
-
   //functions to eliminate duplicating shows
   const trendingDisplay = props.trending.filter((movie) => {
     if (
@@ -102,70 +104,6 @@ function MoviesList(props) {
     }
   });
 
-  useEffect(() => {
-    let trendLocation = localStorage.getItem('trendSlide');
-    let recoLocation = localStorage.getItem('recoSlide');
-    let likeLocation = localStorage.getItem('likeSlide');
-
-    if (visibilityFilter === '') {
-      if (trendLocation) {
-        setDragging(false);
-        trendSlide.current.slickGoTo(trendLocation);
-      }
-      if (recoLocation) {
-        setDragging(false);
-        recoSlide.current.slickGoTo(recoLocation);
-      }
-      if (likeLocation) {
-        setDragging(false);
-        likeSlide.current.slickGoTo(likeLocation);
-      }
-    }
-  }, []);
-
-  //to prevent a click when user is dragging slider using before and after change functions
-  function handleBeforeChangeTrend(curr, next) {
-    let trendLocation = localStorage.getItem('trendSlide');
-    if (trendLocation) {
-      curr = Number(trendLocation);
-    }
-    localStorage.setItem('trendSlide', next);
-    if (curr === next) {
-      setDragging(false);
-    } else {
-      setDragging(true);
-    }
-  }
-
-  function handleBeforeChangeReco(curr, next) {
-    let recoLocation = localStorage.getItem('recoSlide');
-    if (recoLocation) {
-      curr = Number(recoLocation);
-    }
-    localStorage.setItem('recoSlide', next);
-    if (curr === next) {
-      setDragging(false);
-    } else {
-      setDragging(true);
-    }
-  }
-
-  function handleBeforeChangeLike(curr, next) {
-    let likeLocation = localStorage.getItem('likeSlide');
-    if (likeLocation) {
-      curr = Number(likeLocation);
-    }
-    localStorage.setItem('likeSlide', next);
-    if (curr === next) {
-      setDragging(false);
-    } else {
-      setDragging(true);
-    }
-  }
-
-  const handleAfterChange = useCallback(() => {
-    setDragging(false);
-  }, [setDragging]);
 
   //pushing movie details on click
   const handleOnItemClick = (param, dragToggle) => (e) => {
@@ -225,23 +163,29 @@ function MoviesList(props) {
               <Row className="d-flex align-items-center">
                 <h3>Recommended for You:</h3>
               </Row>
-              <Slider
-                beforeChange={(current, next) =>
-                  handleBeforeChangeReco(current, next)
-                }
-                afterChange={handleAfterChange}
-                {...sliderSettings}
-                ref={recoSlide}
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={0}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  dynamicBullets: true,
+                  dynamicMainBullets: 5,
+                }}
+                modules={[FreeMode, Pagination]}
+                className="RecoSwiper"
               >
                 {recommendedDisplay.map((m) => (
-                  <div key={m._id} className="mcard">
-                    <MovieCard
-                      movie={m}
-                      onMovieClick={() => handleOnItemClick(m._id, true)}
-                    />
-                  </div>
+                  <SwiperSlide key={m._id}>
+                    <div className="mcard">
+                      <MovieCard
+                        movie={m}
+                        onMovieClick={() => handleOnItemClick(m._id, true)}
+                      />
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </Slider>
+              </Swiper>
             </div>
           )}
           {mostLikedDisplay && mostLikedDisplay.length > 0 && (
@@ -249,23 +193,29 @@ function MoviesList(props) {
               <Row className="d-flex align-items-center">
                 <h3>Other People Like:</h3>
               </Row>
-              <Slider
-                beforeChange={(current, next) =>
-                  handleBeforeChangeLike(current, next)
-                }
-                afterChange={handleAfterChange}
-                {...sliderSettings}
-                ref={likeSlide}
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={0}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  dynamicBullets: true,
+                  dynamicMainBullets: 5,
+                }}
+                modules={[FreeMode, Pagination]}
+                className="LikeSwiper"
               >
                 {mostLikedDisplay.map((m) => (
-                  <div key={m._id} className="mcard">
-                    <MovieCard
-                      movie={m}
-                      onMovieClick={() => handleOnItemClick(m._id, true)}
-                    />
-                  </div>
+                  <SwiperSlide key={m._id}>
+                    <div className="mcard">
+                      <MovieCard
+                        movie={m}
+                        onMovieClick={() => handleOnItemClick(m._id, true)}
+                      />
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </Slider>
+              </Swiper>
             </div>
           )}
           {trendingDisplay && trendingDisplay.length > 0 && (
@@ -273,23 +223,29 @@ function MoviesList(props) {
               <Row className="d-flex align-items-center">
                 <h3>Trending This Week:</h3>
               </Row>
-              <Slider
-                beforeChange={(current, next) =>
-                  handleBeforeChangeTrend(current, next)
-                }
-                afterChange={handleAfterChange}
-                {...sliderSettings}
-                ref={trendSlide}
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={0}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  dynamicBullets: true,
+                  dynamicMainBullets: 5,
+                }}
+                modules={[FreeMode, Pagination]}
+                className="LikeSwiper"
               >
                 {trendingDisplay.map((m) => (
-                  <div key={m._id} className="mcard">
-                    <MovieCard
-                      movie={m}
-                      onMovieClick={() => handleOnItemClick(m._id, true)}
-                    />
-                  </div>
+                  <SwiperSlide key={m._id}>
+                    <div className="mcard">
+                      <MovieCard
+                        movie={m}
+                        onMovieClick={() => handleOnItemClick(m._id, true)}
+                      />
+                    </div>
+                  </SwiperSlide>
                 ))}
-              </Slider>
+              </Swiper>
             </div>
           )}
         </div>

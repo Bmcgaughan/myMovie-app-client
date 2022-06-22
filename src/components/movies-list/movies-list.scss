@@ -1,3 +1,23 @@
+.swiper-pagination {
+  bottom: 0px !important;
+}
+
+.swiper-pagination-bullet {
+  background: white !important;
+  opacity: 100 !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #5846f9 !important;
+  opacity: 100 !important;
+}
+
+.show-section {
+  padding-bottom: 20px;
+}
+
 .slick-prev {
   left: -55px !important;
 }
