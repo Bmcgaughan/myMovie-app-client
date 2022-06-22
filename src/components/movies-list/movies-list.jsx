@@ -104,7 +104,6 @@ function MoviesList(props) {
     }
   });
 
-
   //pushing movie details on click
   const handleOnItemClick = (param, dragToggle) => (e) => {
     if (!dragToggle) {
@@ -125,10 +124,6 @@ function MoviesList(props) {
     filteredMovies = movies.filter((m) =>
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
-    filteredTrending = props.trending.filter((m) =>
-      m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
-    );
-    filteredMovies = filteredMovies.concat(filteredTrending);
   }
 
   // if (!movies) {
