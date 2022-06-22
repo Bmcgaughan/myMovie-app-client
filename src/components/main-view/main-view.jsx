@@ -4,7 +4,14 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 //setting up redux and bringing in actions
 import { connect } from 'react-redux';
-import { setMovies, setFavorites, setUser } from '../../actions/actions';
+
+import {
+  setMovies,
+  setFavorites,
+  setUser,
+  setMostLiked,
+  setRecommended,
+} from '../../actions/actions';
 
 //bootstrap imports
 import Row from 'react-bootstrap/Row';
@@ -17,7 +24,6 @@ import MoviesList from '../movies-list/movies-list';
 import MovieView from '../movie-view/movie-view';
 import DirectorView from '../director-view/director-view';
 import GenreView from '../genre-view/genre-view';
-import Recommended from '../recommended-view/recommended-view';
 import ProfileView from '../profile-view/profile-view';
 import Menubar from '../navbar-view/navbar';
 import LoadingSpinner from '../spinner/spinner';
@@ -40,7 +46,8 @@ class MainView extends React.Component {
     if (accessToken !== null) {
       this.props.setUser(localStorage.getItem('user'));
       this.getMovies(accessToken);
-      // this.getTrending(accessToken);
+      this.getForYou(accessToken);
+      this.getMostLiked(accessToken);
       this.getFavorites(accessToken);
     }
   }
@@ -58,6 +65,33 @@ class MainView extends React.Component {
         console.log(error);
       });
   }
+
+  getForYou(token) {
+    axios
+      .get('https://whatdoiwatch.herokuapp.com/foryou', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.props.setRecommended(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getMostLiked(token) {
+    axios
+      .get('https://whatdoiwatch.herokuapp.com/mostliked', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        this.props.setMostLiked(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
 
   getTrending(token) {
     axios
@@ -83,7 +117,6 @@ class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.props.movies;
         this.props.setFavorites(response.data.FavoriteMovies);
       })
       .catch((e) => console.log(e));
@@ -95,7 +128,8 @@ class MainView extends React.Component {
     localStorage.setItem('token', userAuth.token),
       localStorage.setItem('user', userAuth.user.Username);
     this.getMovies(userAuth.token);
-    // this.getTrending(accessToken);
+    this.getForYou(userAuth.token);
+    this.getMostLiked(userAuth.token);
     this.getFavorites(userAuth.token);
   }
 
@@ -268,6 +302,8 @@ let mapStateToProps = (state) => {
   return {
     movies: state.movies,
     favorites: state.favorites,
+    recommended: state.recommended,
+    mostLiked: state.mostLiked,
     user: state.user,
   };
 };
@@ -276,4 +312,6 @@ export default connect(mapStateToProps, {
   setMovies,
   setFavorites,
   setUser,
+  setMostLiked,
+  setRecommended,
 })(MainView);

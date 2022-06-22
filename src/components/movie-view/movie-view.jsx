@@ -179,9 +179,6 @@ class MovieView extends React.Component {
                 />
               </Col>
             ))}
-          {/* {recommended &&
-            recommended.length > 0 &&
-            recommended.map((m) => <RecommendedView key={m._id} movie={m} />)} */}
         </Row>
       </div>
     );
@@ -214,7 +211,3 @@ export default withRouter(
     setMovies,
   })(MovieView)
 );
-
-// export default connect(mapStateToProps, {
-//   setMovies,
-// })(MovieView);
