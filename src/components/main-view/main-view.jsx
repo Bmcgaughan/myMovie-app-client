@@ -11,6 +11,7 @@ import {
   setUser,
   setMostLiked,
   setRecommended,
+  setTrending,
 } from '../../actions/actions';
 
 //bootstrap imports
@@ -47,6 +48,7 @@ class MainView extends React.Component {
       this.props.setUser(localStorage.getItem('user'));
       this.getMovies(accessToken);
       this.getForYou(accessToken);
+      this.getTrending(accessToken);
       this.getMostLiked(accessToken);
       this.getFavorites(accessToken);
     }
@@ -92,17 +94,17 @@ class MainView extends React.Component {
       });
   }
 
-
   getTrending(token) {
     axios
       .get(`https://whatdoiwatch.herokuapp.com/trending`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        this.setState({
-          trending: true,
-        });
-        console.log(response.data);
+        if (response.status === 201) {
+          this.props.setTrending(response.data);
+        } else {
+          this.props.setTrending([]);
+        }
       })
       .catch((e) => console.log(e));
   }
@@ -129,6 +131,7 @@ class MainView extends React.Component {
       localStorage.setItem('user', userAuth.user.Username);
     this.getMovies(userAuth.token);
     this.getForYou(userAuth.token);
+    this.getTrending(userAuth.token);
     this.getMostLiked(userAuth.token);
     this.getFavorites(userAuth.token);
   }
@@ -159,22 +162,16 @@ class MainView extends React.Component {
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
-              if (movies.length === 0)
-                return (
-                  <div className="main-view">
-                    <LoadingSpinner />
-                  </div>
-                );
+              // if (mostLiked.length === 0 || recommended.length === 0)
+              //   return (
+              //     <div className="main-view">
+              //       <LoadingSpinner />
+              //     </div>
+              //   );
               if (!favorites) return <div className="main-view" />;
               return (
                 <MoviesList
-                  movies={movies.filter((m) => {
-                    return !m.Trending;
-                  })}
                   favorites={favorites}
-                  trending={movies.filter((m) => {
-                    return m.Trending;
-                  })}
                 />
               );
             }}
@@ -303,6 +300,7 @@ let mapStateToProps = (state) => {
     movies: state.movies,
     favorites: state.favorites,
     recommended: state.recommended,
+    trending: state.trending,
     mostLiked: state.mostLiked,
     user: state.user,
   };
@@ -314,4 +312,5 @@ export default connect(mapStateToProps, {
   setUser,
   setMostLiked,
   setRecommended,
+  setTrending,
 })(MainView);

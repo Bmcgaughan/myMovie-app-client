@@ -30,8 +30,24 @@ import { Next } from 'react-bootstrap/esm/PageItem';
 
 //mapping filter and favorites to props ma
 const mapStateToProps = (state) => {
-  const { visibilityFilter, trendSort, movieSort } = state;
-  return { visibilityFilter, trendSort, movieSort };
+  const {
+    movies,
+    trending,
+    visibilityFilter,
+    trendSort,
+    movieSort,
+    mostLiked,
+    recommended,
+  } = state;
+  return {
+    movies,
+    trending,
+    visibilityFilter,
+    trendSort,
+    movieSort,
+    mostLiked,
+    recommended,
+  };
 };
 
 //settings for the slider
@@ -57,7 +73,7 @@ let sliderSettings = {
 };
 
 function MoviesList(props) {
-  const { movies, visibilityFilter, sort, trendSort, movieSort } = props;
+  const { movies, mostLiked, recommended, visibilityFilter } = props;
   const [dragging, setDragging] = useState(false);
 
   //setting up to navigate to specific movie
@@ -66,6 +82,34 @@ function MoviesList(props) {
   //allowing slider to reset to start when filter is applied
   const totalSlide = useRef();
   const trendSlide = useRef();
+
+  //functions to eliminate duplicating shows
+  const trendingDisplay = props.trending.filter((movie) => {
+    if (
+      !props.recommended.some((recommend) => recommend._id === movie._id) &&
+      !props.mostLiked.some((like) => like._id === movie._id)
+    ) {
+      return movie;
+    }
+  });
+
+  const recommendedDisplay = props.recommended.filter((movie) => {
+    if (
+      !props.trending.some((trend) => trend._id === movie._id) &&
+      !props.mostLiked.some((like) => like._id === movie._id)
+    ) {
+      return movie;
+    }
+  });
+
+  const mostLikedDisplay = props.mostLiked.filter((movie) => {
+    if (
+      !props.trending.some((trend) => trend._id === movie._id) &&
+      !props.recommended.some((recommend) => recommend._id === movie._id)
+    ) {
+      return movie;
+    }
+  });
 
   useEffect(() => {
     let trendLocation = localStorage.getItem('trendSlide');
@@ -313,18 +357,17 @@ function MoviesList(props) {
         <div className="unfilter">
           <div className="show-section">
             <Row className="d-flex align-items-center">
-              <h3>Trending ({props.trending.length})</h3>
-              {filterGenerator('trending')}
+              <h3>Recommended for You ({recommendedDisplay.length})</h3>
             </Row>
             <Slider
               beforeChange={(current, next) =>
-                handleBeforeChangeTrend(current, next)
+                handleBeforeChangeMovie(current, next)
               }
               afterChange={handleAfterChange}
               {...sliderSettings}
-              ref={trendSlide}
+              ref={totalSlide}
             >
-              {props.trending.map((m) => (
+              {recommendedDisplay.map((m) => (
                 <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}
@@ -336,8 +379,7 @@ function MoviesList(props) {
           </div>
           <div className="show-section">
             <Row className="d-flex align-items-center">
-              <h3>Movies and Shows ({movies.length})</h3>
-              {filterGenerator('movies')}
+              <h3>Other People Like ({mostLikedDisplay.length})</h3>
             </Row>
             <Slider
               beforeChange={(current, next) =>
@@ -347,7 +389,29 @@ function MoviesList(props) {
               {...sliderSettings}
               ref={totalSlide}
             >
-              {movies.map((m) => (
+              {mostLikedDisplay.map((m) => (
+                <div key={m._id} className="mcard">
+                  <MovieCard
+                    movie={m}
+                    onMovieClick={() => handleOnItemClick(m._id, true)}
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
+          <div className="show-section">
+            <Row className="d-flex align-items-center">
+              <h3>Trending This Week ({trendingDisplay.length})</h3>
+            </Row>
+            <Slider
+              beforeChange={(current, next) =>
+                handleBeforeChangeTrend(current, next)
+              }
+              afterChange={handleAfterChange}
+              {...sliderSettings}
+              ref={trendSlide}
+            >
+              {trendingDisplay.map((m) => (
                 <div key={m._id} className="mcard">
                   <MovieCard
                     movie={m}

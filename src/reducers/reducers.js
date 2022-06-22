@@ -11,6 +11,7 @@ import {
   TOGGLE_TREND_SORT,
   SET_RECOMMENDED,
   SET_MOST_LIKED,
+  SET_TRENDING,
 } from '../actions/actions';
 
 //used for filtering movies
@@ -60,6 +61,15 @@ function recommended(state = [], action) {
 function mostLiked(state = [], action) {
   switch (action.type) {
     case SET_MOST_LIKED:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
+function trending(state = [], action) {
+  switch (action.type) {
+    case SET_TRENDING:
       return action.value;
     default:
       return state;
@@ -128,6 +138,7 @@ const moviesApp = combineReducers({
   movies,
   recommended,
   mostLiked,
+  trending,
   favorites,
   user,
   trendSort,

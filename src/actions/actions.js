@@ -9,6 +9,7 @@ export const SET_MOV_SORT = 'SET_MOV_SORT';
 export const TOGGLE_MOV_SORT = 'TOGGLE_MOV_SORT';
 export const SET_RECOMMENDED = 'SET_RECOMMENDED';
 export const SET_MOST_LIKED = 'SET_MOST_LIKED';
+export const SET_TRENDING = 'SET_TRENDING';
 
 export function setMovies(value) {
   return { type: SET_MOVIES, value };
@@ -28,6 +29,10 @@ export function setRecommended(value) {
 
 export function setMostLiked(value) {
   return { type: SET_MOST_LIKED, value };
+}
+
+export function setTrending(value) {
+  return { type: SET_TRENDING, value };
 }
 
 export function toggleFavorite(movieId) {
