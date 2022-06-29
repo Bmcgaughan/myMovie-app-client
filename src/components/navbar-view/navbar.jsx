@@ -102,6 +102,7 @@ function Menubar(props) {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
           {isAuth() && <Nav.Link href={`/`}>Home</Nav.Link>}
+          {isAuth() && <Nav.Link href={`/allshows`}>All Shows</Nav.Link>}
 
           {isAuth() && <Nav.Link href={`/users/${user}`}>Profile</Nav.Link>}
           {isAuth() && (

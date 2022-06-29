@@ -26,6 +26,7 @@ import MovieView from '../movie-view/movie-view';
 import DirectorView from '../director-view/director-view';
 import GenreView from '../genre-view/genre-view';
 import ProfileView from '../profile-view/profile-view';
+import AllShows from '../all-show-view/all-show-view';
 import Menubar from '../navbar-view/navbar';
 import LoadingSpinner from '../spinner/spinner';
 
@@ -162,20 +163,24 @@ class MainView extends React.Component {
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
-              // if (mostLiked.length === 0 || recommended.length === 0)
-              //   return (
-              //     <div className="main-view">
-              //       <LoadingSpinner />
-              //     </div>
-              //   );
               if (!favorites) return <div className="main-view" />;
-              return (
-                <MoviesList
-                  favorites={favorites}
-                />
-              );
+              return <MoviesList favorites={favorites} />;
             }}
           />
+          <Route
+            path="/allshows"
+            render={() => {
+              if (!user)
+                return (
+                  <Col>
+                    <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+                  </Col>
+                );
+              if (!movies) return <div className="main-view" />;
+              return <AllShows />;
+            }}
+          />
+
           <Row className="main-view justify-content-sm-center">
             <Route
               path="/register"

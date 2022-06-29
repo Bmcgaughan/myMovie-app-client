@@ -25382,6 +25382,8 @@ var _genreView = require("../genre-view/genre-view");
 var _genreViewDefault = parcelHelpers.interopDefault(_genreView);
 var _profileView = require("../profile-view/profile-view");
 var _profileViewDefault = parcelHelpers.interopDefault(_profileView);
+var _allShowView = require("../all-show-view/all-show-view");
+var _allShowViewDefault = parcelHelpers.interopDefault(_allShowView);
 var _navbar = require("../navbar-view/navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _spinner = require("../spinner/spinner");
@@ -25490,7 +25492,7 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 152
+                lineNumber: 153
             },
             __self: this,
             children: [
@@ -25498,14 +25500,14 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 153
+                        lineNumber: 154
                     },
                     __self: this
                 }),
                 /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Container, {
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 154
+                        lineNumber: 155
                     },
                     __self: this,
                     children: [
@@ -25518,12 +25520,6 @@ class MainView extends _reactDefault.default.Component {
                                         onLoggedIn: (user1)=>this.onLoggedIn(user1)
                                     })
                                 }));
-                                // if (mostLiked.length === 0 || recommended.length === 0)
-                                //   return (
-                                //     <div className="main-view">
-                                //       <LoadingSpinner />
-                                //     </div>
-                                //   );
                                 if (!favorites) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
                                     className: "main-view"
                                 }));
@@ -25533,7 +25529,27 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 155
+                                lineNumber: 156
+                            },
+                            __self: this
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactRouterDom.Route, {
+                            path: "/allshows",
+                            render: ()=>{
+                                if (!user) return(/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_loginView.LoginView, {
+                                        onLoggedIn: (user1)=>this.onLoggedIn(user1)
+                                    })
+                                }));
+                                if (!movies) return(/*#__PURE__*/ _jsxRuntime.jsx("div", {
+                                    className: "main-view"
+                                }));
+                                return(/*#__PURE__*/ _jsxRuntime.jsx(_allShowViewDefault.default, {
+                                }));
+                            },
+                            __source: {
+                                fileName: "src/components/main-view/main-view.jsx",
+                                lineNumber: 170
                             },
                             __self: this
                         }),
@@ -25541,7 +25557,7 @@ class MainView extends _reactDefault.default.Component {
                             className: "main-view justify-content-sm-center",
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 179
+                                lineNumber: 184
                             },
                             __self: this,
                             children: [
@@ -25556,7 +25572,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 180
+                                        lineNumber: 185
                                     },
                                     __self: this
                                 }),
@@ -25584,7 +25600,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 188
+                                        lineNumber: 193
                                     },
                                     __self: this
                                 }),
@@ -25613,7 +25629,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 214
+                                        lineNumber: 219
                                     },
                                     __self: this
                                 }),
@@ -25642,7 +25658,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 243
+                                        lineNumber: 248
                                     },
                                     __self: this
                                 }),
@@ -25669,7 +25685,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 269
+                                        lineNumber: 274
                                     },
                                     __self: this
                                 })
@@ -25705,7 +25721,7 @@ exports.default = _reactRedux.connect(mapStateToProps, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","axios":"iYoWk","react-router-dom":"cpyQW","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","../registration-view/registration-view":"aP2YV","../login-view/login-view":"054li","../movie-view/movie-view":"ikZdr","../director-view/director-view":"ck15y","../genre-view/genre-view":"8WCoL","../profile-view/profile-view":"2E7Aw","../navbar-view/navbar":"bicRv","react-bootstrap":"h2YVd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../../actions/actions":"1Ttfj","../movies-list/movies-list":"1kGQ5","../spinner/spinner":"eZvtp"}],"iYoWk":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","axios":"iYoWk","react-router-dom":"cpyQW","react-bootstrap/Row":"c0x1x","react-bootstrap/Col":"fbam0","../registration-view/registration-view":"aP2YV","../login-view/login-view":"054li","../movie-view/movie-view":"ikZdr","../director-view/director-view":"ck15y","../genre-view/genre-view":"8WCoL","../profile-view/profile-view":"2E7Aw","../navbar-view/navbar":"bicRv","react-bootstrap":"h2YVd","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../../actions/actions":"1Ttfj","../movies-list/movies-list":"1kGQ5","../spinner/spinner":"eZvtp","../all-show-view/all-show-view":"gg2Yk"}],"iYoWk":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 
 },{"./lib/axios":"3QmO2"}],"3QmO2":[function(require,module,exports) {
@@ -47863,10 +47879,19 @@ function Menubar(props) {
                             children: "Home"
                         }),
                         isAuth() && /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
+                            href: `/allshows`,
+                            __source: {
+                                fileName: "src/components/navbar-view/navbar.jsx",
+                                lineNumber: 105
+                            },
+                            __self: this,
+                            children: "All Shows"
+                        }),
+                        isAuth() && /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Nav.Link, {
                             href: `/users/${user}`,
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 106
+                                lineNumber: 107
                             },
                             __self: this,
                             children: "Profile"
@@ -47878,7 +47903,7 @@ function Menubar(props) {
                             },
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 108
+                                lineNumber: 109
                             },
                             __self: this,
                             children: "Log Out"
@@ -47887,7 +47912,7 @@ function Menubar(props) {
                             href: "/",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 117
+                                lineNumber: 118
                             },
                             __self: this,
                             children: "Sign In"
@@ -47896,7 +47921,7 @@ function Menubar(props) {
                             href: "/register",
                             __source: {
                                 fileName: "src/components/navbar-view/navbar.jsx",
-                                lineNumber: 118
+                                lineNumber: 119
                             },
                             __self: this,
                             children: "Register"
@@ -57996,7 +58021,201 @@ const SwiperSlide = /*#__PURE__*/ _react.forwardRef(function(_temp, externalRef)
 });
 SwiperSlide.displayName = 'SwiperSlide';
 
-},{"react":"6TuXu","./utils.js":"BPkN0","./use-isomorphic-layout-effect.js":"gIvZ7","./context.js":"kWZWY","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"jUTZ8":[function() {},{}],"4d0QS":[function(require,module,exports) {
+},{"react":"6TuXu","./utils.js":"BPkN0","./use-isomorphic-layout-effect.js":"gIvZ7","./context.js":"kWZWY","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY"}],"gg2Yk":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$f160 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$f160.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxRuntime = require("react/jsx-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
+var _reactRedux = require("react-redux");
+var _reactBootstrap = require("react-bootstrap");
+//components to import and render
+var _movieCard = require("../movie-card/movie-card");
+var _movieCardDefault = parcelHelpers.interopDefault(_movieCard);
+var _s = $RefreshSig$();
+const mapStateToProps = (state)=>{
+    const { movies , visibilityFilter  } = state;
+    return {
+        movies,
+        visibilityFilter
+    };
+};
+function AllShows(props) {
+    _s();
+    const { movies , visibilityFilter  } = props;
+    const history = _reactRouterDom.useHistory();
+    movies.sort((a, b)=>{
+        if (a.Title < b.Title) return -1;
+        if (a.Title > b.Title) return 1;
+        return 0;
+    });
+    const handleOnItemClick = (param)=>(e)=>{
+            e.stopPropagation();
+            history.push(`/movies/${param}`);
+        }
+    ;
+    if (visibilityFilter !== '') filteredMovies = movies.filter((m)=>m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+    );
+    return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
+        className: "shows-wrapper",
+        __source: {
+            fileName: "src/components/all-show-view/all-show-view.jsx",
+            lineNumber: 45
+        },
+        __self: this,
+        children: [
+            visibilityFilter != '' && /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                className: "filtered",
+                __source: {
+                    fileName: "src/components/all-show-view/all-show-view.jsx",
+                    lineNumber: 47
+                },
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "show-section",
+                    __source: {
+                        fileName: "src/components/all-show-view/all-show-view.jsx",
+                        lineNumber: 48
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
+                            className: "d-flex align-items-center",
+                            __source: {
+                                fileName: "src/components/all-show-view/all-show-view.jsx",
+                                lineNumber: 49
+                            },
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
+                                __source: {
+                                    fileName: "src/components/all-show-view/all-show-view.jsx",
+                                    lineNumber: 50
+                                },
+                                __self: this,
+                                children: [
+                                    "Search Results (",
+                                    filteredMovies.length,
+                                    ")"
+                                ]
+                            })
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
+                            __source: {
+                                fileName: "src/components/all-show-view/all-show-view.jsx",
+                                lineNumber: 52
+                            },
+                            __self: this,
+                            children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                                    md: 3,
+                                    __source: {
+                                        fileName: "src/components/all-show-view/all-show-view.jsx",
+                                        lineNumber: 54
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                                        movie: m,
+                                        onMovieClick: ()=>handleOnItemClick(m._id)
+                                        ,
+                                        __source: {
+                                            fileName: "src/components/all-show-view/all-show-view.jsx",
+                                            lineNumber: 55
+                                        },
+                                        __self: this
+                                    })
+                                }, m._id)
+                            )
+                        })
+                    ]
+                })
+            }),
+            visibilityFilter === '' && /*#__PURE__*/ _jsxRuntime.jsx("div", {
+                className: "filtered",
+                __source: {
+                    fileName: "src/components/all-show-view/all-show-view.jsx",
+                    lineNumber: 66
+                },
+                __self: this,
+                children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                    className: "show-section",
+                    __source: {
+                        fileName: "src/components/all-show-view/all-show-view.jsx",
+                        lineNumber: 67
+                    },
+                    __self: this,
+                    children: [
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
+                            className: "d-flex align-items-center",
+                            __source: {
+                                fileName: "src/components/all-show-view/all-show-view.jsx",
+                                lineNumber: 68
+                            },
+                            __self: this,
+                            children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
+                                __source: {
+                                    fileName: "src/components/all-show-view/all-show-view.jsx",
+                                    lineNumber: 69
+                                },
+                                __self: this,
+                                children: [
+                                    "All Shows (",
+                                    movies.length,
+                                    ")"
+                                ]
+                            })
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
+                            __source: {
+                                fileName: "src/components/all-show-view/all-show-view.jsx",
+                                lineNumber: 71
+                            },
+                            __self: this,
+                            children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
+                                    md: 3,
+                                    __source: {
+                                        fileName: "src/components/all-show-view/all-show-view.jsx",
+                                        lineNumber: 73
+                                    },
+                                    __self: this,
+                                    children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
+                                        movie: m,
+                                        onMovieClick: ()=>handleOnItemClick(m._id)
+                                        ,
+                                        __source: {
+                                            fileName: "src/components/all-show-view/all-show-view.jsx",
+                                            lineNumber: 74
+                                        },
+                                        __self: this
+                                    })
+                                }, m._id)
+                            )
+                        })
+                    ]
+                })
+            })
+        ]
+    }));
+}
+_s(AllShows, "9cZfZ04734qoCGIctmKX7+sX6eU=", false, function() {
+    return [_reactRouterDom.useHistory];
+});
+_c = AllShows;
+exports.default = _reactRedux.connect(mapStateToProps)(AllShows);
+var _c;
+$RefreshReg$(_c, "AllShows");
+
+  $parcel$ReactRefreshHelpers$f160.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l"}],"jUTZ8":[function() {},{}],"4d0QS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes
