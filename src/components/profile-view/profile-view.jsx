@@ -18,11 +18,8 @@ export class ProfileView extends React.Component {
     this.state = {
       username: '',
       password: '',
-      email: '',
-      birthday: '',
       usernameErr: '',
       passwordErr: '',
-      emailErr: '',
       editAccount: false,
       deleteConfirm: false,
     };
@@ -45,8 +42,6 @@ export class ProfileView extends React.Component {
       .then((response) => {
         this.setState({
           username: response.data.Username,
-          email: response.data.Email,
-          birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies,
         });
       })
@@ -68,13 +63,6 @@ export class ProfileView extends React.Component {
     return `${date.substr(5, 2)}/${date.substr(8, 2)}/${date.substr(0, 4)}`;
   }
 
-  //identifting if email address is valid before updating
-  validateEmail(email) {
-    return email.match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  }
-
   //validating new user account info to clean up inputes
   validate() {
     let isReq = true;
@@ -93,13 +81,6 @@ export class ProfileView extends React.Component {
     } else {
       this.setErr('passwordErr', '');
     }
-    if (this.state.email && !this.validateEmail(this.state.email)) {
-      this.setErr('emailErr', ' Must use a valid Email Address');
-      isReq = false;
-    } else {
-      this.setErr('emailErr', '');
-    }
-
     return isReq;
   }
 
@@ -177,18 +158,6 @@ export class ProfileView extends React.Component {
     });
   }
 
-  setEmail(value) {
-    this.setState({
-      email: value,
-    });
-  }
-
-  setBirthday(value) {
-    this.setState({
-      birthday: value,
-    });
-  }
-
   //end user state updates
 
   //trying to set validation errors
@@ -224,8 +193,6 @@ export class ProfileView extends React.Component {
           {
             Username: this.state.username,
             Password: this.state.password,
-            Email: this.state.email,
-            Birthday: this.state.birthday,
           },
 
           { headers: { Authorization: `Bearer ${token}` } }
@@ -234,8 +201,6 @@ export class ProfileView extends React.Component {
           this.setState({
             username: response.data.Username,
             password: response.data.Password,
-            email: response.data.Email,
-            birthday: response.data.Birthday,
           });
           localStorage.setItem('user', this.state.username);
           alert('profile updated successfully!');
@@ -266,7 +231,7 @@ export class ProfileView extends React.Component {
 
   render() {
     const { history } = this.props;
-    const { username, email, birthday, usernameErr, passwordErr, emailErr } =
+    const { username, email, birthday, usernameErr, passwordErr} =
       this.state;
 
     return (
@@ -277,8 +242,6 @@ export class ProfileView extends React.Component {
           <div className="user-info">
             <h4>User Information</h4>
             <p>Username: {username}</p>
-            <p>Email: {email}</p>
-            <p>Birthday: {this.getFormattedDate(birthday)}</p>
             <Row>
               <Col md={6}>
                 <Button
@@ -312,8 +275,6 @@ export class ProfileView extends React.Component {
                   e,
                   this.Username,
                   this.Password,
-                  this.Email,
-                  this.Birthday
                 )
               }
             >
@@ -337,23 +298,6 @@ export class ProfileView extends React.Component {
                   onChange={(e) => this.setPassword(e.target.value)}
                 />
                 {passwordErr && <p>{passwordErr}</p>}
-              </Form.Group>
-              <Form.Group controlId="regEmail">
-                <Form.Label>Email:</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="Email"
-                  onChange={(e) => this.setEmail(e.target.value)}
-                />
-                {emailErr && <p>{emailErr}</p>}
-              </Form.Group>
-              <Form.Group controlId="regBirthday">
-                <Form.Label>Birthday:</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="Birthday"
-                  onChange={(e) => this.setBirthday(e.target.value)}
-                />
               </Form.Group>
               <Button
                 className="register-button"

@@ -3,13 +3,12 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import Slider from 'react-slick';
-
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
 
 import '../../../node_modules/swiper/swiper.scss';
 import '../../../node_modules/swiper/modules/free-mode/free-mode.scss';
 import '../../../node_modules/swiper/modules/pagination/pagination.scss';
+
 import { FreeMode, Pagination } from 'swiper';
 
 import { connect } from 'react-redux';
@@ -21,9 +20,6 @@ import MovieCard from '../movie-card/movie-card';
 
 //styles for filters
 import './movies-list.scss';
-
-import '../../../node_modules/slick-carousel/slick/slick.css';
-import '../../../node_modules/slick-carousel/slick/slick-theme.css';
 
 //mapping filter and favorites to props ma
 const mapStateToProps = (state) => {
@@ -45,28 +41,6 @@ const mapStateToProps = (state) => {
     mostLiked,
     recommended,
   };
-};
-
-//settings for the slider
-let sliderSettings = {
-  dots: false,
-  infinite: false,
-  rows: 1,
-  speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 1,
-  swipeToSlide: true,
-  responsive: [
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        infinite: false,
-        dots: false,
-      },
-    },
-  ],
 };
 
 function MoviesList(props) {
@@ -125,7 +99,7 @@ function MoviesList(props) {
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
   }
-
+  
   // if (!movies) {
   //   return <div className="main-view" />;
   // }
@@ -169,6 +143,16 @@ function MoviesList(props) {
                 }}
                 modules={[FreeMode, Pagination]}
                 className="RecoSwiper"
+                breakpoints={{
+                  425: {
+                    slidesPerView: 5,
+                    spaceBetween: 0,
+                  },
+                  300: {
+                    slidesPerView: 4,
+                    spaceBetween: 0,
+                  },
+                }}
               >
                 {recommendedDisplay.map((m) => (
                   <SwiperSlide key={m._id}>
@@ -199,6 +183,16 @@ function MoviesList(props) {
                 }}
                 modules={[FreeMode, Pagination]}
                 className="LikeSwiper"
+                breakpoints={{
+                  425: {
+                    slidesPerView: 5,
+                    spaceBetween: 0,
+                  },
+                  300: {
+                    slidesPerView: 4,
+                    spaceBetween: 0,
+                  },
+                }}
               >
                 {mostLikedDisplay.map((m) => (
                   <SwiperSlide key={m._id}>
@@ -228,7 +222,17 @@ function MoviesList(props) {
                   dynamicMainBullets: 5,
                 }}
                 modules={[FreeMode, Pagination]}
-                className="LikeSwiper"
+                className="TrendSwiper"
+                breakpoints={{
+                  425: {
+                    slidesPerView: 5,
+                    spaceBetween: 0,
+                  },
+                  300: {
+                    slidesPerView: 4,
+                    spaceBetween: 0,
+                  },
+                }}
               >
                 {trendingDisplay.map((m) => (
                   <SwiperSlide key={m._id}>
