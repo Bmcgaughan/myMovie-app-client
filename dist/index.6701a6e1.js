@@ -48184,7 +48184,9 @@ function MoviesList(props) {
                                     dynamicBullets: true,
                                     dynamicMainBullets: 5
                                 },
-                                modules: [_swiper.FreeMode, _swiper.Pagination],
+                                preloadImages: false,
+                                lazy: true,
+                                modules: [_swiper.FreeMode, _swiper.Pagination, _swiper.Lazy],
                                 className: "RecoSwiper",
                                 breakpoints: {
                                     425: {
@@ -48204,14 +48206,14 @@ function MoviesList(props) {
                                 children: recommendedDisplay.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_swiperReactJs.SwiperSlide, {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 160
+                                            lineNumber: 162
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
                                             className: "mcard",
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 161
+                                                lineNumber: 163
                                             },
                                             __self: this,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48220,7 +48222,7 @@ function MoviesList(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                                    lineNumber: 162
+                                                    lineNumber: 164
                                                 },
                                                 __self: this
                                             })
@@ -48234,7 +48236,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 173
+                            lineNumber: 175
                         },
                         __self: this,
                         children: [
@@ -48242,13 +48244,13 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 174
+                                    lineNumber: 176
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 175
+                                        lineNumber: 177
                                     },
                                     __self: this,
                                     children: "Other People Like:"
@@ -48263,7 +48265,9 @@ function MoviesList(props) {
                                     dynamicBullets: true,
                                     dynamicMainBullets: 5
                                 },
-                                modules: [_swiper.FreeMode, _swiper.Pagination],
+                                preloadImages: false,
+                                lazy: true,
+                                modules: [_swiper.FreeMode, _swiper.Pagination, _swiper.Lazy],
                                 className: "LikeSwiper",
                                 breakpoints: {
                                     425: {
@@ -48277,20 +48281,20 @@ function MoviesList(props) {
                                 },
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 177
+                                    lineNumber: 179
                                 },
                                 __self: this,
                                 children: mostLikedDisplay.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_swiperReactJs.SwiperSlide, {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 200
+                                            lineNumber: 204
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
                                             className: "mcard",
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 201
+                                                lineNumber: 205
                                             },
                                             __self: this,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48299,7 +48303,7 @@ function MoviesList(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                                    lineNumber: 202
+                                                    lineNumber: 206
                                                 },
                                                 __self: this
                                             })
@@ -48313,7 +48317,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 213
+                            lineNumber: 217
                         },
                         __self: this,
                         children: [
@@ -48321,13 +48325,13 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 214
+                                    lineNumber: 218
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 215
+                                        lineNumber: 219
                                     },
                                     __self: this,
                                     children: "Trending This Week:"
@@ -48342,7 +48346,9 @@ function MoviesList(props) {
                                     dynamicBullets: true,
                                     dynamicMainBullets: 5
                                 },
-                                modules: [_swiper.FreeMode, _swiper.Pagination],
+                                preloadImages: false,
+                                lazy: true,
+                                modules: [_swiper.FreeMode, _swiper.Pagination, _swiper.Lazy],
                                 className: "TrendSwiper",
                                 breakpoints: {
                                     425: {
@@ -48356,20 +48362,20 @@ function MoviesList(props) {
                                 },
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 217
+                                    lineNumber: 221
                                 },
                                 __self: this,
                                 children: trendingDisplay.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_swiperReactJs.SwiperSlide, {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 240
+                                            lineNumber: 246
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
                                             className: "mcard",
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 241
+                                                lineNumber: 247
                                             },
                                             __self: this,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48378,7 +48384,7 @@ function MoviesList(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                                    lineNumber: 242
+                                                    lineNumber: 248
                                                 },
                                                 __self: this
                                             })

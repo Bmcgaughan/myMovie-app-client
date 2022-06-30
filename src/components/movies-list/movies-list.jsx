@@ -9,7 +9,7 @@ import '../../../node_modules/swiper/swiper.scss';
 import '../../../node_modules/swiper/modules/free-mode/free-mode.scss';
 import '../../../node_modules/swiper/modules/pagination/pagination.scss';
 
-import { FreeMode, Pagination } from 'swiper';
+import { FreeMode, Pagination, Lazy } from 'swiper';
 
 import { connect } from 'react-redux';
 
@@ -143,7 +143,9 @@ function MoviesList(props) {
                   dynamicBullets: true,
                   dynamicMainBullets: 5,
                 }}
-                modules={[FreeMode, Pagination]}
+                preloadImages={false}
+                lazy={true}
+                modules={[FreeMode, Pagination, Lazy]}
                 className="RecoSwiper"
                 breakpoints={{
                   425: {
@@ -183,7 +185,9 @@ function MoviesList(props) {
                   dynamicBullets: true,
                   dynamicMainBullets: 5,
                 }}
-                modules={[FreeMode, Pagination]}
+                preloadImages={false}
+                lazy={true}
+                modules={[FreeMode, Pagination, Lazy]}
                 className="LikeSwiper"
                 breakpoints={{
                   425: {
@@ -223,7 +227,9 @@ function MoviesList(props) {
                   dynamicBullets: true,
                   dynamicMainBullets: 5,
                 }}
-                modules={[FreeMode, Pagination]}
+                preloadImages={false}
+                lazy={true}
+                modules={[FreeMode, Pagination, Lazy]}
                 className="TrendSwiper"
                 breakpoints={{
                   425: {
