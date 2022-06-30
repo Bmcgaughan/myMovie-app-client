@@ -1,8 +1,3 @@
-.search-wrapper {
-  height: 100vh;
-  width: 100%;
-}
-
 .search-wrapper h3,
 p {
   color: white;
@@ -17,6 +12,11 @@ p {
   width: 25%;
 }
 
+.show-header h3 {
+  padding-left: 15px;
+  
+}
+
 .search-results {
-    margin-top: 10px;
+  margin-top: 10px;
 }

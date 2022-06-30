@@ -17,6 +17,7 @@ import { Row, Col } from 'react-bootstrap';
 
 //components to import and render
 import MovieCard from '../movie-card/movie-card';
+import ShowSearch from '../show-search-view/show-search-view';
 
 //styles for filters
 import './movies-list.scss';
@@ -99,14 +100,15 @@ function MoviesList(props) {
       m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
   }
-  
+
   // if (!movies) {
   //   return <div className="main-view" />;
   // }
 
   return (
     <div className="shows-wrapper">
-      {visibilityFilter != '' && (
+      {visibilityFilter != '' && filteredMovies.length === 0 && <ShowSearch />}
+      {visibilityFilter != '' && filteredMovies.length != 0 && (
         <div className="filtered">
           <div className="show-section">
             <Row className="d-flex align-items-center">

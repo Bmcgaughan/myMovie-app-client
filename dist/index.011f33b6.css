@@ -1384,14 +1384,6 @@ button.swiper-pagination-bullet {
   transition-timing-function: ease-out;
   margin: 0 auto;
 }
-.show-header h3 {
-  padding-left: 15px;
-}
-.search-wrapper {
-  height: 100vh;
-  width: 100%;
-}
-
 .search-wrapper h3,
 p {
   color: white;
@@ -1406,7 +1398,14 @@ p {
   width: 25%;
 }
 
+.show-header h3 {
+  padding-left: 15px;
+}
+
 .search-results {
   margin-top: 10px;
+}
+.show-header h3 {
+  padding-left: 15px;
 }
 /*# sourceMappingURL=index.011f33b6.css.map */

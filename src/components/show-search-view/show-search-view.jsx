@@ -1,28 +1,28 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
 import MovieCard from '../movie-card/movie-card';
 import LoadingSpinner from '../spinner/spinner';
 
 import './show-search-view.scss';
+import axios from 'axios';
 
 const mapStateToProps = (state) => {
-  const { visibilityFilter, movies } = state;
+  const { visibilityFilter } = state;
   return {
     visibilityFilter,
-    movies,
   };
 };
 
 function ShowSearch(props) {
   const [searching, setSearching] = useState(false);
-  const [searchResults, setResults] = useState();
+  const [searchResults, setResults] = useState([]);
 
-  const { movies } = props;
+  const { visibilityFilter } = props;
 
   const history = useHistory();
 
@@ -33,7 +33,20 @@ function ShowSearch(props) {
 
   const runSearch = () => {
     setSearching(true);
-    console.log('ran');
+    token = localStorage.getItem('token');
+    const query = encodeURI(visibilityFilter);
+    axios
+      .get(`https://whatdoiwatch.herokuapp.com/search/${query}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setResults(response.data.processedTV);
+        setSearching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setSearching(false);
+      });
   };
 
   return (
@@ -49,13 +62,20 @@ function ShowSearch(props) {
       </Button>
 
       {searching && <LoadingSpinner />}
-      {!searching && searchResults && (
+      {!searching && searchResults.length === 0 && (
         <div className="show-section search-results">
           <Row className="d-flex align-items-center show-header">
-            <h3>Results: ({movies.length})</h3>
+            <h3>Nothing found on TMDB...</h3>
+          </Row>
+        </div>
+      )}
+      {!searching && searchResults.length > 0 && (
+        <div className="show-section search-results">
+          <Row className="d-flex align-items-center show-header">
+            <h3>Results: ({searchResults.length})</h3>
           </Row>
           <Row>
-            {movies.map((m) => (
+            {searchResults.map((m) => (
               <Col md={3} key={m._id}>
                 <MovieCard
                   movie={m}
