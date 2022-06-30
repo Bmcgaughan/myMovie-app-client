@@ -2,6 +2,10 @@
   bottom: 0px !important;
 }
 
+.RecoSwiper {
+  height: 446px;
+}
+
 .swiper-pagination-bullet {
   background: white !important;
   opacity: 100 !important;
@@ -15,7 +19,7 @@
 }
 
 .show-section {
-  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .show-section {
@@ -77,7 +81,11 @@
   margin-top: 10px;
 }
 
-// @media (max-width: 1024px) {
+@media (max-width: 1024px) {
+  .RecoSwiper {
+    height: auto;
+  }
+}
 //   .slick-prev {
 //     left: -30px !important;
 //   }

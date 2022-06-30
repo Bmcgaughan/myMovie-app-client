@@ -939,6 +939,10 @@ a {
   bottom: 0px !important;
 }
 
+.RecoSwiper {
+  height: 446px;
+}
+
 .swiper-pagination-bullet {
   background: white !important;
   opacity: 100 !important;
@@ -952,7 +956,7 @@ a {
 }
 
 .show-section {
-  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .show-section {
@@ -1015,6 +1019,11 @@ a {
   margin-top: 10px;
 }
 
+@media (max-width: 1024px) {
+  .RecoSwiper {
+    height: auto;
+  }
+}
 @media (max-width: 425px) {
   .swiper-pagination-bullet {
     width: 5px !important;
