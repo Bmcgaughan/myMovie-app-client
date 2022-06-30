@@ -4,8 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
+import './all-show-view.scss';
+
 //components to import and render
 import MovieCard from '../movie-card/movie-card';
+import ShowSearch from '../show-search-view/show-search-view';
 
 const mapStateToProps = (state) => {
   const { movies, visibilityFilter } = state;
@@ -43,10 +46,11 @@ function AllShows(props) {
 
   return (
     <div className="shows-wrapper">
-      {visibilityFilter != '' && (
+      {visibilityFilter != '' && filteredMovies.length === 0 && <ShowSearch />}
+      {visibilityFilter != '' && filteredMovies.length > 0 && (
         <div className="filtered">
           <div className="show-section">
-            <Row className="d-flex align-items-center">
+            <Row className="d-flex align-items-center show-header">
               <h3>Search Results ({filteredMovies.length})</h3>
             </Row>
             <Row>
@@ -65,7 +69,7 @@ function AllShows(props) {
       {visibilityFilter === '' && (
         <div className="filtered">
           <div className="show-section">
-            <Row className="d-flex align-items-center">
+            <Row className="d-flex align-items-center show-header">
               <h3>All Shows ({movies.length})</h3>
             </Row>
             <Row>

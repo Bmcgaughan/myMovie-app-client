@@ -62,7 +62,8 @@ function Menubar(props) {
       variant="light"
     >
       <Nav>
-        {location.pathname === '/' && props.user ? (
+        {location.pathname === '/' ||
+        (location.pathname === '/allshows' && props.user) ? (
           <div className="search-expand d-flex align-items-center">
             <a
               className="search-link"
