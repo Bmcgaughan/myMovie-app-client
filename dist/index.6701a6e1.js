@@ -25485,6 +25485,12 @@ class MainView extends _reactDefault.default.Component {
             registered
         });
     }
+    checkDetails(id) {
+        console.log(this.props.movies);
+        let movie = this.props.movies.find((m)=>m._id === id
+        );
+        return movie;
+    }
     render() {
         let { user , movies , favorites  } = this.props;
         let { trending  } = this.state;
@@ -25492,7 +25498,7 @@ class MainView extends _reactDefault.default.Component {
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 153
+                lineNumber: 159
             },
             __self: this,
             children: [
@@ -25500,14 +25506,14 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 154
+                        lineNumber: 160
                     },
                     __self: this
                 }),
                 /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Container, {
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 155
+                        lineNumber: 161
                     },
                     __self: this,
                     children: [
@@ -25529,7 +25535,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 156
+                                lineNumber: 162
                             },
                             __self: this
                         }),
@@ -25549,7 +25555,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 170
+                                lineNumber: 176
                             },
                             __self: this
                         }),
@@ -25557,7 +25563,7 @@ class MainView extends _reactDefault.default.Component {
                             className: "main-view justify-content-sm-center",
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 184
+                                lineNumber: 190
                             },
                             __self: this,
                             children: [
@@ -25572,7 +25578,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 185
+                                        lineNumber: 191
                                     },
                                     __self: this
                                 }),
@@ -25592,15 +25598,15 @@ class MainView extends _reactDefault.default.Component {
                                         return(/*#__PURE__*/ _jsxRuntime.jsx(_colDefault.default, {
                                             md: 8,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieViewDefault.default, {
-                                                movie: movies.find((m)=>m._id === match.params.movieId
-                                                ),
+                                                // movie={movies.find((m) => m._id === match.params.movieId)}
+                                                movie: this.checkDetails(match.params.movieId),
                                                 onBackClick: ()=>history.goBack()
                                             })
                                         }));
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 193
+                                        lineNumber: 199
                                     },
                                     __self: this
                                 }),
@@ -25629,7 +25635,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 219
+                                        lineNumber: 226
                                     },
                                     __self: this
                                 }),
@@ -25658,7 +25664,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 248
+                                        lineNumber: 255
                                     },
                                     __self: this
                                 }),
@@ -25685,7 +25691,7 @@ class MainView extends _reactDefault.default.Component {
                                     },
                                     __source: {
                                         fileName: "src/components/main-view/main-view.jsx",
-                                        lineNumber: 274
+                                        lineNumber: 281
                                     },
                                     __self: this
                                 })
@@ -35377,6 +35383,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "SET_MOVIES", ()=>SET_MOVIES
 );
+parcelHelpers.export(exports, "ADD_MOVIES", ()=>ADD_MOVIES
+);
 parcelHelpers.export(exports, "SET_FILTER", ()=>SET_FILTER
 );
 parcelHelpers.export(exports, "SET_FAVORITE", ()=>SET_FAVORITE
@@ -35401,6 +35409,8 @@ parcelHelpers.export(exports, "SET_TRENDING", ()=>SET_TRENDING
 );
 parcelHelpers.export(exports, "setMovies", ()=>setMovies
 );
+parcelHelpers.export(exports, "addMovies", ()=>addMovies
+);
 parcelHelpers.export(exports, "setFilter", ()=>setFilter
 );
 parcelHelpers.export(exports, "setFavorites", ()=>setFavorites
@@ -35424,6 +35434,7 @@ parcelHelpers.export(exports, "setMovieSort", ()=>setMovieSort
 parcelHelpers.export(exports, "toggleMovieSort", ()=>toggleMovieSort
 );
 const SET_MOVIES = 'SET_MOVIES';
+const ADD_MOVIES = 'ADD_MOVIES';
 const SET_FILTER = 'SET_FILTER';
 const SET_FAVORITE = 'SET_FAVORITE';
 const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
@@ -35438,6 +35449,12 @@ const SET_TRENDING = 'SET_TRENDING';
 function setMovies(value) {
     return {
         type: SET_MOVIES,
+        value
+    };
+}
+function addMovies(value) {
+    return {
+        type: ADD_MOVIES,
         value
     };
 }
@@ -48073,9 +48090,10 @@ function MoviesList(props) {
         __self: this,
         children: [
             visibilityFilter != '' && filteredMovies.length === 0 && /*#__PURE__*/ _jsxRuntime.jsx(_showSearchViewDefault.default, {
+                title: 'No Results in Local DB',
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 110
+                    lineNumber: 111
                 },
                 __self: this
             }),
@@ -48083,14 +48101,14 @@ function MoviesList(props) {
                 className: "filtered",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 112
+                    lineNumber: 114
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                     className: "show-section",
                     __source: {
                         fileName: "src/components/movies-list/movies-list.jsx",
-                        lineNumber: 113
+                        lineNumber: 115
                     },
                     __self: this,
                     children: [
@@ -48098,13 +48116,13 @@ function MoviesList(props) {
                             className: "d-flex align-items-center",
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 114
+                                lineNumber: 116
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 115
+                                    lineNumber: 117
                                 },
                                 __self: this,
                                 children: [
@@ -48117,14 +48135,14 @@ function MoviesList(props) {
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                             __source: {
                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                lineNumber: 117
+                                lineNumber: 119
                             },
                             __self: this,
                             children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                     md: 3,
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 119
+                                        lineNumber: 121
                                     },
                                     __self: this,
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48133,12 +48151,38 @@ function MoviesList(props) {
                                         ,
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 120
+                                            lineNumber: 122
                                         },
                                         __self: this
                                     })
                                 }, m._id)
                             )
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "add-search",
+                            __source: {
+                                fileName: "src/components/movies-list/movies-list.jsx",
+                                lineNumber: 129
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx("h3", {
+                                    __source: {
+                                        fileName: "src/components/movies-list/movies-list.jsx",
+                                        lineNumber: 130
+                                    },
+                                    __self: this,
+                                    children: "Not What You're Looking For?"
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_showSearchViewDefault.default, {
+                                    title: '',
+                                    __source: {
+                                        fileName: "src/components/movies-list/movies-list.jsx",
+                                        lineNumber: 131
+                                    },
+                                    __self: this
+                                })
+                            ]
                         })
                     ]
                 })
@@ -48147,7 +48191,7 @@ function MoviesList(props) {
                 className: "unfilter",
                 __source: {
                     fileName: "src/components/movies-list/movies-list.jsx",
-                    lineNumber: 131
+                    lineNumber: 137
                 },
                 __self: this,
                 children: [
@@ -48155,7 +48199,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 133
+                            lineNumber: 139
                         },
                         __self: this,
                         children: [
@@ -48163,13 +48207,13 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 134
+                                    lineNumber: 140
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 135
+                                        lineNumber: 141
                                     },
                                     __self: this,
                                     children: "Recommended for You:"
@@ -48200,20 +48244,20 @@ function MoviesList(props) {
                                 },
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 137
+                                    lineNumber: 143
                                 },
                                 __self: this,
                                 children: recommendedDisplay.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_swiperReactJs.SwiperSlide, {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 162
+                                            lineNumber: 168
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
                                             className: "mcard",
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 163
+                                                lineNumber: 169
                                             },
                                             __self: this,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48222,7 +48266,7 @@ function MoviesList(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                                    lineNumber: 164
+                                                    lineNumber: 170
                                                 },
                                                 __self: this
                                             })
@@ -48236,7 +48280,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 175
+                            lineNumber: 181
                         },
                         __self: this,
                         children: [
@@ -48244,13 +48288,13 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 176
+                                    lineNumber: 182
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 177
+                                        lineNumber: 183
                                     },
                                     __self: this,
                                     children: "Other People Like:"
@@ -48281,20 +48325,20 @@ function MoviesList(props) {
                                 },
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 179
+                                    lineNumber: 185
                                 },
                                 __self: this,
                                 children: mostLikedDisplay.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_swiperReactJs.SwiperSlide, {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 204
+                                            lineNumber: 210
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
                                             className: "mcard",
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 205
+                                                lineNumber: 211
                                             },
                                             __self: this,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48303,7 +48347,7 @@ function MoviesList(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                                    lineNumber: 206
+                                                    lineNumber: 212
                                                 },
                                                 __self: this
                                             })
@@ -48317,7 +48361,7 @@ function MoviesList(props) {
                         className: "show-section",
                         __source: {
                             fileName: "src/components/movies-list/movies-list.jsx",
-                            lineNumber: 217
+                            lineNumber: 223
                         },
                         __self: this,
                         children: [
@@ -48325,13 +48369,13 @@ function MoviesList(props) {
                                 className: "d-flex align-items-center",
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 218
+                                    lineNumber: 224
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                                     __source: {
                                         fileName: "src/components/movies-list/movies-list.jsx",
-                                        lineNumber: 219
+                                        lineNumber: 225
                                     },
                                     __self: this,
                                     children: "Trending This Week:"
@@ -48362,20 +48406,20 @@ function MoviesList(props) {
                                 },
                                 __source: {
                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                    lineNumber: 221
+                                    lineNumber: 227
                                 },
                                 __self: this,
                                 children: trendingDisplay.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_swiperReactJs.SwiperSlide, {
                                         __source: {
                                             fileName: "src/components/movies-list/movies-list.jsx",
-                                            lineNumber: 246
+                                            lineNumber: 252
                                         },
                                         __self: this,
                                         children: /*#__PURE__*/ _jsxRuntime.jsx("div", {
                                             className: "mcard",
                                             __source: {
                                                 fileName: "src/components/movies-list/movies-list.jsx",
-                                                lineNumber: 247
+                                                lineNumber: 253
                                             },
                                             __self: this,
                                             children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -48384,7 +48428,7 @@ function MoviesList(props) {
                                                 ,
                                                 __source: {
                                                     fileName: "src/components/movies-list/movies-list.jsx",
-                                                    lineNumber: 248
+                                                    lineNumber: 254
                                                 },
                                                 __self: this
                                             })
@@ -58058,18 +58102,21 @@ var _spinnerDefault = parcelHelpers.interopDefault(_spinner);
 var _showSearchViewScss = require("./show-search-view.scss");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _actions = require("../../actions/actions");
 var _s = $RefreshSig$();
 const mapStateToProps = (state)=>{
-    const { visibilityFilter  } = state;
+    const { visibilityFilter , movies  } = state;
     return {
-        visibilityFilter
+        visibilityFilter,
+        movies
     };
 };
 function ShowSearch(props) {
     _s();
     const [searching, setSearching] = _react.useState(false);
     const [searchResults, setResults] = _react.useState([]);
-    const { visibilityFilter  } = props;
+    const [resultCount, setResultCount] = _react.useState();
+    const { visibilityFilter , title  } = props;
     const history = _reactRouterDom.useHistory();
     const handleOnItemClick = (param)=>(e)=>{
             e.stopPropagation();
@@ -58085,33 +58132,38 @@ function ShowSearch(props) {
                 Authorization: `Bearer ${token}`
             }
         }).then((response)=>{
-            setResults(response.data.processedTV);
+            setResultCount(response.data.processedTV.length);
+            if (response.data.processedTV.length > 0) {
+                setResults(response.data.processedTV);
+                props.addMovies(response.data.processedTV);
+            }
             setSearching(false);
         }).catch((error)=>{
             console.log(error);
             setSearching(false);
+            setResultCount(0);
         });
     };
     return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
         className: "search-wrapper",
         __source: {
             fileName: "src/components/show-search-view/show-search-view.jsx",
-            lineNumber: 53
+            lineNumber: 62
         },
         __self: this,
         children: [
             /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                 __source: {
                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                    lineNumber: 54
+                    lineNumber: 63
                 },
                 __self: this,
-                children: "No Results in local Database"
+                children: props.title
             }),
             /*#__PURE__*/ _jsxRuntime.jsxs("p", {
                 __source: {
                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                    lineNumber: 55
+                    lineNumber: 64
                 },
                 __self: this,
                 children: [
@@ -58125,7 +58177,7 @@ function ShowSearch(props) {
                 onClick: runSearch,
                 __source: {
                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                    lineNumber: 56
+                    lineNumber: 65
                 },
                 __self: this,
                 children: "Search"
@@ -58133,31 +58185,31 @@ function ShowSearch(props) {
             searching && /*#__PURE__*/ _jsxRuntime.jsx(_spinnerDefault.default, {
                 __source: {
                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                    lineNumber: 64
+                    lineNumber: 73
                 },
                 __self: this
             }),
-            !searching && searchResults.length === 0 && /*#__PURE__*/ _jsxRuntime.jsx("div", {
+            !searching && resultCount === 0 && /*#__PURE__*/ _jsxRuntime.jsx("div", {
                 className: "show-section search-results",
                 __source: {
                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                    lineNumber: 66
+                    lineNumber: 75
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                     className: "d-flex align-items-center show-header",
                     __source: {
                         fileName: "src/components/show-search-view/show-search-view.jsx",
-                        lineNumber: 67
+                        lineNumber: 76
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("h3", {
                         __source: {
                             fileName: "src/components/show-search-view/show-search-view.jsx",
-                            lineNumber: 68
+                            lineNumber: 77
                         },
                         __self: this,
-                        children: "Nothing found on TMDB..."
+                        children: "Nothing additional found on TMDB..."
                     })
                 })
             }),
@@ -58165,7 +58217,7 @@ function ShowSearch(props) {
                 className: "show-section search-results",
                 __source: {
                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                    lineNumber: 73
+                    lineNumber: 82
                 },
                 __self: this,
                 children: [
@@ -58173,13 +58225,13 @@ function ShowSearch(props) {
                         className: "d-flex align-items-center show-header",
                         __source: {
                             fileName: "src/components/show-search-view/show-search-view.jsx",
-                            lineNumber: 74
+                            lineNumber: 83
                         },
                         __self: this,
                         children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                             __source: {
                                 fileName: "src/components/show-search-view/show-search-view.jsx",
-                                lineNumber: 75
+                                lineNumber: 84
                             },
                             __self: this,
                             children: [
@@ -58192,14 +58244,14 @@ function ShowSearch(props) {
                     /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                         __source: {
                             fileName: "src/components/show-search-view/show-search-view.jsx",
-                            lineNumber: 77
+                            lineNumber: 86
                         },
                         __self: this,
                         children: searchResults.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                 md: 3,
                                 __source: {
                                     fileName: "src/components/show-search-view/show-search-view.jsx",
-                                    lineNumber: 79
+                                    lineNumber: 88
                                 },
                                 __self: this,
                                 children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -58208,7 +58260,7 @@ function ShowSearch(props) {
                                     ,
                                     __source: {
                                         fileName: "src/components/show-search-view/show-search-view.jsx",
-                                        lineNumber: 80
+                                        lineNumber: 89
                                     },
                                     __self: this
                                 })
@@ -58220,11 +58272,13 @@ function ShowSearch(props) {
         ]
     }));
 }
-_s(ShowSearch, "+1MdC0wJoaqcQfemq3DfIV2KLrY=", false, function() {
+_s(ShowSearch, "xZ+zydUDCaV+GBpV55TPURGfdXE=", false, function() {
     return [_reactRouterDom.useHistory];
 });
 _c = ShowSearch;
-exports.default = _reactRedux.connect(mapStateToProps)(ShowSearch);
+exports.default = _reactRedux.connect(mapStateToProps, {
+    addMovies: _actions.addMovies
+})(ShowSearch);
 var _c;
 $RefreshReg$(_c, "ShowSearch");
 
@@ -58233,7 +58287,7 @@ $RefreshReg$(_c, "ShowSearch");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","./show-search-view.scss":"9kCn6","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../spinner/spinner":"eZvtp","axios":"iYoWk"}],"9kCn6":[function() {},{}],"gg2Yk":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","./show-search-view.scss":"9kCn6","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","../spinner/spinner":"eZvtp","axios":"iYoWk","../../actions/actions":"1Ttfj"}],"9kCn6":[function() {},{}],"gg2Yk":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$f160 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -58248,6 +58302,7 @@ var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRouterDom = require("react-router-dom");
 var _reactRedux = require("react-redux");
 var _reactBootstrap = require("react-bootstrap");
+var _actions = require("../../actions/actions");
 var _allShowViewScss = require("./all-show-view.scss");
 //components to import and render
 var _movieCard = require("../movie-card/movie-card");
@@ -58282,14 +58337,15 @@ function AllShows(props) {
         className: "shows-wrapper",
         __source: {
             fileName: "src/components/all-show-view/all-show-view.jsx",
-            lineNumber: 48
+            lineNumber: 50
         },
         __self: this,
         children: [
             visibilityFilter != '' && filteredMovies.length === 0 && /*#__PURE__*/ _jsxRuntime.jsx(_showSearchViewDefault.default, {
+                title: 'No Results in Local DB',
                 __source: {
                     fileName: "src/components/all-show-view/all-show-view.jsx",
-                    lineNumber: 49
+                    lineNumber: 52
                 },
                 __self: this
             }),
@@ -58297,14 +58353,14 @@ function AllShows(props) {
                 className: "filtered",
                 __source: {
                     fileName: "src/components/all-show-view/all-show-view.jsx",
-                    lineNumber: 51
+                    lineNumber: 55
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                     className: "show-section",
                     __source: {
                         fileName: "src/components/all-show-view/all-show-view.jsx",
-                        lineNumber: 52
+                        lineNumber: 56
                     },
                     __self: this,
                     children: [
@@ -58312,13 +58368,13 @@ function AllShows(props) {
                             className: "d-flex align-items-center show-header",
                             __source: {
                                 fileName: "src/components/all-show-view/all-show-view.jsx",
-                                lineNumber: 53
+                                lineNumber: 57
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                 __source: {
                                     fileName: "src/components/all-show-view/all-show-view.jsx",
-                                    lineNumber: 54
+                                    lineNumber: 58
                                 },
                                 __self: this,
                                 children: [
@@ -58331,14 +58387,14 @@ function AllShows(props) {
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                             __source: {
                                 fileName: "src/components/all-show-view/all-show-view.jsx",
-                                lineNumber: 56
+                                lineNumber: 60
                             },
                             __self: this,
                             children: filteredMovies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                     md: 3,
                                     __source: {
                                         fileName: "src/components/all-show-view/all-show-view.jsx",
-                                        lineNumber: 58
+                                        lineNumber: 62
                                     },
                                     __self: this,
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -58347,12 +58403,38 @@ function AllShows(props) {
                                         ,
                                         __source: {
                                             fileName: "src/components/all-show-view/all-show-view.jsx",
-                                            lineNumber: 59
+                                            lineNumber: 63
                                         },
                                         __self: this
                                     })
                                 }, m._id)
                             )
+                        }),
+                        /*#__PURE__*/ _jsxRuntime.jsxs("div", {
+                            className: "add-search",
+                            __source: {
+                                fileName: "src/components/all-show-view/all-show-view.jsx",
+                                lineNumber: 70
+                            },
+                            __self: this,
+                            children: [
+                                /*#__PURE__*/ _jsxRuntime.jsx("h3", {
+                                    __source: {
+                                        fileName: "src/components/all-show-view/all-show-view.jsx",
+                                        lineNumber: 71
+                                    },
+                                    __self: this,
+                                    children: "Not What You're Looking For?"
+                                }),
+                                /*#__PURE__*/ _jsxRuntime.jsx(_showSearchViewDefault.default, {
+                                    title: '',
+                                    __source: {
+                                        fileName: "src/components/all-show-view/all-show-view.jsx",
+                                        lineNumber: 72
+                                    },
+                                    __self: this
+                                })
+                            ]
                         })
                     ]
                 })
@@ -58361,14 +58443,14 @@ function AllShows(props) {
                 className: "filtered",
                 __source: {
                     fileName: "src/components/all-show-view/all-show-view.jsx",
-                    lineNumber: 70
+                    lineNumber: 78
                 },
                 __self: this,
                 children: /*#__PURE__*/ _jsxRuntime.jsxs("div", {
                     className: "show-section",
                     __source: {
                         fileName: "src/components/all-show-view/all-show-view.jsx",
-                        lineNumber: 71
+                        lineNumber: 79
                     },
                     __self: this,
                     children: [
@@ -58376,13 +58458,13 @@ function AllShows(props) {
                             className: "d-flex align-items-center show-header",
                             __source: {
                                 fileName: "src/components/all-show-view/all-show-view.jsx",
-                                lineNumber: 72
+                                lineNumber: 80
                             },
                             __self: this,
                             children: /*#__PURE__*/ _jsxRuntime.jsxs("h3", {
                                 __source: {
                                     fileName: "src/components/all-show-view/all-show-view.jsx",
-                                    lineNumber: 73
+                                    lineNumber: 81
                                 },
                                 __self: this,
                                 children: [
@@ -58395,14 +58477,14 @@ function AllShows(props) {
                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
                             __source: {
                                 fileName: "src/components/all-show-view/all-show-view.jsx",
-                                lineNumber: 75
+                                lineNumber: 83
                             },
                             __self: this,
                             children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                     md: 3,
                                     __source: {
                                         fileName: "src/components/all-show-view/all-show-view.jsx",
-                                        lineNumber: 77
+                                        lineNumber: 85
                                     },
                                     __self: this,
                                     children: /*#__PURE__*/ _jsxRuntime.jsx(_movieCardDefault.default, {
@@ -58411,7 +58493,7 @@ function AllShows(props) {
                                         ,
                                         __source: {
                                             fileName: "src/components/all-show-view/all-show-view.jsx",
-                                            lineNumber: 78
+                                            lineNumber: 86
                                         },
                                         __self: this
                                     })
@@ -58428,7 +58510,9 @@ _s(AllShows, "9cZfZ04734qoCGIctmKX7+sX6eU=", false, function() {
     return [_reactRouterDom.useHistory];
 });
 _c = AllShows;
-exports.default = _reactRedux.connect(mapStateToProps)(AllShows);
+exports.default = _reactRedux.connect(mapStateToProps, {
+    setMovies: _actions.setMovies
+})(AllShows);
 var _c;
 $RefreshReg$(_c, "AllShows");
 
@@ -58437,7 +58521,7 @@ $RefreshReg$(_c, "AllShows");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","./all-show-view.scss":"4aPf5","../show-search-view/show-search-view":"93oDI"}],"4aPf5":[function() {},{}],"jUTZ8":[function() {},{}],"4d0QS":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","react-redux":"2L0if","react-bootstrap":"h2YVd","../movie-card/movie-card":"6EiBJ","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","./all-show-view.scss":"4aPf5","../show-search-view/show-search-view":"93oDI","../../actions/actions":"1Ttfj"}],"4aPf5":[function() {},{}],"jUTZ8":[function() {},{}],"4d0QS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "__DO_NOT_USE__ActionTypes", ()=>ActionTypes
@@ -59033,6 +59117,11 @@ function movies(state = [], action) {
     switch(action.type){
         case _actions.SET_MOVIES:
             return action.value;
+        case _actions.ADD_MOVIES:
+            return [
+                ...state,
+                ...action.value
+            ];
         default:
             return state;
     }

@@ -1,4 +1,5 @@
 export const SET_MOVIES = 'SET_MOVIES';
+export const ADD_MOVIES = 'ADD_MOVIES';
 export const SET_FILTER = 'SET_FILTER';
 export const SET_FAVORITE = 'SET_FAVORITE';
 export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
@@ -13,6 +14,10 @@ export const SET_TRENDING = 'SET_TRENDING';
 
 export function setMovies(value) {
   return { type: SET_MOVIES, value };
+}
+
+export function addMovies(value) {
+  return { type: ADD_MOVIES, value };
 }
 
 export function setFilter(value) {

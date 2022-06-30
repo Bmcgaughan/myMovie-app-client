@@ -11,18 +11,22 @@ import LoadingSpinner from '../spinner/spinner';
 import './show-search-view.scss';
 import axios from 'axios';
 
+import { addMovies } from '../../actions/actions';
+
 const mapStateToProps = (state) => {
-  const { visibilityFilter } = state;
+  const { visibilityFilter, movies } = state;
   return {
     visibilityFilter,
+    movies,
   };
 };
 
 function ShowSearch(props) {
   const [searching, setSearching] = useState(false);
   const [searchResults, setResults] = useState([]);
+  const [resultCount, setResultCount] = useState();
 
-  const { visibilityFilter } = props;
+  const { visibilityFilter, title } = props;
 
   const history = useHistory();
 
@@ -40,18 +44,23 @@ function ShowSearch(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setResults(response.data.processedTV);
+        setResultCount(response.data.processedTV.length);
+        if (response.data.processedTV.length > 0) {
+          setResults(response.data.processedTV);
+          props.addMovies(response.data.processedTV);
+        }
         setSearching(false);
       })
       .catch((error) => {
         console.log(error);
         setSearching(false);
+        setResultCount(0);
       });
   };
 
   return (
     <div className="search-wrapper">
-      <h3>No Results in local Database</h3>
+      <h3>{props.title}</h3>
       <p>Search TMDB Online for {props.visibilityFilter}</p>
       <Button
         className="dbsearch-button"
@@ -62,10 +71,10 @@ function ShowSearch(props) {
       </Button>
 
       {searching && <LoadingSpinner />}
-      {!searching && searchResults.length === 0 && (
+      {!searching && resultCount === 0 && (
         <div className="show-section search-results">
           <Row className="d-flex align-items-center show-header">
-            <h3>Nothing found on TMDB...</h3>
+            <h3>Nothing additional found on TMDB...</h3>
           </Row>
         </div>
       )}
@@ -90,4 +99,4 @@ function ShowSearch(props) {
   );
 }
 
-export default connect(mapStateToProps)(ShowSearch);
+export default connect(mapStateToProps, { addMovies })(ShowSearch);

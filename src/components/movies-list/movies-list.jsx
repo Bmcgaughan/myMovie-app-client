@@ -107,7 +107,9 @@ function MoviesList(props) {
 
   return (
     <div className="shows-wrapper">
-      {visibilityFilter != '' && filteredMovies.length === 0 && <ShowSearch />}
+      {visibilityFilter != '' && filteredMovies.length === 0 && (
+        <ShowSearch title={'No Results in Local DB'} />
+      )}
       {visibilityFilter != '' && filteredMovies.length != 0 && (
         <div className="filtered">
           <div className="show-section">
@@ -124,6 +126,10 @@ function MoviesList(props) {
                 </Col>
               ))}
             </Row>
+            <div className="add-search">
+              <h3>Not What You're Looking For?</h3>
+              <ShowSearch title={''} />
+            </div>
           </div>
         </div>
       )}

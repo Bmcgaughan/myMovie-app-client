@@ -1027,6 +1027,10 @@ a {
   justify-content: space-between;
 }
 
+.add-search {
+  margin-top: 10px;
+}
+
 @media (max-width: 1024px) {
   .slick-prev {
     left: -30px !important;
@@ -1407,5 +1411,9 @@ p {
 }
 .show-header h3 {
   padding-left: 15px;
+}
+
+.add-show {
+  margin-top: 10px;
 }
 /*# sourceMappingURL=index.011f33b6.css.map */

@@ -3,6 +3,7 @@ import {
   SET_FAVORITE,
   SET_FILTER,
   SET_MOVIES,
+  ADD_MOVIES,
   TOGGLE_FAVORITE,
   SET_USER,
   SET_MOV_SORT,
@@ -28,6 +29,8 @@ function movies(state = [], action) {
   switch (action.type) {
     case SET_MOVIES:
       return action.value;
+    case ADD_MOVIES:
+      return [...state, ...action.value];
     default:
       return state;
   }

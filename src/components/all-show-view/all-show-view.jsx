@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 
+import { setMovies } from '../../actions/actions';
+
 import './all-show-view.scss';
 
 //components to import and render
@@ -46,7 +48,9 @@ function AllShows(props) {
 
   return (
     <div className="shows-wrapper">
-      {visibilityFilter != '' && filteredMovies.length === 0 && <ShowSearch />}
+      {visibilityFilter != '' && filteredMovies.length === 0 && (
+        <ShowSearch title={'No Results in Local DB'} />
+      )}
       {visibilityFilter != '' && filteredMovies.length > 0 && (
         <div className="filtered">
           <div className="show-section">
@@ -63,6 +67,10 @@ function AllShows(props) {
                 </Col>
               ))}
             </Row>
+            <div className="add-search">
+              <h3>Not What You're Looking For?</h3>
+              <ShowSearch title={''} />
+            </div>
           </div>
         </div>
       )}
@@ -89,4 +97,4 @@ function AllShows(props) {
   );
 }
 
-export default connect(mapStateToProps)(AllShows);
+export default connect(mapStateToProps, { setMovies })(AllShows);
