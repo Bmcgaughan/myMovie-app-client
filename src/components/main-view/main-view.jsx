@@ -145,7 +145,6 @@ class MainView extends React.Component {
   }
 
   checkDetails(id) {
-    console.log(this.props.movies);
     let movie = this.props.movies.find((m) => m._id === id);
     return movie;
   }
@@ -214,8 +213,7 @@ class MainView extends React.Component {
                 return (
                   <Col md={8}>
                     <MovieView
-                      // movie={movies.find((m) => m._id === match.params.movieId)}
-                      movie={this.checkDetails(match.params.movieId)}
+                      movie={movies.find((m) => m._id === match.params.movieId)}
                       onBackClick={() => history.goBack()}
                     />
                   </Col>

@@ -67,6 +67,7 @@ class MovieView extends React.Component {
     }
     if (recommended.processedTV && recommended.processedTV.length > 0) {
       processedTV = [...recommended.processedTV];
+      this.props.setMovies(processedTV);
     }
 
     this.setState({
