@@ -743,6 +743,10 @@ body {
 .delete-account-button {
   align-self: end;
 }
+
+.modal-body p {
+  color: black;
+}
 html {
   min-height: 100vh;
   background-color: black;

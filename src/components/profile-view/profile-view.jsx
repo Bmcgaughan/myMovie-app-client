@@ -17,6 +17,7 @@ export class ProfileView extends React.Component {
     super();
     this.state = {
       username: '',
+      usernameToUpdate: '',
       password: '',
       usernameErr: '',
       passwordErr: '',
@@ -148,7 +149,7 @@ export class ProfileView extends React.Component {
   //methods for updating user info state during editing
   setUsername(value) {
     this.setState({
-      username: value,
+      usernameToUpdate: value,
     });
   }
 
@@ -185,7 +186,6 @@ export class ProfileView extends React.Component {
     const userName = localStorage.getItem('user');
     let token = localStorage.getItem('token');
     const isReq = this.validate();
-    console.log(isReq);
     if (isReq) {
       axios
         .put(
@@ -205,6 +205,12 @@ export class ProfileView extends React.Component {
           localStorage.setItem('user', this.state.username);
           alert('profile updated successfully!');
           window.open(`/users/${this.state.username}`, '_self');
+        })
+        .catch((e) => {
+          console.log(e);
+          if (e.response.status === 401) {
+            alert('You are not authorized to update this account');
+          }
         });
     }
   };
@@ -226,13 +232,19 @@ export class ProfileView extends React.Component {
         localStorage.removeItem('token');
         window.open('/', '_self');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        if (e.response.status === 401) {
+          alert('You are not authorized to delete this account');
+        }
+      });
   }
 
   render() {
     const { history } = this.props;
-    const { username, email, birthday, usernameErr, passwordErr} =
-      this.state;
+    const { username, email, birthday, usernameErr, passwordErr } = this.state;
+
+    const usernameStatic = username;
 
     return (
       <div className="profile-wrapper">
@@ -241,7 +253,7 @@ export class ProfileView extends React.Component {
 
           <div className="user-info">
             <h4>User Information</h4>
-            <p>Username: {username}</p>
+            <p>Username: {usernameStatic}</p>
             <Row>
               <Col md={6}>
                 <Button
@@ -271,11 +283,7 @@ export class ProfileView extends React.Component {
             <Form
               className="d-flex justify-content-md-center flex-column align-items-center"
               onSubmit={(e) =>
-                this.handleSubmit(
-                  e,
-                  this.Username,
-                  this.Password,
-                )
+                this.handleSubmit(e, this.Username, this.Password)
               }
             >
               <div className="register-title">
