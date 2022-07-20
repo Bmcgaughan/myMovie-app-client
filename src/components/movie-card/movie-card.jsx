@@ -99,6 +99,7 @@ export class MovieCard extends React.Component {
             crossOrigin="anonymous"
             variant="top"
             src={movie.ImagePath}
+            loading="lazy"
             className="poster-img"
           />
         </div>

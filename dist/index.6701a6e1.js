@@ -35632,6 +35632,7 @@ class MovieCard extends _reactDefault.default.Component {
                         crossOrigin: "anonymous",
                         variant: "top",
                         src: movie.ImagePath,
+                        loading: "lazy",
                         className: "poster-img",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
@@ -35649,7 +35650,7 @@ class MovieCard extends _reactDefault.default.Component {
                     title: "Add to Favorites",
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 105
+                        lineNumber: 106
                     },
                     __self: this,
                     children: /*#__PURE__*/ _jsxRuntime.jsx("img", {
@@ -35658,7 +35659,7 @@ class MovieCard extends _reactDefault.default.Component {
                         alt: "cam",
                         __source: {
                             fileName: "src/components/movie-card/movie-card.jsx",
-                            lineNumber: 112
+                            lineNumber: 113
                         },
                         __self: this
                     })
@@ -35668,14 +35669,14 @@ class MovieCard extends _reactDefault.default.Component {
                     onClick: onMovieClick(movie._id),
                     __source: {
                         fileName: "src/components/movie-card/movie-card.jsx",
-                        lineNumber: 119
+                        lineNumber: 120
                     },
                     __self: this,
                     children: [
                         /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Title, {
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 123
+                                lineNumber: 124
                             },
                             __self: this,
                             children: movie.Title
@@ -35683,7 +35684,7 @@ class MovieCard extends _reactDefault.default.Component {
                         movie.Network && /*#__PURE__*/ _jsxRuntime.jsx(_cardDefault.default.Text, {
                             __source: {
                                 fileName: "src/components/movie-card/movie-card.jsx",
-                                lineNumber: 124
+                                lineNumber: 125
                             },
                             __self: this,
                             children: movie.Network
