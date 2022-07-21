@@ -95,7 +95,7 @@ export class ProfileView extends React.Component {
     let favoriteCards = this.props.movies
       .filter((m) => favorites.includes(m._id))
       .map((m) => (
-        <Col md={4} key={m._id}>
+        <Col xs={6} lg={4} key={m._id}>
           {/* <Link to={`/movies/${m._id}`} className="movie-opt"> */}
           <MovieCard
             movie={m}
@@ -255,7 +255,7 @@ export class ProfileView extends React.Component {
             <h4>User Information</h4>
             <p>Username: {usernameStatic}</p>
             <Row>
-              <Col md={6}>
+              <Col xs={6}>
                 <Button
                   className="update-info-button"
                   variant="primary"
@@ -266,7 +266,7 @@ export class ProfileView extends React.Component {
                   {this.state.editAccount ? 'Close' : 'Edit Account'}
                 </Button>
               </Col>
-              <Col md={6} className="text-right">
+              <Col xs={6} className="text-right">
                 <Button
                   className="delete-account-button"
                   variant="danger"

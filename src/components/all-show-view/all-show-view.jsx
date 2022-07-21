@@ -82,7 +82,7 @@ function AllShows(props) {
             </Row>
             <Row>
               {movies.map((m) => (
-                <Col md={3} key={m._id}>
+                <Col md={3} xs={4} key={m._id}>
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id)}

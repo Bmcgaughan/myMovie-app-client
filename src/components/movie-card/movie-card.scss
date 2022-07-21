@@ -24,7 +24,7 @@
 
 .card-img-top {
   width: 100%;
-  height: 350px;
+  height: 100%;
 }
 
 .fav-icon {
@@ -53,18 +53,11 @@
 }
 
 @media (max-width: 1024px) {
-  .show-section .card-img-top {
+  .genre-wrapper .card-img-top {
     width: 100%;
     height: 100%;
   }
-
-  .genre-wrapper .card-img-top,
-  .director-wrapper .card-img-top {
-    width: 100%;
-    height: 100%;
-  }
-  .genre-wrapper .cards-header,
-  .director-wrapper .cards-header {
+  .genre-wrapper .cards-header {
     font-size: 1.25rem;
   }
 }
@@ -87,12 +80,6 @@
     font-size: 0.5rem;
   }
 
-  .genre-wrapper .card-img-top,
-  .director-wrapper .card-img-top {
-    width: 100%;
-    height: 100%;
-  }
-
   .genre-wrapper .cards-header,
   .director-wrapper .cards-header {
     font-size: 1.25rem;
@@ -111,8 +98,8 @@
 }
 
 @media (max-width: 430px) {
-  .show-section .card-img-top {
-    width: 100%;
+
+  .poster-img {
     height: 100%;
   }
 
@@ -137,12 +124,6 @@
   }
   .show-section .card-text {
     font-size: 10px;
-  }
-
-  .genre-wrapper .card-img-top,
-  .director-wrapper .card-img-top {
-    width: 100%;
-    height: 100%;
   }
 
   .genre-wrapper .cards-header,

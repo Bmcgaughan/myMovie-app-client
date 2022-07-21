@@ -35724,7 +35724,7 @@ exports.default = _reactRedux.connect(mapStateToProps, {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","axios":"iYoWk","react-bootstrap/Card":"MoOk8","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","./movie-card.scss":"cF5gT","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../../actions/actions":"1Ttfj"}],"MoOk8":[function(require,module,exports) {
+},{"react/jsx-runtime":"8xIwr","react":"6TuXu","react-router-dom":"cpyQW","prop-types":"1tgq3","axios":"iYoWk","react-bootstrap/Card":"MoOk8","../../img/heart-empty.png":"68Ejn","../../img/heart-full.png":"fms7o","@parcel/transformer-js/src/esmodule-helpers.js":"iQxSY","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"22m6l","react-redux":"2L0if","../../actions/actions":"1Ttfj","./movie-card.scss":"cF5gT"}],"MoOk8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _classnames = require("classnames");
@@ -36343,7 +36343,8 @@ class ProfileView extends _reactDefault.default.Component {
     listFavorites = (favorites)=>{
         let favoriteCards = this.props.movies.filter((m)=>favorites.includes(m._id)
         ).map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                md: 4,
+                xs: 6,
+                lg: 4,
                 __source: {
                     fileName: "src/components/profile-view/profile-view.jsx",
                     lineNumber: 98
@@ -36575,7 +36576,7 @@ class ProfileView extends _reactDefault.default.Component {
                                     __self: this,
                                     children: [
                                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                                            md: 6,
+                                            xs: 6,
                                             __source: {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
                                                 lineNumber: 258
@@ -36595,7 +36596,7 @@ class ProfileView extends _reactDefault.default.Component {
                                             })
                                         }),
                                         /*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
-                                            md: 6,
+                                            xs: 6,
                                             className: "text-right",
                                             __source: {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
@@ -58491,6 +58492,7 @@ function AllShows(props) {
                             __self: this,
                             children: movies.map((m)=>/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Col, {
                                     md: 3,
+                                    xs: 4,
                                     __source: {
                                         fileName: "src/components/all-show-view/all-show-view.jsx",
                                         lineNumber: 85
