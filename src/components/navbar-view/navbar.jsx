@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
 function Menubar(props) {
   const [searchBar, setSearchBar] = useState(false);
   const [fade, setFade] = useState('');
+  const [logoHide, setLogoHide] = useState('');
 
   const { visibilityFilter, user } = props;
 
@@ -47,8 +48,10 @@ function Menubar(props) {
   const toggleSearchBar = (e) => {
     if (fade !== '') {
       setFade('');
+      setLogoHide('');
     } else {
       setFade('fade-in');
+      setLogoHide('logo-hide');
     }
     setSearchBar(!searchBar);
   };
@@ -94,7 +97,7 @@ function Menubar(props) {
         </div>
       </Nav>
       <Navbar.Brand className="navbar-logo">
-        <Nav.Link className="main-header-link" href={`/`}>
+        <Nav.Link className={`main-header-link ${logoHide}`} href={`/`}>
           {' '}
           What Do I Watch?
         </Nav.Link>
