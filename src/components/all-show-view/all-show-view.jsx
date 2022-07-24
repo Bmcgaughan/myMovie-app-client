@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -26,6 +26,14 @@ function AllShows(props) {
   const { movies, visibilityFilter } = props;
 
   const history = useHistory();
+
+  useEffect(() => {
+    console.log('useEffect');
+    const appliedFilter = localStorage.getItem('networkFilter');
+    if (appliedFilter) {
+      setNetworkFilter(appliedFilter);
+    }
+  });
 
   //get list of Network from movies
   const networks = movies.map((movie) => movie.Network);
@@ -65,6 +73,7 @@ function AllShows(props) {
 
   const handleNetworkFilter = (event) => {
     setNetworkFilter(event);
+    localStorage.setItem('networkFilter', event);
   };
 
   const handleOnItemClick = (param) => (e) => {
@@ -111,7 +120,11 @@ function AllShows(props) {
           <div className="show-section">
             <Row className="d-flex align-items-center show-header">
               <h3>
-                {networkFilter ? networkFilter : 'All Shows'} ({movies.length})
+                {networkFilter ? networkFilter : 'All Shows'} (
+                {networkFilter
+                  ? movies.filter((m) => m.Network === networkFilter).length
+                  : movies.length}
+                )
               </h3>
               <a className="show-filter">
                 <Dropdown>
@@ -123,6 +136,13 @@ function AllShows(props) {
                     <Filter />
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="container-fluid">
+                    <Dropdown.Item
+                      key={'All Shows'}
+                      onClick={() => handleNetworkFilter('')}
+                    >
+                      <b>All Shows</b>
+                    </Dropdown.Item>
+
                     {topNetworks.map((m) => (
                       <Dropdown.Item
                         key={m}
