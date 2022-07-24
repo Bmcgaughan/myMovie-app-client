@@ -5,3 +5,31 @@
 .add-show {
   margin-top: 10px;
 }
+
+.show-filter {
+  margin: 0;
+}
+
+.filter-button {
+  font-size: 1.75rem;
+  color: white;
+  margin-top: 0 !important;
+  padding-bottom: 20px !important;
+  justify-content: center;
+}
+
+.show-dropdown {
+  color: white;
+}
+
+#dropdown-basic:hover {
+  color: white;
+}
+
+.dropdown-menu.show {
+  z-index: 10000;
+  width: fit-content;
+  height: 300px;
+  overflow-y: auto;
+  overflow: scroll;
+}

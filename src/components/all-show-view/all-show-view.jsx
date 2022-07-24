@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Dropdown } from 'react-bootstrap';
+import { Filter } from 'react-bootstrap-icons';
 
 import { setMovies } from '../../actions/actions';
 
@@ -21,9 +22,36 @@ const mapStateToProps = (state) => {
 };
 
 function AllShows(props) {
+  const [networkFilter, setNetworkFilter] = useState('');
   const { movies, visibilityFilter } = props;
 
   const history = useHistory();
+
+  //get list of Network from movies
+  const networks = movies.map((movie) => movie.Network);
+
+  //get tally of unique networks
+  const networkTally = networks.reduce((acc, curr) => {
+    if (curr in acc) {
+      acc[curr]++;
+    } else {
+      acc[curr] = 1;
+    }
+    return acc;
+  }, {});
+
+  //get top 10 most common networks
+  const topNetworks = Object.keys(networkTally)
+    .sort((a, b) => {
+      return networkTally[b] - networkTally[a];
+    })
+    .slice(0, 10);
+
+  //get networkTally not in topNetworks and sorted by network
+  const otherNetworks = Object.keys(networkTally).filter((network) => {
+    return !topNetworks.includes(network);
+  });
+  otherNetworks.sort();
 
   movies.sort((a, b) => {
     if (a.Title < b.Title) {
@@ -34,6 +62,10 @@ function AllShows(props) {
     }
     return 0;
   });
+
+  const handleNetworkFilter = (event) => {
+    setNetworkFilter(event);
+  };
 
   const handleOnItemClick = (param) => (e) => {
     e.stopPropagation();
@@ -78,17 +110,68 @@ function AllShows(props) {
         <div className="filtered">
           <div className="show-section">
             <Row className="d-flex align-items-center show-header">
-              <h3>All Shows ({movies.length})</h3>
+              <h3>
+                {networkFilter ? networkFilter : 'All Shows'} ({movies.length})
+              </h3>
+              <a className="show-filter">
+                <Dropdown>
+                  <Dropdown.Toggle
+                    className="filter-button"
+                    variant="success"
+                    id="dropdown-basic"
+                  >
+                    <Filter />
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="container-fluid">
+                    {topNetworks.map((m) => (
+                      <Dropdown.Item
+                        key={m}
+                        onClick={() => handleNetworkFilter(m)}
+                      >
+                        {m}
+                      </Dropdown.Item>
+                    ))}
+                    <Dropdown.Divider />
+                    {otherNetworks.map((m) => (
+                      <Dropdown.Item
+                        key={m}
+                        onClick={() => handleNetworkFilter(m)}
+                      >
+                        {m}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </a>
             </Row>
             <Row>
-              {movies.map((m) => (
+              {networkFilter
+                ? movies
+                    .filter((m) => m.Network === networkFilter)
+                    .map((m) => (
+                      <Col md={3} key={m._id}>
+                        <MovieCard
+                          movie={m}
+                          onMovieClick={() => handleOnItemClick(m._id)}
+                        />
+                      </Col>
+                    ))
+                : movies.map((m) => (
+                    <Col md={3} key={m._id}>
+                      <MovieCard
+                        movie={m}
+                        onMovieClick={() => handleOnItemClick(m._id)}
+                      />
+                    </Col>
+                  ))}
+              {/* {movies.map((m) => (
                 <Col md={3} xs={4} key={m._id}>
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id)}
                   />
                 </Col>
-              ))}
+              ))} */}
             </Row>
           </div>
         </div>
