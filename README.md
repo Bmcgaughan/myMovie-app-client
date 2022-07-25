@@ -38,7 +38,7 @@ You can also select favorite shows
 - react-slick ^ 0.29.0
 - redux ^ 4.2.0
 - redux-devtools-extension ^ 2.13.9
-- slick slick-carousel ^ 1.8.1
+- swiper ^8.2.4
 
 ## Tech
 - React
