@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { Row, Col, Dropdown } from 'react-bootstrap';
-import { Filter } from 'react-bootstrap-icons';
+import { CaretDownFill } from 'react-bootstrap-icons';
 
 import { setMovies } from '../../actions/actions';
 
@@ -126,14 +126,15 @@ function AllShows(props) {
                   : movies.length}
                 )
               </h3>
-              <a className="show-filter">
+              <div className="show-filter">
+                <div className={`filter-title ${networkFilter ? 'filter-applied' : ''}`}>Networks</div>
                 <Dropdown>
                   <Dropdown.Toggle
                     className="filter-button"
                     variant="success"
                     id="dropdown-basic"
                   >
-                    <Filter />
+                    <CaretDownFill />
                   </Dropdown.Toggle>
                   <Dropdown.Menu className="container-fluid">
                     <Dropdown.Item
@@ -162,7 +163,7 @@ function AllShows(props) {
                     ))}
                   </Dropdown.Menu>
                 </Dropdown>
-              </a>
+              </div>
             </Row>
             <Row>
               {networkFilter
@@ -184,14 +185,6 @@ function AllShows(props) {
                       />
                     </Col>
                   ))}
-              {/* {movies.map((m) => (
-                <Col md={3} xs={4} key={m._id}>
-                  <MovieCard
-                    movie={m}
-                    onMovieClick={() => handleOnItemClick(m._id)}
-                  />
-                </Col>
-              ))} */}
             </Row>
           </div>
         </div>
