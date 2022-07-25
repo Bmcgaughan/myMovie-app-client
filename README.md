@@ -52,6 +52,6 @@ Brian McGaughan
 
 ## Acknowledgments
 
-- Slick-Slider https://kenwheeler.github.io/slick/
+- SwiperJS
 - The MovieDB https://www.themoviedb.org/
 
