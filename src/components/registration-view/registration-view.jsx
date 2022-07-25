@@ -15,17 +15,11 @@ export function RegistrationView(props) {
   const [birthday, setBirthday] = useState('');
   const [usernameErr, setUsernameErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
-  const [emailErr, setEmailErr] = useState('');
 
-  const validateEmail = (email) => {
-    return email.match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  };
 
   //validation of registration data
   const validate = () => {
-    setEmailErr(''), setPasswordErr(''), setUsernameErr('');
+    setPasswordErr(''), setUsernameErr('');
     let isReq = true;
     if (!username) {
       setUsernameErr('Username Required');
@@ -41,10 +35,6 @@ export function RegistrationView(props) {
       setPasswordErr('Password must be at least 6 characters');
       isReq = false;
     }
-    if (!validateEmail(email)) {
-      setEmailErr('Must use a valid Email Address');
-      isReq = false;
-    }
     return isReq;
   };
 
@@ -58,8 +48,6 @@ export function RegistrationView(props) {
         .post('https://whatdoiwatch.herokuapp.com/users', {
           Username: username,
           Password: password,
-          Email: email,
-          Birthday: birthday,
         })
         .then((response) => {
           const date = response.data;
@@ -94,18 +82,6 @@ export function RegistrationView(props) {
         />
         {passwordErr && <p>{passwordErr}</p>}
       </Form.Group>
-      <Form.Group controlId="regEmail">
-        <Form.Label>Email:</Form.Label>
-        <Form.Control type="email" onChange={(e) => setEmail(e.target.value)} />
-        {emailErr && <p>{emailErr}</p>}
-      </Form.Group>
-      <Form.Group controlId="regBirthday">
-        <Form.Label>Birthday:</Form.Label>
-        <Form.Control
-          type="date"
-          onChange={(e) => setBirthday(e.target.value)}
-        />
-      </Form.Group>
       <Button
         className="register-button"
         variant="primary"
@@ -122,6 +98,5 @@ RegistrationView.propTypes = {
   register: PropTypes.shape({
     Username: PropTypes.string.isRequired,
     Password: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
   }),
 };

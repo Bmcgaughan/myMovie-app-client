@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
 function Menubar(props) {
   const [searchBar, setSearchBar] = useState(false);
   const [fade, setFade] = useState('');
+  const [logoHide, setLogoHide] = useState('');
 
   const { visibilityFilter, user } = props;
 
@@ -47,8 +48,10 @@ function Menubar(props) {
   const toggleSearchBar = (e) => {
     if (fade !== '') {
       setFade('');
+      setLogoHide('');
     } else {
       setFade('fade-in');
+      setLogoHide('logo-hide');
     }
     setSearchBar(!searchBar);
   };
@@ -62,7 +65,8 @@ function Menubar(props) {
       variant="light"
     >
       <Nav>
-        {location.pathname === '/' && props.user ? (
+        {location.pathname === '/' ||
+        (location.pathname === '/allshows' && props.user) ? (
           <div className="search-expand d-flex align-items-center">
             <a
               className="search-link"
@@ -93,7 +97,7 @@ function Menubar(props) {
         </div>
       </Nav>
       <Navbar.Brand className="navbar-logo">
-        <Nav.Link className="main-header-link" href={`/`}>
+        <Nav.Link className={`main-header-link ${logoHide}`} href={`/`}>
           {' '}
           What Do I Watch?
         </Nav.Link>
@@ -102,6 +106,7 @@ function Menubar(props) {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
           {isAuth() && <Nav.Link href={`/`}>Home</Nav.Link>}
+          {isAuth() && <Nav.Link href={`/allshows`}>All Shows</Nav.Link>}
 
           {isAuth() && <Nav.Link href={`/users/${user}`}>Profile</Nav.Link>}
           {isAuth() && (

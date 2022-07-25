@@ -1,0 +1,50 @@
+.show-header h3 {
+  padding-left: 15px;
+}
+
+.add-show {
+  margin-top: 10px;
+}
+
+.show-filter {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.show-header {
+  justify-content: space-between;
+}
+
+.filter-title {
+  padding-bottom: 10px;
+}
+
+.filter-button {
+  font-size: 1rem;
+  color: white;
+  margin-top: 0 !important;
+  padding-bottom: 16px !important;
+  justify-content: center;
+}
+
+.show-dropdown {
+  color: white;
+}
+
+.filter-applied {
+  color: #5846f9
+}
+
+#dropdown-basic:hover {
+  color: white;
+}
+
+.dropdown-menu.show {
+  z-index: 10000;
+  width: fit-content;
+  height: 300px;
+  overflow-y: auto;
+  overflow: scroll;
+}

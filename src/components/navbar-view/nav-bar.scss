@@ -74,7 +74,34 @@ a {
   }
 
   .navbar-logo {
-    padding-left: 56px;
+    padding-left: 25px;
     margin-right: 0;
+  }
+
+  .anim-search {
+    position: absolute;
+    left: 50px;
+  }
+
+  .anim-search {
+    z-index: 1000;
+  }
+}
+
+@media (max-width: 430px) {
+  .logo-hide {
+    opacity: 0.1;
+    z-index: -1000;
+  }
+  .anim-search {
+    position: absolute;
+    left: 50px;
+  }
+  .navbar-logo {
+    padding-left: 25px;
+  }
+
+  .anim-search {
+    z-index: 1000;
   }
 }

@@ -30,7 +30,8 @@
     "react-slick": "^0.29.0",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "swiper": "^8.2.4"
   },
   "devDependencies": {
     "@parcel/transformer-image": "^2.0.0-rc.0",

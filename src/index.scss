@@ -1,6 +1,7 @@
 $primary-color: black;
 $secondary-color: #5846f9;
 
+
 html {
   min-height: 100vh;
   background-color: black;
@@ -105,3 +106,4 @@ body {
 .btn-danger {
   @include btn-border-drawing(red, white, 2px, bottom, right);
 }
+

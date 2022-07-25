@@ -3,12 +3,16 @@ import {
   SET_FAVORITE,
   SET_FILTER,
   SET_MOVIES,
+  ADD_MOVIES,
   TOGGLE_FAVORITE,
   SET_USER,
   SET_MOV_SORT,
   TOGGLE_MOV_SORT,
   SET_TREND_SORT,
   TOGGLE_TREND_SORT,
+  SET_RECOMMENDED,
+  SET_MOST_LIKED,
+  SET_TRENDING,
 } from '../actions/actions';
 
 //used for filtering movies
@@ -25,6 +29,8 @@ function movies(state = [], action) {
   switch (action.type) {
     case SET_MOVIES:
       return action.value;
+    case ADD_MOVIES:
+      return [...state, ...action.value];
     default:
       return state;
   }
@@ -41,6 +47,33 @@ function favorites(state = [], action) {
       } else {
         return [...state, action.movieId];
       }
+    default:
+      return state;
+  }
+}
+
+function recommended(state = [], action) {
+  switch (action.type) {
+    case SET_RECOMMENDED:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
+function mostLiked(state = [], action) {
+  switch (action.type) {
+    case SET_MOST_LIKED:
+      return action.value;
+    default:
+      return state;
+  }
+}
+
+function trending(state = [], action) {
+  switch (action.type) {
+    case SET_TRENDING:
+      return action.value;
     default:
       return state;
   }
@@ -106,6 +139,9 @@ function movieSort(state = {}, action) {
 const moviesApp = combineReducers({
   visibilityFilter,
   movies,
+  recommended,
+  mostLiked,
+  trending,
   favorites,
   user,
   trendSort,

@@ -17,12 +17,10 @@ export class ProfileView extends React.Component {
     super();
     this.state = {
       username: '',
+      usernameToUpdate: '',
       password: '',
-      email: '',
-      birthday: '',
       usernameErr: '',
       passwordErr: '',
-      emailErr: '',
       editAccount: false,
       deleteConfirm: false,
     };
@@ -45,8 +43,6 @@ export class ProfileView extends React.Component {
       .then((response) => {
         this.setState({
           username: response.data.Username,
-          email: response.data.Email,
-          birthday: response.data.Birthday,
           favoriteMovies: response.data.FavoriteMovies,
         });
       })
@@ -68,13 +64,6 @@ export class ProfileView extends React.Component {
     return `${date.substr(5, 2)}/${date.substr(8, 2)}/${date.substr(0, 4)}`;
   }
 
-  //identifting if email address is valid before updating
-  validateEmail(email) {
-    return email.match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    );
-  }
-
   //validating new user account info to clean up inputes
   validate() {
     let isReq = true;
@@ -93,13 +82,6 @@ export class ProfileView extends React.Component {
     } else {
       this.setErr('passwordErr', '');
     }
-    if (this.state.email && !this.validateEmail(this.state.email)) {
-      this.setErr('emailErr', ' Must use a valid Email Address');
-      isReq = false;
-    } else {
-      this.setErr('emailErr', '');
-    }
-
     return isReq;
   }
 
@@ -113,7 +95,7 @@ export class ProfileView extends React.Component {
     let favoriteCards = this.props.movies
       .filter((m) => favorites.includes(m._id))
       .map((m) => (
-        <Col md={4} key={m._id}>
+        <Col xs={6} lg={4} key={m._id}>
           {/* <Link to={`/movies/${m._id}`} className="movie-opt"> */}
           <MovieCard
             movie={m}
@@ -167,25 +149,13 @@ export class ProfileView extends React.Component {
   //methods for updating user info state during editing
   setUsername(value) {
     this.setState({
-      username: value,
+      usernameToUpdate: value,
     });
   }
 
   setPassword(value) {
     this.setState({
       password: value,
-    });
-  }
-
-  setEmail(value) {
-    this.setState({
-      email: value,
-    });
-  }
-
-  setBirthday(value) {
-    this.setState({
-      birthday: value,
     });
   }
 
@@ -216,7 +186,6 @@ export class ProfileView extends React.Component {
     const userName = localStorage.getItem('user');
     let token = localStorage.getItem('token');
     const isReq = this.validate();
-    console.log(isReq);
     if (isReq) {
       axios
         .put(
@@ -224,8 +193,6 @@ export class ProfileView extends React.Component {
           {
             Username: this.state.username,
             Password: this.state.password,
-            Email: this.state.email,
-            Birthday: this.state.birthday,
           },
 
           { headers: { Authorization: `Bearer ${token}` } }
@@ -234,12 +201,16 @@ export class ProfileView extends React.Component {
           this.setState({
             username: response.data.Username,
             password: response.data.Password,
-            email: response.data.Email,
-            birthday: response.data.Birthday,
           });
           localStorage.setItem('user', this.state.username);
           alert('profile updated successfully!');
           window.open(`/users/${this.state.username}`, '_self');
+        })
+        .catch((e) => {
+          console.log(e);
+          if (e.response.status === 401) {
+            alert('You are not authorized to update this account');
+          }
         });
     }
   };
@@ -261,13 +232,19 @@ export class ProfileView extends React.Component {
         localStorage.removeItem('token');
         window.open('/', '_self');
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        if (e.response.status === 401) {
+          alert('You are not authorized to delete this account');
+        }
+      });
   }
 
   render() {
     const { history } = this.props;
-    const { username, email, birthday, usernameErr, passwordErr, emailErr } =
-      this.state;
+    const { username, email, birthday, usernameErr, passwordErr } = this.state;
+
+    const usernameStatic = username;
 
     return (
       <div className="profile-wrapper">
@@ -276,11 +253,9 @@ export class ProfileView extends React.Component {
 
           <div className="user-info">
             <h4>User Information</h4>
-            <p>Username: {username}</p>
-            <p>Email: {email}</p>
-            <p>Birthday: {this.getFormattedDate(birthday)}</p>
+            <p>Username: {usernameStatic}</p>
             <Row>
-              <Col md={6}>
+              <Col xs={6}>
                 <Button
                   className="update-info-button"
                   variant="primary"
@@ -291,7 +266,7 @@ export class ProfileView extends React.Component {
                   {this.state.editAccount ? 'Close' : 'Edit Account'}
                 </Button>
               </Col>
-              <Col md={6} className="text-right">
+              <Col xs={6} className="text-right">
                 <Button
                   className="delete-account-button"
                   variant="danger"
@@ -308,13 +283,7 @@ export class ProfileView extends React.Component {
             <Form
               className="d-flex justify-content-md-center flex-column align-items-center"
               onSubmit={(e) =>
-                this.handleSubmit(
-                  e,
-                  this.Username,
-                  this.Password,
-                  this.Email,
-                  this.Birthday
-                )
+                this.handleSubmit(e, this.Username, this.Password)
               }
             >
               <div className="register-title">
@@ -337,23 +306,6 @@ export class ProfileView extends React.Component {
                   onChange={(e) => this.setPassword(e.target.value)}
                 />
                 {passwordErr && <p>{passwordErr}</p>}
-              </Form.Group>
-              <Form.Group controlId="regEmail">
-                <Form.Label>Email:</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="Email"
-                  onChange={(e) => this.setEmail(e.target.value)}
-                />
-                {emailErr && <p>{emailErr}</p>}
-              </Form.Group>
-              <Form.Group controlId="regBirthday">
-                <Form.Label>Birthday:</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="Birthday"
-                  onChange={(e) => this.setBirthday(e.target.value)}
-                />
               </Form.Group>
               <Button
                 className="register-button"
