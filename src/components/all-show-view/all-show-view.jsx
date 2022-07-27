@@ -28,7 +28,6 @@ function AllShows(props) {
   const history = useHistory();
 
   useEffect(() => {
-    console.log('useEffect');
     const appliedFilter = localStorage.getItem('networkFilter');
     if (appliedFilter) {
       setNetworkFilter(appliedFilter);
@@ -127,7 +126,13 @@ function AllShows(props) {
                 )
               </h3>
               <div className="show-filter">
-                <div className={`filter-title ${networkFilter ? 'filter-applied' : ''}`}>Networks</div>
+                <div
+                  className={`filter-title ${
+                    networkFilter ? 'filter-applied' : ''
+                  }`}
+                >
+                  Networks
+                </div>
                 <Dropdown>
                   <Dropdown.Toggle
                     className="filter-button"
@@ -182,6 +187,7 @@ function AllShows(props) {
                       <MovieCard
                         movie={m}
                         onMovieClick={() => handleOnItemClick(m._id)}
+                        lazy={'lazy'}
                       />
                     </Col>
                   ))}

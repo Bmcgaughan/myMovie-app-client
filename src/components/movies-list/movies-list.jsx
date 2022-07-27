@@ -122,6 +122,7 @@ function MoviesList(props) {
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id, false)}
+                    lazy={''}
                   />
                 </Col>
               ))}

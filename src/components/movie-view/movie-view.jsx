@@ -12,10 +12,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { connect } from 'react-redux';
-import { setMovies } from '../../actions/actions';
+import { setMovies, addMovies } from '../../actions/actions';
 
 import './movie-view.scss';
 import MovieCard from '../movie-card/movie-card';
+import { WindowPlus } from 'react-bootstrap-icons';
 
 //showing details once MovieCard is clicked
 class MovieView extends React.Component {
@@ -23,7 +24,8 @@ class MovieView extends React.Component {
     super();
     //initial state for main-view
     this.state = {
-      gettingReco: null,
+      movieDisplay: '',
+      gettingReco: undefined,
       recommended: null,
     };
     this.showRecos = this.showRecos.bind(this);
@@ -37,6 +39,7 @@ class MovieView extends React.Component {
       return;
     }
     let accessToken = localStorage.getItem('token');
+    this.setState({ gettingReco: 'get' });
     axios
       .get(
         `https://whatdoiwatch.herokuapp.com/movies/recommended/${this.props.movie.odbID}`,
@@ -67,12 +70,17 @@ class MovieView extends React.Component {
     }
     if (recommended.processedTV && recommended.processedTV.length > 0) {
       processedTV = [...recommended.processedTV];
-      this.props.setMovies(processedTV);
+      this.props.addMovies(processedTV);
     }
 
-    this.setState({
-      recommended: [...existDetails, ...processedTV],
-    });
+    this.setState(
+      {
+        recommended: [...existDetails, ...processedTV],
+      },
+      () => {
+        this.setState({ gettingReco: 'complete' });
+      }
+    );
   }
 
   //resetting window to top for component
@@ -92,47 +100,58 @@ class MovieView extends React.Component {
     const { movie, onBackClick, movies } = this.props;
     const { recommended, gettingReco } = this.state;
 
+    const showDisplay = movies.find(
+      (m) => m._id === this.props.match.params.movieId
+    );
+
     return (
       <div className="movie-view">
         <Row className="details-wrapper">
           <Col lg={6}>
             <div className="movie-poster d-flex">
-              <img src={movie.ImagePath} crossOrigin="anonymous" />
+              <img src={showDisplay.ImagePath} crossOrigin="anonymous" />
             </div>
           </Col>
           <Col lg={6} className="d-flex flex-column">
             <div className="movie-details align-self-center">
               <div className="movie-title mov-section">
                 <span className="value">
-                  <h3>{movie.Title}</h3>
+                  <h3>{showDisplay.Title}</h3>
                 </span>
-                <span className="value">{movie.Genre.Name}</span>
+                <span className="value">{showDisplay.Genre.Name}</span>
               </div>
               <div className="movie-actors mov-section">
                 <span className="value">
-                  {movie.Actors ? movie.Actors.join(' / ') : ''}
+                  {showDisplay.Actors ? showDisplay.Actors.join(' / ') : ''}
                 </span>
               </div>
               <div className="movie-description mov-section">
-                <span className="value">{movie.Description}</span>
+                <span className="value">{showDisplay.Description}</span>
               </div>
               <div className="movie-director mov-section">
                 <span className="label">Director: </span>
                 <span className="value">
-                  {movie.Director.Name ? movie.Director.Name : 'N/A'}
+                  {showDisplay.Director.Name
+                    ? showDisplay.Director.Name
+                    : 'N/A'}
                 </span>
               </div>
               <div className="movie-rating mov-section">
                 <span className="label">Rating: </span>
                 <span className="value">
-                  {movie.Rating ? movie.Rating : 'N/A'}
+                  {showDisplay.Rating ? showDisplay.Rating : 'N/A'}
                 </span>
               </div>
             </div>
             <div className="button-wrapper">
-              <Link to={`/genres/${movie.Genre.Name}`} className="movie-opt">
-                {movie.Genre.Name ? (
-                  <Button variant="secondary">More {movie.Genre.Name}</Button>
+              <Link
+                to={`/genres/${showDisplay.Genre.Name}`}
+                className="movie-opt"
+              >
+                {showDisplay.Genre.Name ? (
+                  <Button variant="secondary">
+                    More {showDisplay.Genre.Name}
+                  </Button>
                 ) : (
                   <Button disabled variant="secondary">
                     More from this Genre
@@ -142,7 +161,7 @@ class MovieView extends React.Component {
               <Button
                 className="reco-button"
                 variant="secondary"
-                onClick={() => this.getRecos(movie)}
+                onClick={() => this.getRecos(showDisplay)}
               >
                 More Shows Like This
               </Button>
@@ -169,18 +188,26 @@ class MovieView extends React.Component {
             <h3>Sorry! Nothing to Recommened...</h3>
           </div>
         )}
-        <Row>
-          {recommended &&
-            recommended.length > 0 &&
-            recommended.map((m) => (
-              <Col md={4} key={m._id}>
+
+        {gettingReco === 'get' && (
+          <Row className="justify-content-center">
+            <LoadingSpinner />
+          </Row>
+        )}
+
+        {gettingReco === 'complete' && recommended.length > 0 && (
+          <Row>
+            {recommended.map((m) => (
+              <Col md={3} key={m._id}>
                 <MovieCard
                   movie={m}
                   onMovieClick={() => this.handleOnItemClick(m._id)}
+                  lazy={''}
                 />
               </Col>
             ))}
-        </Row>
+          </Row>
+        )}
       </div>
     );
   }
@@ -210,5 +237,6 @@ let mapStateToProps = (state) => {
 export default withRouter(
   connect(mapStateToProps, {
     setMovies,
+    addMovies,
   })(MovieView)
 );

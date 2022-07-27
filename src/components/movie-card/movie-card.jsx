@@ -90,7 +90,7 @@ export class MovieCard extends React.Component {
   }
 
   render() {
-    const { movie, onMovieClick } = this.props;
+    const { movie, onMovieClick, lazy } = this.props;
     return (
       <Card className="h-100 mcard">
         <div className="poster-wrapper">
@@ -99,7 +99,7 @@ export class MovieCard extends React.Component {
             crossOrigin="anonymous"
             variant="top"
             src={movie.ImagePath}
-            loading="lazy"
+            loading={lazy}
             className="poster-img"
           />
         </div>
