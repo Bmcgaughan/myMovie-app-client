@@ -103,6 +103,7 @@ function AllShows(props) {
                   <MovieCard
                     movie={m}
                     onMovieClick={() => handleOnItemClick(m._id)}
+                    lazy={''}
                   />
                 </Col>
               ))}
@@ -179,6 +180,7 @@ function AllShows(props) {
                         <MovieCard
                           movie={m}
                           onMovieClick={() => handleOnItemClick(m._id)}
+                          lazy={''}
                         />
                       </Col>
                     ))

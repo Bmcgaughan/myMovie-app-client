@@ -171,6 +171,7 @@ function MoviesList(props) {
                       <MovieCard
                         movie={m}
                         onMovieClick={() => handleOnItemClick(m._id, true)}
+                        lazy={''}
                       />
                     </div>
                   </SwiperSlide>
@@ -213,6 +214,7 @@ function MoviesList(props) {
                       <MovieCard
                         movie={m}
                         onMovieClick={() => handleOnItemClick(m._id, true)}
+                        lazy={''}
                       />
                     </div>
                   </SwiperSlide>
@@ -255,6 +257,7 @@ function MoviesList(props) {
                       <MovieCard
                         movie={m}
                         onMovieClick={() => handleOnItemClick(m._id, true)}
+                        lazy={''}
                       />
                     </div>
                   </SwiperSlide>
