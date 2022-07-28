@@ -92,6 +92,7 @@ class MovieView extends React.Component {
     const { history } = withRouter;
     this.setState({
       recommended: null,
+      gettingReco: undefined,
     });
     this.props.history.push(`/movies/${param}`);
   };
