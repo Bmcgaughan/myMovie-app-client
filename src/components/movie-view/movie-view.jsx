@@ -195,7 +195,7 @@ class MovieView extends React.Component {
           </Row>
         )}
 
-        {gettingReco === 'complete' && recommended.length > 0 && (
+        {gettingReco === 'complete' && recommended && recommended.length > 0 && (
           <Row>
             {recommended.map((m) => (
               <Col md={3} key={m._id}>
