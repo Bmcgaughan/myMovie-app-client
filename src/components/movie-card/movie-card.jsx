@@ -16,6 +16,7 @@ import { toggleFavorite } from '../../actions/actions';
 //favorite asset images
 import heartEmpty from '../../img/heart-empty.png';
 import heartFull from '../../img/heart-full.png';
+import missingImg from '../../img/missing_image.png';
 
 //importing stylesheet
 import './movie-card.scss';
@@ -26,6 +27,7 @@ export class MovieCard extends React.Component {
     super(props);
     this.state = {
       movieId: '',
+      ImageErr: null,
     };
   }
 
@@ -89,6 +91,21 @@ export class MovieCard extends React.Component {
     }
   }
 
+  handleImageError = (url, retries = 5) => {
+    const image = new Image();
+    console.log(image);
+    image.onerror = () => {
+      if (retries > 0) {
+        console.log('called');
+        this.handleImageError(url, retries - 1);
+      } else {
+        console.log('error');
+      }
+      img.src = url;
+    };
+  };
+
+  //http://image.tmdb.org/t/p/original/70yK1hRyyQiwqstpMTHZCpcnP7.jpg
   render() {
     const { movie, onMovieClick, lazy } = this.props;
     return (
@@ -99,6 +116,24 @@ export class MovieCard extends React.Component {
             crossOrigin="anonymous"
             variant="top"
             src={movie.ImagePath}
+            onError={(e) => {
+              let image = new Image();
+              image.src = e.target.src;
+              setTimeout(() => {
+                image = new Image();
+                image.src = e.target.src;
+              }, 4000);
+              image.onerror = () => {
+                console.log('error');
+                e.target.src = missingImg;
+                e.target.style.height = '330px';
+              };
+            }}
+            // onError={(e) => {
+            //   e.onerror = null;
+            //   e.target.src = missingImg;
+            //   e.target.style.height = '330px';
+            // }}
             loading={lazy}
             className="poster-img"
           />
