@@ -199,7 +199,7 @@ class MovieView extends React.Component {
         {gettingReco === 'complete' && recommended && recommended.length > 0 && (
           <Row>
             {recommended.map((m) => (
-              <Col md={3} key={m._id}>
+              <Col sm={3} xs={4} key={m._id}>
                 <MovieCard
                   movie={m}
                   onMovieClick={() => this.handleOnItemClick(m._id)}
