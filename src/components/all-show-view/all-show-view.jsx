@@ -176,7 +176,7 @@ function AllShows(props) {
                 ? movies
                     .filter((m) => m.Network === networkFilter)
                     .map((m) => (
-                      <Col md={3} key={m._id}>
+                      <Col sm={3} xs={4} key={m._id}>
                         <MovieCard
                           movie={m}
                           onMovieClick={() => handleOnItemClick(m._id)}
@@ -185,7 +185,7 @@ function AllShows(props) {
                       </Col>
                     ))
                 : movies.map((m) => (
-                    <Col md={3} key={m._id}>
+                    <Col sm={3} xs={4} key={m._id}>
                       <MovieCard
                         movie={m}
                         onMovieClick={() => handleOnItemClick(m._id)}
