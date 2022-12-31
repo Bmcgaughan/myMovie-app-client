@@ -73,7 +73,7 @@ export class MovieCard extends React.Component {
   //the state is then updated to either add/remove the movie
   favMovieClick(e) {
     e.preventDefault();
-    let movId = this.props.movie._id;
+    let movId = this.props.movie.obdID;
     if (this.props.favorites.includes(movId)) {
       this.removeFavMovie(movId);
     } else {
@@ -112,7 +112,7 @@ export class MovieCard extends React.Component {
       <Card className="h-100 mcard">
         <div className="poster-wrapper">
           <Card.Img
-            onClick={onMovieClick(movie._id)}
+            onClick={onMovieClick(movie.odbID)}
             crossOrigin="anonymous"
             variant="top"
             src={movie.imagePath}
@@ -146,7 +146,7 @@ export class MovieCard extends React.Component {
           title="Add to Favorites"
         >
           <img
-            src={this.favMovieHandle(movie._id)}
+            src={this.favMovieHandle(movie.obdID)}
             className="fav-icon"
             alt="cam"
           />
@@ -154,7 +154,7 @@ export class MovieCard extends React.Component {
 
         <Card.Body
           className="d-flex flex-column"
-          onClick={onMovieClick(movie._id)}
+          onClick={onMovieClick(movie.obdID)}
         >
           <Card.Title>{movie.title}</Card.Title>
           {movie.network && <Card.Text>{movie.network}</Card.Text>}

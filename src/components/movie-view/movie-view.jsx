@@ -101,8 +101,10 @@ class MovieView extends React.Component {
     const { movie, onBackClick, movies } = this.props;
     const { recommended, gettingReco } = this.state;
 
+    console.log(movie);
+
     const showDisplay = movies.find(
-      (m) => m._id === this.props.match.params.movieId
+      (m) => m.odbID == this.props.match.params.movieId
     );
 
     return (
@@ -196,19 +198,21 @@ class MovieView extends React.Component {
           </Row>
         )}
 
-        {gettingReco === 'complete' && recommended && recommended.length > 0 && (
-          <Row>
-            {recommended.map((m) => (
-              <Col sm={3} xs={4} key={m._id}>
-                <MovieCard
-                  movie={m}
-                  onMovieClick={() => this.handleOnItemClick(m._id)}
-                  lazy={''}
-                />
-              </Col>
-            ))}
-          </Row>
-        )}
+        {gettingReco === 'complete' &&
+          recommended &&
+          recommended.length > 0 && (
+            <Row>
+              {recommended.map((m) => (
+                <Col sm={3} xs={4} key={m.odbID}>
+                  <MovieCard
+                    movie={m}
+                    onMovieClick={() => this.handleOnItemClick(m.odbID)}
+                    lazy={''}
+                  />
+                </Col>
+              ))}
+            </Row>
+          )}
       </div>
     );
   }

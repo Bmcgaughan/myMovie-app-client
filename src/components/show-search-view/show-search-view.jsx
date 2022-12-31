@@ -85,10 +85,10 @@ function ShowSearch(props) {
           </Row>
           <Row>
             {searchResults.map((m) => (
-              <Col md={3} key={m._id}>
+              <Col md={3} key={m.odbID}>
                 <MovieCard
                   movie={m}
-                  onMovieClick={() => handleOnItemClick(m._id)}
+                  onMovieClick={() => handleOnItemClick(m.odbID)}
                 />
               </Col>
             ))}

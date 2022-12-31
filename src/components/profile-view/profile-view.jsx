@@ -93,13 +93,13 @@ export class ProfileView extends React.Component {
   //for display
   listFavorites = (favorites) => {
     let favoriteCards = this.props.movies
-      .filter((m) => favorites.includes(m._id))
+      .filter((m) => favorites.includes(m.odbID))
       .map((m) => (
-        <Col xs={6} lg={4} key={m._id}>
+        <Col xs={6} lg={4} key={m.odbID}>
           {/* <Link to={`/movies/${m._id}`} className="movie-opt"> */}
           <MovieCard
             movie={m}
-            onMovieClick={() => this.handleOnItemClick(m._id)}
+            onMovieClick={() => this.handleOnItemClick(m.odbID)}
           />
           {/* </Link> */}
         </Col>

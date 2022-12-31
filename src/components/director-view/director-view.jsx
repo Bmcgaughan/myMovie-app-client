@@ -29,10 +29,10 @@ class DirectorView extends React.Component {
 
     //generator for movies by the same director.
     let directorCards = directorMovies.map((m) => (
-      <Col md={3} key={m._id}>
+      <Col md={3} key={m.odbID}>
         <MovieCard
           movie={m}
-          onMovieClick={() => this.handleOnItemClick(m._id)}
+          onMovieClick={() => this.handleOnItemClick(m.odbID)}
         />
       </Col>
     ));
