@@ -91,7 +91,7 @@ export class ProfileView extends React.Component {
 
   //takes users favorite movie ids and find them in the full set of movies
   //for display
-  listFavorites = (favorites) => {
+  listFavorites = (favorites) => {    
     let favoriteCards = this.props.movies
       .filter((m) => favorites.includes(m.odbID))
       .map((m) => (
