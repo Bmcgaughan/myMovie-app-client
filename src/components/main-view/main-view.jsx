@@ -101,7 +101,7 @@ class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        if (response.status === 201) {
+        if (response.status === 200) {
           this.props.setTrending(response.data);
         } else {
           this.props.setTrending([]);
@@ -237,11 +237,11 @@ class MainView extends React.Component {
                     <DirectorView
                       director={
                         movies.find(
-                          (m) => m.Director.Name === match.params.name
+                          (m) => m.director.name === match.params.name
                         ).Director
                       }
                       directorMovies={movies.filter((m) => {
-                        return m.Director.Name === match.params.name;
+                        return m.director.name === match.params.name;
                       })}
                       onBackClick={() => history.goBack()}
                     />
@@ -264,11 +264,11 @@ class MainView extends React.Component {
                   <Col md={12}>
                     <GenreView
                       genre={
-                        movies.find((m) => m.Genre.Name === match.params.name)
-                          .Genre
+                        movies.find((m) => m.genre.name === match.params.name)
+                          .genre
                       }
                       genreMovies={movies.filter((m) => {
-                        return m.Genre.Name === match.params.name;
+                        return m.genre.name === match.params.name;
                       })}
                       onBackClick={() => history.goBack()}
                     />

@@ -115,7 +115,7 @@ export class MovieCard extends React.Component {
             onClick={onMovieClick(movie._id)}
             crossOrigin="anonymous"
             variant="top"
-            src={movie.ImagePath}
+            src={movie.imagePath}
             onError={(e) => {
               let image = new Image();
               image.src = e.target.src;
@@ -156,8 +156,8 @@ export class MovieCard extends React.Component {
           className="d-flex flex-column"
           onClick={onMovieClick(movie._id)}
         >
-          <Card.Title>{movie.Title}</Card.Title>
-          {movie.Network && <Card.Text>{movie.Network}</Card.Text>}
+          <Card.Title>{movie.title}</Card.Title>
+          {movie.network && <Card.Text>{movie.network}</Card.Text>}
         </Card.Body>
       </Card>
     );
@@ -168,13 +168,13 @@ export class MovieCard extends React.Component {
 //ensuring values are strings and required
 MovieCard.propTypes = {
   movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    genre: PropTypes.shape({
+      name: PropTypes.string,
     }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string,
+    director: PropTypes.shape({
+      name: PropTypes.string,
     }),
   }),
 };

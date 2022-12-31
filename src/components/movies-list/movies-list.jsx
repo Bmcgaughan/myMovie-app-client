@@ -51,34 +51,6 @@ function MoviesList(props) {
   //setting up to navigate to specific movie
   const history = useHistory();
 
-  //functions to eliminate duplicating shows
-  const trendingDisplay = props.trending.filter((movie) => {
-    if (
-      !props.recommended.some((recommend) => recommend._id === movie._id) &&
-      !props.mostLiked.some((like) => like._id === movie._id)
-    ) {
-      return movie;
-    }
-  });
-
-  const recommendedDisplay = props.recommended.filter((movie) => {
-    if (
-      !props.trending.some((trend) => trend._id === movie._id) &&
-      !props.mostLiked.some((like) => like._id === movie._id)
-    ) {
-      return movie;
-    }
-  });
-
-  const mostLikedDisplay = props.mostLiked.filter((movie) => {
-    if (
-      !props.trending.some((trend) => trend._id === movie._id) &&
-      !props.recommended.some((recommend) => recommend._id === movie._id)
-    ) {
-      return movie;
-    }
-  });
-
   //pushing movie details on click
   const handleOnItemClick = (param, dragToggle) => (e) => {
     if (!dragToggle) {
@@ -136,7 +108,7 @@ function MoviesList(props) {
       )}
       {visibilityFilter === '' && (
         <div className="unfilter">
-          {recommendedDisplay && recommendedDisplay.length > 0 && (
+          {props.recommended && props.recommended.length > 0 && (
             <div className="show-section">
               <Row className="d-flex align-items-center">
                 <h3>Recommended for You:</h3>
@@ -165,7 +137,7 @@ function MoviesList(props) {
                   },
                 }}
               >
-                {recommendedDisplay.map((m) => (
+                {props.recommended.map((m) => (
                   <SwiperSlide key={m._id}>
                     <div className="mcard">
                       <MovieCard
@@ -179,50 +151,7 @@ function MoviesList(props) {
               </Swiper>
             </div>
           )}
-          {mostLikedDisplay && mostLikedDisplay.length > 0 && (
-            <div className="show-section">
-              <Row className="d-flex align-items-center">
-                <h3>Other People Like:</h3>
-              </Row>
-              <Swiper
-                slidesPerView={5}
-                spaceBetween={0}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                  dynamicBullets: true,
-                  dynamicMainBullets: 5,
-                }}
-                preloadImages={false}
-                lazy={true}
-                modules={[FreeMode, Pagination, Lazy]}
-                className="LikeSwiper"
-                breakpoints={{
-                  425: {
-                    slidesPerView: 5,
-                    spaceBetween: 0,
-                  },
-                  300: {
-                    slidesPerView: 4,
-                    spaceBetween: 0,
-                  },
-                }}
-              >
-                {mostLikedDisplay.map((m) => (
-                  <SwiperSlide key={m._id}>
-                    <div className="mcard">
-                      <MovieCard
-                        movie={m}
-                        onMovieClick={() => handleOnItemClick(m._id, true)}
-                        lazy={''}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          )}
-          {trendingDisplay && trendingDisplay.length > 0 && (
+          {props.trending && props.trending.length > 0 && (
             <div className="show-section">
               <Row className="d-flex align-items-center">
                 <h3>Trending This Week:</h3>
@@ -251,7 +180,50 @@ function MoviesList(props) {
                   },
                 }}
               >
-                {trendingDisplay.map((m) => (
+                {props.trending.map((m) => (
+                  <SwiperSlide key={m._id}>
+                    <div className="mcard">
+                      <MovieCard
+                        movie={m}
+                        onMovieClick={() => handleOnItemClick(m._id, true)}
+                        lazy={''}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
+          {props.mostLiked && props.mostLiked.length > 0 && (
+            <div className="show-section">
+              <Row className="d-flex align-items-center">
+                <h3>Popular Right Now:</h3>
+              </Row>
+              <Swiper
+                slidesPerView={5}
+                spaceBetween={0}
+                freeMode={true}
+                pagination={{
+                  clickable: true,
+                  dynamicBullets: true,
+                  dynamicMainBullets: 5,
+                }}
+                preloadImages={false}
+                lazy={true}
+                modules={[FreeMode, Pagination, Lazy]}
+                className="LikeSwiper"
+                breakpoints={{
+                  425: {
+                    slidesPerView: 5,
+                    spaceBetween: 0,
+                  },
+                  300: {
+                    slidesPerView: 4,
+                    spaceBetween: 0,
+                  },
+                }}
+              >
+                {props.mostLiked.map((m) => (
                   <SwiperSlide key={m._id}>
                     <div className="mcard">
                       <MovieCard

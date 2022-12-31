@@ -32,9 +32,9 @@ class MovieView extends React.Component {
   }
 
   getRecos(movie) {
-    if (movie.Recommended.length > 0) {
+    if (movie.recommended.length > 0) {
       this.showRecos({
-        exist: movie.Recommended,
+        exist: movie.recommended,
       });
       return;
     }
@@ -110,48 +110,48 @@ class MovieView extends React.Component {
         <Row className="details-wrapper">
           <Col lg={6}>
             <div className="movie-poster d-flex">
-              <img src={showDisplay.ImagePath} crossOrigin="anonymous" />
+              <img src={showDisplay.imagePath} crossOrigin="anonymous" />
             </div>
           </Col>
           <Col lg={6} className="d-flex flex-column">
             <div className="movie-details align-self-center">
               <div className="movie-title mov-section">
                 <span className="value">
-                  <h3>{showDisplay.Title}</h3>
+                  <h3>{showDisplay.title}</h3>
                 </span>
-                <span className="value">{showDisplay.Genre.Name}</span>
+                <span className="value">{showDisplay.genre.name}</span>
               </div>
               <div className="movie-actors mov-section">
                 <span className="value">
-                  {showDisplay.Actors ? showDisplay.Actors.join(' / ') : ''}
+                  {showDisplay.actors ? showDisplay.actors.join(' / ') : ''}
                 </span>
               </div>
               <div className="movie-description mov-section">
-                <span className="value">{showDisplay.Description}</span>
+                <span className="value">{showDisplay.description}</span>
               </div>
               <div className="movie-director mov-section">
                 <span className="label">Director: </span>
                 <span className="value">
-                  {showDisplay.Director.Name
-                    ? showDisplay.Director.Name
+                  {showDisplay.director.name
+                    ? showDisplay.director.name
                     : 'N/A'}
                 </span>
               </div>
               <div className="movie-rating mov-section">
                 <span className="label">Rating: </span>
                 <span className="value">
-                  {showDisplay.Rating ? showDisplay.Rating : 'N/A'}
+                  {showDisplay.rating ? showDisplay.rating : 'N/A'}
                 </span>
               </div>
             </div>
             <div className="button-wrapper">
               <Link
-                to={`/genres/${showDisplay.Genre.Name}`}
+                to={`/genres/${showDisplay.genre.name}`}
                 className="movie-opt"
               >
-                {showDisplay.Genre.Name ? (
+                {showDisplay.genre.name ? (
                   <Button variant="secondary">
-                    More {showDisplay.Genre.Name}
+                    More {showDisplay.genre.name}
                   </Button>
                 ) : (
                   <Button disabled variant="secondary">
@@ -181,7 +181,7 @@ class MovieView extends React.Component {
 
         {recommended && recommended.length > 0 && (
           <div className="recommended-wrap">
-            <h3>Shows Similar to {movie.Title}</h3>
+            <h3>Shows Similar to {movie.title}</h3>
           </div>
         )}
         {recommended && recommended.length === 0 && (
@@ -216,13 +216,13 @@ class MovieView extends React.Component {
 
 MovieView.propTypes = {
   movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Genre: PropTypes.shape({
-      Name: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    genre: PropTypes.shape({
+      name: PropTypes.string,
     }),
-    Director: PropTypes.shape({
-      Name: PropTypes.string,
+    director: PropTypes.shape({
+      name: PropTypes.string,
     }),
   }).isRequired,
 

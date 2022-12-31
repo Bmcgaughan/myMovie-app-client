@@ -35,7 +35,7 @@ function AllShows(props) {
   });
 
   //get list of Network from movies
-  const networks = movies.map((movie) => movie.Network);
+  const networks = movies.map((movie) => movie.network);
 
   //get tally of unique networks
   const networkTally = networks.reduce((acc, curr) => {
@@ -122,7 +122,7 @@ function AllShows(props) {
               <h3>
                 {networkFilter ? networkFilter : 'All Shows'} (
                 {networkFilter
-                  ? movies.filter((m) => m.Network === networkFilter).length
+                  ? movies.filter((m) => m.network === networkFilter).length
                   : movies.length}
                 )
               </h3>
@@ -174,7 +174,7 @@ function AllShows(props) {
             <Row>
               {networkFilter
                 ? movies
-                    .filter((m) => m.Network === networkFilter)
+                    .filter((m) => m.network === networkFilter)
                     .map((m) => (
                       <Col sm={3} xs={4} key={m._id}>
                         <MovieCard

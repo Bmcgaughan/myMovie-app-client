@@ -39,10 +39,10 @@ class GenreView extends React.Component {
         <div className="movie-view tp-movie">
           <div className="movie-genre mov-section">
             <div>
-              <h3>{genre.Name}</h3>
+              <h3>{genre.name}</h3>
             </div>
             <br></br>
-            <span>{genre.Description}</span>
+            <span>{genre.description}</span>
           </div>
           <Button
             variant="secondary"
@@ -55,7 +55,7 @@ class GenreView extends React.Component {
         </div>
         <div className="movie-view bt-movie">
           <div className="cards-header">
-            {genre.Name} ({genreMovies.length}):
+            {genre.name} ({genreMovies.length}):
           </div>
 
           <Row>{genreCards}</Row>
@@ -69,7 +69,7 @@ export default withRouter(GenreView);
 
 GenreView.propTypes = {
   genre: PropTypes.shape({
-    Name: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
   }).isRequired,
   onBackClick: PropTypes.func.isRequired,
 };
