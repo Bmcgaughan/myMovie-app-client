@@ -84,7 +84,7 @@ class MainView extends React.Component {
 
   getMostLiked(token) {
     axios
-      .get('https://whatdoiwatch-api-go.onrender.com/popular', {
+      .get('https://whatdoiwatch-api-go.onrender.com/tv/popular', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -97,7 +97,7 @@ class MainView extends React.Component {
 
   getTrending(token) {
     axios
-      .get(`https://whatdoiwatch-api-go.onrender.com/trending`, {
+      .get(`https://whatdoiwatch-api-go.onrender.com/tv/trending`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
