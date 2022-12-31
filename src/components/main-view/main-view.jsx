@@ -58,7 +58,7 @@ class MainView extends React.Component {
   //once authenticated - request movies from API with token - recieve array of JSONS
   getMovies(token) {
     axios
-      .get('https://whatdoiwatch.herokuapp.com/movies', {
+      .get('https://whatdoiwatch-api-go.onrender.com/tv', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -71,7 +71,7 @@ class MainView extends React.Component {
 
   getForYou(token) {
     axios
-      .get('https://whatdoiwatch.herokuapp.com/foryou', {
+      .get('https://whatdoiwatch-api-go.onrender.com/tv/foryou', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -84,7 +84,7 @@ class MainView extends React.Component {
 
   getMostLiked(token) {
     axios
-      .get('https://whatdoiwatch.herokuapp.com/mostliked', {
+      .get('https://whatdoiwatch-api-go.onrender.com/popular', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -97,7 +97,7 @@ class MainView extends React.Component {
 
   getTrending(token) {
     axios
-      .get(`https://whatdoiwatch.herokuapp.com/trending`, {
+      .get(`https://whatdoiwatch-api-go.onrender.com/trending`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
@@ -116,7 +116,7 @@ class MainView extends React.Component {
     this.props.setFavorites('');
     let user = localStorage.getItem('user');
     axios
-      .get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
+      .get(`https://whatdoiwatch-api-go.onrender.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {

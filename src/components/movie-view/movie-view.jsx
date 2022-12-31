@@ -42,7 +42,7 @@ class MovieView extends React.Component {
     this.setState({ gettingReco: 'get' });
     axios
       .get(
-        `https://whatdoiwatch.herokuapp.com/movies/recommended/${this.props.movie.odbID}`,
+        `https://whatdoiwatch-api-go.onrender.com/tv/recommended/${this.props.movie.odbID}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }

@@ -45,7 +45,7 @@ export function RegistrationView(props) {
 
     if (isReq) {
       axios
-        .post('https://whatdoiwatch.herokuapp.com/users', {
+        .post('https://whatdoiwatch-api-go.onrender.com/users', {
           Username: username,
           Password: password,
         })

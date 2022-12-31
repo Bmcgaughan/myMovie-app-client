@@ -38,7 +38,7 @@ export class MovieCard extends React.Component {
 
     axios
       .post(
-        `https://whatdoiwatch.herokuapp.com/users/${userName}/favorites/${mid}`,
+        `https://whatdoiwatch-api-go.onrender.com/users/${userName}/favorites/${mid}`,
         '',
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -57,7 +57,7 @@ export class MovieCard extends React.Component {
 
     axios
       .delete(
-        `https://whatdoiwatch.herokuapp.com/users/${userName}/favorites/${mid}`,
+        `https://whatdoiwatch-api-go.onrender.com/users/${userName}/favorites/${mid}`,
 
         { headers: { Authorization: `Bearer ${token}` } }
       )

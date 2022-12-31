@@ -37,7 +37,7 @@ export class ProfileView extends React.Component {
   getUser(token) {
     let user = localStorage.getItem('user');
     axios
-      .get(`https://whatdoiwatch.herokuapp.com/users/${user}`, {
+      .get(`https://whatdoiwatch-api-go.onrender.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
