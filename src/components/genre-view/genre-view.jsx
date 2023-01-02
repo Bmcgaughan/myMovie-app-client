@@ -26,10 +26,10 @@ class GenreView extends React.Component {
     const { genre, onBackClick, genreMovies } = this.props;
     //generator for movies of the same genre - finds them in the full list of movies
     let genreCards = genreMovies.map((m) => (
-      <Col md={3} key={m.odbID}>
+      <Col md={3} key={m.obdid}>
         <MovieCard
           movie={m}
-          onMovieClick={() => this.handleOnItemClick(m.odbID)}
+          onMovieClick={() => this.handleOnItemClick(m.odbid)}
         />
       </Col>
     ));
@@ -69,7 +69,7 @@ export default withRouter(GenreView);
 
 GenreView.propTypes = {
   genre: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    Name: PropTypes.string.isRequired,
   }).isRequired,
   onBackClick: PropTypes.func.isRequired,
 };

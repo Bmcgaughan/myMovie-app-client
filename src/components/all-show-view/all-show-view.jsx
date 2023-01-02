@@ -82,7 +82,7 @@ function AllShows(props) {
 
   if (visibilityFilter !== '') {
     filteredMovies = movies.filter((m) =>
-      m.Title.toLowerCase().includes(visibilityFilter.toLowerCase())
+      m.title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import axios from 'axios';
@@ -20,6 +20,26 @@ export function LoginView(props) {
   const [usernameErr, setUsernameErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
   const [loading, setLoading] = useState(false);
+  const [awake, setAwake] = useState(false);
+
+  useEffect(() => {
+    awakeCheck();
+  }, []);
+
+  //checking if server is awake
+  const awakeCheck = () => {
+    axios
+      .get('https://whatdoiwatch-api-go.onrender.com/healthcheck')
+      .then((response) => {
+        if (response.data.message === 'OK') {
+          setAwake(true);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        setTimeout(awakeCheck, 1000);
+      });
+  };
 
   //validation of registration data
   const validate = () => {
@@ -56,6 +76,7 @@ export function LoginView(props) {
         })
         .then((response) => {
           setLoading(false);
+          setAwake(true);
           const data = response.data;
           props.onLoggedIn(data);
         })
@@ -67,10 +88,10 @@ export function LoginView(props) {
     }
   };
 
-  if (loading) {
+  if (loading || !awake) {
     return (
       <Form className="login-form d-flex justify-content-md-center flex-column align-items-center">
-        <LoadingSpinner />
+        <LoadingSpinner message={!awake ? 'waking up server' : ''} />
       </Form>
     );
   } else {

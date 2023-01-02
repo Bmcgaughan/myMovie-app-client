@@ -39,20 +39,44 @@ class MainView extends React.Component {
     //initial state for main-view
     this.state = {
       registered: null,
+      awake: false,
     };
   }
 
   componentDidMount() {
     //seeing if user is logged in
     let accessToken = localStorage.getItem('token');
+    let tokenExpire = localStorage.getItem('tokenTTL');
+
+    if (accessToken !== null && tokenExpire < Date.now()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('tokenExpire');
+      localStorage.removeItem('user');
+      accessToken = null;
+    }
+
     if (accessToken !== null) {
       this.props.setUser(localStorage.getItem('user'));
+      this.awakeCheck();
       this.getMovies(accessToken);
       this.getForYou(accessToken);
       this.getTrending(accessToken);
       this.getMostLiked(accessToken);
       this.getFavorites(accessToken);
     }
+  }
+
+  awakeCheck() {
+    axios
+      .get('https://whatdoiwatch-api-go.onrender.com/healthcheck')
+      .then((response) => {
+        if (response.data.message === 'OK') {
+          this.setState({ awake: true });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   //once authenticated - request movies from API with token - recieve array of JSONS
@@ -128,8 +152,11 @@ class MainView extends React.Component {
   //when user is verified set state to current user
   onLoggedIn(userAuth) {
     this.props.setUser(userAuth.user.Username);
-    localStorage.setItem('token', userAuth.token),
-      localStorage.setItem('user', userAuth.user.Username);
+    localStorage.setItem('token', userAuth.token);
+    localStorage.setItem('tokenTTL', Date.now() + 1209600 * 1000);
+
+    localStorage.setItem('user', userAuth.user.Username);
+    this.awakeCheck();
     this.getMovies(userAuth.token);
     this.getForYou(userAuth.token);
     this.getTrending(userAuth.token);
@@ -168,6 +195,8 @@ class MainView extends React.Component {
                     <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
                   </Col>
                 );
+              if (!this.state.awake)
+                return <LoadingSpinner message={'waking up server'} />;
               if (!favorites) return <div className="main-view" />;
               return <MoviesList favorites={favorites} />;
             }}
@@ -266,11 +295,11 @@ class MainView extends React.Component {
                   <Col md={12}>
                     <GenreView
                       genre={
-                        movies.find((m) => m.genre.name === match.params.name)
+                        movies.find((m) => m.genre.Name === match.params.name)
                           .genre
                       }
                       genreMovies={movies.filter((m) => {
-                        return m.genre.name === match.params.name;
+                        return m.genre.Name === match.params.name;
                       })}
                       onBackClick={() => history.goBack()}
                     />

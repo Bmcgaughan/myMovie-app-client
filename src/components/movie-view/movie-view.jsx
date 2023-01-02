@@ -47,6 +47,7 @@ class MovieView extends React.Component {
       )
       .then((response) => {
         this.showRecos(response.data, false);
+        this.props.addMovies(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -141,12 +142,12 @@ class MovieView extends React.Component {
             </div>
             <div className="button-wrapper">
               <Link
-                to={`/genres/${showDisplay.genre.name}`}
+                to={`/genres/${showDisplay.genre.Name}`}
                 className="movie-opt"
               >
-                {showDisplay.genre.name ? (
+                {showDisplay.genre.Name ? (
                   <Button variant="secondary">
-                    More {showDisplay.genre.name}
+                    More {showDisplay.genre.Name}
                   </Button>
                 ) : (
                   <Button disabled variant="secondary">

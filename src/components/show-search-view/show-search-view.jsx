@@ -39,6 +39,7 @@ function ShowSearch(props) {
     setSearching(true);
     token = localStorage.getItem('token');
     const query = encodeURI(visibilityFilter);
+    console.log(query);
     axios
       .get(`https://whatdoiwatch-api-go.onrender.com/tv/search/${query}`, {
         headers: { Authorization: `Bearer ${token}` },
