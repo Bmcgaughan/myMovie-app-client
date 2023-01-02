@@ -40,7 +40,7 @@ function ShowSearch(props) {
     token = localStorage.getItem('token');
     const query = encodeURI(visibilityFilter);
     axios
-      .get(`https://whatdoiwatch.herokuapp.com/tv/search/${query}`, {
+      .get(`https://whatdoiwatch-api-go.onrender.com/tv/search/${query}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
