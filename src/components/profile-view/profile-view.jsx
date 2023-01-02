@@ -91,19 +91,21 @@ export class ProfileView extends React.Component {
 
   //takes users favorite movie ids and find them in the full set of movies
   //for display
-  listFavorites = (favorites) => {    
+  listFavorites = (favorites) => {
+    console.log(favorites.length);
     let favoriteCards = this.props.movies
-      .filter((m) => favorites.includes(m.odbID))
+      .filter((m) => favorites.includes(m.odbid))
       .map((m) => (
-        <Col xs={6} lg={4} key={m.odbID}>
+        <Col xs={6} lg={4} key={m.obdid}>
           {/* <Link to={`/movies/${m._id}`} className="movie-opt"> */}
           <MovieCard
             movie={m}
-            onMovieClick={() => this.handleOnItemClick(m.odbID)}
+            onMovieClick={() => this.handleOnItemClick(m.odbid)}
           />
           {/* </Link> */}
         </Col>
       ));
+    console.log(favoriteCards);
     return favoriteCards;
   };
 
@@ -342,7 +344,7 @@ ProfileView.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      imagePath: PropTypes.string.isRequired,
+      imagepath: PropTypes.string.isRequired,
     })
   ).isRequired,
 };

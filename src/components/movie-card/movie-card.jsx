@@ -73,7 +73,7 @@ export class MovieCard extends React.Component {
   //the state is then updated to either add/remove the movie
   favMovieClick(e) {
     e.preventDefault();
-    let movId = this.props.movie.odbID;
+    let movId = this.props.movie.odbid;
     if (this.props.favorites.includes(movId)) {
       this.removeFavMovie(movId);
     } else {
@@ -112,10 +112,10 @@ export class MovieCard extends React.Component {
       <Card className="h-100 mcard">
         <div className="poster-wrapper">
           <Card.Img
-            onClick={onMovieClick(movie.odbID)}
+            onClick={onMovieClick(movie.odbid)}
             crossOrigin="anonymous"
             variant="top"
-            src={movie.imagePath}
+            src={movie.imagepath}
             onError={(e) => {
               let image = new Image();
               image.src = e.target.src;
@@ -146,7 +146,7 @@ export class MovieCard extends React.Component {
           title="Add to Favorites"
         >
           <img
-            src={this.favMovieHandle(movie.odbID)}
+            src={this.favMovieHandle(movie.odbid)}
             className="fav-icon"
             alt="cam"
           />
@@ -154,7 +154,7 @@ export class MovieCard extends React.Component {
 
         <Card.Body
           className="d-flex flex-column"
-          onClick={onMovieClick(movie.odbID)}
+          onClick={onMovieClick(movie.odbid)}
         >
           <Card.Title>{movie.title}</Card.Title>
           {movie.network && <Card.Text>{movie.network}</Card.Text>}
@@ -171,7 +171,7 @@ MovieCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string,
     genre: PropTypes.shape({
-      name: PropTypes.string,
+      Name: PropTypes.string,
     }),
     director: PropTypes.shape({
       name: PropTypes.string,

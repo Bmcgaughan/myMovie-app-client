@@ -90,10 +90,10 @@ function MoviesList(props) {
             </Row>
             <Row>
               {filteredMovies.map((m) => (
-                <Col md={3} key={m.odbID}>
+                <Col md={3} key={m.odbid}>
                   <MovieCard
                     movie={m}
-                    onMovieClick={() => handleOnItemClick(m.odbID, false)}
+                    onMovieClick={() => handleOnItemClick(m.odbid, false)}
                     lazy={''}
                   />
                 </Col>
@@ -138,11 +138,11 @@ function MoviesList(props) {
                 }}
               >
                 {props.recommended.map((m) => (
-                  <SwiperSlide key={m.odbID}>
+                  <SwiperSlide key={m.odbid}>
                     <div className="mcard">
                       <MovieCard
                         movie={m}
-                        onMovieClick={() => handleOnItemClick(m.odbID, true)}
+                        onMovieClick={() => handleOnItemClick(m.odbid, true)}
                         lazy={''}
                       />
                     </div>
@@ -181,11 +181,11 @@ function MoviesList(props) {
                 }}
               >
                 {props.trending.map((m) => (
-                  <SwiperSlide key={m.odbID}>
+                  <SwiperSlide key={m.odbid}>
                     <div className="mcard">
                       <MovieCard
                         movie={m}
-                        onMovieClick={() => handleOnItemClick(m.odbID, true)}
+                        onMovieClick={() => handleOnItemClick(m.odbid, true)}
                         lazy={''}
                       />
                     </div>
@@ -224,11 +224,11 @@ function MoviesList(props) {
                 }}
               >
                 {props.mostLiked.map((m) => (
-                  <SwiperSlide key={m.odbID}>
+                  <SwiperSlide key={m.odbid}>
                     <div className="mcard">
                       <MovieCard
                         movie={m}
-                        onMovieClick={() => handleOnItemClick(m.odbID, true)}
+                        onMovieClick={() => handleOnItemClick(m.odbid, true)}
                         lazy={''}
                       />
                     </div>

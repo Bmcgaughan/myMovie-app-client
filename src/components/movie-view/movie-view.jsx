@@ -32,50 +32,45 @@ class MovieView extends React.Component {
   }
 
   getRecos(movie) {
-    if (movie.recommended.length > 0) {
-      this.showRecos({
-        exist: movie.recommended,
-      });
+    if (movie.recommended && movie.recommended.length > 0) {
+      this.showRecos(movie.recommended, true);
       return;
     }
     let accessToken = localStorage.getItem('token');
     this.setState({ gettingReco: 'get' });
     axios
       .get(
-        `https://whatdoiwatch-api-go.onrender.com/tv/recommended/${this.props.movie.odbID}`,
+        `https://whatdoiwatch-api-go.onrender.com/tv/recommended/${this.props.movie.odbid}`,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       )
       .then((response) => {
-        this.showRecos(response.data);
+        this.showRecos(response.data, false);
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  showRecos(recommended) {
+  showRecos(recommended, exist) {
     if (!recommended) return;
 
-    let processedTV = [];
-    let existDetails = [];
+    let displayList = [];
 
-    if (recommended.exist && recommended.exist.length > 0) {
+    if (recommended && exist && recommended.length > 0) {
       existDetails = this.props.movies.filter((m) => {
-        if (recommended.exist.includes(m.odbID)) {
+        if (recommended.includes(m.odbid)) {
           return m;
         }
       });
     }
-    if (recommended.processedTV && recommended.processedTV.length > 0) {
-      processedTV = [...recommended.processedTV];
-      this.props.addMovies(processedTV);
-    }
+
+    displayList = exist ? existDetails : recommended;
 
     this.setState(
       {
-        recommended: [...existDetails, ...processedTV],
+        recommended: [...displayList],
       },
       () => {
         this.setState({ gettingReco: 'complete' });
@@ -101,10 +96,8 @@ class MovieView extends React.Component {
     const { movie, onBackClick, movies } = this.props;
     const { recommended, gettingReco } = this.state;
 
-    console.log(movie);
-
     const showDisplay = movies.find(
-      (m) => m.odbID == this.props.match.params.movieId
+      (m) => m.odbid == this.props.match.params.movieId
     );
 
     return (
@@ -112,7 +105,7 @@ class MovieView extends React.Component {
         <Row className="details-wrapper">
           <Col lg={6}>
             <div className="movie-poster d-flex">
-              <img src={showDisplay.imagePath} crossOrigin="anonymous" />
+              <img src={showDisplay.imagepath} crossOrigin="anonymous" />
             </div>
           </Col>
           <Col lg={6} className="d-flex flex-column">
@@ -121,7 +114,7 @@ class MovieView extends React.Component {
                 <span className="value">
                   <h3>{showDisplay.title}</h3>
                 </span>
-                <span className="value">{showDisplay.genre.name}</span>
+                <span className="value">{showDisplay.genre.Name}</span>
               </div>
               <div className="movie-actors mov-section">
                 <span className="value">
@@ -134,8 +127,8 @@ class MovieView extends React.Component {
               <div className="movie-director mov-section">
                 <span className="label">Director: </span>
                 <span className="value">
-                  {showDisplay.director.name
-                    ? showDisplay.director.name
+                  {showDisplay.director.Name
+                    ? showDisplay.director.Name
                     : 'N/A'}
                 </span>
               </div>
@@ -203,10 +196,10 @@ class MovieView extends React.Component {
           recommended.length > 0 && (
             <Row>
               {recommended.map((m) => (
-                <Col sm={3} xs={4} key={m.odbID}>
+                <Col sm={3} xs={4} key={m.odbid}>
                   <MovieCard
                     movie={m}
-                    onMovieClick={() => this.handleOnItemClick(m.odbID)}
+                    onMovieClick={() => this.handleOnItemClick(m.odbid)}
                     lazy={''}
                   />
                 </Col>
@@ -223,10 +216,10 @@ MovieView.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     genre: PropTypes.shape({
-      name: PropTypes.string,
+      Name: PropTypes.string,
     }),
     director: PropTypes.shape({
-      name: PropTypes.string,
+      Name: PropTypes.string,
     }),
   }).isRequired,
 
