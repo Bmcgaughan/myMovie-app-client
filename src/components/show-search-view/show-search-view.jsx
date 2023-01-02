@@ -40,14 +40,14 @@ function ShowSearch(props) {
     token = localStorage.getItem('token');
     const query = encodeURI(visibilityFilter);
     axios
-      .get(`https://whatdoiwatch.herokuapp.com/search/${query}`, {
+      .get(`https://whatdoiwatch.herokuapp.com/tv/search/${query}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setResultCount(response.data.processedTV.length);
-        if (response.data.processedTV.length > 0) {
-          setResults(response.data.processedTV);
-          props.addMovies(response.data.processedTV);
+        setResultCount(response.data.length);
+        if (response.data.length > 0) {
+          setResults(response.data);
+          props.addMovies(response.data);
         }
         setSearching(false);
       })
@@ -85,10 +85,10 @@ function ShowSearch(props) {
           </Row>
           <Row>
             {searchResults.map((m) => (
-              <Col md={3} key={m.odbID}>
+              <Col md={3} key={m.odbid}>
                 <MovieCard
                   movie={m}
-                  onMovieClick={() => handleOnItemClick(m.odbID)}
+                  onMovieClick={() => handleOnItemClick(m.odbid)}
                 />
               </Col>
             ))}
