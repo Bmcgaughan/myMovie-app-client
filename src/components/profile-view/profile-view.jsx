@@ -105,7 +105,6 @@ export class ProfileView extends React.Component {
           {/* </Link> */}
         </Col>
       ));
-    console.log(favoriteCards);
     return favoriteCards;
   };
 

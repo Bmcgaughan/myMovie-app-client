@@ -45,11 +45,39 @@ const mapStateToProps = (state) => {
 };
 
 function MoviesList(props) {
-  const { movies, visibilityFilter } = props;
+  const { movies, visibilityFilter, recommended } = props;
   const [dragging, setDragging] = useState(false);
 
   //setting up to navigate to specific movie
   const history = useHistory();
+
+  const recoRef = useRef(null);
+  const popRef = useRef(null);
+  const trendRef = useRef(null);
+
+  useEffect(() => {
+    if (recoRef.current) {
+      recoRef.current.swiper.slideTo(
+        localStorage.getItem('slide_reco') || 0,
+        0
+      );
+    }
+  }, [recommended]);
+
+  useEffect(() => {
+    if (popRef.current) {
+      popRef.current.swiper.slideTo(localStorage.getItem('slide_pop') || 0, 0);
+    }
+  }, [popRef.current]);
+
+  useEffect(() => {
+    if (trendRef.current) {
+      trendRef.current.swiper.slideTo(
+        localStorage.getItem('slide_trend') || 0,
+        0
+      );
+    }
+  }, [trendRef.current]);
 
   //pushing movie details on click
   const handleOnItemClick = (param, dragToggle) => (e) => {
@@ -64,6 +92,10 @@ function MoviesList(props) {
     }
   };
 
+  const storeSwiperIndex = (swiper, src) => {
+    localStorage.setItem(`slide_${src}`, swiper.realIndex);
+  };
+
   //setting filtered to default prop
   let filteredMovies = [];
 
@@ -72,10 +104,6 @@ function MoviesList(props) {
       m.title.toLowerCase().includes(visibilityFilter.toLowerCase())
     );
   }
-
-  // if (!movies) {
-  //   return <div className="main-view" />;
-  // }
 
   return (
     <div className="shows-wrapper">
@@ -114,6 +142,10 @@ function MoviesList(props) {
                 <h3>Recommended for You:</h3>
               </Row>
               <Swiper
+                ref={recoRef}
+                onSlideChange={(swiper) => {
+                  storeSwiperIndex(swiper, 'reco');
+                }}
                 slidesPerView={5}
                 spaceBetween={0}
                 freeMode={true}
@@ -157,6 +189,10 @@ function MoviesList(props) {
                 <h3>Trending This Week:</h3>
               </Row>
               <Swiper
+                ref={trendRef}
+                onSlideChange={(swiper) => {
+                  storeSwiperIndex(swiper, 'trend');
+                }}
                 slidesPerView={5}
                 spaceBetween={0}
                 freeMode={true}
@@ -200,6 +236,10 @@ function MoviesList(props) {
                 <h3>Popular Right Now:</h3>
               </Row>
               <Swiper
+                ref={popRef}
+                onSlideChange={(swiper) => {
+                  storeSwiperIndex(swiper, 'pop');
+                }}
                 slidesPerView={5}
                 spaceBetween={0}
                 freeMode={true}
