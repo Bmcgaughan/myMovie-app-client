@@ -1,15 +1,7 @@
 import React from 'react';
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { useHistory } from 'react-router-dom';
-
-import { Swiper, SwiperSlide } from 'swiper/react/swiper-react.js';
-
-import '../../../node_modules/swiper/swiper.scss';
-import '../../../node_modules/swiper/modules/free-mode/free-mode.scss';
-import '../../../node_modules/swiper/modules/pagination/pagination.scss';
-
-import { FreeMode, Pagination, Lazy } from 'swiper';
 
 import { connect } from 'react-redux';
 
@@ -18,6 +10,7 @@ import { Row, Col } from 'react-bootstrap';
 //components to import and render
 import MovieCard from '../movie-card/movie-card';
 import ShowSearch from '../show-search-view/show-search-view';
+import SliderView from '../slider-view/slider-view';
 
 //styles for filters
 import './movies-list.scss';
@@ -141,46 +134,7 @@ function MoviesList(props) {
               <Row className="d-flex align-items-center">
                 <h3>Recommended for You:</h3>
               </Row>
-              <Swiper
-                ref={recoRef}
-                onSlideChange={(swiper) => {
-                  storeSwiperIndex(swiper, 'reco');
-                }}
-                slidesPerView={5}
-                spaceBetween={0}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                  dynamicBullets: true,
-                  dynamicMainBullets: 5,
-                }}
-                preloadImages={false}
-                lazy={true}
-                modules={[FreeMode, Pagination, Lazy]}
-                className="RecoSwiper"
-                breakpoints={{
-                  425: {
-                    slidesPerView: 5,
-                    spaceBetween: 0,
-                  },
-                  300: {
-                    slidesPerView: 4,
-                    spaceBetween: 0,
-                  },
-                }}
-              >
-                {props.recommended.map((m) => (
-                  <SwiperSlide key={m.odbid}>
-                    <div className="mcard">
-                      <MovieCard
-                        movie={m}
-                        onMovieClick={() => handleOnItemClick(m.odbid, true)}
-                        lazy={''}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <SliderView shows={props.recommended} element={'reco'} />
             </div>
           )}
           {props.trending && props.trending.length > 0 && (
@@ -188,46 +142,7 @@ function MoviesList(props) {
               <Row className="d-flex align-items-center">
                 <h3>Trending This Week:</h3>
               </Row>
-              <Swiper
-                ref={trendRef}
-                onSlideChange={(swiper) => {
-                  storeSwiperIndex(swiper, 'trend');
-                }}
-                slidesPerView={5}
-                spaceBetween={0}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                  dynamicBullets: true,
-                  dynamicMainBullets: 5,
-                }}
-                preloadImages={false}
-                lazy={true}
-                modules={[FreeMode, Pagination, Lazy]}
-                className="TrendSwiper"
-                breakpoints={{
-                  425: {
-                    slidesPerView: 5,
-                    spaceBetween: 0,
-                  },
-                  300: {
-                    slidesPerView: 4,
-                    spaceBetween: 0,
-                  },
-                }}
-              >
-                {props.trending.map((m) => (
-                  <SwiperSlide key={m.odbid}>
-                    <div className="mcard">
-                      <MovieCard
-                        movie={m}
-                        onMovieClick={() => handleOnItemClick(m.odbid, true)}
-                        lazy={''}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <SliderView shows={props.trending} element={'trend'} />
             </div>
           )}
           {props.mostLiked && props.mostLiked.length > 0 && (
@@ -235,46 +150,7 @@ function MoviesList(props) {
               <Row className="d-flex align-items-center">
                 <h3>Popular Right Now:</h3>
               </Row>
-              <Swiper
-                ref={popRef}
-                onSlideChange={(swiper) => {
-                  storeSwiperIndex(swiper, 'pop');
-                }}
-                slidesPerView={5}
-                spaceBetween={0}
-                freeMode={true}
-                pagination={{
-                  clickable: true,
-                  dynamicBullets: true,
-                  dynamicMainBullets: 5,
-                }}
-                preloadImages={false}
-                lazy={true}
-                modules={[FreeMode, Pagination, Lazy]}
-                className="LikeSwiper"
-                breakpoints={{
-                  425: {
-                    slidesPerView: 5,
-                    spaceBetween: 0,
-                  },
-                  300: {
-                    slidesPerView: 4,
-                    spaceBetween: 0,
-                  },
-                }}
-              >
-                {props.mostLiked.map((m) => (
-                  <SwiperSlide key={m.odbid}>
-                    <div className="mcard">
-                      <MovieCard
-                        movie={m}
-                        onMovieClick={() => handleOnItemClick(m.odbid, true)}
-                        lazy={''}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <SliderView shows={props.mostLiked} element={'pop'} />
             </div>
           )}
         </div>
