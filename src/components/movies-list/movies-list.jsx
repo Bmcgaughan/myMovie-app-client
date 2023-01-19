@@ -44,34 +44,6 @@ function MoviesList(props) {
   //setting up to navigate to specific movie
   const history = useHistory();
 
-  const recoRef = useRef(null);
-  const popRef = useRef(null);
-  const trendRef = useRef(null);
-
-  useEffect(() => {
-    if (recoRef.current) {
-      recoRef.current.swiper.slideTo(
-        localStorage.getItem('slide_reco') || 0,
-        0
-      );
-    }
-  }, [recommended]);
-
-  useEffect(() => {
-    if (popRef.current) {
-      popRef.current.swiper.slideTo(localStorage.getItem('slide_pop') || 0, 0);
-    }
-  }, [popRef.current]);
-
-  useEffect(() => {
-    if (trendRef.current) {
-      trendRef.current.swiper.slideTo(
-        localStorage.getItem('slide_trend') || 0,
-        0
-      );
-    }
-  }, [trendRef.current]);
-
   //pushing movie details on click
   const handleOnItemClick = (param, dragToggle) => (e) => {
     if (!dragToggle) {
@@ -83,10 +55,6 @@ function MoviesList(props) {
         history.push(`/movies/${param}`);
       }
     }
-  };
-
-  const storeSwiperIndex = (swiper, src) => {
-    localStorage.setItem(`slide_${src}`, swiper.realIndex);
   };
 
   //setting filtered to default prop
